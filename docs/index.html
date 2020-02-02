@@ -126,7 +126,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
 <a id="active-page" href="index.html">Preamble</a><ul class="toc-sections">
-<li class="toc"><a href="#references-and-credits">References and credits</a></li>
 <li class="toc"><a href="#pre-requisites">Pre-requisites</a></li>
 <li class="toc"><a href="#about-this-course-material">About this course material</a></li>
 <li class="toc"><a href="#citation">Citation</a></li>
@@ -156,32 +155,37 @@ is a project-based course that teaches the analysis of quantitative
 omics data. It is composed of three major parts:</p>
 <ul>
 <li><p>Introductory material about the command line interface, advanced
-material about R markdown, linear models, and utilisation and
-interpretation of gene set enrichment and over-representation
-analyses.</p></li>
-<li><p>Project 1: analysis and interpretation of RNA-Seq data.</p></li>
-<li><p>Project 2: analysis and interpretation of mass spectrometry-based
-quantitative proteomics.</p></li>
+usage of R markdown for reports and slides, linear models, and
+utilisation and interpretation of gene set enrichment and
+over-representation analyses (GSEA).</p></li>
+<li><p>Project 1: analysis and interpretation of RNA-Seq data, including
+high throughput sequencing (HTS) data processing.</p></li>
+<li><p>Project 2: analysis and interpretation of quantitative proteomics,
+including mass spectrometry data (MS) and its processing.</p></li>
 </ul>
-<p>Each projet will entail an introductory session, dedicated office time
+<p>Each project will entail an introductory session, dedicated office time
 for students to ask question, oral presentation of the data analysis
 and interpretation, and submission of a fully reproducible R markdown
-report.</p>
-<div id="references-and-credits" class="section level2 unnumbered">
-<h2>References and credits</h2>
-<p>References are provided throughout the course. Several stand out
-however, as they cover large parts of the material or provide
-complementary resources.</p>
+report. The report will contain an introduction, a description of the
+experimental design of the data, a detailed description of the data
+analysis steps, discussion and interpretation of the results,
+including a biological interpretation, references and contribution
+statement of all authors.</p>
+<p>Tentative schedule for the course.</p>
 <ul>
-<li>
-<strong>Modern Statistical for Modern Biology</strong>, by Susan Holmes and
-Wolfgang Huber <span class="citation">(Holmes and Huber <label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle">2019<span class="marginnote">Holmes, Susan, and Wolfgang Huber. 2019. <em>Modern Statistics for Modern Biology</em>. Cambridge Univeristy Press.</span>)</span>. A free online version of the book is
-available <a href="https://www-huber.embl.de/msmb/">here</a>.</li>
+<li>CLI and Rmd</li>
+<li>Linear models and GSEA</li>
+<li>Project 1: HTS and RNA-Seq</li>
+<li>QA session for project 1</li>
+<li>Project 1 presentations</li>
+<li>Submission of the 1st report</li>
+<li>Project 2: MS and quantitative proteomcis</li>
+<li>QA session for project 2</li>
+<li>Project 2 presentations</li>
+<li>Submission of the 2nd report</li>
+<li>Oral exams based on the submitted reports.</li>
 </ul>
-<p>This course is being tought by Prof Laurent Gatto with invaluable
-assistance from Dr Axelle Loriot at the Faculty of Pharmacy and
-Biomedical Sciences (FASB) at the UCLouvain, Belgium.</p>
-</div>
+<p>The course will be taught in English.</p>
 <div id="pre-requisites" class="section level2 unnumbered">
 <h2>Pre-requisites</h2>
 <p>Students taking this course should be familiar with data analysis and
@@ -192,8 +196,8 @@ class is the introductory course
 </div>
 <div id="about-this-course-material" class="section level2 unnumbered">
 <h2>About this course material</h2>
-<p>This material is written in R markdown <span class="citation">(Allaire et al. <label for="tufte-mn-2" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle">2020<span class="marginnote">Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2020. <em>Rmarkdown: Dynamic Documents for R</em>. <a href="https://CRAN.R-project.org/package=rmarkdown" class="uri">https://CRAN.R-project.org/package=rmarkdown</a>.</span>)</span> and compiled as a
-book using <code>knitr</code> <span class="citation">(Xie <label for="tufte-mn-3" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-3" class="margin-toggle">2020b<span class="marginnote">Xie, Yihui. 2020b. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in R</em>. <a href="https://CRAN.R-project.org/package=knitr" class="uri">https://CRAN.R-project.org/package=knitr</a>.</span>)</span> <code>bookdown</code> <span class="citation">(Xie <label for="tufte-mn-4" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-4" class="margin-toggle">2020a<span class="marginnote">Xie, Yihui. 2020a. <em>Bookdown: Authoring Books and Technical Documents with R Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown" class="uri">https://CRAN.R-project.org/package=bookdown</a>.</span>)</span>. The source
+<p>This material is written in R markdown <span class="citation">(Allaire et al. <label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle">2020<span class="marginnote">Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2020. <em>Rmarkdown: Dynamic Documents for R</em>. <a href="https://CRAN.R-project.org/package=rmarkdown" class="uri">https://CRAN.R-project.org/package=rmarkdown</a>.</span>)</span> and compiled as a
+book using <code>knitr</code> <span class="citation">(Xie <label for="tufte-mn-2" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle">2020b<span class="marginnote">Xie, Yihui. 2020b. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in R</em>. <a href="https://CRAN.R-project.org/package=knitr" class="uri">https://CRAN.R-project.org/package=knitr</a>.</span>)</span> <code>bookdown</code> <span class="citation">(Xie <label for="tufte-mn-3" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-3" class="margin-toggle">2020a<span class="marginnote">Xie, Yihui. 2020a. <em>Bookdown: Authoring Books and Technical Documents with R Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown" class="uri">https://CRAN.R-project.org/package=bookdown</a>.</span>)</span>. The source
 code is publicly available in a Github repository
 <a href="https://github.com/uclouvain-cbio/WSBIM2122" class="uri">https://github.com/uclouvain-cbio/WSBIM2122</a>
 and the compiled material can be read at <a href="http://bit.ly/WSBIM2122" class="uri">http://bit.ly/WSBIM2122</a>.</p>
@@ -208,7 +212,7 @@ participating in this project you agree to abide by its terms.</p>
 <h2>Citation</h2>
 <p>If you use this course, please cite it as</p>
 <blockquote>
-<p>Laurent Gatto. <em>UCLouvain-CBIO/WSBIM2122: Bioinformatics.</em>
+<p>Laurent Gatto. <em>UCLouvain-CBIO/WSBIM2122: Omics data analysis.</em>
 <a href="https://github.com/UCLouvain-CBIO/WSBIM2122" class="uri">https://github.com/UCLouvain-CBIO/WSBIM2122</a>.</p>
 </blockquote>
 </div>
@@ -237,9 +241,9 @@ installed. See section <a href="sec-si.html#sec:setup2">7.1</a> for details.</p>
 <!-- ```{r rwsbim1322, message = FALSE, warning = FALSE} -->
 <!-- library("rWSBIM2122") -->
 <!-- ``` -->
-<p>To build this book, you’ll need <code>bookdown</code> <span class="citation">(Xie <label for="tufte-mn-5" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-5" class="margin-toggle">2020a<span class="marginnote">Xie, Yihui. 2020a. <em>Bookdown: Authoring Books and Technical Documents with R Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown" class="uri">https://CRAN.R-project.org/package=bookdown</a>.</span>)</span> and a
+<p>To build this book, you’ll need <code>bookdown</code> <span class="citation">(Xie <label for="tufte-mn-4" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-4" class="margin-toggle">2020a<span class="marginnote">Xie, Yihui. 2020a. <em>Bookdown: Authoring Books and Technical Documents with R Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown" class="uri">https://CRAN.R-project.org/package=bookdown</a>.</span>)</span> and a
 fork<label for="tufte-sn-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="tufte-sn-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> <a href="https://github.com/lgatto/msmbstyle" class="uri">https://github.com/lgatto/msmbstyle</a></span> of <a href="https://github.com/grimbough/msmbstyle/"><code>msmbstyle</code>
-style</a> <span class="citation">(Smith <label for="tufte-mn-6" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-6" class="margin-toggle">2019<span class="marginnote">Smith, Mike. 2019. <em>Msmbstyle: MSMB Styles for R Markdown Documents</em>.</span>)</span>.</p>
+style</a> <span class="citation">(Smith <label for="tufte-mn-5" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-5" class="margin-toggle">2019<span class="marginnote">Smith, Mike. 2019. <em>Msmbstyle: MSMB Styles for R Markdown Documents</em>.</span>)</span>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"bookdown"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"lgatto/msmbstyle"</span>)</a></code></pre></div>
 <p>In the course’s work directory, simply type</p>

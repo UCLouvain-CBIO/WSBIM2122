@@ -23,34 +23,41 @@ is a project-based course that teaches the analysis of quantitative
 omics data. It is composed of three major parts:
 
 - Introductory material about the command line interface, advanced
-  material about R markdown, linear models, and utilisation and
-  interpretation of gene set enrichment and over-representation
-  analyses.
+  usage of R markdown for reports and slides, linear models, and
+  utilisation and interpretation of gene set enrichment and
+  over-representation analyses (GSEA).
 
-- Project 1: analysis and interpretation of RNA-Seq data.
+- Project 1: analysis and interpretation of RNA-Seq data, including
+  high throughput sequencing (HTS) data processing.
 
-- Project 2: analysis and interpretation of mass spectrometry-based
-  quantitative proteomics.
+- Project 2: analysis and interpretation of quantitative proteomics,
+  including mass spectrometry data (MS) and its processing.
 
-Each projet will entail an introductory session, dedicated office time
+Each project will entail an introductory session, dedicated office time
 for students to ask question, oral presentation of the data analysis
 and interpretation, and submission of a fully reproducible R markdown
-report. 
+report. The report will contain an introduction, a description of the
+experimental design of the data, a detailed description of the data
+analysis steps, discussion and interpretation of the results,
+including a biological interpretation, references and contribution
+statement of all authors.
 
+Tentative schedule for the course.
 
-## References and credits {-}
+- CLI and Rmd
+- Linear models and GSEA
+- Project 1: HTS and RNA-Seq
+- QA session for project 1
+- Project 1 presentations
+- Submission of the 1st report
+- Project 2: MS and quantitative proteomcis
+- QA session for project 2
+- Project 2 presentations
+- Submission of the 2nd report
+- Oral exams based on the submitted reports.
 
-References are provided throughout the course. Several stand out
-however, as they cover large parts of the material or provide
-complementary resources.
+The course will be taught in English.
 
-- **Modern Statistical for Modern Biology**, by Susan Holmes and
-  Wolfgang Huber [@MSMB]. A free online version of the book is
-  available [here](https://www-huber.embl.de/msmb/).
-
-This course is being tought by Prof Laurent Gatto with invaluable
-assistance from Dr Axelle Loriot at the Faculty of Pharmacy and
-Biomedical Sciences (FASB) at the UCLouvain, Belgium.
 
 ## Pre-requisites {-}
 
@@ -80,7 +87,7 @@ participating in this project you agree to abide by its terms.
 
 If you use this course, please cite it as
 
-> Laurent Gatto. *UCLouvain-CBIO/WSBIM2122: Bioinformatics.*
+> Laurent Gatto. *UCLouvain-CBIO/WSBIM2122: Omics data analysis.*
 > https://github.com/UCLouvain-CBIO/WSBIM2122.
 
 
