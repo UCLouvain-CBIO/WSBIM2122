@@ -1,0 +1,134 @@
+---
+title: "Omics Data Analysis"
+author: "Laurent Gatto"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+knit: bookdown::preview_chapter
+description: "Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain."
+output:
+  msmbstyle::msmb_html_book:
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    split_bib: no
+    css: style.css
+link-citations: yes
+bibliography: [refs.bib, packages.bib]
+---
+
+# Preamble {-}
+
+The [WSBIM2122](https://uclouvain.be/cours-2020-wsbim2122.html) course
+is a project-based course that teaches the analysis of quantitative
+omics data. It is composed of three major parts:
+
+- Introductory material about the command line interface, advanced
+  material about R markdown, linear models, and utilisation and
+  interpretation of gene set enrichment and over-representation
+  analyses.
+
+- Project 1: analysis and interpretation of RNA-Seq data.
+
+- Project 2: analysis and interpretation of mass spectrometry-based
+  quantitative proteomics.
+
+Each projet will entail an introductory session, dedicated office time
+for students to ask question, oral presentation of the data analysis
+and interpretation, and submission of a fully reproducible R markdown
+report. 
+
+
+## References and credits {-}
+
+References are provided throughout the course. Several stand out
+however, as they cover large parts of the material or provide
+complementary resources.
+
+- **Modern Statistical for Modern Biology**, by Susan Holmes and
+  Wolfgang Huber [@MSMB]. A free online version of the book is
+  available [here](https://www-huber.embl.de/msmb/).
+
+This course is being tought by Prof Laurent Gatto with invaluable
+assistance from Dr Axelle Loriot at the Faculty of Pharmacy and
+Biomedical Sciences (FASB) at the UCLouvain, Belgium.
+
+## Pre-requisites {-}
+
+Students taking this course should be familiar with data analysis and
+visualisation in R. A formal pre-requisite for students taking the
+class is the introductory course
+[WSBIM2122](https://UCLouvain-CBIO.github.io/WSBIM2122).
+
+Software requirements are documented in the *Setup* section below.
+
+## About this course material {-}
+
+This material is written in R markdown [@R-rmarkdown] and compiled as a
+book using `knitr` [@R-knitr] `bookdown` [@R-bookdown]. The source
+code is publicly available in a Github repository
+[https://github.com/uclouvain-cbio/WSBIM2122](https://github.com/uclouvain-cbio/WSBIM2122)
+and the compiled material can be read at http://bit.ly/WSBIM2122.
+
+Contributions to this material are welcome. The best way to contribute
+or contact the maintainers is by means of pull requests and
+[issues](https://github.com/uclouvain-cbio/WSBIM2122/issues). Please
+familiarise yourself with the [code of
+conduct](https://github.com/UCLouvain-CBIO/WSBIM2122/blob/master/CONDUCT.md). By
+participating in this project you agree to abide by its terms.
+
+## Citation {-}
+
+If you use this course, please cite it as
+
+> Laurent Gatto. *UCLouvain-CBIO/WSBIM2122: Bioinformatics.*
+> https://github.com/UCLouvain-CBIO/WSBIM2122.
+
+
+## License {-}
+
+This material is licensed under the [Creative Commons
+Attribution-ShareAlike 4.0
+License](https://creativecommons.org/licenses/by-sa/4.0/).
+
+
+## Setup {-}
+
+We will be using the [R environment for statistical
+computing](https://www.r-project.org/) as main data science language.
+We will also use the
+[RStudio](https://www.rstudio.com/products/RStudio/) interface to
+interact with R and write scripts and reports. Both R and RStudio are
+easy to install and works on all major operating systems.
+
+Once R and RStudio are installed, a set of packages will need to be
+installed. See section \@ref(sec:setup2) for details.
+
+The `rWSBIM2122` package provides some pre-formatted data used in this
+course. It can be installed with
+
+```{r, eval = FALSE}
+BiocManager::install("UCLouvain-CBIO/rWSBIM2122")
+```
+
+and then loaded with
+
+```{r rwsbim1322, message = FALSE, warning = FALSE}
+library("rWSBIM2122")
+```
+
+To build this book, you'll need `bookdown` [@R-bookdown] and a
+fork[^msmbfork] of [`msmbstyle`
+style](https://github.com/grimbough/msmbstyle/) [@R-msmbstyle].
+
+[^msmbfork]: https://github.com/lgatto/msmbstyle
+
+```{r combilebook1, eval=FALSE}
+install.packages("bookdown")
+devtools::install_github("lgatto/msmbstyle")
+```
+
+In the course's work directory, simply type
+
+```{r combilebook2, eval=FALSE}
+bookdown::render_book(".")
+```
