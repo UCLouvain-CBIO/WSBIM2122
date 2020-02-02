@@ -1,0 +1,1 @@
+# High throughput sequencing {#sec:hts}
