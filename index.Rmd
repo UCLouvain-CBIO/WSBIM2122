@@ -63,7 +63,8 @@ Tentative schedule for the course.
 - Oral exams based on the submitted reports.
 
 The course will be taught in English. The reports and oral exams can
-be in either English or French.
+be in either English or French. The final mark will be based on the
+submitted reports and the oral exam, tentatively about 50% each.
 
 
 ## Pre-requisites {-}
@@ -71,7 +72,7 @@ be in either English or French.
 Students taking this course should be familiar with data analysis and
 visualisation in R. A formal pre-requisite for students taking the
 class is the introductory course
-[WSBIM2122](https://UCLouvain-CBIO.github.io/WSBIM2122).
+[WSBIM1322](https://UCLouvain-CBIO.github.io/WSBIM1322).
 
 Software requirements are documented in the *Setup* section below.
 
