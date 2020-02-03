@@ -33,30 +33,37 @@ omics data. It is composed of three major parts:
 - Project 2: analysis and interpretation of quantitative proteomics,
   including mass spectrometry data (MS) and its processing.
 
-Each project will entail an introductory session, dedicated office time
-for students to ask question, oral presentation of the data analysis
-and interpretation, and submission of a fully reproducible R markdown
-report. The report will contain an introduction, a description of the
-experimental design of the data, a detailed description of the data
-analysis steps, discussion and interpretation of the results,
-including a biological interpretation, references and contribution
-statement of all authors.
+Each project will entail an introductory lecture, dedicated office
+time for students to ask questions, oral presentations of the data
+analysis and interpretation, and submission of a fully reproducible R
+markdown report. The students will be able to amend their final
+reports after the presentations, benefiting from the in-class
+feedback and discussion. The report will contain an introduction, a
+description of the experimental design of the data, a detailed
+description of the data analysis steps, discussion and interpretation
+of the results, including a biological interpretation, as well as
+references and contribution statement of all authors.
+
+The projects will be done in groups, with different groups for each
+project. The number of students per group will be set once the total
+number of students is known.
 
 Tentative schedule for the course.
 
 - CLI and Rmd
 - Linear models and GSEA
-- Project 1: HTS and RNA-Seq
+- Project 1: lecture on HTS and RNA-Seq
 - QA session for project 1
 - Project 1 presentations
 - Submission of the 1st report
-- Project 2: MS and quantitative proteomcis
+- Project 2: lecture MS and quantitative proteomics
 - QA session for project 2
 - Project 2 presentations
 - Submission of the 2nd report
 - Oral exams based on the submitted reports.
 
-The course will be taught in English.
+The course will be taught in English. The reports and oral exams can
+be in either English or French.
 
 
 ## Pre-requisites {-}
