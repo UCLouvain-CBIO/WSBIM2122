@@ -1,3 +1,8 @@
 # Command line interface {#sec:cli}
 
 
+Possible material: [Carpentries shell lesson](https://swcarpentry.github.io/shell-novice/)
+
+
+
+
