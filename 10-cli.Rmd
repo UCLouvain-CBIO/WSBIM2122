@@ -1,7 +1,13 @@
 # Command line interface {#sec:cli}
 
 
-Possible material: [Carpentries shell lesson](https://swcarpentry.github.io/shell-novice/)
+Possible material: 
+
+- [Carpentries shell lesson](https://swcarpentry.github.io/shell-novice/)
+- The [Carpentries genomics
+  lession](https://datacarpentry.org/genomics-workshop/) has episodes
+  on: *Introduction to the command line* and *Data wrangling and
+  processing* (using the command line).
 
 
 
