@@ -1,1 +1,6 @@
 # High throughput sequencing {#sec:hts}
+
+- HTS technologies
+- file formats
+- alignment
+- counting
