@@ -1,2 +1,6 @@
 # R markdown {#sec:rmd}
 
+- refresher
+- caching
+- slides
+- references

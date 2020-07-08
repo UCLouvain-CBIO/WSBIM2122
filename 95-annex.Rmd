@@ -1,6 +1,7 @@
 # Annex {#sec:anx}
 
 - Consignes rapport
-- Structure rapport
-- Presentation
-- Examen
+- Structure rapport: abstract, intro, m&m, res, ccl, references,
+  contributions.
+- Presentations et question/réponses.
+- Examen.
