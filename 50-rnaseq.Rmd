@@ -1,5 +1,5 @@
 # RNA sequencing analysis {#sec:rnaseq}
 
-- Example data
+- Example data (from local analyses)
 - DESeq2
 - GSEA
