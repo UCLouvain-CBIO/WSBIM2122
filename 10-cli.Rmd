@@ -8,4 +8,5 @@ Possible material:
   lession](https://datacarpentry.org/genomics-workshop/) has episodes
   on: *Introduction to the command line* and *Data wrangling and
   processing* (using the command line).
+- [Introduction to Unix](https://bioinformaticsworkbook.org/Appendix/Unix/unix-basics-1.html#gsc.tab=0)
 - Also: `ssh`, using an editor remotely (`nano`).
