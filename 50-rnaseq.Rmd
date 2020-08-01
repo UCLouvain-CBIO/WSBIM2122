@@ -2,7 +2,7 @@
 
 **Learning Objectives**
 
-The goal of this chapter is 
+The goal of this chapter is
 
 - to understand the different theorical concepts behind a differential expression analysis 
 
@@ -14,7 +14,7 @@ DESeq2 bioconductor package is widely used for differential expression analysis.
 
 The starting point of the analysis is the count matrix, 
 and the goal is to identify genes that are differentially expressed between samples.
-The different steps of the analysis are illustrated in the figure below. Briefly, DESeq2 will normalise the raw counts to account for differences in library depth and library composition. Then, it will estimate the gene-wise dispersions and shrink these estimates to generate more accurate estimates of dispersion to model the counts. Finally, DESeq2 will fit the negative binomial model and perform hypothesis testing using the Wald test.
+The different steps of the analysis are illustrated in the figure below. Briefly, DESeq2 will normalise the raw counts to account for differences in library depth and library composition. Then, it will estimate the gene-wise dispersions and shrink these estimates to generate more accurate estimates of dispersion to model the counts. Finally, DESeq2 will fit a negative binomial model and perform hypothesis testing using the Wald test.
 
 For more information read the original paper [@Huber:2014] or the [DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)
 
@@ -60,7 +60,6 @@ knitr::include_graphics("figs/library_composition.png")
 ```
 
 In a real dataset, a few highly differentially expressed genes between samples, differences in the number of genes expressed between samples, or presence of contamination can skew some types of normalisation methods. Accounting for RNA composition is recommended for accurate comparison of expression between samples, and is particularly important when performing differential expression analyses [@Anders:2010].
-
 
 - **DESeq2 normalisation method**
 

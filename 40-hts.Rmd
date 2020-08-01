@@ -2,21 +2,14 @@
 
 **Learning Objectives**
 
-To fill
+The aim of this chapter is to give an overview of the RNAseq experiment. 
+
+We will pass through the different steps starting from the library preparation. We will describe the high throughput sequencing process, explore the resulting fastq files and the downstream processing pipeline includind quality control, alignment and counting steps. 
 
 ## The Power of RNA-Seq
 
 To fill
 
-Steps
-
-- Library preparation
-
-- Sequencing
-
-- Data processing
-
-- Analysis
 
 ## RNA-seq library preparation
 
