@@ -6,15 +6,22 @@ The goal of this chapter is
 
 - to understand the different theorical concepts behind a differential expression analysis 
 
-- to provide real-life example of DE analysis analysis running DESeq2 step by step
+- to provide a real-life example of DE analysis analysis running DESeq2 step-by-step
+
+
 
 ## Theory behind DESeq2
 
 DESeq2 bioconductor package is widely used for differential expression analysis.
 
-The starting point of the analysis is the count matrix, 
-and the goal is to identify genes that are differentially expressed between samples.
-The different steps of the analysis are illustrated in the figure below. Briefly, DESeq2 will normalise the raw counts to account for differences in library depth and library composition. Then, it will estimate the gene-wise dispersions and shrink these estimates to generate more accurate estimates of dispersion to model the counts. Finally, DESeq2 will fit a negative binomial model and perform hypothesis testing using the Wald test.
+The starting point of the analysis is the count matrix, and the goal is to identify 
+genes that are differentially expressed between samples.
+
+The different steps of the analysis are illustrated in the figure below. Briefly, 
+DESeq2 will normalise the raw counts to account for differences in library depth and 
+library composition. Then, it will estimate the gene-wise dispersions and shrink these 
+estimates to generate more accurate estimates of dispersion to model the counts. Finally, 
+DESeq2 will fit a negative binomial model and perform hypothesis testing using the Wald test.
 
 For more information read the original paper [@Huber:2014] or the [DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)
 
@@ -29,11 +36,24 @@ knitr::include_graphics("figs/deseq2_steps.png")
 
 - **Why do we have to normalise?**
 
-Observed counts are supposed to reflect gene abundance (what we are interested in), however they are also dependant on other less interesting factors such as gene length, sequencing biases, sequencing depth or library composition. Normalisation is the process of scaling raw count values to account for the “uninteresting” factors rendering the expression levels more comparable between and/or within samples. 
+Observed counts are supposed to reflect gene abundance (what we are 
+interested in), however they are also dependant on other less interesting 
+factors such as gene length, sequencing biases, sequencing depth or library 
+composition. Normalisation is the process of scaling raw count values to 
+account for the “uninteresting” factors rendering the expression levels more 
+comparable between and/or within samples. 
 
 - **Gene length**
 
-As illustrated below, Gene 1 and Gene 2 have similar levels of expression, but many more reads map to Gene 2 than to Gene 1. This is not related to biology but it is just because Gene 2 is longer. Gene length normalisation is mandatory when the purpuse is to compare expression levels between different genes within the same sample. However, for differential expression analysis, as genes expression levels are compared between samples, gene length normalisation is not necessary and even not recommended. It was just mentionned here because many RNAseq common normalisation methods such as TPM (transcript per million), FPKM (fragment per million), or RPKM (reads per million) do normalise read counts by gene length. 
+As illustrated below, Gene 1 and Gene 2 have similar levels of expression, 
+but many more reads map to Gene 2 than to Gene 1. This is not related to biology 
+but it is just because Gene 2 is longer. Gene length normalisation is mandatory 
+when the purpuse is to compare expression levels between different genes within 
+the same sample. However, for differential expression analysis, as genes expression 
+levels are compared between samples, gene length normalisation is not necessary and 
+even not recommended. It was just mentionned here because many RNAseq common 
+normalisation methods such as TPM (transcript per million), FPKM (fragment per million), 
+or RPKM (reads per million) do normalise read counts by gene length. 
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
 knitr::include_graphics("figs/read_length.png")
