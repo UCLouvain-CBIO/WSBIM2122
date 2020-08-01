@@ -1,6 +1,52 @@
 # High throughput sequencing {#sec:hts}
 
-- HTS technologies
-- file formats
-- alignment
-- counting
+**Learning Objectives**
+
+To fill
+
+## The Power of RNA-Seq
+
+To fill
+
+Steps
+
+- Library preparation
+
+- Sequencing
+
+- Data processing
+
+- Analysis
+
+## RNA-seq library preparation
+
+In a classical RNA-seq library preparation, total RNA is first purified in order to remove ribosomial RNA which constitute the majority of total RNA. This can be done by extracting poly(A) RNA or by depleting rRNA. Purified RNA is then fragmented, reverse transcribed and adapters are ligated to both extremities. If a stranded protocol is used, dUTP are added during the 2nd strand cDNA synthesis and this newly synthetised cDNA strand is degradated after the ligation step. This will allow to infere the transcript orientation as in this case only the first cDNA strand is sequenced. 
+Strand-specificity leads to lower number of ambiguous reads (overlapping multiple genes).
+
+```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
+knitr::include_graphics("figs/library.png")
+```
+
+# Sequencing 
+
+Once the library is ready, molecules from the library are then sequenced in a high-throughput manner to obtain short sequences from one end (single-end sequencing) or both ends (pair-end sequencing). 
+
+Single-end sequencing is cheaper, but Paired-end sequencing improves the ability to localise the fragment in the genome and resolve mapping close to repeat regions, resulting in less multimapping reads.
+The sequencing is usually done by a [cluster amplification](https://www.youtube.com/watch?v=fCd6B5HRaZ8) process.
+
+# fastq files
+
+describe structure
+
+
+# Data processing
+
+ajouter schema global
+
+## processing pipeline
+
+## QC
+## Alignment
+## Visualisation
+## Counting
+## DESeq2
