@@ -519,26 +519,7 @@ as_tibble(res_bis, rownames = "ENSEMBL") %>%
 Another useful diagnostic plot is the histogram of the p values.
 
 ```{r}
-res_tbl <- as_tibble(res, rownames = "ENSEMBL")
-hist(res_tbl$log2FoldChange)
 hist(res_tbl$pvalue)
-
-summary(res_tbl$padj)
-
-res_tbl %>% 
-  filter(is.na(padj))
-
-res_tbl %>% 
-  filter(is.na(padj)) %>% 
-  filter(baseMean > 0)
-
-res_tbl %>% 
-  filter(is.na(padj)) %>% 
-  #filter(baseMean > 0) %>% 
-  filter(baseMean > 2.876126)
-
-enframe(rowData(dds)$maxCooks) %>% arrange(desc(value))
-dds[48984, ]
 ```
 
 ```{r filterThreshold}
@@ -615,24 +596,5 @@ hist( res$pvalue, breaks=20, col="grey" )
 
 
 
-```{r, eval = F, echo = F}
-
-
-
-DESeq2 Result Files
-A DESeq2 result file (*.deseq.res.csv) is a CSV file containing a header row followed by one row for each gene or transcript. The first column contains the gene or transcript ID. The other columns are:
-
-•	GeneName—Gene name for gene level results or transcript ID for transcript level results.
-•	baseMean—The average of the normalized count values, dividing by size factors, taken over all samples.
-•	log2FoldChange–The effect size estimate. This value indicates how much the gene or transcript's expression seems to have changed between the comparison and control groups. This value is reported on a logarithmic scale to base 2.
-•	lfcSE–The standard error estimate for the log2 fold change estimate.
-•	stat–The value of the test statistic for the gene or transcript.
-•	pvalue–P-value of the test for the gene or transcript.
-•	padj–Adjusted P-value for multiple testing for the gene or transcript.
-•	status–Low if baseMean is less than or equal to filterThreshold calculated by DESeq2 for the gene or transcript. OK for all the other genes or transcripts.
-•	control–Expression of the control group back-calculated from baseMean and log2FoldChange. NA if log2FoldChange is not available.
-•	comparison–Expression of the comparison group back–calculated from baseMean and log2FoldChange. NA if log2FoldChange is not available.
-
-```
 
 #### Results
