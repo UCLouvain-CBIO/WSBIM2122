@@ -18,10 +18,10 @@ The starting point of the analysis is a count matrix, and the goal is to identif
 genes that are differentially expressed between samples.
 
 The different steps of the analysis are illustrated in the figure below. Briefly, 
-DESeq2 will start by normalising the raw counts to account for differences in library depth and 
-library composition. Then, it will estimate the gene-wise dispersions and shrink these 
-estimates to generate more accurate estimates of dispersion to model the counts. Finally, 
-DESeq2 will fit a negative binomial model and perform hypothesis testing using the Wald test.
+DESeq2 starts by normalising the raw counts. Then, it estimates the gene-wise 
+dispersions and shrinks these estimates to generate more accurate estimates of dispersion 
+to model the counts. Finally, DESeq2 fits a negative binomial model and performs 
+hypothesis testing using the Wald test.
 
 
 ```{r, echo=FALSE, fig.align='center', out.width='60%', purl=TRUE}
@@ -34,7 +34,7 @@ knitr::include_graphics("figs/deseq2_steps.png")
 - **Why is it mandatory to normalise?**
 
 Observed counts are supposed to reflect gene abundance (what we are 
-interested in), however they are also dependant on other less interesting 
+interested in), however they are also dependent on other less interesting 
 factors such as gene length, sequencing biases, sequencing depth or library 
 composition. Normalisation is the process of scaling raw count values to 
 account for the “uninteresting” factors rendering the expression levels more 
@@ -45,10 +45,10 @@ comparable between and/or within samples.
 As illustrated in the example below, gene 1 and gene 2 have similar levels of expression, 
 but many more reads map to gene 2 than to gene 1. This might not be related to biology 
 but it can just reflect the fact that gene 2 is longer. Gene length normalisation is 
-mandatory when the purpuse is to compare expression levels between different genes within 
+mandatory when the purpose is to compare expression levels between different genes within 
 the same sample. However, for differential expression analysis, as genes expression 
-levels are compared between samples, gene length normalisation is not necessary and 
-even not recommended. It was just mentionned here because many RNAseq common 
+levels are compared between samples, gene length normalisation is not necessary (and 
+even not recommended). It was just mentioned here for information because many RNAseq common 
 normalisation methods such as TPM (transcript per million), FPKM (fragment per million), 
 or RPKM (reads per million) do normalise read counts by gene length. 
 
@@ -64,10 +64,10 @@ typically around tens of millions. A fraction of the raw sequencing reads will b
 discarded during the quality control, the alignment and the counting processes, 
 which implies that the total number of reads for each sample will be different.
 
-As shown below, all genes seem to be expressed at higher levels in sample 1 than 
-in sample 2. This is because sample 1 has twice more reads than sample 2. Accounting 
-for sequencing depth is necessary for differential expression analysis as samples are 
-compared with each other.
+As shown in the following example, all genes seem to be expressed at higher levels in 
+sample 1 than in sample 2, but this is likely because sample 1 has twice more reads than 
+sample 2. Accounting for sequencing depth is necessary for differential expression analysis 
+as samples are compared with each other.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
 knitr::include_graphics("figs/Sequencing_depth.png")
@@ -94,34 +94,29 @@ Accounting for it is highly recommended for accurate comparison of expression be
 
 - **DESeq2 normalisation method**
 
-DESeq2 will hence use a normalisation method that takes into account both library size 
-and library composition. To normalise for sequencing depth and RNA composition, DESeq2 uses 
-the median of ratios method.
+DESeq2 will use a normalisation method that takes into account both library size 
+and library composition. To normalise for sequencing depth and RNA composition, DESeq2 
+uses the median of ratios method.
 
-- Step 1: creates a pseudo-reference sample (row-wise geometric mean)
-
-DESeq2 will calculate the geometric mean of each gene. Geometric mean is used instead of 
+Step 1: DESeq2 creates a pseudo-reference sample (row-wise geometric mean).
+It calculates the geometric mean of each gene. Geometric mean is used instead of 
 classical mean because it uses log values. It is hence more robust as it is less influenced 
 by extreme values. The geometric means constitute a pseudo-reference sample.
 
-- Step 2: calculates ratio of each sample to the pseudo-reference
-
-For every gene in a sample, the ratios (sample/pseudo-reference sample) are calculated. 
+Step 2: For every gene in a sample, the ratios (sample/pseudo-reference sample) are calculated. 
 Since the majority of genes are not differentially expressed, the majority of genes in 
 each sample should have similar ratios within the sample.
 
-- Step 3: calculates the normalisation factor for each sample (size factor)
-
-The median value of all ratios for a given sample is taken as the size factor for that 
+Step 3: The median value of all ratios for a given sample is taken as the size factor for that 
 sample. Importantly, the method is based on the assumption that the majority of genes are 
 not differentially expressed, which implies that rare genes that are really up-regulated / 
-down-regulated should not influence the median. Furthemore, the median is calcutated skipping 
+down-regulated should not influence the median. Furthermore, the median is calculated skipping 
 genes with a geometric mean of zero. This will hence automatically eliminate genes expressed 
 in some samples but not in others and will help to focus the scaling factor on housekeeping genes. 
 
-- Step 4: calculate the normalised counts using the scaling factor
-
-This is performed by dividing each raw count values in a given sample by that sample’s scaling factor. 
+Step 4: DESeq2 calculates the normalised counts using the scaling factor
+This is performed by dividing each raw count values in a given sample by that sample’s 
+scaling factor. 
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
 knitr::include_graphics("figs/SF_steps.png")
@@ -132,13 +127,13 @@ knitr::include_graphics("figs/SF_steps.png")
 
 Let's first have a look at the counts distribution for a typical RNAseq sample:
 
-```{r, echo=FALSE, fig.align='center', out.width='50%', purl=TRUE}
+```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
 knitr::include_graphics("figs/distribution_of_counts.png")
 ```
 
 It is obvious that the count data is not normally distributed. Counts are integer values, 
 always positive, and we observe a large number of genes with low counts (or counts about zero), 
-and a a few number of genes with a very high count level. 
+and a few number of genes with a very high count level. 
 
 As seen in the [WSBIM1322 course](http://bit.ly/WSBIM1322) with the example of the coin toss, 
 count data are often modelised by a binomial distribution with parameters n and p where p is the 
@@ -158,14 +153,14 @@ of the Poisson distribution is that the variance equals the mean. Applying a Poi
 distribution to Rnaseq counts holds true when comparing technical replicates from a same 
 sample, where the variance only reflects the counting noise. But when comparing biological 
 replicates, counting noise is not the only source of variance. The observed count values for 
-each genes within biological replicates fluctuate more importantly, due to the combination of 
+each gene within biological replicates fluctuate more importantly, due to the combination of 
 biological and technical factors: inter-individual variations in gene expression, sample purity, 
 cell reponses to environment (e.g. heat-shock)... Due to this overdispersion, the Poisson 
 distribution doesn't fit that well to RNAseq counts.
 
 Actually, RNAseq counts are better modelised by an alternative distribution, 
 the negative-binomial. It is derived from the Poisson distribution but the 
-negative-binomial distribution has, in addition tho the mean parameter, 
+negative-binomial distribution has, in addition to the mean parameter, 
 an extra parameter $α$ called the “dispersion” parameter to model this “extra” 
 variance that is empirically observed in RNA-Seq experiments. 
 
@@ -189,10 +184,9 @@ hundreds of replicates. Of course, this is not feasible for economic reasons, an
 experiments are usually done on only 3-5 replicates. But how to estimate dispersion 
 reliably based on such a little number of samples? To overcome this problem, DESeq2 
 makes the assumption that genes of similar expression levels have similar dispersions 
-and it will use information coming from other genes expressed at at similar level. 
+and it will use information coming from other genes expressed at similar level. 
 
-- Step1: Dispersion for each gene is estimated separately
-
+**Step1: Dispersion for each gene is estimated separately.**
 An initial estimation of dispersion for each gene is first estimated using maximum 
 likelihood estimation. In other words, given the count values of the replicates, the 
 most likely estimate of dispersion is calculated. For each gene, the dispersion estimate 
@@ -206,16 +200,14 @@ knitr::include_graphics("figs/dispersion_plot.png")
 Note that the dispersion plot highlights an intrinsic feature of RNAseq data: 
 genes with low read counts show substantially higher dispersion than highly expressed genes. 
 
-- Step 2: A curve is fitted to gene-wise dispersion estimates
-
+**Step 2: A curve is fitted to gene-wise dispersion estimates**.
 A curve is fitted (displayed as a red line in the dispersion plot), which represents the 
 estimate for the expected dispersion value for genes of a given expression strength. 
 The idea behind fitting a curve to the data is that different genes will have different 
 scales of biological variability, but, over all genes, there will be a distribution of 
 reasonable estimates of dispersion.
 
-- Step 3: Shrink gene-wise dispersion estimates toward the values predicted by the curve
-
+**Step 3: Shrinkage of gene-wise dispersion estimates toward the values predicted by the curve**.
 Initial gene-wise dispersion estimates will be shrinked (by an empirical Bayes approach) 
 towards this fitted curve to obtain the final dispersion estimates. The adjusted dispersion 
 values are represented by the blue dots in the dispersion plot. For a certain number of genes, 
@@ -249,10 +241,6 @@ coefficients are computed. They give estimates of the log fold changes for gene 
 for each column of the model matrix. Standard errors for the log2 fold changes are 
 also estimated.
 
-### logFC shrinkage?
-
-
-
 ### Statistical test
 
 #### Wald test
@@ -283,13 +271,13 @@ false positive). But remember the problematic of multiple testing seen in chapte
 from [WSBIM1322 course](http://bit.ly/WSBIM1322).
 
 In a typical RNAseq differential expression analysis, we might have about 20,000 genes 
-to test and usually only a fraction of genes are really differentially expressed. 
+to test and usually only a fraction of genes is really differentially expressed. 
 Imagine a drug treatment that modifies the expression of about 1000 genes, but that has 
 no impact on the other ones. The first histogram shows how the distribution of pvalues 
-for trully modified genes ($H_0$ is fase) would look like: most of the pvalues would be 
+for truly modified genes ($H_0$ is false) would look like: most of the pvalues would be 
 very small. Using a pvalue cutoff of 0.05 should permit to identify most of these 
 differentially expressed genes. The second histogram shows the distribution of pvalues 
-for unmodified genes ($H_0$ is true). Here the p-values are uniformely distributed between
+for unmodified genes ($H_0$ is true). Here the p-values are uniformly distributed between
 0 and 1, and we can see that 5% of these genes appear to be significant even though this 
 is only by chance as the drug had no real effect on them. But 5% of 19000 genes means ... 
 950 false positive genes! Hence, pvalues obtained from the Wald test must be corrected 
@@ -314,7 +302,7 @@ knitr::include_graphics("figs/pval_histograms.png")
 
 
 
-- **Independant filtering**
+- **Independentfiltering**
 
 Multiple testing adjustment tends to be associated with a loss of power. 
 To counteract this effect, one possibility is to filter out those tests from 
@@ -335,7 +323,7 @@ of the FDR procedure. This is why filtering is done on the average expression ov
 all samples, irrespective of biological condition: this filter is blind to the assignment 
 of samples to the treatment and control group and hence independent.
 
-The mean expression threshold used by DESeq2 for independant filtering is defined 
+The mean expression threshold used by DESeq2 for independentfiltering is defined 
 automatically by the software. It is chosen in a way that maximizes the number of 
 genes which will have a significant padjusted value.
 
@@ -363,14 +351,13 @@ We will run a DESeq2 analysis using real data.
 ### Construct DESeqDataSet object
 
 Let's first load the count matrix and the sample metadata. 
-This dataset corresponds to RNAseq data done on a a cell line
-(cell lines "F") that was grown in acid condition or not.
-The aim here is to test the influence of the acidity on the transcriptome.
+This dataset corresponds to RNAseq data done on a cell line
+treated a not by a siRNA.
 
 ```{r}
-load("data/deseq2/counts_F_cells.rda")
-load("data/deseq2/coldata_F_cells.rda")
-coldata
+load("data/deseq2/counts.rda")
+load("data/deseq2/coldata.rda")
+coldata 
 head(counts)
 dim(counts)
 ```
@@ -386,7 +373,7 @@ used in modeling) must be provided.
 ```{r}
 dds <- DESeqDataSetFromMatrix(countData = counts, 
                               colData = coldata,
-                              design = ~ condition) 
+                              design = ~ Condition) 
 dds
 ```
 
@@ -407,7 +394,7 @@ Access the count data from the dds object and
 
 plot the counts distributions of each sample.
 
-How does it look like?
+Do they all look similar?
 
 `r msmbstyle::question_end()`
 
@@ -421,9 +408,6 @@ as_tibble(assay(dds, 1)) %>%
   geom_histogram(bins = 20) +
   facet_wrap(~ sample)
 ```
-
-Note that a "pseudo-count" was added before the log2 transformation of the counts,
-to avoid elimination of counts equal to zero.
 
 `r msmbstyle::solution_end()`
 
@@ -442,22 +426,23 @@ function `DESeq()`. This function will automatically run the following other fun
 dds <- DESeq(dds)
 ```
 
-resultsNames() function shows the results available. Note that by default, R will choose 
-a reference level for factors based on alphabetical order. Here acid condition is the reference level. 
-This means that the fold changes evaluated for every gene will correspond to their expression level 
-in cells grown in normal condition versus their expression level in cells grown at in acid condition.  
+resultsNames() function shows the results available. Note that by default, R will 
+choose a reference level for factors based on alphabetical order. Here KD condition 
+was hence set arbitrarily as the reference level. This means that the fold changes evaluated 
+for every gene will correspond to their expression level in mock cells versus their 
+expression level in KD cells.  
 
 ```{r}
 resultsNames(dds)
-dds$condition
+dds$Condition
 ```
 
-In this case, it seems more logical to use cells grown in normal condition as reference. 
-Reference levels can be changed using the relevel( ) function. In this case you need to run DESeq()
-function after the re-leveling operation.
+In this case, it seems more logical to use mock cells as reference. 
+Reference levels can be changed using the relevel( ) function. But in this case don't
+forget to re-run DESeq() function after the re-leveling operation.
 
 ```{r}
-dds$condition <- relevel(dds$condition, ref = "normal")
+dds$Condition <- relevel(dds$Condition, ref = "mock")
 dds <- DESeq(dds)
 resultsNames(dds)
 ```
@@ -492,7 +477,7 @@ the regularized-logarithm transformation `rlog()`[^rlog].
 
 ```{r PCA}
 rld <- rlogTransformation(dds)
-plotPCA(rld, intgroup = "condition")
+plotPCA(rld, intgroup = "Condition")
 ```
 
 
@@ -505,8 +490,6 @@ across all samples. See `?rlog` for more details about the function.
 `r msmbstyle::question_begin()`
 
 How would you interprete this PCA?
-
-How does it tell us about the design of the experiment?
 
 `r msmbstyle::question_end()`
 
@@ -532,6 +515,10 @@ Compare Size Factors to sequencing depth.
 
 `r msmbstyle::solution_begin()`
 
+```{r, echo = F}
+suppressPackageStartupMessages(library("cowplot"))
+```
+
 ```{r size_factor}
 SF <- enframe(sizeFactors(dds), name = "sample", value = "Size_Factor") %>% 
   ggplot(aes(x = sample, y = Size_Factor)) + 
@@ -542,7 +529,7 @@ SD <- enframe(colSums(assay(dds, "counts")), name = "sample", value = "n_reads")
   geom_bar(stat = "identity") 
 
 library(cowplot)
-plot_grid(SF, SD, ncol = 2)
+plot_grid(SF, SD, ncol = 1)
 ```
 
 `r msmbstyle::solution_end()`
@@ -568,35 +555,35 @@ Let's inspect the results and their signification.
 
 ```{r}
 res <- results(dds,
-               name = "condition_acid_vs_normal")
+               name = "Condition_KD_vs_mock")
 res_tbl <- as_tibble(res, rownames = "ENSEMBL")
 res_tbl
 ```
 
--	**baseMean**: The average of the normalized count values taken over all samples.
+**baseMean**: The average of the normalized count values taken over all samples.
 
-- **log2FoldChange**: This value indicates how much the gene or transcript's expression 
-seems to have changed between the comparison and control groups[^log2C]. It is reported 
-on a logarithmic scale to base 2. 
+**log2FoldChange**: This value indicates how much the gene or transcript's 
+expression seems to have changed between the comparison and control groups[^log2C]. 
+It is reported on a logarithmic scale to base 2. 
 
-[^log2C]:In this case, as we are testing the "condition_acid_vs_normal" coefficient, 
-positive log2FC indicates a gene up-regulated in the acid condition compared to the normal 
-condition, while a negative log2FC indicate a down-regulation.
+[^log2C]:In this case, as we are testing the "Condition_KD_vs_mock" coefficient, 
+positive log2FC indicates a gene up-regulated in the KD condition compared to the 
+mock condition, while a negative log2FC indicate a down-regulation.
 
--	**lfcSE**: The standard error estimate for the log2FoldChange estimate
+**lfcSE**: The standard error estimate for the log2FoldChange estimate
 
--	**stat**: The value of the test statistic for the gene
+**stat**: The value of the test statistic for the gene
 
--	**pvalue**: The pvalue of the test for the gene
+**pvalue**: The pvalue of the test for the gene
 
--	**padj**: pvalue adjusted for multiple testing
+**padj**: pvalue adjusted for multiple testing
 
 
 `r msmbstyle::question_begin()`
 
 Inspect the results table.
 
-1. Which gene has the lowest padjusted value?
+1. Identify the 5 genes with the lowest padjusted value?
 
 2. How many genes have no padjusted value? Why? 
 
@@ -626,17 +613,17 @@ res_tbl %>%
   filter(is.na(padj))
 ```
 
-- Many genes with `padj == NA` correspond to genes with a `basemean == 0`. 
+Many genes with `padj == NA` correspond to genes with a `basemean == 0`. 
 No pvalue can be calculated because there is no variation in their counts 
 (equal to 0 in all samples).
 
-- Some of these genes do have a `basemean > 0` and a pvalue, but if you look at 
+Some of these genes do have a `basemean > 0` and a pvalue, but if you look at 
 them carefully, they all have a very low basemean. Actually these genes are the one 
-that have been filtered out by the independant filtering procedure.
+that have been filtered out by the independent filtering procedure.
 
 `r msmbstyle::solution_end()`
 
-#### Independant filtering exploration
+#### Independent filtering exploration
 
 The filtering threshold that has been used to filter low count genes can be extracted 
 from the results metadata.
@@ -665,11 +652,11 @@ as_tibble(metadata(res)$filterNumRej, rownames = 'percent') %>%
 `r msmbstyle::question_begin()`
 
 1. Actually many of these genes would have been filtered anyway because 
-their `basemean == 0`. Evaluate how many genes were really filtered by the independant 
+their `basemean == 0`. Evaluate how many genes were really filtered by the independent 
 filtering procedure.
 
 2. Re-run the results() function on the same dds object, 
-but set the independant filtering parameter to FALSE.
+but set the independent filtering parameter to FALSE.
 Check how many genes have no padj?
 
 3. Imagine another way of filtering genes with very low counts
@@ -679,7 +666,7 @@ Check how many genes have no padj?
 `r msmbstyle::solution_begin()`
 
 1. Actually many of these genes would have been filtered anyway because 
-their `basemean == 0`. Evaluate how many genes were really filtered by the independant 
+their `basemean == 0`. Evaluate how many genes were really filtered by the independent 
 filtering procedure.
 
 ```{r}
@@ -688,18 +675,20 @@ res_tbl %>%
   filter(baseMean == 0) %>% 
   nrow()
 
-# Number of genes filtered by the independant filtering procedure
+# Number of genes filtered by the independent filtering procedure
 res_tbl %>% 
   filter(baseMean > 0 & baseMean < metadata(res)$filterThreshold) %>% 
   nrow()
 ```
 
 2. Re-run the results() function on the same dds object, 
-but set the independant filtering parameter to FALSE.
+but set the independent filtering parameter to FALSE.
 Check how many genes have no padj?
 
 ```{r}
-res_no_IF <- results(dds, independentFiltering = FALSE)
+res_no_IF <- results(dds, 
+                     name = "Condition_KD_vs_mock",
+                     independentFiltering = FALSE)
 as_tibble(res_no_IF, rownames = "ENSEMBL") %>% 
   filter(is.na(padj)) %>% nrow()
 ```
@@ -713,6 +702,7 @@ filtering_thr <- 5
 keep <- rowSums(counts(dds, normalized = TRUE) >= filtering_thr) >=3 
 dds_bis <- DESeq(dds[keep, ])
 res_bis <- results(dds_bis, 
+                   name = "Condition_KD_vs_mock",
                    independentFiltering = FALSE)
 
 as_tibble(res_bis, rownames = "ENSEMBL") %>% 
@@ -746,8 +736,7 @@ What do you think about the this pvalues histogram?
 
 `r msmbstyle::solution_begin()`
 
-There is a peak at 0, but there is also a peak close to 0.8, and to a smaller extend 
-a smaller peak at bout 1. 
+There is a peak at 0, but there is also a peak close to 0.8. 
 Assumption that the p-values near 1 are uniform doesn't seem to be completely valid. 
 This implies that in principle, a false discovery rate shouldn't be applied to control 
 these p-values. 
@@ -767,9 +756,9 @@ res_tbl %>%
 We observe that most of the genes that have a pvalue around 0.8 
 (corresponding to genes belonging to the second peak) have a pvalue, 
 but no padjusted value. These are hence genes that were filtered out 
-by the independant filtering process. This means that DESeq2 does calculate 
+by the independent filtering process. This means that DESeq2 does calculate 
 a pvalue for every gene (except for those that have a basemean = 0), but 
-the pvalue adjustement is computed later only on genes that pass the independant 
+the pvalue adjustement is computed later only on genes that pass the independent 
 filtering threshold. If we plot again the pvalues histogram using filtered genes only, 
 then we observe that the pvalues behaviour is now much nicer!
 
@@ -784,11 +773,11 @@ hist(res_tbl[res_tbl$baseMean > metadata(res)$filterThreshold, "pvalue"])
 #### MA-plot
 
 Another interesting plot is the MA-plot ("Mean-Average" plot), a scatter plot of 
-log2FC versus the mean of normalized counts. Genes with a padjusted value lower than 
+log2FC versus the mean of normalised counts. Genes with a padjusted value lower than 
 0.05 are plotted in red. The plot highlights the fact that genes with low read counts show 
 substantially higher variability than highly expressed genes, resulting in a strong log2FC 
 even though are likely not really differentially expressed. 
-In the MA-plot, we hope to observe some genes located in the the upper/lower right 
+In the MA-plot, we hope to observe some genes located in the upper/lower right 
 quadrant of the plots (the most interesting candidates).
 
 ```{r}
@@ -809,7 +798,7 @@ res_tbl %>%
 Recall that the most interesting features are those towards to top corners given 
 that they have a small pvalues and large fold-changes.
 The volcano-plot can be useful to define padjusted and log2FC thresholds. 
-Based on this plot, we could for example decide (arbitrarly), to consider genes as 
+Based on this plot, we could for example decide (arbitrarily), to consider genes as 
 differentially expressed genes that have a padj_thr <- 1e-5 and an absolute log2FC value > 1.
 
 ```{r}
@@ -839,11 +828,15 @@ best_genes <- res_tbl %>%
   arrange(padj)  %>% 
   head(6) 
 
+ordered_samples <- c(rownames(coldata[coldata$Condition == "mock", ]),
+                     rownames(coldata[coldata$Condition == "KD", ]))
+
 as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = T), 
           rownames = 'ENSEMBL') %>% 
   gather(sample, counts, -ENSEMBL) %>% 
   left_join(as_tibble(coldata, rownames = "sample")) %>% 
-  ggplot(aes(x = sample, y = counts, fill = pH)) +
+  mutate(sample = factor(sample, levels = ordered_samples)) %>% 
+  ggplot(aes(x = sample, y = counts, fill = Condition)) +
   geom_bar(stat = 'identity', color = "gray30") +
   facet_wrap( ~ ENSEMBL, scales = "free", ncol = 3) +
   theme(axis.text.x = element_text(size = 7, angle = 90),
@@ -856,8 +849,7 @@ as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = T),
 `r msmbstyle::question_begin()`
 
 1. Identify and inspect counts of the genes plotted in red in the following volcano-plot.
-These genes have a very large log2FC (log2FC > 5) but are far from bearing the lowest 
-padjusted value (their padjusted value is between 0.05 and 1e-10).
+These genes have a very large log2FC (|log2FC| > 5) but are far from bearing the lowest padjusted value (their padjusted value is between 0.05 and 1e-5).
 
 ```{r, echo = FALSE}
 res_tbl %>% 
@@ -866,12 +858,13 @@ res_tbl %>%
    geom_point(size = 0.5, color = "gray40") +
    geom_point(data = subset(res_tbl, 
                             padj < 0.05 &
-                            padj > 1e-10 &
-                            log2FoldChange > 5), 
+                            padj > 1e-5 &
+                            abs(log2FoldChange) > 5), 
               size = 0.5, color = "firebrick1") +
   geom_hline(yintercept = -log10(0.05)) +
-  geom_hline(yintercept = -log10(1e-10)) +
-  geom_vline(xintercept = 5) 
+  geom_hline(yintercept = -log10(1e-5)) +
+  geom_vline(xintercept = 5) +
+  geom_vline(xintercept = -5) 
 ```
 
 2. Compare counts with previous counts plots (counts of genes with lowest pvalues). 
@@ -884,21 +877,22 @@ what is the most striking?
 `r msmbstyle::solution_begin()`
 
 1. Identify and inspect counts of the genes plotted in red in the following volcano-plot.
-These genes have a very large log2FC (log2FC > 5) but are far from bearing the lowest padjusted value (their padjusted value is between 0.05 and 1e-10).
+These genes have a very large log2FC (|log2FC| > 5) but are far from bearing the lowest padjusted value (their padjusted value is between 0.05 and 1e-5).
 
 ```{r}
 selected_genes <- res_tbl %>% 
-  filter(padj < 0.05 & padj > 1e-10 & log2FoldChange > 5)
+  filter(padj < 0.05 & padj > 1e-5 & abs(log2FoldChange) > 5)
 
 selected_genes
 
-as_tibble(counts(dds[selected_genes$ENSEMBL, ], normalize = T), 
+as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = T), 
           rownames = 'ENSEMBL') %>% 
   gather(sample, counts, -ENSEMBL) %>% 
   left_join(as_tibble(coldata, rownames = "sample")) %>% 
-  ggplot(aes(x = sample, y = counts, fill = pH)) +
+  mutate(sample = factor(sample, levels = ordered_samples)) %>% 
+  ggplot(aes(x = sample, y = counts, fill = Condition)) +
   geom_bar(stat = 'identity', color = "gray30") +
-  facet_wrap( ~ ENSEMBL, scales = "free", ncol = 3) + 
+  facet_wrap( ~ ENSEMBL, scales = "free", ncol = 3) +
   theme(axis.text.x = element_text(size = 7, angle = 90),
         axis.title.x = element_blank(),
         legend.position = "right",
@@ -922,6 +916,7 @@ data.frame(best_genes = dispersions(dds[best_genes$ENSEMBL,]),
   geom_point()
 
 ```
+`r msmbstyle::solution_end()`
 
 #### Adding gene name to result table
 
@@ -952,15 +947,20 @@ head(res_tbl)
 
 ## A more complex design
 
-The experiment was in reality done on 2 different cell lines (cell line "F" and cell line "H")
+Actually, the experiment was in reality done on 2 different cell lines, epithelial and fibroblasts cells.
 
 ```{r}
-load("data/deseq2/counts.rda")
-load("data/deseq2/coldata.rda")
+#load("data/deseq2/counts_both.rda")
+load("data/deseq2/coldata_both.rda")
 coldata
-head(counts)
-dim(counts)
+#head(counts)
+#dim(counts)
 ```
 
+`r msmbstyle::question_begin()`
 
+Start the whole analysis again, using all samples, and try to identify genes that are differentially
+expressed in both types of cells.
+
+`r msmbstyle::question_begin()`
 
