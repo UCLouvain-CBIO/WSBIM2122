@@ -363,7 +363,9 @@ dim(counts)
 ```
 
 Using these data, we will start by creating a [DESeqDataSet](https://www.rdocumentation.org/packages/DESeq2/versions/1.12.3/topics/DESeqDataSet-class), 
-which is a subclass of [RangedSummarizedExperiment](https://www.rdocumentation.org/packages/SummarizedExperiment/versions/1.2.3/topics/RangedSummarizedExperiment-class) used by the DESeq2 
+which is a subclass of 
+[RangedSummarizedExperiment](https://www.rdocumentation.org/packages/SummarizedExperiment/versions/1.2.3/topics/RangedSummarizedExperiment-class) 
+used by the DESeq2 
 package to store the read counts and the intermediate estimated quantities during 
 statistical analysis. The DESeqDataSet class enforces non-negative integer values 
 in the count matrix stored as the first element in the assay list. In addition, a 
@@ -632,11 +634,15 @@ from the results metadata.
 metadata(res)$filterThreshold
 ```
 
-This means that genes whith basemean < `r metadata(res)$filterThreshold` have been filtered. This represents `r names(metadata(res)$filterThreshold)` of all tested genes!
+This means that genes whith basemean < `r metadata(res)$filterThreshold` have been 
+filtered. This represents `r names(metadata(res)$filterThreshold)` of all tested genes!
 
-Remember that the filtering threshold has been fixed in a way that maximizes the number of genes which will have a significant padjusted value. We can illustrate this on the following plot, which shows the number of rejections over the basemean quantiles. 
+Remember that the filtering threshold has been fixed in a way that maximizes the number 
+of genes which will have a significant padjusted value. We can illustrate this on the 
+following plot, which shows the number of rejections over the basemean quantiles. 
 
-The threshold chosen (red vertical line) is the lowest quantile for which the number of rejections is within 1 residual standard deviation to the peak of the curve.
+The threshold chosen (red vertical line) is the lowest quantile for which the number of 
+rejections is within 1 residual standard deviation to the peak of the curve.
 
 ```{r}
 as_tibble(metadata(res)$filterNumRej, rownames = 'percent') %>% 
