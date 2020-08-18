@@ -95,10 +95,12 @@ head data/RNAseq_pipeline/example.fastq
 
 Each entry in a fastq file consists of 4 lines:
 
-- A sequence identifier (by convention preceded by '@') with information about the sequencing run
+- A sequence identifier (by convention preceded by '@') with information about 
+the sequencing run
 - The sequence
 - The same sequence identifier preceded by '+'
-- The base call quality scores. These are Phred scores, encoded using [ASCII characters](https://theasciicode.com.ar) to represent the numerical quality scores.
+- The base call quality scores. These are Phred scores, encoded using 
+[ASCII characters](https://theasciicode.com.ar) to represent the numerical quality scores.
 Each character is assigned a quality score between 0 and 40. Quality scores represent 
 the probability that the corresponding nucleotide call is incorrect.
 
@@ -149,7 +151,8 @@ Try to interpret the different plots of this
 [fastQC report](data/RNAseq_pipeline/OD01_10_1_fastqc.html) 
 from a real RNAseq fastq file.
 
-Another report corresponding to [bad quality](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html) data can be used as a point of comparison.
+Another report corresponding to [bad quality](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html) 
+data can be used as a point of comparison.
 
 `r msmbstyle::question_end()`
 
