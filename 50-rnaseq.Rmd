@@ -140,7 +140,7 @@ It is obvious that the count data is not normally distributed. Counts are intege
 always positive, and we observe a large number of genes with low counts (or counts about zero), 
 and a a few number of genes with a very high count level. 
 
-As seen in the [WSBIM1322 course](http://bit.ly/WSBIM1322) with the example of the ?toss coin, 
+As seen in the [WSBIM1322 course](http://bit.ly/WSBIM1322) with the example of the coin toss, 
 count data are often modelised by a binomial distribution with parameters n and p where p is the 
 discrete probability distribution of the number of successes in a sequence of n 
 independent experiments. In an RNAseq experiment, p would be the probability of getting 
@@ -170,7 +170,7 @@ an extra parameter $α$ called the “dispersion” parameter to model this “e
 variance that is empirically observed in RNA-Seq experiments. 
 
 
-```{r, echo=FALSE, fig.align='center', out.width='50%', purl=TRUE}
+```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
 knitr::include_graphics("figs/NB.png")
 ```
 
@@ -363,13 +363,13 @@ We will run a DESeq2 analysis using real data.
 ### Construct DESeqDataSet object
 
 Let's first load the count matrix and the sample metadata. 
-This dataset corresponds to RNAseq data done on a two cell lines 
-(cell lines "F" and "H") that were grown in acid condition or not.
+This dataset corresponds to RNAseq data done on a a cell line
+(cell lines "F") that was grown in acid condition or not.
 The aim here is to test the influence of the acidity on the transcriptome.
 
 ```{r}
-load("data/deseq2/counts.rda")
-load("data/deseq2/coldata.rda")
+load("data/deseq2/counts_F_cells.rda")
+load("data/deseq2/coldata_F_cells.rda")
 coldata
 head(counts)
 dim(counts)
@@ -386,7 +386,7 @@ used in modeling) must be provided.
 ```{r}
 dds <- DESeqDataSetFromMatrix(countData = counts, 
                               colData = coldata,
-                              design = ~ group) 
+                              design = ~ condition) 
 dds
 ```
 
@@ -442,6 +442,26 @@ function `DESeq()`. This function will automatically run the following other fun
 dds <- DESeq(dds)
 ```
 
+resultsNames() function shows the results available. Note that by default, R will choose 
+a reference level for factors based on alphabetical order. Here acid condition is the reference level. 
+This means that the fold changes evaluated for every gene will correspond to their expression level 
+in cells grown in normal condition versus their expression level in cells grown at in acid condition.  
+
+```{r}
+resultsNames(dds)
+dds$condition
+```
+
+In this case, it seems more logical to use cells grown in normal condition as reference. 
+Reference levels can be changed using the relevel( ) function. In this case you need to run DESeq()
+function after the re-leveling operation.
+
+```{r}
+dds$condition <- relevel(dds$condition, ref = "normal")
+dds <- DESeq(dds)
+resultsNames(dds)
+```
+
 ### Data exploration 
 
 Before anything else, a good practice is to explore the data 
@@ -472,7 +492,7 @@ the regularized-logarithm transformation `rlog()`[^rlog].
 
 ```{r PCA}
 rld <- rlogTransformation(dds)
-plotPCA(rld, intgroup = "group")
+plotPCA(rld, intgroup = "condition")
 ```
 
 
@@ -522,7 +542,7 @@ SD <- enframe(colSums(assay(dds, "counts")), name = "sample", value = "n_reads")
   geom_bar(stat = "identity") 
 
 library(cowplot)
-plot_grid(SF, SD, ncol = 1)
+plot_grid(SF, SD, ncol = 2)
 ```
 
 `r msmbstyle::solution_end()`
@@ -540,16 +560,17 @@ plotDispEsts(dds)
 ### Results
 
 Results can then be extracted using the `results()`function.
-The `contrast` parameter allows to specify the samples to compare.
-In this case, `contrast = c("group", "F_acid", "F_acid")` means that we are comparing 
-the group "F_acid" to the group "F_norm". 
+
+The `name` parameter must be an element of resultsNames(object), it specifies the 
+the samples to compare.
 
 Let's inspect the results and their signification.
 
 ```{r}
 res <- results(dds,
-               contrast = c("group", "F_acid", "F_norm"))
-head(res)
+               name = "condition_acid_vs_normal")
+res_tbl <- as_tibble(res, rownames = "ENSEMBL")
+res_tbl
 ```
 
 -	**baseMean**: The average of the normalized count values taken over all samples.
@@ -558,7 +579,7 @@ head(res)
 seems to have changed between the comparison and control groups[^log2C]. It is reported 
 on a logarithmic scale to base 2. 
 
-[^log2C]:In this case, as the we set the contrast as `c("group", "F_acid", "F_acid")` a 
+[^log2C]:In this case, as we are testing the "condition_acid_vs_normal" coefficient, 
 positive log2FC indicates a gene up-regulated in the acid condition compared to the normal 
 condition, while a negative log2FC indicate a down-regulation.
 
@@ -575,11 +596,23 @@ condition, while a negative log2FC indicate a down-regulation.
 
 Inspect the results table.
 
-How many genes have no padjusted value? Why? 
+1. Which gene has the lowest padjusted value?
+
+2. How many genes have no padjusted value? Why? 
 
 `r msmbstyle::question_end()`
 
 `r msmbstyle::solution_begin()`
+
+1. Identify the 5 genes with the lowest padjusted value?
+
+```{r}
+res_tbl %>% 
+  arrange(padj) %>% 
+  head(5)
+```
+
+2. How many genes have no padjusted value? Why? 
 
 ```{r}
 summary(res$padj)
@@ -592,7 +625,6 @@ res_tbl <- as_tibble(res, rownames = "ENSEMBL")
 res_tbl %>% 
   filter(is.na(padj))
 ```
-
 
 - Many genes with `padj == NA` correspond to genes with a `basemean == 0`. 
 No pvalue can be calculated because there is no variation in their counts 
@@ -694,88 +726,241 @@ as_tibble(res_bis, rownames = "ENSEMBL") %>%
 `r msmbstyle::solution_end()`
 
 
-
 #### pvalues distribution
 
-Another useful diagnostic plot is the histogram of the p values.
+Another useful diagnostic plot is the histogram of pvalues.
+It can give you an immediate idea of the proportion of genes differentially expressed, 
+(the taller the is the left peak, the more p-values are close to 0 and therefore 
+significant). Furthermore, it gives an idea of how the test behaved across all your 
+hypotheses, and immediately diagnoses some potential problems.
 
 ```{r}
 hist(res_tbl$pvalue)
 ```
 
-```{r filterThreshold}
-metadata(res)$filterThreshold
+`r msmbstyle::question_begin()`
+
+What do you think about the this pvalues histogram?
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+There is a peak at 0, but there is also a peak close to 0.8, and to a smaller extend 
+a smaller peak at bout 1. 
+Assumption that the p-values near 1 are uniform doesn't seem to be completely valid. 
+This implies that in principle, a false discovery rate shouldn't be applied to control 
+these p-values. 
+Let's try to figure out why the p-values show this behavior.
+
+```{r}
+res_tbl %>% 
+  filter(pvalue > 0.8 & pvalue < 0.85) %>% 
+  head(10)
+
+res_tbl %>% 
+  filter(pvalue > 0.8 & pvalue < 0.85) %>% 
+  dplyr::select(padj) %>% 
+  summary()
 ```
 
-```{r rejections_vs_quantiles, eval = F}
-par(mfrow=c(1, 1))
-plot(metadata(res)$filterNumRej, type = "b", xlab = "Quantiles of filter",
-     ylab = "Number of rejections", main = "6.5 vs 7.4 for all cells")
-lines(metadata(res)$lo.fit, col = "red")
-abline(v = metadata(res)$filterTheta)
+We observe that most of the genes that have a pvalue around 0.8 
+(corresponding to genes belonging to the second peak) have a pvalue, 
+but no padjusted value. These are hence genes that were filtered out 
+by the independant filtering process. This means that DESeq2 does calculate 
+a pvalue for every gene (except for those that have a basemean = 0), but 
+the pvalue adjustement is computed later only on genes that pass the independant 
+filtering threshold. If we plot again the pvalues histogram using filtered genes only, 
+then we observe that the pvalues behaviour is now much nicer!
+
+
+```{r}
+hist(res_tbl[res_tbl$baseMean > metadata(res)$filterThreshold, "pvalue"])
 ```
 
+`r msmbstyle::solution_end()`
 
 
+#### MA-plot
 
-```{r, eval = F, echo = F}
-# counts <- read_tsv(file = "data/deseq2/count_matrix.tsv")
-# ref <- counts$ref
-# counts <- data.frame(counts[-1])
-# rownames(counts) <- ref
-# counts
-# # colnames(counts)
-# # coldata <- as_tibble(data.frame(cell = rep("mesenchymal", 6), name = colnames(counts)[-1])) %>% 
-# #   mutate(stage = substr(name, 7, 9)) %>% 
-# #   as.data.frame()
-# # rownames(coldata) <- coldata$name
-# # coldata$cell <- rep("mesenchymal", 6)
-# #  coldata <- coldata[, -2]
-# #  coldata
-# save(coldata, file = "data/deseq2/coldata.rda")
-# save(counts, file = "data/deseq2/count_matrix.rda")
-# counts <- data.frame(counts)
-# coldata
+Another interesting plot is the MA-plot ("Mean-Average" plot), a scatter plot of 
+log2FC versus the mean of normalized counts. Genes with a padjusted value lower than 
+0.05 are plotted in red. The plot highlights the fact that genes with low read counts show 
+substantially higher variability than highly expressed genes, resulting in a strong log2FC 
+even though are likely not really differentially expressed. 
+In the MA-plot, we hope to observe some genes located in the the upper/lower right 
+quadrant of the plots (the most interesting candidates).
 
+```{r}
+plotMA(res, alpha = 0.05)
+```
 
-load("data/deseq2/count_matrix.rda")
+#### Volcano-plot
+
+Drawing a volcano-plot is also informative for data interpretation. 
+
+```{r}
+res_tbl %>% 
+  filter(!is.na(padj)) %>% 
+  ggplot(aes(x= log2FoldChange, y = -log10(padj))) +
+   geom_point(size = 0.5, color = "gray40") 
+```
+
+Recall that the most interesting features are those towards to top corners given 
+that they have a small pvalues and large fold-changes.
+The volcano-plot can be useful to define padjusted and log2FC thresholds. 
+Based on this plot, we could for example decide (arbitrarly), to consider genes as 
+differentially expressed genes that have a padj_thr <- 1e-5 and an absolute log2FC value > 1.
+
+```{r}
+padj_thr <- 1e-5
+log2FC_thr <- 1
+
+res_tbl %>% 
+  filter(!is.na(padj)) %>% 
+  ggplot(aes(x= log2FoldChange, y = -log10(padj))) +
+   geom_point(size = 0.5, color = "gray40") +
+   geom_point(data = subset(res_tbl, 
+                            padj < padj_thr & 
+                            abs(log2FoldChange) > log2FC_thr), 
+              size = 0.5, color = "firebrick1") +
+  geom_vline(xintercept = log2FC_thr) +
+  geom_vline(xintercept = -log2FC_thr) +
+  geom_hline(yintercept = -log10(padj_thr))
+```
+
+#### Plot counts of genes
+
+It may be also useful to check the validity of the analysis by simply assessing the expression 
+level of the most highly differentially expressed genes.
+
+```{r}
+best_genes <- res_tbl %>% 
+  arrange(padj)  %>% 
+  head(6) 
+
+as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = T), 
+          rownames = 'ENSEMBL') %>% 
+  gather(sample, counts, -ENSEMBL) %>% 
+  left_join(as_tibble(coldata, rownames = "sample")) %>% 
+  ggplot(aes(x = sample, y = counts, fill = pH)) +
+  geom_bar(stat = 'identity', color = "gray30") +
+  facet_wrap( ~ ENSEMBL, scales = "free", ncol = 3) +
+  theme(axis.text.x = element_text(size = 7, angle = 90),
+        axis.title.x = element_blank(),
+        legend.position = "right",
+        legend.text = element_text(size = 7),
+        legend.title = element_text(size = 7)) 
+```
+
+`r msmbstyle::question_begin()`
+
+1. Identify and inspect counts of the genes plotted in red in the following volcano-plot.
+These genes have a very large log2FC (log2FC > 5) but are far from bearing the lowest 
+padjusted value (their padjusted value is between 0.05 and 1e-10).
+
+```{r, echo = FALSE}
+res_tbl %>% 
+  filter(!is.na(padj)) %>% 
+  ggplot(aes(x= log2FoldChange, y = -log10(padj))) +
+   geom_point(size = 0.5, color = "gray40") +
+   geom_point(data = subset(res_tbl, 
+                            padj < 0.05 &
+                            padj > 1e-10 &
+                            log2FoldChange > 5), 
+              size = 0.5, color = "firebrick1") +
+  geom_hline(yintercept = -log10(0.05)) +
+  geom_hline(yintercept = -log10(1e-10)) +
+  geom_vline(xintercept = 5) 
+```
+
+2. Compare counts with previous counts plots (counts of genes with lowest pvalues). 
+what is the most striking?
+
+3. Using dispersion() function, compare dispersion values for both group of genes
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+1. Identify and inspect counts of the genes plotted in red in the following volcano-plot.
+These genes have a very large log2FC (log2FC > 5) but are far from bearing the lowest padjusted value (their padjusted value is between 0.05 and 1e-10).
+
+```{r}
+selected_genes <- res_tbl %>% 
+  filter(padj < 0.05 & padj > 1e-10 & log2FoldChange > 5)
+
+selected_genes
+
+as_tibble(counts(dds[selected_genes$ENSEMBL, ], normalize = T), 
+          rownames = 'ENSEMBL') %>% 
+  gather(sample, counts, -ENSEMBL) %>% 
+  left_join(as_tibble(coldata, rownames = "sample")) %>% 
+  ggplot(aes(x = sample, y = counts, fill = pH)) +
+  geom_bar(stat = 'identity', color = "gray30") +
+  facet_wrap( ~ ENSEMBL, scales = "free", ncol = 3) + 
+  theme(axis.text.x = element_text(size = 7, angle = 90),
+        axis.title.x = element_blank(),
+        legend.position = "right",
+        legend.text = element_text(size = 7),
+        legend.title = element_text(size = 7)) 
+```
+
+2. Compare counts with previous counts plots (counts of genes with lowest pvalues). 
+what is the most striking?
+
+These genes have very low counts. Even if they show a strong log2FC, their variability is very high.
+This will result in higher dispersion values, and larger pvalues. 
+
+3. Using dispersion() function, compare dispersion values for both group of genes
+
+```{r}
+data.frame(best_genes = dispersions(dds[best_genes$ENSEMBL,]), 
+           selected_genes = dispersions(dds[selected_genes$ENSEMBL,])) %>% 
+  gather(group, dispersion) %>% 
+  ggplot(aes(x = group, y = dispersion)) +
+  geom_point()
+
+```
+
+#### Adding gene name to result table
+
+The result table only uses Ensembl gene IDs, but gene names may be more informative. 
+Bioconductor’s biomaRt package can help with mapping various ID schemes to each other.
+
+```{r, echo = F}
+suppressPackageStartupMessages(library("biomaRt"))
+suppressPackageStartupMessages(library("org.Hs.eg.db"))
+```
+
+```{r}
+library("biomaRt")
+library("org.Hs.eg.db")
+
+# Add gene name column
+mart <- useDataset("hsapiens_gene_ensembl", useMart("ensembl"))
+ensembl_to_geneName <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), mart = mart)
+names(ensembl_to_geneName) <- c("ENSEMBL", "gene")
+
+res_tbl <- res_tbl %>% 
+  left_join(ensembl_to_geneName) %>% 
+  dplyr::select(ENSEMBL, gene, everything()) %>% 
+  arrange(padj)
+
+head(res_tbl)
+```
+
+## A more complex design
+
+The experiment was in reality done on 2 different cell lines (cell line "F" and cell line "H")
+
+```{r}
+load("data/deseq2/counts.rda")
 load("data/deseq2/coldata.rda")
-
-if (!file.exists("data/deseq2/dds.rda")){
-  dds <- DESeqDataSetFromMatrix(countData = counts, 
-                                colData = coldata,
-                                design = ~ stage ) 
-  dds <- DESeq(dds)
-  
-  
-  resultsNames(dds)
-  res <- results(dds, 
-                 name = "stage_E18_vs_E16")
-  
-  res_tbl <- as_tibble(res, rownames = "ENSEMBL")
-  save(dds, file = "data/deseq2/dds.rda")
-}
-load("data/deseq2/dds.rda")
-
-
-res_tbl <- as_tibble(res, rownames = "ENSEMBL")
-counts_tbl <- as_tibble(counts, rownames = "ENSEMBL") %>% select(ENSEMBL, starts_with("CTL"), starts_with("IFN"))
-plotDispEsts(dds, main="Dispersion plot")
-res_tbl %>% arrange(padj)
-summary(res)
-hist(res$pvalue, col = "lavender", xlab = "p-values")
-DESeq2::plotMA(res, alpha = 0.05)
-metadata(res)$filterThreshold
-metadata(dds)$filterThreshold
-hist(res$pvalue, col = "lavender", xlab = "p-values")
-dds
-hist(res$pvalue)
-hist(res_tbl$pvalue)
-hist( res$pvalue, breaks=20, col="grey" )
-
+coldata
+head(counts)
+dim(counts)
 ```
 
 
 
-
-#### Results
