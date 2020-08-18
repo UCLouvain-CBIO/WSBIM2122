@@ -290,7 +290,7 @@ FastQC gives a global vision the quality of the sample. If it is not optimal,
 it is advisable to use [Trimmomatics](http://www.usadellab.org/cms/?page=trimmomatic) 
 software to filter poor quality reads and trim residual adapters.
 
-Trimmomatics has a variety of options to clean the reads. Read the [manual](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf) 
+Trimmomatics has a variety of options to clean the reads. Read the  [manual](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf) 
 for more information. However, a command for Trimmomatics could look something like the command below. 
 In this case it would perform adapter removal, and perform a scan of the read with a 10-base wide 
 sliding window, cutting when the average quality per base drops below 20. 
@@ -449,7 +449,7 @@ knitr::include_graphics("figs/featurecount_metafeature.png")
 ```
 
 FeatureCounts could be launched with the following command.
-As usual, many of other parameters can be fine-tuned (see the [manual](http://manpages.ubuntu.com/manpages/bionic/man1/featureCounts.1.html) 
+As usual, many of other parameters can be fine-tuned (see the  [manual](http://manpages.ubuntu.com/manpages/bionic/man1/featureCounts.1.html) 
 for more details). 
 
 ```{r, eval = F}
