@@ -174,7 +174,7 @@ knitr::include_graphics("figs/NB.png")
 
 Having modelised counts by a negative-binomial distribution, next step is to estimate, 
 for each gene, the two parameters of the distribution (mean and dispersion). The mean 
-will be estimated easily from the observed normalized counts in both conditions, but 
+will be estimated easily from the observed normalised counts in both conditions, but 
 the dispersion is not that trivial to estimate.
 
 Dispersion is a measure of spread or variability in the data ($α= CV^2$). A gene with 
@@ -265,7 +265,7 @@ p-value is small (below a certain cutoff) the null hypothesis is rejected.
 - **False discovery rate (FDR)**
 
 Recall that a pvalue of 0.05 means that there is only 5% chance of getting this data 
-if no real difference existed (if Ho was really true). In other words, choosing a cut 
+if no real difference existed (if $H_0$ was really true). In other words, choosing a cut 
 off of 0.05 means there is 5% chance that the wrong decision is made (resulting in a 
 false positive). But remember the problematic of multiple testing seen in chapter 7 
 from [WSBIM1322 course](http://bit.ly/WSBIM1322).
@@ -288,7 +288,7 @@ The third histogram bellow illustrates the principle behind this False discovery
 adjustment. As differential expression analysis is done on the whole set of genes, the 
 resulting pvalues will have a distribution corresponding to the combination of both histograms. 
 Most of the p-values are uniformly distributed between 0 and 1 but there is a spike to the 
-left close to zero, due to those p-values for which $H0$ is false. The correction approach 
+left close to zero, due to those p-values for which $H_0$ is false. The correction approach 
 helps to estimate how many of the significant values are actually false positives. 
 It tries to find the height where the p-value distribution flattens out (corresponding to 
 the red line) and incorporates this height value into the calculation of FDR adjusted p-values. 
@@ -381,7 +381,7 @@ dds
 
 As for SummarizedExperiments (see chapter 3 from [WSBIM1322 course](http://bit.ly/WSBIM1322)):
 
-- The Quantiative data can be accessed with `assay()`.
+- The Quantitative data can be accessed with `assay()`.
 - The sample (columns) metadata can be access with the `colData()`
   function.
 - The features (rows) metadata can be access with the `rowData()`
@@ -467,10 +467,10 @@ It is highly recommended to starts by a PCA to assess overall similarity between
 
 - Are they any sample outliers which may need to be explored further? 
 
-Remember that if one performs PCA directly on a matrix of normalized read counts, 
+Remember that if one performs PCA directly on a matrix of normalised read counts, 
 the result typically depends only on the few most strongly expressed genes because 
 they show the largest absolute differences between samples. A simple and often used 
-strategy to avoid this is to take the logarithm of the normalized count values plus 
+strategy to avoid this is to take the logarithm of the normalised count values plus 
 a small pseudocount; however, now the genes with low counts tend to dominate the 
 results because, due to the strong Poisson noise inherent to small count values, they 
 show the strongest relative differences between samples. As a solution, DESeq2 offers 
@@ -562,7 +562,7 @@ res_tbl <- as_tibble(res, rownames = "ENSEMBL")
 res_tbl
 ```
 
-**baseMean**: The average of the normalized count values taken over all samples.
+**baseMean**: The average of the normalised count values taken over all samples.
 
 **log2FoldChange**: This value indicates how much the gene or transcript's 
 expression seems to have changed between the comparison and control groups[^log2C]. 
@@ -801,8 +801,8 @@ res_tbl %>%
    geom_point(size = 0.5, color = "gray40") 
 ```
 
-Recall that the most interesting features are those towards to top corners given 
-that they have a small pvalues and large fold-changes.
+Recall that the most interesting features are those towards the top corners given 
+that they have small pvalues and large fold-changes.
 The volcano-plot can be useful to define padjusted and log2FC thresholds. 
 Based on this plot, we could for example decide (arbitrarily), to consider genes as 
 differentially expressed genes that have a padj_thr <- 1e-5 and an absolute log2FC value > 1.
@@ -876,7 +876,7 @@ res_tbl %>%
 2. Compare counts with previous counts plots (counts of genes with lowest pvalues). 
 what is the most striking?
 
-3. Using dispersion() function, compare dispersion values for both group of genes
+3. Using dispersions() function, compare dispersion values for both group of genes
 
 `r msmbstyle::question_end()`
 
