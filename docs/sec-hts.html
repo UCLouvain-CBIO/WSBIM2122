@@ -21,7 +21,7 @@ MathJax.Hub.Config({
   TeX: { equationNumbers: { autoNumber: "AMS" } }
 });
 </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
@@ -60,41 +60,67 @@ if(f.classList.contains('fa-plus-square')) {
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -147,34 +173,87 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1>
 <span class="header-section-number">Chapter 4</span> High throughput sequencing</h1>
 <p><strong>Learning Objectives</strong></p>
-<p>The aim of this chapter is to present high throughput sequencing by going through one of its key applications: RNAseq. It is a highly sensitive and accurate tool that has revolutionised the study of transcriptomes. The objective is to give an overview of the technology.</p>
-<p>We will pass through the different steps starting from the library preparation and the sequencing process. We will explore the resulting fastq files and the downstream processing pipeline including quality control, alignment and counting steps.</p>
+<p>The aim of this chapter is to present high throughput sequencing by
+going through one of its key applications: RNAseq. It is a highly
+sensitive and accurate tool that has revolutionised the study of
+transcriptomes. The objective is to give an overview of the
+technology.</p>
+<p>We will pass through the different steps starting from the library
+preparation and the sequencing process. We will explore the resulting
+fastq files and the downstream processing pipeline including quality
+control, alignment and counting steps.</p>
 <div id="rna-seq-library-preparation" class="section level2">
 <h2>
 <span class="header-section-number">4.1</span> RNA-seq library preparation</h2>
-<p>The starting point of a RNAseq experiment is the cDNA library preparation. RNA is first isolated from cells and purified to remove ribosomal RNA which constitute the majority of total RNA. This can be done by extracting poly(A) RNA or by depleting rRNA. In a classical RNA-seq library preparation, purified RNA is then fragmented, reverse transcribed and adapters are ligated to both extremities to allow for amplification.</p>
-<p>While simple, this approach loses the information about which DNA strand corresponds to the sense strand of RNA. This can be avoided by using a stranded protocol. In this case, dUTP are added during the 2nd strand cDNA synthesis and the newly synthetized cDNA strand is degradated after the ligation step. This allows to infer the transcript orientation as only the first cDNA strand is sequenced. Strand-specificity leads to lower number of ambiguous reads (overlapping multiple genes).</p>
+<p>The starting point of a RNAseq experiment is the cDNA library
+preparation. RNA is first isolated from cells and purified to remove
+ribosomal RNA which constitute the majority of total RNA. This can be
+done by extracting poly(A) RNA or by depleting rRNA. In a classical
+RNA-seq library preparation, purified RNA is then fragmented, reverse
+transcribed and adapters are ligated to both extremities to allow for
+amplification.</p>
+<p>While simple, this approach loses the information about which DNA
+strand corresponds to the sense strand of RNA. This can be avoided by
+using a stranded protocol. In this case, dUTP are added during the 2nd
+strand cDNA synthesis and the newly synthetized cDNA strand is
+degradated after the ligation step. This allows to infer the
+transcript orientation as only the first cDNA strand is
+sequenced. Strand-specificity leads to lower number of ambiguous reads
+(overlapping multiple genes).</p>
 <p><img src="figs/library.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div id="sequencing" class="section level2">
 <h2>
 <span class="header-section-number">4.2</span> Sequencing</h2>
-<p>Once the library is ready, molecules from the library are sequenced in a high throughput manner to obtain short sequences from one end (single-end sequencing) or both ends (pair-end sequencing). Single-end sequencing is cheaper, but Paired-end sequencing improves the ability to localise the fragment in the genome and resolve mapping close to repeat regions, resulting in less multimapping reads.</p>
+<p>Once the library is ready, molecules from the library are sequenced in
+a high throughput manner to obtain short sequences from one end
+(single-end sequencing) or both ends (pair-end sequencing). Single-end
+sequencing is cheaper, but Paired-end sequencing improves the ability
+to localise the fragment in the genome and resolve mapping close to
+repeat regions, resulting in less multimapping reads.</p>
 <p><img src="figs/SE_vs_PE.png" width="100%" style="display: block; margin: auto;"></p>
 <p>The sequencing is done by a cluster amplification process.</p>
-<p>The library preparation is hybridized to a flow cell coated with immobilized oligonucleotides that serve as support to hold the DNA strands in place during sequencing. The templates are copied from the hybridized primers by 3’ extension using a high-fidelity DNA polymerase. The original templates are denatured, leaving the copies immobilized on the flow cell surface.</p>
-<p>Immobilized DNA template copies are then amplified by bridge amplification. The templates loop over to hybridize to adjacent oligonucleotides. DNA polymerase copies the templates from the hybridized oligonucleotides, forming dsDNA bridges, which are denatured to form two ssDNA strands. These two strands loop over and hybridize to adjacent oligonucleotides and are extended again to form two new dsDNA loops. The process is repeated on each template by cycles of denaturation and amplification to create millions of individual, dense clonal clusters containing ~2,000 molecules.</p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD Each cluster of dsDNA bridges is denatured, and the reverse strand is removed by specific base cleavage, leaving the forward DNA strand. The 3’-ends of the DNA strands and flow cell-bound oligonucleotides are blocked to prevent interference with the sequencing reaction. The sequencing primer is hybridized to the the Illumina adapter. Clusters are ready for sequencing. ======= Each cluster of dsDNA bridges is denatured, and the reverse strand is removed by specific base cleavage, leaving the forward DNA strand. The 3’-ends of the DNA strands and flow cell-bound oligonucleotides are blocked to prevent interference with the sequencing reaction. The sequencing primer is hybridized to the Illumina adapter. Clusters are ready for sequencing. &gt;&gt;&gt;&gt;&gt;&gt;&gt; 16dc704538c143d57fcd0e2fd35f318a87ec0aef</p>
+<p>The library preparation is hybridized to a flow cell coated with
+immobilized oligonucleotides that serve as support to hold the DNA
+strands in place during sequencing. The templates are copied from the
+hybridized primers by 3’ extension using a high-fidelity DNA
+polymerase. The original templates are denatured, leaving the copies
+immobilized on the flow cell surface.</p>
+<p>Immobilized DNA template copies are then amplified by bridge
+amplification. The templates loop over to hybridize to adjacent
+oligonucleotides. DNA polymerase copies the templates from the
+hybridized oligonucleotides, forming dsDNA bridges, which are
+denatured to form two ssDNA strands. These two strands loop over and
+hybridize to adjacent oligonucleotides and are extended again to form
+two new dsDNA loops. The process is repeated on each template by
+cycles of denaturation and amplification to create millions of
+individual, dense clonal clusters containing ~2,000 molecules.</p>
+<p>Each cluster of dsDNA bridges is denatured, and the reverse strand is
+removed by specific base cleavage, leaving the forward DNA strand. The
+3’-ends of the DNA strands and flow cell-bound oligonucleotides are
+blocked to prevent interference with the sequencing reaction. The
+sequencing primer is hybridised to the Illumina adapter. Clusters are
+ready for sequencing.</p>
 <p><img src="figs/cluster_amplification.png" width="100%" style="display: block; margin: auto;"></p>
-<p>The sequencing process is done by synthesis. A polymerase adds a fluorescently tagged dNTP to the DNA strand (only one base is able to be added per round due to the fluorophore acting as a blocking group, but the blocking group is reversible). Each of the four bases has a unique fluorophore, and after each round, the machine records which base was added. The fluorophore is then washed away and the process is repeated.</p>
-<p>For a dynamic view of the cluster amplification process, watch the <a href="https://www.youtube.com/watch?v=fCd6B5HRaZ8">Illumina video</a>.</p>
+<p>The sequencing process is done by synthesis. A polymerase adds a
+fluorescently tagged dNTP to the DNA strand (only one base is able to
+be added per round due to the fluorophore acting as a blocking group,
+but the blocking group is reversible). Each of the four bases has a
+unique fluorophore, and after each round, the machine records which
+base was added. The fluorophore is then washed away and the process is
+repeated.</p>
+<p>For a dynamic view of the cluster amplification process, watch the
+<a href="https://www.youtube.com/watch?v=fCd6B5HRaZ8">Illumina video</a>.</p>
 </div>
 <div id="fastq-files" class="section level2">
 <h2>
 <span class="header-section-number">4.3</span> fastq files</h2>
-<p>The sequence data generated from the sequencer are received in text files called fastq files. For a single-read run, one fastq file is created for each sample. For a paired-end run, two separated fastq files are generated, each containing sequences from one end.</p>
+<p>The sequence data generated from the sequencer are received in text
+files called fastq files. For a single-read run, one fastq file is
+created for each sample. For a paired-end run, two separated fastq
+files are generated, each containing sequences from one end.</p>
 <p>What does a FASTQ file look like?</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">head</span> data/RNAseq_pipeline/example.fastq</code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="fu">head</span> wsbim2122_data/RNAseq_pipeline/example.fastq</a></code></pre></div>
 <pre><code>## @DRR016707.1 DGTKZQN1:354:C2B0UACXX:5:1101:1199:1908 length=101
 ## NTGANGCTTAGGTAGGGGTAGGGAGACAGGGAAGTAACAGAGGTACTGGACATGCCAGGCAGAAGAAACAGCAGTACAGGACATGGAAGCAAACAACATGG
 ## +DRR016707.1 DGTKZQN1:354:C2B0UACXX:5:1101:1199:1908 length=101
@@ -185,10 +264,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## @@@D#2ADHHHAAF&lt;CFHIGHIIGGIHIECGFAHDHIIIGGGIBGG?FHHHGGEHIH=FEGDDGI@GIIGIHHEHEDDBACCDCECB@BCBCCBCBBBCC@</code></pre>
 <p>Each entry in a fastq file consists of 4 lines:</p>
 <ul>
-<li>A sequence identifier (by convention preceded by '@') with information about the sequencing run</li>
+<li>A sequence identifier (by convention preceded by ‘@’) with
+information about the sequencing run</li>
 <li>The sequence</li>
-<li>The same sequence identifier preceded by '+'</li>
-<li>The base call quality scores. These are Phred scores, encoded using <a href="https://theasciicode.com.ar">ASCII characters</a> to represent the numerical quality scores. Each character is assigned a quality score between 0 and 40. Quality scores represent the probability that the corresponding nucleotide call is incorrect.</li>
+<li>The same sequence identifier preceded by ‘+’</li>
+<li>The base call quality scores. These are Phred scores, encoded using
+<a href="https://theasciicode.com.ar">ASCII characters</a> to represent the
+numerical quality scores. Each character is assigned a quality
+score between 0 and 40. Quality scores represent the probability
+that the corresponding nucleotide call is incorrect.</li>
 </ul>
 <p><img src="figs/phred_score.png" width="100%" style="display: block; margin: auto;"></p>
 <div class="question">
@@ -196,7 +280,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ► Question
 </p>
 <div class="question-body">
-<p>What do you think of the quality of the two sequences presented in the fastq file above?</p>
+<p>What do you think of the quality of the two sequences presented in the
+fastq file above?</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -206,25 +291,40 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="processing-pipeline" class="section level2">
 <h2>
 <span class="header-section-number">4.4</span> Processing pipeline</h2>
-<p>The raw reads from fastq files will need to pass through a different tools to yield ultimately a count table, representing a snapshot of individual gene expression levels. The execution of this set of tools in a specified order is commonly referred to as a pipeline.</p>
+<p>The raw reads from fastq files will need to pass through a different
+tools to yield ultimately a count table, representing a snapshot of
+individual gene expression levels. The execution of this set of tools
+in a specified order is commonly referred to as a pipeline.</p>
 <p><img src="figs/pipeline.png" width="40%" style="display: block; margin: auto;"></p>
 <div id="quality-control" class="section level3">
 <h3>
 <span class="header-section-number">4.4.1</span> Quality control</h3>
-<p>Of course, no one will analyse the sequences from the fastq file one by one to check their quality... Rather, a software called <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a> can be used. Then, another program such as <a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatics</a> can help to clean the reads.</p>
+<p>Of course, no one will analyse the sequences from the fastq file one
+by one to check their quality… Rather, a software called
+<a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a>
+can be used. Then, another program such as
+<a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatics</a> can
+help to clean the reads.</p>
 <ul>
 <li><strong>FastQC</strong></li>
 </ul>
-<p><a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a> allows to analyse different features of the reads and generates a report that includes several diagnostic plots to highlight any problem the data may have.</p>
+<p><a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a>
+allows to analyse different features of the reads and generates a
+report that includes several diagnostic plots to highlight any problem
+the data may have.</p>
 <p>FastQC is run from the command line:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">$</span><span class="st"> </span>fastqc SampleName.fastq</code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="op">$</span><span class="st"> </span>fastqc SampleName.fastq</a></code></pre></div>
 <div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
-<p>Try to interpret the different plots of this <a href="data/RNAseq_pipeline/OD01_10_1_fastqc.html">fastQC report</a> from a real RNAseq fastq file.</p>
-<p>Another report corresponding to <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html">bad quality</a> data can be used as a point of comparison.</p>
+<p>Try to interpret the different plots of this
+<a href="./OD01_10_1_fastqc.html">fastQC report</a>
+from a real RNAseq fastq file.</p>
+<p>Another report corresponding to <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html">bad
+quality</a>
+data can be used as a point of comparison.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -237,33 +337,87 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="sol-body-1" class="solution-body" style="display: none;">
 <p><strong>1. Per base sequence quality</strong></p>
 <p><img src="figs/fastqc_fig1.png" width="80%" style="display: block; margin: auto;"></p>
-<p>This graph shows an overview of the range of quality values (Phred scores) across all bases at each position. In this example, the sample contains reads that are 150 bp long. For each position, a boxplot is drawn with the median value, represented by the red line. The mean quality is represented by the blue line. The background of the graph divides the y-axis into very good quality scores (green), scores of reasonable quality (orange), and reads of poor quality (red). Here the quality of reads is very good.</p>
+<p>This graph shows an overview of the range of quality values (Phred
+scores) across all bases at each position. In this example, the sample
+contains reads that are 150 bp long. For each position, a boxplot is
+drawn with the median value, represented by the red line. The mean
+quality is represented by the blue line. The background of the graph
+divides the y-axis into very good quality scores (green), scores of
+reasonable quality (orange), and reads of poor quality (red). Here
+the quality of reads is very good.</p>
 <p><strong>2. Per tile sequence quality</strong>:</p>
 <p><img src="figs/fastqc_fig2.png" width="80%" style="display: block; margin: auto;"></p>
-<p>Flowcells are divided into tiles. The graph allows to look at the quality scores from each tile across the reads to see if there is a loss in quality associated with one part of the flowcell. The plot shows the deviation from the average quality for each tile. Cold colours being positions where the quality was at or above the average for that base in the run, and hotter colours indicate that a tile had worse qualities than other tiles for that base. Low scores are often found around the edges, but hot spots can also occur in the middle (due to an air bubble for example), however these should represent only a small percentage of the total sequences. In this example no tile shows poor quality.</p>
+<p>Flowcells are divided into tiles. The graph allows to look at the
+quality scores from each tile across the reads to see if there is a
+loss in quality associated with one part of the flowcell. The plot
+shows the deviation from the average quality for each tile. Cold
+colours being positions where the quality was at or above the average
+for that base in the run, and hotter colours indicate that a tile had
+worse qualities than other tiles for that base. Low scores are often
+found around the edges, but hot spots can also occur in the middle
+(due to an air bubble for example), however these should represent
+only a small percentage of the total sequences. In this example no
+tile shows poor quality.</p>
 <p><strong>3. Per sequence quality scores</strong></p>
 <p><img src="figs/fastqc_fig3.png" width="80%" style="display: block; margin: auto;"></p>
-<p>It represents a density plot of average quality per read. The distribution of average read quality should show a tight peak in the upper range of the plot. It could report a subset of sequences with low quality values, however these should represent only a small percentage of the total sequences.</p>
+<p>It represents a density plot of average quality per read. The
+distribution of average read quality should show a tight peak in the
+upper range of the plot. It could report a subset of sequences with
+low quality values, however these should represent only a small
+percentage of the total sequences.</p>
 <p><strong>4. Per base sequence content</strong></p>
 <p><img src="figs/fastqc_fig4.png" width="80%" style="display: block; margin: auto;"></p>
-<p>It plots the proportion of each base position over all the reads. Typically, we expect to see each base roughly 25% of the time at each position so the lines in this plot should run parallel with each other. Experience has shown that RNAseq libraries often have a selection bias in around the first 12bp of each run. This is due to a biased selection of random primers, but doesn't represent any individually biased sequences. This is a typical plot obtained for RNAseq reads.</p>
+<p>It plots the proportion of each base position over all the
+reads. Typically, we expect to see each base roughly 25% of the time
+at each position so the lines in this plot should run parallel with
+each other. Experience has shown that RNAseq libraries often have a
+selection bias in around the first 12bp of each run. This is due to a
+biased selection of random primers, but doesn’t represent any
+individually biased sequences. This is a typical plot obtained for
+RNAseq reads.</p>
 <p><strong>5. Per sequence GC content</strong></p>
 <p><img src="figs/fastqc_fig5.png" width="80%" style="display: block; margin: auto;"></p>
-<p>It represents a density plot of average GC content in each of the reads. This plot makes sense for whole genome shotgun sequencing, as the overall GC content should reflect the GC content of the underlying genome. A GC bias could indicate an overrepresented sequence contaminating the library. For RNA sequencing, this plot makes less sense, as there may be a greater or lesser distribution of mean GC content among transcripts causing the observed plot to be wider or narrower than an ideal normal distribution.</p>
+<p>It represents a density plot of average GC content in each of the
+reads. This plot makes sense for whole genome shotgun sequencing, as
+the overall GC content should reflect the GC content of the underlying
+genome. A GC bias could indicate an overrepresented sequence
+contaminating the library. For RNA sequencing, this plot makes less
+sense, as there may be a greater or lesser distribution of mean GC
+content among transcripts causing the observed plot to be wider or
+narrower than an ideal normal distribution.</p>
 <p><strong>6. Per base N content</strong></p>
 <p><img src="figs/fastqc_fig6.png" width="80%" style="display: block; margin: auto;"></p>
-<p>If a sequencer is unable to make a base call with sufficient confidence then it will replace the conventional base call with an 'N'. This graph plots the percent of times that ‘N’ occurs at a position in all reads. If there was an increase at a particular position, it could indicate that something went wrong during sequencing.</p>
+<p>If a sequencer is unable to make a base call with sufficient
+confidence then it will replace the conventional base call with an
+‘N’. This graph plots the percent of times that ‘N’ occurs at a
+position in all reads. If there was an increase at a particular
+position, it could indicate that something went wrong during
+sequencing.</p>
 <p><strong>7. Sequence Length Distribution</strong></p>
 <p><img src="figs/fastqc_fig7.png" width="80%" style="display: block; margin: auto;"></p>
-<p>The distribution of sequence lengths of all reads in the file. Here we see that most reads are 150 pb long but some reads are shorter.</p>
+<p>The distribution of sequence lengths of all reads in the file.
+Here we see that most reads are 150 pb long but some reads are shorter.</p>
 <p><strong>8. Sequence Duplication Levels</strong>:</p>
 <p><img src="figs/fastqc_fig8.png" width="80%" style="display: block; margin: auto;"></p>
-<p>It gives the distribution of duplicated sequences. The blue line corresponds to the percentage of duplicated reads among total number of reads. The red line corresponds to the percentage of duplicated reads among total number of distinct reads.</p>
-<p>In a highly diverse library from whole genome shotgun sequencing, it is expected that nearly all reads will be unique, appearing only 1 time in the sequence data. A high level of duplication could indicate biased PCR enrichment, or presence of contaminant.</p>
-<p>In contrast, in RNAseq, there will likely be some very highly abundant transcripts for which it is expected to observe duplicated reads. Here the data was flagged as 'failed' by FastQC even though duplication was expected in this case.</p>
+<p>It gives the distribution of duplicated sequences. The blue line
+corresponds to the percentage of duplicated reads among total number
+of reads. The red line corresponds to the percentage of duplicated
+reads among total number of distinct reads.</p>
+<p>In a highly diverse library from whole genome shotgun sequencing, it
+is expected that nearly all reads will be unique, appearing only 1
+time in the sequence data. A high level of duplication could indicate
+biased PCR enrichment, or presence of contaminant.</p>
+<p>In contrast, in RNAseq, there will likely be some very highly abundant
+transcripts for which it is expected to observe duplicated reads. Here
+the data was flagged as ‘failed’ by FastQC even though duplication was
+expected in this case.</p>
 <p><strong>9. Overrepresented sequences</strong></p>
 <p><img src="figs/fastqc_fig9.png" width="80%" style="display: block; margin: auto;"></p>
-<p>FastQC lists here all of the sequence which make up more than 0.1% of the total. Finding that a single sequence is highly overrepresented in the set means that it is either highly biologically significant, or that the library is biased or contaminated. Here it is of course not relevant as it just corresponds to a sequence full of 'N'.</p>
+<p>FastQC lists here all of the sequence which make up more than 0.1% of
+the total. Finding that a single sequence is highly overrepresented in
+the set means that it is either highly biologically significant, or
+that the library is biased or contaminated. Here it is of course not
+relevant as it just corresponds to a sequence full of ‘N’.</p>
 <p><strong>10. Adapter Content</strong></p>
 <p><img src="figs/fastqc_fig10.png" width="80%" style="display: block; margin: auto;"></p>
 <p>This graph indicates if and where adapter sequences occur in the reads.</p>
@@ -275,19 +429,28 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li><strong>Trimmomatics</strong></li>
 </ul>
-<p>FastQC gives a global vision the quality of the sample. If it is not optimal, it is advisable to use <a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatics</a> software to filter poor quality reads and trim residual adapters.</p>
-<p>Trimmomatics has a variety of options to clean the reads. Read the <a href="http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf">manual</a> for more information. However, a command for Trimmomatics could look something like the command below. In this case it would perform adapter removal, and perform a scan of the read with a 10-base wide sliding window, cutting when the average quality per base drops below 20.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">$</span><span class="st"> </span>java <span class="op">-</span>jar trimmomatic<span class="dv">-0</span>.<span class="fl">38.</span>jar \
-  PE \                                  <span class="co"># paired-end</span>
-  <span class="op">-</span>threads <span class="dv">4</span> \                          <span class="co"># number of threads</span>
-  SampleName_<span class="fl">1.</span>fastq \                  <span class="co"># fastq file for fw reads</span>
-  SampleName_<span class="fl">2.</span>fastq  \                 <span class="co"># fastq file for rev reads</span>
-  SampleName_<span class="dv">1</span>_clean.fastq \            <span class="co"># clean fastq for fw reads</span>
-  SampleName_<span class="dv">1</span>_unpaired.fastq \         <span class="co"># fastq for discared fw reads</span>
-  SampleName_<span class="dv">2</span>_clean.fastq \            <span class="co"># clean fastq for rev reads</span>
-  SampleName_<span class="dv">2</span>_unpaired.fastq \         <span class="co"># fastq for discared rev reads</span>
-  ILLUMINACLIP<span class="op">:</span>TruSeq3<span class="op">-</span>PE.fa<span class="op">:</span><span class="dv">2</span><span class="op">:</span><span class="dv">30</span><span class="op">:</span><span class="dv">10</span> \  <span class="co"># cut adapter from the read.</span>
-  SLIDINGWINDOW<span class="op">:</span><span class="dv">10</span><span class="op">:</span><span class="dv">20</span>                   <span class="co"># sliding window trimming</span></code></pre></div>
+<p>FastQC gives a global vision the quality of the sample. If it is not
+optimal, it is advisable to use
+<a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatics</a>
+software to filter poor quality reads and trim residual adapters.</p>
+<p>Trimmomatics has a variety of options to clean the reads. Read the
+<a href="http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf">manual</a>
+for more information. However, a command for Trimmomatics could look
+something like the command below. In this case it would perform
+adapter removal, and perform a scan of the read with a 10-base wide
+sliding window, cutting when the average quality per base drops below
+20.</p>
+<pre><code>$ java -jar trimmomatic-0.38.jar \
+  PE \                                  # paired-end
+  -threads 4 \                          # number of threads
+  SampleName_1.fastq \                  # fastq file for fw reads
+  SampleName_2.fastq  \                 # fastq file for rev reads
+  SampleName_1_clean.fastq \            # clean fastq for fw reads
+  SampleName_1_unpaired.fastq \         # fastq for discared fw reads
+  SampleName_2_clean.fastq \            # clean fastq for rev reads
+  SampleName_2_unpaired.fastq \         # fastq for discared rev reads
+  ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 \  # cut adapter from the read.
+  SLIDINGWINDOW:10:20                   # sliding window trimming</code></pre>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -304,8 +467,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ► Solution<span id="sol-start-2" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-2', 'sol-start-2')"></span>
 </p>
 <div id="sol-body-2" class="solution-body" style="display: none;">
-<p>Once samples passed through Trimmomatics, they should perform better on the quality tests run by FastQC. You could re-run FastQC on your clean fastq files to see whether adapters were correctly removed and if the per base sequence quality is higher after trimming...</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">$</span><span class="st"> </span>fastqc SampleName_<span class="dv">1</span>_clean.fastq</code></pre></div>
+<p>Once samples passed through Trimmomatics, they should perform better
+on the quality tests run by FastQC. You could re-run FastQC on your
+clean fastq files to see whether adapters were correctly removed and
+if the per base sequence quality is higher after trimming…</p>
+<pre><code>$ fastqc SampleName_1_clean.fastq</code></pre>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -316,85 +482,140 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="alignment" class="section level2">
 <h2>
 <span class="header-section-number">4.5</span> Alignment</h2>
-<p>Next step is to map the reads to determine where in the genome the reads originated from. Many different aligners are available such as <a href="https://ccb.jhu.edu/software/hisat2/manual.shtml">HISAT2</a>, <a href="https://github.com/alexdobin/STAR">STAR</a>, <a href="http://bio-bwa.sourceforge.net">BWA</a>, <a href="https://combine-lab.github.io/salmon/">Salmon</a>, <a href="https://sourceforge.net/projects/subread/">Subread</a>... There is no gold standard, but some tools are better suited for particular NGS analyses <span class="citation">(Giacomo et al. <label for="tufte-mn-7" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-7" class="margin-toggle">2017<span class="marginnote">Giacomo, B, K E Hayer, E J Kim, B Di Camillo, G A FitzGerald, and G R Grant. 2017. “Simulation-Based Comprehensive Benchmarking of Rna-Seq Aligners.” <em>Nature Methods</em> 2 (14): 135. doi:<a href="https://doi.org/10.1038/nmeth.4106">10.1038/nmeth.4106</a>.</span>)</span>... In the case of RNAseq, it is important to use an aligner able to handle spliced reads.</p>
+<p>Next step is to map the reads to determine where in the genome the
+reads originated from. Many different aligners are available such as
+<a href="https://ccb.jhu.edu/software/hisat2/manual.shtml">HISAT2</a>,
+<a href="https://github.com/alexdobin/STAR">STAR</a>,
+<a href="http://bio-bwa.sourceforge.net">BWA</a>,
+<a href="https://combine-lab.github.io/salmon/">Salmon</a>,
+<a href="https://sourceforge.net/projects/subread/">Subread</a>… There is no
+gold standard, but some tools are better suited for particular NGS
+analyses <span class="citation">(Giacomo et al. <label for="tufte-mn-7" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-7" class="margin-toggle">2017<span class="marginnote">Giacomo, B, K E Hayer, E J Kim, B Di Camillo, G A FitzGerald, and G R Grant. 2017. “Simulation-Based Comprehensive Benchmarking of Rna-Seq Aligners.” <em>Nature Methods</em> 2 (14): 135. <a href="https://doi.org/10.1038/nmeth.4106" class="uri">https://doi.org/10.1038/nmeth.4106</a>.</span>)</span>… In the case of RNAseq, it is important to
+use an aligner able to handle spliced reads.</p>
 <p><img src="figs/spliced_alignment.png" width="100%" style="display: block; margin: auto;"></p>
-<p>Here we show an example of what the command could look like when using <a href="https://ccb.jhu.edu/software/hisat2/manual.shtml">HISAT2</a> aligner, launched with default parameters. In this basic configuration, mandatory parameters are of course the fastq file(s) and the sequence of the genome on which the reads have to be aligned. In practical, the genome's sequence is not given as it is but in an indexed form.<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> Genome indexing allows the aligner to quickly find potential alignment sites for query sequences in a genome, which saves considerable time during alignment. Frequently used genome (human, mouse, rat...) already have indexed versions that can be downloaded directly. When working with another reference genome, a specific indexed genome has to be built.</span> Of course many of other parameters can be fine tuned (see the <a href="https://ccb.jhu.edu/software/hisat2/manual.shtml">manual</a> for more details). The alignment output file data is a <code>sam</code> file (see below).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">$</span><span class="st"> </span>hisat2 \
-  <span class="op">-</span>p <span class="dv">6</span> \                        <span class="co"># number of threads</span>
-  <span class="op">-</span>x genome_index \             <span class="co"># index for the reference genome</span>
-  <span class="dv">-1</span> SampleName_<span class="dv">1</span>_clean.fastq \ <span class="co"># clean fastq_file for fw reads</span>
-  <span class="dv">-2</span> SampleName_<span class="dv">2</span>_clean.fastq \ <span class="co"># clean fastq_file for rev reads</span>
-  <span class="op">-</span>S SampleName.sam             <span class="co"># sam file name</span></code></pre></div>
-<p>It is recommended to pay attention to the HISAT2 report to check the alignment rate. For a PE-end alignment it could look like this:</p>
+<p>Here we show an example of what the command could look like when using
+<a href="https://ccb.jhu.edu/software/hisat2/manual.shtml">HISAT2</a> aligner,
+launched with default parameters. In this basic configuration,
+mandatory parameters are of course the fastq file(s) and the sequence
+of the genome on which the reads have to be aligned. In practical, the
+genome’s sequence is not given as it is but in an indexed form.<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> Genome indexing allows the aligner to quickly find
+potential alignment sites for query sequences in a genome, which saves
+considerable time during alignment. Frequently used genome (human,
+mouse, rat…) already have indexed versions that can be downloaded
+directly. When working with another reference genome, a specific
+indexed genome has to be built.</span> Of course many of other parameters can be fine
+tuned (see the
+<a href="https://ccb.jhu.edu/software/hisat2/manual.shtml">manual</a> for more
+details). The alignment output file data is a <code>sam</code> file (see below).</p>
+<pre><code>$ hisat2 \
+  -p 6 \                        # number of threads
+  -x genome_index \             # index for the reference genome
+  -1 SampleName_1_clean.fastq \ # clean fastq_file for fw reads
+  -2 SampleName_2_clean.fastq \ # clean fastq_file for rev reads
+  -S SampleName.sam             # sam file name</code></pre>
+<p>It is recommended to pay attention to the HISAT2 report to check the
+alignment rate. For a PE-end alignment it could look like this:</p>
 <p><img src="figs/hisat2_report.png" width="100%" style="display: block; margin: auto;"></p>
 <p><strong>SAM format</strong></p>
-<p>The <a href="https://genome.sph.umich.edu/wiki/SAM">SAM</a> file, is a tab-delimited text file. Each line corresponds to alignment information for a single read. Each line has 11 mandatories fields for essential mapping information and a variable number of other fields for aligner specific information. An example of few entries from a SAM file is displayed below.</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">head</span> data/RNAseq_pipeline/example.sam</code></pre></div>
-<pre><code>## DRR016707.26395247   147 1   19626495    60  101M    =   19626490    -106    GTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGGAAGTTGTAAGG   DDDDDDDDDDDDDEEEEEEEFFFFFFHCHHHJJJHHJJJJJJJJJJJJIHFJJIHJJJJJJJJJJJJJJJJJJJJJJJJJJJJIJJJJHHHHHFFFFFCCC   AS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:101    YS:i:0  YT:Z:CP NH:i:1
-## DRR016707.26395247   99  1   19626490    60  101M    =   19626495    106 CTTCTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGGAAGTTG   CCCFFFFFHHHHHJIJJJJIJJJJJJJJJJIJJJJJJJJJJJJJJJHHIHIJJJIJJHIJJJIIIIIIJGIJJJJDHJJJHHHHHHHFFFFFFEDACEEDD   AS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:101    YS:i:0  YT:Z:CP NH:i:1
-## DRR016707.34969377   163 1   19626487    60  101M    =   19626493    107 ATTCTTCTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGGAAG   CC@FFFFFHFHFFHGGJCIFJGHIIIIGIIIIJIIJJJIGIIIIIIGII?:BFHGHIIIIGEHHHGIIDGGH@GGIGHJGHHHHCEHDEFDDFFEEECCEC   AS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:101    YS:i:0  YT:Z:CP NH:i:1
-## DRR016707.34969377   83  1   19626493    60  101M    =   19626487    -107    CTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGGAAGTTGTAA   CDDDDDDDDDDDDECEEEEEFFFFD?=HHHHGIIGEGIGIIIHIGDIHHGGGIIHGHIIIIGIIIGIGEIIGGGIIIIGIIIIGHDIIFHHHHFFBDD?C@   AS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:101    YS:i:0  YT:Z:CP NH:i:1
-## DRR016707.42561021   161 1   19626495    60  100M1S  =   19626494    0   GTAACAATGTTATCAGTAATGCTTTAAACTAAAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGGAAGTTGTAAGA   ?8?B1:BDD,,2&lt;:C&lt;2A&lt;&lt;,+A?CBFFAE&lt;+&lt;+2A?EEBD99:D&lt;*?B:*:D9B:DD/BDED@)=8=B;@=)).=(=@;7A)7.==&gt;;3);@AAA&gt;A@3;   AS:i:-8 XN:i:0  XM:i:2  XO:i:0  XG:i:0  NM:i:2  MD:Z:30C0C68    YT:Z:UP NH:i:1
-## DRR016707.42561021   81  1   19626494    60  101M    =   19626495    0   TGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGACACCAAGTCTGTTTCTTGTTTTGTATTTTCGCTCTGGAAGTTGTAAG   (9(??==3??&gt;==;5(55((6.((9&gt;;..;67&gt;)&gt;).5(A;;&gt;=/))8.=&gt;9)((?AB?92=00*;=::1)=:3=74=A7&lt;)0&lt;+&lt;AAAB?=&lt;+4AA&lt;;==   AS:i:-5 ZS:i:-19    XN:i:0  XM:i:2  XO:i:0  XG:i:0  NM:i:2  MD:Z:54A29T16   YT:Z:UP NH:i:1
-## DRR016707.43465443   163 1   19626483    60  101M    =   19626486    104 TGCCATTCTTCTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTG   B@@FAFFFHHHHHHIIIIJJJHJJIJJIIJJJJJJJFJJJJJJJJJJJJJHIJFHJJIJJJIJJIIJIJJHIHHIIIJJJJJHEHHHFEFFFFFEDEEEEE   AS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:101    YS:i:-1 YT:Z:CP NH:i:1
-## DRR016707.43465443   83  1   19626486    60  100M1S  =   19626483    -104    CATTCTTCTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGGAG   DDDDDDCDDDDCCDEEEEDFFFFFDBHHHHHGJJGHDJIJJIGIHJGGJJJJJJJJJJJJJHG?JJJJJJJJJJJIIJJJJIJJJJJIGHGHHFFFFFCCC   AS:i:-1 ZS:i:-12    XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:100    YS:i:0  YT:Z:CP NH:i:1
-## DRR016707.64407509   147 1   19626484    60  101M    =   19626484    -101    GCCATTCTTCTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGG   DDDDDCDDDDDDEEDEEEEFFFFFFHHHHHHJJIJIGHFIHJJJIHFIHHFJJJJJIJJJJJJJIHJJJJJIJJJJJJJJJJJJJJJJHHHHHFFFFFBB@   AS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:101    YS:i:0  YT:Z:CP NH:i:1
-## DRR016707.64407509   99  1   19626484    60  101M    =   19626484    -101    GCCATTCTTCTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGG   CCCFFFFFHHHHHJJJJJJJIJJJJJJJJJJJJJJJJJJJJJIJJJJJJIJJDGIJJJJJJJJCGIJJJIIHHJJJHHIJJJHHHHHDFFFFFFEEEEEED   AS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:101    YS:i:0  YT:Z:CP NH:i:1</code></pre>
+<p>The <a href="https://genome.sph.umich.edu/wiki/SAM">SAM</a> file, is a
+tab-delimited text file. Each line corresponds to alignment
+information for a single read. Each line has 11 mandatories fields for
+essential mapping information and a variable number of other fields
+for aligner specific information. An example of few entries from a SAM
+file is displayed below.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="fu">head</span> wsbim2122_data/RNAseq_pipeline/example.sam</a></code></pre></div>
+<pre><code>## DRR016707.26395247	147	1	19626495	60	101M	=	19626490	-106	GTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGGAAGTTGTAAGG	DDDDDDDDDDDDDEEEEEEEFFFFFFHCHHHJJJHHJJJJJJJJJJJJIHFJJIHJJJJJJJJJJJJJJJJJJJJJJJJJJJJIJJJJHHHHHFFFFFCCC	AS:i:0	XN:i:0	XM:i:0	XO:i:0	XG:i:0	NM:i:0	MD:Z:101	YS:i:0	YT:Z:CP	NH:i:1
+## DRR016707.26395247	99	1	19626490	60	101M	=	19626495	106	CTTCTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGGAAGTTG	CCCFFFFFHHHHHJIJJJJIJJJJJJJJJJIJJJJJJJJJJJJJJJHHIHIJJJIJJHIJJJIIIIIIJGIJJJJDHJJJHHHHHHHFFFFFFEDACEEDD	AS:i:0	XN:i:0	XM:i:0	XO:i:0	XG:i:0	NM:i:0	MD:Z:101	YS:i:0	YT:Z:CP	NH:i:1
+## DRR016707.34969377	163	1	19626487	60	101M	=	19626493	107	ATTCTTCTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGGAAG	CC@FFFFFHFHFFHGGJCIFJGHIIIIGIIIIJIIJJJIGIIIIIIGII?:BFHGHIIIIGEHHHGIIDGGH@GGIGHJGHHHHCEHDEFDDFFEEECCEC	AS:i:0	XN:i:0	XM:i:0	XO:i:0	XG:i:0	NM:i:0	MD:Z:101	YS:i:0	YT:Z:CP	NH:i:1
+## DRR016707.34969377	83	1	19626493	60	101M	=	19626487	-107	CTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGGAAGTTGTAA	CDDDDDDDDDDDDECEEEEEFFFFD?=HHHHGIIGEGIGIIIHIGDIHHGGGIIHGHIIIIGIIIGIGEIIGGGIIIIGIIIIGHDIIFHHHHFFBDD?C@	AS:i:0	XN:i:0	XM:i:0	XO:i:0	XG:i:0	NM:i:0	MD:Z:101	YS:i:0	YT:Z:CP	NH:i:1
+## DRR016707.42561021	161	1	19626495	60	100M1S	=	19626494	0	GTAACAATGTTATCAGTAATGCTTTAAACTAAAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGGAAGTTGTAAGA	?8?B1:BDD,,2&lt;:C&lt;2A&lt;&lt;,+A?CBFFAE&lt;+&lt;+2A?EEBD99:D&lt;*?B:*:D9B:DD/BDED@)=8=B;@=)).=(=@;7A)7.==&gt;;3);@AAA&gt;A@3;	AS:i:-8	XN:i:0	XM:i:2	XO:i:0	XG:i:0	NM:i:2	MD:Z:30C0C68	YT:Z:UP	NH:i:1
+## DRR016707.42561021	81	1	19626494	60	101M	=	19626495	0	TGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGACACCAAGTCTGTTTCTTGTTTTGTATTTTCGCTCTGGAAGTTGTAAG	(9(??==3??&gt;==;5(55((6.((9&gt;;..;67&gt;)&gt;).5(A;;&gt;=/))8.=&gt;9)((?AB?92=00*;=::1)=:3=74=A7&lt;)0&lt;+&lt;AAAB?=&lt;+4AA&lt;;==	AS:i:-5	ZS:i:-19	XN:i:0	XM:i:2	XO:i:0	XG:i:0	NM:i:2	MD:Z:54A29T16	YT:Z:UP	NH:i:1
+## DRR016707.43465443	163	1	19626483	60	101M	=	19626486	104	TGCCATTCTTCTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTG	B@@FAFFFHHHHHHIIIIJJJHJJIJJIIJJJJJJJFJJJJJJJJJJJJJHIJFHJJIJJJIJJIIJIJJHIHHIIIJJJJJHEHHHFEFFFFFEDEEEEE	AS:i:0	XN:i:0	XM:i:0	XO:i:0	XG:i:0	NM:i:0	MD:Z:101	YS:i:-1	YT:Z:CP	NH:i:1
+## DRR016707.43465443	83	1	19626486	60	100M1S	=	19626483	-104	CATTCTTCTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGGAG	DDDDDDCDDDDCCDEEEEDFFFFFDBHHHHHGJJGHDJIJJIGIHJGGJJJJJJJJJJJJJHG?JJJJJJJJJJJIIJJJJIJJJJJIGHGHHFFFFFCCC	AS:i:-1	ZS:i:-12	XN:i:0	XM:i:0	XO:i:0	XG:i:0	NM:i:0	MD:Z:100	YS:i:0	YT:Z:CP	NH:i:1
+## DRR016707.64407509	147	1	19626484	60	101M	=	19626484	-101	GCCATTCTTCTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGG	DDDDDCDDDDDDEEDEEEEFFFFFFHHHHHHJJIJIGHFIHJJJIHFIHHFJJJJJIJJJJJJJIHJJJJJIJJJJJJJJJJJJJJJJHHHHHFFFFFBB@	AS:i:0	XN:i:0	XM:i:0	XO:i:0	XG:i:0	NM:i:0	MD:Z:101	YS:i:0	YT:Z:CP	NH:i:1
+## DRR016707.64407509	99	1	19626484	60	101M	=	19626484	-101	GCCATTCTTCTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGG	CCCFFFFFHHHHHJJJJJJJIJJJJJJJJJJJJJJJJJJJJJIJJJJJJIJJDGIJJJJJJJJCGIJJJIIHHJJJHHIJJJHHHHHDFFFFFFEEEEEED	AS:i:0	XN:i:0	XM:i:0	XO:i:0	XG:i:0	NM:i:0	MD:Z:101	YS:i:0	YT:Z:CP	NH:i:1</code></pre>
 <p>Field 1: Sequence ID</p>
-<p>Field 2: <a href="https://broadinstitute.github.io/picard/explain-flags.html">SAM Flag</a>. It gives information about the read (is it paired, aligned, is the mate read properly aligned...)</p>
+<p>Field 2: <a href="https://broadinstitute.github.io/picard/explain-flags.html">SAM Flag</a>. It gives information about
+the read (is it paired, aligned, is the mate read properly aligned…)</p>
 <p>Field 3: Chromosome where alignment occurs</p>
 <p>Field 4: Position of alignment</p>
 <p>Field 5: Mapping quality score (read uniquely mapped (60), multiply mapped (1) or unmapped (0))</p>
-<p>Field 6: <a href="https://sites.google.com/site/bioinformaticsremarks/bioinfo/sam-bam-format/what-is-a-cigar">CIGAR</a> string. It is a representation of alignment indicating positions of match/mismatch/deletion/insertion compared to the reference.</p>
-<p>Field 7: Reference name of the mate (Set to '=' if the mate’s reference sequence is the same as this alignment’s)</p>
+<p>Field 6: <a href="https://sites.google.com/site/bioinformaticsremarks/bioinfo/sam-bam-format/what-is-a-cigar">CIGAR</a>
+string. It is a representation of alignment indicating positions of match/mismatch/deletion/insertion
+compared to the reference.</p>
+<p>Field 7: Reference name of the mate (Set to ‘=’ if the mate’s reference sequence is the same as this alignment’s)</p>
 <p>Field 8: Position of mate</p>
 <p>Field 9: Inferred fragment length</p>
 <p>Field 10: Read sequence (reverse-complemented if aligned to the reverse strand)</p>
 <p>Field 11: Base quality (Phred score)</p>
 <p>Field 12: Optional. See <a href="http://daehwankimlab.github.io/hisat2/manual/">hisat2 manual</a> for more information.</p>
 <p><strong>BAM format</strong></p>
-<p>BAM file is a compressed binary version of SAM file. SAM files can be easily converted into BAM files using <a href="http://www.htslib.org%20software">samtools</a>, and it is sometimes mandatory to sort the SAM/BAM by chromosomal coordinates for downstream applications.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">samtools view <span class="op">-</span>Sb XXX.sam <span class="op">|</span><span class="st"> </span>samtools sort <span class="op">&gt;</span><span class="st"> </span>XXX.bam</code></pre></div>
+<p>BAM file is a compressed binary version of SAM file. SAM files can be
+easily converted into BAM files using <a href="http://www.htslib.org%20software">samtools</a>, and it is sometimes mandatory to sort the SAM/BAM by
+chromosomal coordinates for downstream applications.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1">samtools view <span class="op">-</span>Sb XXX.sam <span class="op">|</span><span class="st"> </span>samtools sort <span class="op">&gt;</span><span class="st"> </span>XXX.bam</a></code></pre></div>
 </div>
 <div id="counting" class="section level2">
 <h2>
 <span class="header-section-number">4.6</span> Counting</h2>
-<p>Now comes the quantification step. It can be performed with several tools such as <a href="https://pypi.org/project/HTSeq/">htseq-count</a> or <a href="http://bioinf.wehi.edu.au/featureCounts/">FeatureCounts</a>. We will describe the latter as it runs much faster. It was developed for counting reads to genomic features such as genes, exons, promoters and genomic bins. FeatureCounts takes as input SAM/BAM files and an annotation file (such as a gtf file) containing chromosomal coordinates of features.</p>
-<p>The Gene Transfer Format (GTF) is a widely used format for storing gene annotations. Human and mouse GTF files can be downloaded easily from <a href="http://www.ensembl.org/info/data/ftp/index.html">Ensembl</a> or from the <a href="https://www.gencodegenes.org/human/">UCSC table browser</a>. The first few lines of gtf annotation file for human genome assembly GRCh38 look like this:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">head</span> -n 20 data/RNAseq_pipeline/Homo_sapiens.GRCh38.94.gtf</code></pre></div>
+<p>Now comes the quantification step. It can be performed with several
+tools such as <a href="https://pypi.org/project/HTSeq/">htseq-count</a> or
+<a href="http://bioinf.wehi.edu.au/featureCounts/">FeatureCounts</a>. We will
+describe the latter as it runs much faster. It was developed for
+counting reads to genomic features such as genes, exons, promoters and
+genomic bins. FeatureCounts takes as input SAM/BAM files and an
+annotation file (such as a gtf file) containing chromosomal
+coordinates of features.</p>
+<p>The Gene Transfer Format (GTF) is a widely used format for storing
+gene annotations. Human and mouse GTF files can be downloaded easily
+from <a href="http://www.ensembl.org/info/data/ftp/index.html">Ensembl</a> or
+from the <a href="https://www.gencodegenes.org/human/">UCSC table
+browser</a>. The first few lines of
+gtf annotation file for human genome assembly GRCh38 look like this:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="fu">head</span> -n 20 wsbim2122_data/RNAseq_pipeline/Homo_sapiens.GRCh38.94.gtf</a></code></pre></div>
 <pre><code>## #!genome-build GRCh38.p12
 ## #!genome-version GRCh38
 ## #!genome-date 2013-12
 ## #!genome-build-accession NCBI:GCA_000001405.27
 ## #!genebuild-last-updated 2018-07
-## 1    havana  gene    11869   14409   .   +   .   gene_id "ENSG00000223972"; gene_version "5"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene";
-## 1    havana  transcript  11869   14409   .   +   .   gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000456328"; transcript_version "2"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-202"; transcript_source "havana"; transcript_biotype "processed_transcript"; tag "basic"; transcript_support_level "1";
-## 1    havana  exon    11869   12227   .   +   .   gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000456328"; transcript_version "2"; exon_number "1"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-202"; transcript_source "havana"; transcript_biotype "processed_transcript"; exon_id "ENSE00002234944"; exon_version "1"; tag "basic"; transcript_support_level "1";
-## 1    havana  exon    12613   12721   .   +   .   gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000456328"; transcript_version "2"; exon_number "2"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-202"; transcript_source "havana"; transcript_biotype "processed_transcript"; exon_id "ENSE00003582793"; exon_version "1"; tag "basic"; transcript_support_level "1";
-## 1    havana  exon    13221   14409   .   +   .   gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000456328"; transcript_version "2"; exon_number "3"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-202"; transcript_source "havana"; transcript_biotype "processed_transcript"; exon_id "ENSE00002312635"; exon_version "1"; tag "basic"; transcript_support_level "1";
-## 1    havana  transcript  12010   13670   .   +   .   gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000450305"; transcript_version "2"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-201"; transcript_source "havana"; transcript_biotype "transcribed_unprocessed_pseudogene"; tag "basic"; transcript_support_level "NA";
-## 1    havana  exon    12010   12057   .   +   .   gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000450305"; transcript_version "2"; exon_number "1"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-201"; transcript_source "havana"; transcript_biotype "transcribed_unprocessed_pseudogene"; exon_id "ENSE00001948541"; exon_version "1"; tag "basic"; transcript_support_level "NA";
-## 1    havana  exon    12179   12227   .   +   .   gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000450305"; transcript_version "2"; exon_number "2"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-201"; transcript_source "havana"; transcript_biotype "transcribed_unprocessed_pseudogene"; exon_id "ENSE00001671638"; exon_version "2"; tag "basic"; transcript_support_level "NA";
-## 1    havana  exon    12613   12697   .   +   .   gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000450305"; transcript_version "2"; exon_number "3"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-201"; transcript_source "havana"; transcript_biotype "transcribed_unprocessed_pseudogene"; exon_id "ENSE00001758273"; exon_version "2"; tag "basic"; transcript_support_level "NA";
-## 1    havana  exon    12975   13052   .   +   .   gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000450305"; transcript_version "2"; exon_number "4"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-201"; transcript_source "havana"; transcript_biotype "transcribed_unprocessed_pseudogene"; exon_id "ENSE00001799933"; exon_version "2"; tag "basic"; transcript_support_level "NA";
-## 1    havana  exon    13221   13374   .   +   .   gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000450305"; transcript_version "2"; exon_number "5"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-201"; transcript_source "havana"; transcript_biotype "transcribed_unprocessed_pseudogene"; exon_id "ENSE00001746346"; exon_version "2"; tag "basic"; transcript_support_level "NA";
-## 1    havana  exon    13453   13670   .   +   .   gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000450305"; transcript_version "2"; exon_number "6"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-201"; transcript_source "havana"; transcript_biotype "transcribed_unprocessed_pseudogene"; exon_id "ENSE00001863096"; exon_version "1"; tag "basic"; transcript_support_level "NA";
-## 1    havana  gene    14404   29570   .   -   .   gene_id "ENSG00000227232"; gene_version "5"; gene_name "WASH7P"; gene_source "havana"; gene_biotype "unprocessed_pseudogene";
-## 1    havana  transcript  14404   29570   .   -   .   gene_id "ENSG00000227232"; gene_version "5"; transcript_id "ENST00000488147"; transcript_version "1"; gene_name "WASH7P"; gene_source "havana"; gene_biotype "unprocessed_pseudogene"; transcript_name "WASH7P-201"; transcript_source "havana"; transcript_biotype "unprocessed_pseudogene"; tag "basic"; transcript_support_level "NA";
-## 1    havana  exon    29534   29570   .   -   .   gene_id "ENSG00000227232"; gene_version "5"; transcript_id "ENST00000488147"; transcript_version "1"; exon_number "1"; gene_name "WASH7P"; gene_source "havana"; gene_biotype "unprocessed_pseudogene"; transcript_name "WASH7P-201"; transcript_source "havana"; transcript_biotype "unprocessed_pseudogene"; exon_id "ENSE00001890219"; exon_version "1"; tag "basic"; transcript_support_level "NA";</code></pre>
-<p>FeatureCounts will count the number of uniquely mapped reads assigned to features (e.g. an exon) or meta-features (e.g. a gene) of the gtf file. When summarizing reads at gene level, read counts obtained for exons belonging to the same gene will be added up to yield the read count for the corresponding gene. Note that an exon-spanning read will be counted only once for the corresponding gene even if it overlaps with more than one exon.</p>
+## 1	havana	gene	11869	14409	.	+	.	gene_id "ENSG00000223972"; gene_version "5"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene";
+## 1	havana	transcript	11869	14409	.	+	.	gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000456328"; transcript_version "2"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-202"; transcript_source "havana"; transcript_biotype "processed_transcript"; tag "basic"; transcript_support_level "1";
+## 1	havana	exon	11869	12227	.	+	.	gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000456328"; transcript_version "2"; exon_number "1"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-202"; transcript_source "havana"; transcript_biotype "processed_transcript"; exon_id "ENSE00002234944"; exon_version "1"; tag "basic"; transcript_support_level "1";
+## 1	havana	exon	12613	12721	.	+	.	gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000456328"; transcript_version "2"; exon_number "2"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-202"; transcript_source "havana"; transcript_biotype "processed_transcript"; exon_id "ENSE00003582793"; exon_version "1"; tag "basic"; transcript_support_level "1";
+## 1	havana	exon	13221	14409	.	+	.	gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000456328"; transcript_version "2"; exon_number "3"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-202"; transcript_source "havana"; transcript_biotype "processed_transcript"; exon_id "ENSE00002312635"; exon_version "1"; tag "basic"; transcript_support_level "1";
+## 1	havana	transcript	12010	13670	.	+	.	gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000450305"; transcript_version "2"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-201"; transcript_source "havana"; transcript_biotype "transcribed_unprocessed_pseudogene"; tag "basic"; transcript_support_level "NA";
+## 1	havana	exon	12010	12057	.	+	.	gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000450305"; transcript_version "2"; exon_number "1"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-201"; transcript_source "havana"; transcript_biotype "transcribed_unprocessed_pseudogene"; exon_id "ENSE00001948541"; exon_version "1"; tag "basic"; transcript_support_level "NA";
+## 1	havana	exon	12179	12227	.	+	.	gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000450305"; transcript_version "2"; exon_number "2"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-201"; transcript_source "havana"; transcript_biotype "transcribed_unprocessed_pseudogene"; exon_id "ENSE00001671638"; exon_version "2"; tag "basic"; transcript_support_level "NA";
+## 1	havana	exon	12613	12697	.	+	.	gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000450305"; transcript_version "2"; exon_number "3"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-201"; transcript_source "havana"; transcript_biotype "transcribed_unprocessed_pseudogene"; exon_id "ENSE00001758273"; exon_version "2"; tag "basic"; transcript_support_level "NA";
+## 1	havana	exon	12975	13052	.	+	.	gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000450305"; transcript_version "2"; exon_number "4"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-201"; transcript_source "havana"; transcript_biotype "transcribed_unprocessed_pseudogene"; exon_id "ENSE00001799933"; exon_version "2"; tag "basic"; transcript_support_level "NA";
+## 1	havana	exon	13221	13374	.	+	.	gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000450305"; transcript_version "2"; exon_number "5"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-201"; transcript_source "havana"; transcript_biotype "transcribed_unprocessed_pseudogene"; exon_id "ENSE00001746346"; exon_version "2"; tag "basic"; transcript_support_level "NA";
+## 1	havana	exon	13453	13670	.	+	.	gene_id "ENSG00000223972"; gene_version "5"; transcript_id "ENST00000450305"; transcript_version "2"; exon_number "6"; gene_name "DDX11L1"; gene_source "havana"; gene_biotype "transcribed_unprocessed_pseudogene"; transcript_name "DDX11L1-201"; transcript_source "havana"; transcript_biotype "transcribed_unprocessed_pseudogene"; exon_id "ENSE00001863096"; exon_version "1"; tag "basic"; transcript_support_level "NA";
+## 1	havana	gene	14404	29570	.	-	.	gene_id "ENSG00000227232"; gene_version "5"; gene_name "WASH7P"; gene_source "havana"; gene_biotype "unprocessed_pseudogene";
+## 1	havana	transcript	14404	29570	.	-	.	gene_id "ENSG00000227232"; gene_version "5"; transcript_id "ENST00000488147"; transcript_version "1"; gene_name "WASH7P"; gene_source "havana"; gene_biotype "unprocessed_pseudogene"; transcript_name "WASH7P-201"; transcript_source "havana"; transcript_biotype "unprocessed_pseudogene"; tag "basic"; transcript_support_level "NA";
+## 1	havana	exon	29534	29570	.	-	.	gene_id "ENSG00000227232"; gene_version "5"; transcript_id "ENST00000488147"; transcript_version "1"; exon_number "1"; gene_name "WASH7P"; gene_source "havana"; gene_biotype "unprocessed_pseudogene"; transcript_name "WASH7P-201"; transcript_source "havana"; transcript_biotype "unprocessed_pseudogene"; exon_id "ENSE00001890219"; exon_version "1"; tag "basic"; transcript_support_level "NA";</code></pre>
+<p>FeatureCounts will count the number of uniquely mapped reads assigned
+to features (e.g. an exon) or meta-features (e.g. a gene) of the gtf
+file. When summarizing reads at gene level, read counts obtained for
+exons belonging to the same gene will be added up to yield the read
+count for the corresponding gene. Note that an exon-spanning read
+will be counted only once for the corresponding gene even if it
+overlaps with more than one exon.</p>
 <p><img src="figs/featurecount_metafeature.png" width="100%" style="display: block; margin: auto;"></p>
-<p>FeatureCounts could be launched with the following command. As usual, many of other parameters can be fine-tuned (see the <a href="http://manpages.ubuntu.com/manpages/bionic/man1/featureCounts.1.html">manual</a> for more details).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">featureCounts \
-<span class="op">-</span>p \                  <span class="co"># paired (fragments counted  instead  of  reads)</span>
-<span class="op">-</span>a annotations.gtf \  <span class="co"># name of the annotation file</span>
-<span class="op">-</span>t exon \             <span class="co"># feature type in GTF annotation</span>
-<span class="op">-</span>g gene_id \          <span class="co"># Meta-features used in GTF annotation</span>
-<span class="op">-</span>s <span class="dv">0</span> \                <span class="co"># strand-specificity</span>
-<span class="op">-</span>o counts.tsv \       <span class="co"># Name of the output file</span>
-mapping_results.bam</code></pre></div>
-<p>Here is an example of featurecounts output file. The last column gives the raw counts of each gene in that sample.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">counts_result &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="dt">file =</span> <span class="st">"data/RNAseq_pipeline/OD01_10_featurecounts.tsv"</span>, <span class="dt">skip =</span> <span class="dv">1</span>)</code></pre></div>
+<p>FeatureCounts could be launched with the following command. As usual,
+many of other parameters can be fine-tuned (see the
+<a href="http://manpages.ubuntu.com/manpages/bionic/man1/featureCounts.1.html">manual</a>
+for more details).</p>
+<pre><code>featureCounts \
+-p \                  # paired (fragments counted  instead  of  reads)
+-a annotations.gtf \  # name of the annotation file
+-t exon \             # feature type in GTF annotation
+-g gene_id \          # Meta-features used in GTF annotation
+-s 0 \                # strand-specificity
+-o counts.tsv \       # Name of the output file
+mapping_results.bam</code></pre>
+<p>Here is an example of featurecounts output file. The last column gives
+the raw counts of each gene in that sample.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1">counts_result &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="dt">file =</span> <span class="st">"wsbim2122_data/RNAseq_pipeline/OD01_10_featurecounts.tsv.gz"</span>, <span class="dt">skip =</span> <span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   Geneid = col_character(),
@@ -405,9 +626,9 @@ mapping_results.bam</code></pre></div>
 ##   Length = col_double(),
 ##   OD01_10.bam = col_double()
 ## )</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">datatable</span>(<span class="kw">head</span>(counts_result))</code></pre></div>
-<div id="htmlwidget-be28bd8f5b7b2fc3cebf" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-be28bd8f5b7b2fc3cebf">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],["ENSG00000223972","ENSG00000227232","ENSG00000278267","ENSG00000243485","ENSG00000284332","ENSG00000237613"],["1;1;1;1;1;1;1;1;1","1;1;1;1;1;1;1;1;1;1;1","1","1;1;1;1;1","1","1;1;1;1;1"],["11869;12010;12179;12613;12613;12975;13221;13221;13453","14404;15005;15796;16607;16858;17233;17606;17915;18268;24738;29534","17369","29554;30267;30564;30976;30976","30366","34554;35245;35277;35721;35721"],["12227;12057;12227;12721;12697;13052;13374;14409;13670","14501;15038;15947;16765;17055;17368;17742;18061;18366;24891;29570","17436","30039;30667;30667;31109;31097","30503","35174;35481;35481;36073;36081"],["+;+;+;+;+;+;+;+;+","-;-;-;-;-;-;-;-;-;-;-","-","+;+;+;+;+","+","-;-;-;-;-"],[1735,1351,68,1021,138,1219],[0,28,4,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Geneid<\/th>\n      <th>Chr<\/th>\n      <th>Start<\/th>\n      <th>End<\/th>\n      <th>Strand<\/th>\n      <th>Length<\/th>\n      <th>OD01_10.bam<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[6,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><div class="question">
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="kw">datatable</span>(<span class="kw">head</span>(counts_result))</a></code></pre></div>
+<div id="htmlwidget-ece484cca19e0c98f700" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ece484cca19e0c98f700">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],["ENSG00000223972","ENSG00000227232","ENSG00000278267","ENSG00000243485","ENSG00000284332","ENSG00000237613"],["1;1;1;1;1;1;1;1;1","1;1;1;1;1;1;1;1;1;1;1","1","1;1;1;1;1","1","1;1;1;1;1"],["11869;12010;12179;12613;12613;12975;13221;13221;13453","14404;15005;15796;16607;16858;17233;17606;17915;18268;24738;29534","17369","29554;30267;30564;30976;30976","30366","34554;35245;35277;35721;35721"],["12227;12057;12227;12721;12697;13052;13374;14409;13670","14501;15038;15947;16765;17055;17368;17742;18061;18366;24891;29570","17436","30039;30667;30667;31109;31097","30503","35174;35481;35481;36073;36081"],["+;+;+;+;+;+;+;+;+","-;-;-;-;-;-;-;-;-;-;-","-","+;+;+;+;+","+","-;-;-;-;-"],[1735,1351,68,1021,138,1219],[0,28,4,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Geneid<\/th>\n      <th>Chr<\/th>\n      <th>Start<\/th>\n      <th>End<\/th>\n      <th>Strand<\/th>\n      <th>Length<\/th>\n      <th>OD01_10.bam<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[6,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><div class="question">
 <p class="question-begin">
 ► Question
 </p>
@@ -433,32 +654,33 @@ mapping_results.bam</code></pre></div>
 <ol style="list-style-type: decimal">
 <li>How many genes are tested ?</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(counts_result)</code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="kw">nrow</span>(counts_result)</a></code></pre></div>
 <pre><code>## [1] 58735</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>How many reads were assigned to genes?</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(counts_result<span class="op">$</span>OD01_<span class="fl">10.</span>bam)</code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="kw">sum</span>(counts_result<span class="op">$</span>OD01_<span class="fl">10.</span>bam)</a></code></pre></div>
 <pre><code>## [1] 18027658</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Inspect the counts. What is the maximum value? How many genes have zero counts ?</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(counts_result<span class="op">$</span>OD01_<span class="fl">10.</span>bam)</code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="kw">summary</span>(counts_result<span class="op">$</span>OD01_<span class="fl">10.</span>bam)</a></code></pre></div>
 <pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
 ##      0.0      0.0      0.0    306.9      7.0 167208.0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">counts_result <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(OD01_<span class="fl">10.</span>bam <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">nrow</span>()</code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">counts_result <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb73-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(OD01_<span class="fl">10.</span>bam <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb73-3" data-line-number="3"><span class="st">  </span><span class="kw">nrow</span>()</a></code></pre></div>
 <pre><code>## [1] 36619</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Plot the distribution of counts. How does it look like?</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">counts_result <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">rename</span>(<span class="dt">counts =</span> OD01_<span class="fl">10.</span>bam) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">log2</span>(counts <span class="op">+</span><span class="st"> </span><span class="dv">1</span>))) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>)</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-36-1.png" width="672"></p>
-<p>Note that a "pseudo-count" was added before the log2 transformation of the counts, to avoid elimination of counts equal to zero.</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1">counts_result <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb75-2" data-line-number="2"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">counts =</span> OD01_<span class="fl">10.</span>bam) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb75-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">log2</span>(counts <span class="op">+</span><span class="st"> </span><span class="dv">1</span>))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb75-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>)</a></code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-32-1.png" width="672"></p>
+<p>Note that a “pseudo-count” was added before the log2 transformation of the counts,
+to avoid elimination of counts equal to zero.</p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -468,9 +690,16 @@ mapping_results.bam</code></pre></div>
 <div id="differential-expression-analysis" class="section level2">
 <h2>
 <span class="header-section-number">4.7</span> Differential expression analysis</h2>
-<p>The aim of an RNAseq experiment is often to compare different types of cells, or to compare treated cells to control cells, to see if some genes are up- or down- regulated.</p>
+<p>The aim of an RNAseq experiment is often to compare different types of
+cells, or to compare treated cells to control cells, to see if some
+genes are up- or down- regulated.</p>
 <p><img src="figs/DE_analysis.png" width="100%" style="display: block; margin: auto;"></p>
-<p>Once fastq files from each sample have been processed into raw counts, results can be merged in a single count matrix, were each column gives the counts evaluated for each gene in each sample. This is the starting point of a differential expression analysis. As it addresses relatively complex statistical concepts, it will be covered in the next chapter.</p>
+<p>Once fastq files from each sample have been processed into raw counts,
+results can be merged in a single count matrix, were each column gives
+the counts evaluated for each gene in each sample. This is the
+starting point of a differential expression analysis. As it addresses
+relatively complex statistical concepts, it will be covered in the
+next chapter.</p>
 
 </div>
 </div></body></html>

@@ -135,31 +135,31 @@ $ pwd
 To create a shared set of files and directories, we will use the
 `rWSBIM2122::prepare_shell()` function in RStudio's R console:
 
-```{r rm_shell_data, echo = FALSE}
-unlink("shell_data", recursive = TRUE, force = TRUE)
+```{r rm_wsbim2122_data, echo = FALSE}
+unlink("wsbim2122_data", recursive = TRUE, force = TRUE)
 ```
 
-```{r prepare_shell_data, eval = FALSE}
+```{r prepare_wsbim2122_data}
 rWSBIM2122::prepare_shell()
 ```
 
 `r msmbstyle::question_begin()`
 
 Using the `ls` shell command in the Terminal, verify that you have a
-new directory called `shell_data`.
+new directory called `wsbim2122_data`.
 
 `r msmbstyle::question_end()`
 
-Let's say we want to navigate to the `shell_data` directory we saw
+Let's say we want to navigate to the `wsbim2122_data` directory we saw
 above. We can use the `cd` command (*change directory*) to get there:
 
 ```
-$ cd shell_data
+$ cd wsbim2122_data
 ```
 
 `r msmbstyle::question_begin()`
 
-What files and/or directories can you find in the `shell_data`
+What files and/or directories can you find in the `wsbim2122_data`
 directory? You can make the `ls` output more comprehensible by using
 the flag `-F`, which tells ls to add a trailing `/` to the names of
 directories.
@@ -219,7 +219,7 @@ $ cd she<tab>
 ```
 
 The shell will fill in the rest of the directory name for
-`shell_data`.
+`wsbim2122_data`.
 
 Tab completion isn't limited to `cd`; it works with any shell command.
 
@@ -252,8 +252,8 @@ also two hidden directories, namely `.` and `..`. `.` refers to the
 current directory (the one shown by `pwd`) and `..` refers to the
 parent directory.
 
-We have seen how we can use `cd shell_data` to move into
-`shell_data`. To move back out of `shell_data`, you can use:
+We have seen how we can use `cd wsbim2122_data` to move into
+`wsbim2122_data`. To move back out of `wsbim2122_data`, you can use:
 
 ```
 $ cd ..
@@ -264,7 +264,7 @@ to mean *the current user's home directory*.
 
 `r msmbstyle::question_begin()`
 
-- Navitage to the `shell_data` directory. From there, list the files
+- Navitage to the `wsbim2122_data` directory. From there, list the files
   and direcoties in it's parent directory.
 
 - Using a single command, list the files and directries in your home
@@ -291,7 +291,7 @@ $ touch my_file.txt
 
 `r msmbstyle::question_begin()`
 
-Make sure you are in the `shell_data` directory and create a new one
+Make sure you are in the `wsbim2122_data` directory and create a new one
 called `wsbim2122_notes` and, in that directory, 3 files respectively
 called `shell_notes.txt`, `report.Rmd` and `omics.md`.
 
@@ -330,11 +330,11 @@ or other special characters, you should surround the name in quotes
 
 To view a file, you can use `cat` to display the whole file at
 once. This might work for the file that you just edited (try it out),
-but not for any of the files in the `shell_data/data` directory.
+but not for any of the files in the `wsbim2122_data/data` directory.
 
 `r msmbstyle::question_begin()`
 
-- Navigate to the `shell_data/data` directory.
+- Navigate to the `wsbim2122_data/data` directory.
 - View the content of one of the files starting with `seq`.
 - Use either of `head` or `tail` to view the few first and last lines
   of that fils.
@@ -409,7 +409,7 @@ return to the shell.
 
 ### Creating, moving, copying, and removing {-}
 
-Make sure you are inside the `shell_data/data` directory and create
+Make sure you are inside the `wsbim2122_data/data` directory and create
 two new directories, namely `fas` and `sim`.
 
 To copy the `seq_1.fas` file into the `fas`:
@@ -476,11 +476,11 @@ $ mv seq*.fas seq
 Reproduce the following folder structure
 
 ```
-shell_data/new_dir
-shell_data/new_dir/file1.txt
-shell_data/new_dir/file2.txt
-shell_data/new_dir/data/seq_1.fas
-shell_data/new_dir/data/sim_100.fas
+wsbim2122_data/new_dir
+wsbim2122_data/new_dir/file1.txt
+wsbim2122_data/new_dir/file2.txt
+wsbim2122_data/new_dir/data/seq_1.fas
+wsbim2122_data/new_dir/data/sim_100.fas
 ```
 
 `r msmbstyle::question_end()`
