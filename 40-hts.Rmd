@@ -63,10 +63,17 @@ loop over and hybridize to adjacent oligonucleotides and are extended again to f
 The process is repeated on each template by cycles of denaturation and amplification to create millions
 of individual, dense clonal clusters containing ~2,000 molecules.
 
+<<<<<<< HEAD
 Each cluster of dsDNA bridges is denatured, and the reverse strand is removed by specific base cleavage,
 leaving the forward DNA strand. The 3’-ends of the DNA strands and flow cell-bound oligonucleotides are
 blocked to prevent interference with the sequencing reaction. The sequencing primer is hybridized to the
 the Illumina adapter. Clusters are ready for sequencing.
+=======
+Each cluster of dsDNA bridges is denatured, and the reverse strand is removed by specific base cleavage, 
+leaving the forward DNA strand. The 3’-ends of the DNA strands and flow cell-bound oligonucleotides are 
+blocked to prevent interference with the sequencing reaction. The sequencing primer is hybridized to the 
+Illumina adapter. Clusters are ready for sequencing.
+>>>>>>> 16dc704538c143d57fcd0e2fd35f318a87ec0aef
 
 ```{r, echo = FALSE, fig.align ='center', out.width = '100%'}
 knitr::include_graphics("figs/cluster_amplification.png")
