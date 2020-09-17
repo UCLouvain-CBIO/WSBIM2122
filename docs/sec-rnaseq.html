@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-09-17" />
+<meta name="date" content="2020-09-18" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -327,7 +327,7 @@ coldata</code></pre></div>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">log2</span>(counts <span class="op">+</span><span class="st"> </span><span class="dv">1</span>), <span class="dt">fill =</span> sample)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sample)</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-51-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-52-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -559,7 +559,7 @@ res_tbl <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span>
                <span class="kw">as.numeric</span>(<span class="kw">sub</span>(<span class="st">'%'</span>, <span class="dt">replacement =</span> <span class="st">''</span>, <span class="kw">names</span>(<span class="kw">metadata</span>(res)<span class="op">$</span>filterThreshold)))<span class="op">/</span><span class="dv">100</span>,
              <span class="dt">color =</span> <span class="st">'red'</span>)</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-61-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-62-1.png" width="672"></p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -638,7 +638,7 @@ dds_bis &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds[keep, ])
 <span class="header-section-number">5.2.4.2</span> pvalues distribution</h4>
 <p>Another useful diagnostic plot is the histogram of pvalues. It can give you an immediate idea of the proportion of genes differentially expressed, (the taller the is the left peak, the more p-values are close to 0 and therefore significant). Furthermore, it gives an idea of how the test behaved across all your hypotheses, and immediately diagnoses some potential problems.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(res_tbl<span class="op">$</span>pvalue)</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-65-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-66-1.png" width="672"></p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -689,7 +689,7 @@ dds_bis &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds[keep, ])
 <span class="st">    </span><span class="kw">filter</span>(baseMean <span class="op">&gt;</span><span class="st"> </span><span class="kw">metadata</span>(res)<span class="op">$</span>filterThreshold) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">pull</span>(pvalue) <span class="op">%&gt;%</span>
 <span class="st">    </span>hist</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-67-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-68-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -701,7 +701,7 @@ dds_bis &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds[keep, ])
 <span class="header-section-number">5.2.4.3</span> MA-plot</h4>
 <p>Another interesting plot is the MA-plot ("Mean-Average" plot), a scatter plot of log2FC versus the mean of normalised counts. Genes with a padjusted value lower than 0.05 are plotted in red. The plot highlights the fact that genes with low read counts show substantially higher variability than highly expressed genes, resulting in a strong log2FC even though are likely not really differentially expressed. In the MA-plot, we hope to observe some genes located in the upper/lower right quadrant of the plots (the most interesting candidates).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotMA</span>(res, <span class="dt">alpha =</span> <span class="fl">0.05</span>)</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-68-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-69-1.png" width="672"></p>
 </div>
 <div id="volcano-plot" class="section level4">
 <h4>
@@ -711,7 +711,7 @@ dds_bis &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds[keep, ])
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(padj)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span> log2FoldChange, <span class="dt">y =</span> <span class="op">-</span><span class="kw">log10</span>(padj))) <span class="op">+</span>
 <span class="st">   </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">"gray40"</span>)</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-69-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-70-1.png" width="672"></p>
 <p>Recall that the most interesting features are those towards the top corners given that they have small pvalues and large fold-changes. The volcano-plot can be useful to define padjusted and log2FC thresholds. Based on this plot, we could for example decide (arbitrarily), to consider genes as differentially expressed genes that have a padj_thr &lt;- 1e-5 and an absolute log2FC value &gt; 1.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">padj_thr &lt;-<span class="st"> </span><span class="fl">1e-5</span>
 log2FC_thr &lt;-<span class="st"> </span><span class="dv">1</span>
@@ -727,7 +727,7 @@ res_tbl <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> log2FC_thr) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="op">-</span>log2FC_thr) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="op">-</span><span class="kw">log10</span>(padj_thr))</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-70-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-71-1.png" width="672"></p>
 </div>
 <div id="plot-counts-of-genes" class="section level4">
 <h4>
@@ -754,7 +754,7 @@ ordered_samples &lt;-<span class="st"> </span><span class="kw">c</span>(<span cl
         <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),
         <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>))</code></pre></div>
 <pre><code>## Joining, by = "sample"</code></pre>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-71-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-72-1.png" width="672"></p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -763,7 +763,7 @@ ordered_samples &lt;-<span class="st"> </span><span class="kw">c</span>(<span cl
 <ol style="list-style-type: decimal">
 <li>Identify and inspect counts of the genes plotted in red in the following volcano-plot. These genes have a very large log2FC (|log2FC| &gt; 5) but are far from bearing the lowest padjusted value (their padjusted value is between 0.05 and 1e-5).</li>
 </ol>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-72-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-73-1.png" width="672"></p>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Compare counts with previous counts plots (counts of genes with lowest pvalues). what is the most striking?</p></li>
 <li><p>Using dispersions() function, compare dispersion values for both group of genes</p></li>
@@ -808,7 +808,7 @@ selected_genes</code></pre></div>
         <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),
         <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>))</code></pre></div>
 <pre><code>## Joining, by = "sample"</code></pre>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-73-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-74-1.png" width="672"></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Compare counts with previous counts plots (counts of genes with lowest pvalues). what is the most striking?</li>
 </ol>
@@ -821,7 +821,7 @@ selected_genes</code></pre></div>
 <span class="st">  </span><span class="kw">gather</span>(group, dispersion) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> dispersion)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-74-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-75-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -897,7 +897,7 @@ coldata</code></pre></div>
 <a href="sec-gsea.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-09-17
+2020-09-18
 </p>
 </div>
 </div>

@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-09-17" />
+<meta name="date" content="2020-09-18" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -162,29 +162,29 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li>Many bioinformatics tools can only be used through a command line interface, or have extra capabilities in the command line version that are not available in the GUI. This is true, for example, of <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">BLAST</a>, which offers many advanced functions only accessible to users who know how to use a shell.</li>
 <li>In bioinformatics you often need to do the same set of tasks with a large number of files. Learning the shell will allow you to automate those repetitive tasks and leave you free to do more exciting things.</li>
-<li>The shell makes your work less error-prone. When humans do the same thing a hundred different times (or even ten times), they’re likely to make a mistake. Your computer can do the same thing a thousand times with no mistakes.</li>
-<li>The shell makes your work more reproducible. When you carry out your work in the command-line (rather than a GUI), your computer keeps a record of every step that you’ve carried out, which you can use to re-do your work when you need to. It also gives you a way to communicate unambiguously what you’ve done, so that others can check your work or apply your process to new data.</li>
-<li>Many bioinformatic tasks require large amounts of computing power and can’t realistically be run on your own machine. These tasks are best performed using powerfull remote computers or cloud computing, which can only be accessed through a shell.</li>
+<li>The shell makes your work less error-prone. When humans do the same thing a hundred different times (or even ten times), they're likely to make a mistake. Your computer can do the same thing a thousand times with no mistakes.</li>
+<li>The shell makes your work more reproducible. When you carry out your work in the command-line (rather than a GUI), your computer keeps a record of every step that you've carried out, which you can use to re-do your work when you need to. It also gives you a way to communicate unambiguously what you've done, so that others can check your work or apply your process to new data.</li>
+<li>Many bioinformatic tasks require large amounts of computing power and can't realistically be run on your own machine. These tasks are best performed using powerfull remote computers or cloud computing, which can only be accessed through a shell.</li>
 </ul>
 <p>In this lesson you will learn how to use the command line interface to move around in your file system.</p>
 </div>
 <div id="how-to-access-the-shell" class="section level3 unnumbered">
 <h3>How to access the shell</h3>
-<p>On a Mac or LiOn a Mac or Linux machine, you can access a shell through a program called Terminal, which is already available on your computer. If you’re using Windows, you’ll need to download a separate program to access the shell.nux machine, you can access a shell through a program called Terminal, which is already available on your computer. If you’re using Windows, you can install a <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Windows Subsystem for Linux</a>. We are going to the use RStudio Terminal.</p>
-<p><img src="figs/rstudio_terminal.png" width="100%" style="display: block; margin: auto;"></p>
+<p>On a Mac or LiOn a Mac or Linux machine, you can access a shell through a program called Terminal, which is already available on your computer. If you're using Windows, you'll need to download a separate program to access the shell.nux machine, you can access a shell through a program called Terminal, which is already available on your computer. If you're using Windows, you can install a <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Windows Subsystem for Linux</a>. We are going to the use RStudio Terminal.</p>
+<p><img src="figs/rstudio_terminal.png" width="80%" style="display: block; margin: auto;"></p>
 <p>At any point, you can use the <code>clear</code> command or the <code>Ctrl+L</code> keyboard shortcut to clear the screen.</p>
 </div>
 <div id="the-shell" class="section level3 unnumbered">
 <h3>The Shell</h3>
-<p>The shell is a program where users can type commands. With the shell, it’s possible to invoke complicated programs like climate modeling software or simple commands that create an empty directory with only one line of code. The most popular Unix shell is Bash (the Bourne Again SHell — so-called because it’s derived from a shell written by Stephen Bourne). Bash is the default shell on most modern implementations of Unix and in most packages that provide Unix-like tools for Windows.</p>
+<p>The shell is a program where users can type commands. With the shell, it's possible to invoke complicated programs like climate modeling software or simple commands that create an empty directory with only one line of code. The most popular Unix shell is Bash (the Bourne Again SHell — so-called because it's derived from a shell written by Stephen Bourne). Bash is the default shell on most modern implementations of Unix and in most packages that provide Unix-like tools for Windows.</p>
 <p>When the shell is first opened, you are presented with a prompt, indicating that the shell is waiting for input.</p>
 <pre><code>$</code></pre>
-<p>The shell typically uses <code>$</code> as the prompt, but may use a different symbol. In the examples for this lesson, we’ll show the prompt as $ . Most importantly: when typing commands, either from these lessons or from other sources, do not type the prompt, only the commands that follow it.</p>
-<p>So let’s try our first command, <code>ls</code> which is short for listing. This command will list the contents of the current directory:</p>
+<p>The shell typically uses <code>$</code> as the prompt, but may use a different symbol. In the examples for this lesson, we'll show the prompt as $ . Most importantly: when typing commands, either from these lessons or from other sources, do not type the prompt, only the commands that follow it.</p>
+<p>So let's try our first command, <code>ls</code> which is short for listing. This command will list the contents of the current directory:</p>
 <pre><code>$ ls
 Desktop     Downloads   Movies      Pictures
 Documents   Library     Music       Public</code></pre>
-<p>If the shell can’t find a program whose name is the command you typed, it will print an error message such as:</p>
+<p>If the shell can't find a program whose name is the command you typed, it will print an error message such as:</p>
 <pre><code>$ ks
 ks: command not found</code></pre>
 <p>This might happen if the command was mis-typed or if the program corresponding to that command is not installed.</p>
@@ -193,7 +193,7 @@ ks: command not found</code></pre>
 <div id="navigating-files-and-directories" class="section level2">
 <h2>
 <span class="header-section-number">1.2</span> Navigating Files and Directories</h2>
-<p>Let's find out where we are by running a command called pwd (which stands for "print working directory"). At any moment, our current working directory is our current default directory, i.e., the directory that the computer assumes we want to run commands in, unless we explicitly specify something else. Here, the computer’s response is /home/dcuser, which is the top level directory within our cloud system:</p>
+<p>Let's find out where we are by running a command called pwd (which stands for "print working directory"). At any moment, our current working directory is our current default directory, i.e., the directory that the computer assumes we want to run commands in, unless we explicitly specify something else. Here, the computer's response is /home/dcuser, which is the top level directory within our cloud system:</p>
 <pre><code>$ pwd
 /home/lgatto</code></pre>
 <p>To create a shared set of files and directories, we will use the <code>rWSBIM2122::prepare_shell()</code> function in RStudio's R console:</p>
@@ -209,7 +209,7 @@ ks: command not found</code></pre>
 </p>
 </div>
 </div>
-<p>Let’s say we want to navigate to the <code>shell_data</code> directory we saw above. We can use the <code>cd</code> command (<em>change directory</em>) to get there:</p>
+<p>Let's say we want to navigate to the <code>shell_data</code> directory we saw above. We can use the <code>cd</code> command (<em>change directory</em>) to get there:</p>
 <pre><code>$ cd shell_data</code></pre>
 <div class="question">
 <p class="question-begin">
@@ -224,7 +224,7 @@ ks: command not found</code></pre>
 </div>
 <p><code>ls</code> has lots of other options. To find out what they are, we can type:</p>
 <pre><code>$ man ls</code></pre>
-<p><code>man</code> (short for manual) displays detailed documentation (also referred as man page or man file) for <code>bash</code> commands. It is a powerful resource to explore bash commands, understand their usage and flags. Some manual files are very long. You can scroll through the file using your keyboard’s down arrow or use the <code>Space</code> key to go forward one page and the <code>b</code> key to go backwards one page. When you are done reading, hit <code>q</code> to quit.</p>
+<p><code>man</code> (short for manual) displays detailed documentation (also referred as man page or man file) for <code>bash</code> commands. It is a powerful resource to explore bash commands, understand their usage and flags. Some manual files are very long. You can scroll through the file using your keyboard's down arrow or use the <code>Space</code> key to go forward one page and the <code>b</code> key to go backwards one page. When you are done reading, hit <code>q</code> to quit.</p>
 <p>An alternative to access the manual page (and sometimes, depending on the environment, only one is available) is the pass <code>--help</code> to the command:</p>
 <pre><code>$ ls --help</code></pre>
 <div class="question">
@@ -232,7 +232,7 @@ ks: command not found</code></pre>
 ► Question
 </p>
 <div class="question-body">
-<p>Use the <code>-l</code> option for the ls command to display more information for each item in the directory. What is one piece of additional information this long format gives you that you don’t see with the bare ls command?</p>
+<p>Use the <code>-l</code> option for the ls command to display more information for each item in the directory. What is one piece of additional information this long format gives you that you don't see with the bare ls command?</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -240,7 +240,7 @@ ks: command not found</code></pre>
 </div>
 <div id="shortcut-tab-completion" class="section level3 unnumbered">
 <h3>Shortcut: Tab Completion</h3>
-<p>Typing out file or directory names can waste a lot of time and it’s easy to make typing mistakes. Instead we can use tab complete as a shortcut. When you start typing out the name of a directory or file, then hit the <code>Tab</code> key, the shell will try to fill in the rest of the directory or file name.</p>
+<p>Typing out file or directory names can waste a lot of time and it's easy to make typing mistakes. Instead we can use tab complete as a shortcut. When you start typing out the name of a directory or file, then hit the <code>Tab</code> key, the shell will try to fill in the rest of the directory or file name.</p>
 <p>Return to your home directory:</p>
 <pre><code>$ cd</code></pre>
 <p>then enter:</p>
@@ -301,8 +301,8 @@ $ ls -Fa</code></pre>
 <p>The tips about variable naming that we saw in previous years also hold for file names. Complicated names of files and directories can make your life painful when working on the command line. Here we provide a few useful tips for the names of your files.</p>
 <ol style="list-style-type: decimal">
 <li>Don't use spaces. Spaces can make a name more meaningful, but since spaces are used to separate arguments on the command line it is better to avoid them in names of files and directories. You can use <code>-</code> or <code>_</code> instead.</li>
-<li><p>Don’t begin the name with <code>-</code> (dash). Commands treat names starting with - as options.</p></li>
-<li><p>Stick with letters, numbers, . (period or ‘full stop’), - (dash) and _ (underscore).</p></li>
+<li><p>Don't begin the name with <code>-</code> (dash). Commands treat names starting with - as options.</p></li>
+<li><p>Stick with letters, numbers, . (period or ‘full stop'), - (dash) and _ (underscore).</p></li>
 </ol>
 <p>Many other characters have special meanings on the command line. There are special characters that can cause your command to not work as expected and can even result in data loss.</p>
 <p>If you need to refer to names of files or directories that have spaces or other special characters, you should surround the name in quotes ("").</p>
@@ -363,7 +363,7 @@ $ ls -Fa</code></pre>
 <p>There exist several text-based editors, i.e. editors that can be used in the shell without a dedicated graphical user interface. Here, we will use <code>nano</code> for its simplicity.</p>
 <p>Open one of the files that you just created with</p>
 <pre><code>$ nano shell_notes.txt</code></pre>
-<p>Let's type in a few lines of text. Once we’re happy with our text, we can press <code>Ctrl+O</code> (press the <code>Ctrl</code> or <code>Control</code> key and, while holding it down, press the <code>O</code> key) to write our data to disk (we’ll be asked what file we want to save this to: press <code>Return</code> to accept the suggested default).</p>
+<p>Let's type in a few lines of text. Once we're happy with our text, we can press <code>Ctrl+O</code> (press the <code>Ctrl</code> or <code>Control</code> key and, while holding it down, press the <code>O</code> key) to write our data to disk (we'll be asked what file we want to save this to: press <code>Return</code> to accept the suggested default).</p>
 <p>Once our file is saved, we can use <code>Ctrl+X</code> to quit the editor and return to the shell.</p>
 </div>
 <div id="creating-moving-copying-and-removing" class="section level3 unnumbered">
@@ -551,13 +551,13 @@ cat nlines2.txt</code></pre>
 <pre><code>$ ls combine_all_simulations.sh
 -rw-rw-r-- 1 lgatto lgatto 79 sept. 17 22:32 combine_all_simulations.sh</code></pre>
 <p>This long output gives us, in addition to the file name, the time and data is was created, the owner (and group) of the file (twice lgatto here) and the files permissions.</p>
-<p>There are ten slots in the permissions list. The first character in this list is related to file type, not permissions, so we’ll ignore it for now. The next three characters relate to the permissions that the file owner has, the next three relate to the permissions for group members, and the final three characters specify what other users outside of your group can do with the file. We’re going to concentrate on the three positions that deal with your permissions (as the file owner).</p>
+<p>There are ten slots in the permissions list. The first character in this list is related to file type, not permissions, so we'll ignore it for now. The next three characters relate to the permissions that the file owner has, the next three relate to the permissions for group members, and the final three characters specify what other users outside of your group can do with the file. We're going to concentrate on the three positions that deal with your permissions (as the file owner).</p>
 <div class="figure" style="text-align: center">
 <span id="fig:unnamed-chunk-2"></span>
 <p class="caption marginnote shownote">
 Figure 1.1: The 10 slots defining the file permission (figure from the Data Carpentry's <a href="https://datacarpentry.org/shell-genomics/03-working-with-files/"><em>Working with Files and Directories</em></a> lesson.
 </p>
-<img src="figs/rwx_figure.svg" alt="The 10 slots defining the file permission (figure from the Data Carpentry's [*Working with Files and Directories*](https://datacarpentry.org/shell-genomics/03-working-with-files/) lesson." width="50%">
+<img src="figs/rwx_figure.svg" alt="The 10 slots defining the file permission (figure from the Data Carpentry's [*Working with Files and Directories*](https://datacarpentry.org/shell-genomics/03-working-with-files/) lesson." width="100%">
 </div>
 <p>Here the three positions that relate to the file owner are <code>rw-</code>. The <code>r</code> means that you have permission to read the file, the <code>w</code> indicates that you have permission to write to (i.e. make changes to) the file, and the third position is a <code>-</code>, indicating that you don't have permission to execute that file, i.e. to run it as a program.</p>
 <p>Our goal for now is to change permissions on this file so that it becomes executable. An for security purposes, we want only the file owner to be able to execute it.</p>
@@ -571,9 +571,9 @@ $ ls -l combine_all_simulations.sh
 $ ls -l combine_all_simulations.sh
 -r-xr--r-- 1 lgatto lgatto 79 sept. 17 22:32 combine_all_simulations.sh</code></pre>
 <p>If you now try to delete the file with <code>rm combine_all_simulations.sh</code>, you'll be asked if you want to override your file permissions:</p>
-<pre><code>rm: remove write-protected regular file ‘combine_all_simulations.sh’? </code></pre>
+<pre><code>rm: remove write-protected regular file ‘combine_all_simulations.sh'? </code></pre>
 <p>If you enter <code>n</code> (for no), the file will not be deleted. If you enter <code>y</code>, you will delete the file. This gives us an extra measure of security, as there is one more step between us and deleting our data files.</p>
-<p><strong>Important</strong>: The <code>rm</code> command permanently removes the file. Be careful with this command. It doesn’t just nicely put the files in the Trash. They're really gone.</p>
+<p><strong>Important</strong>: The <code>rm</code> command permanently removes the file. Be careful with this command. It doesn't just nicely put the files in the Trash. They're really gone.</p>
 <p>By default, <code>rm</code> will not delete directories. You can tell <code>rm</code> to delete a directory using the <code>-r</code> (recursive) option.</p>
 <p>To complete this chapter on shell, let's conclude by mentioning the R <code>system()</code> and <code>system2()</code> functions, that enable to invoke a system command such as a shell script:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system</span>(<span class="st">"combine_all_simulations.sh"</span>)</code></pre></div>
@@ -595,7 +595,7 @@ $ ls -l combine_all_simulations.sh
 <a href="sec-rmd.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-09-17
+2020-09-18
 </p>
 </div>
 </div>

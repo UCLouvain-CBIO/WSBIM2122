@@ -50,29 +50,30 @@ number of students is known.
 
 Tentative schedule for the course.
 
-- CLI and Rmd
-- Linear models and GSEA
-- Project 1: lecture on HTS and RNA-Seq
+- Shell and Rmd
+- Linear models 
+- Project 1: lecture on HTS, RNA-Seq and 
+- Project 1 (cont'd): Gene set enrichment
 - QA session for project 1
 - Project 1 presentations
 - Submission of the 1st report
-- Project 2: lecture MS and quantitative proteomics
+- Project 2: lecture on MS and quantitative proteomics
 - QA session for project 2
 - Project 2 presentations
 - Submission of the 2nd report
 - Oral exams based on the submitted reports.
 
 The course will be taught in English. The reports and oral exams can
-be in either English or French. The final mark will be based on the
+be either in English or in French. The final mark will be based on the
 submitted reports and the oral exam, tentatively about 50% each.
 
 
 ## Pre-requisites {-}
 
-Students taking this course should be familiar with data analysis and
-visualisation in R. A formal pre-requisite for students taking the
-class is the introductory course
-[WSBIM1322](https://UCLouvain-CBIO.github.io/WSBIM1322).
+Students taking this course should be comfortable with data analysis
+and visualisation in R. Formal pre-requisites for students taking the
+class are the [WSBIM1207](https://UCLouvain-CBIO.github.io/WSBIM1207)
+and [WSBIM1322](https://UCLouvain-CBIO.github.io/WSBIM1322).
 
 Software requirements are documented in the *Setup* section below.
 

@@ -36,17 +36,17 @@ There are many reasons to learn about the shell:
   those repetitive tasks and leave you free to do more exciting
   things.
 - The shell makes your work less error-prone. When humans do the same
-  thing a hundred different times (or even ten times), they’re likely
+  thing a hundred different times (or even ten times), they're likely
   to make a mistake. Your computer can do the same thing a thousand
   times with no mistakes.
 - The shell makes your work more reproducible. When you carry out your
   work in the command-line (rather than a GUI), your computer keeps a
-  record of every step that you’ve carried out, which you can use to
+  record of every step that you've carried out, which you can use to
   re-do your work when you need to. It also gives you a way to
-  communicate unambiguously what you’ve done, so that others can check
+  communicate unambiguously what you've done, so that others can check
   your work or apply your process to new data.
 - Many bioinformatic tasks require large amounts of computing power
-  and can’t realistically be run on your own machine. These tasks are
+  and can't realistically be run on your own machine. These tasks are
   best performed using powerfull remote computers or cloud computing,
   which can only be accessed through a shell.
 
@@ -57,15 +57,15 @@ move around in your file system.
 
 On a Mac or LiOn a Mac or Linux machine, you can access a shell
 through a program called Terminal, which is already available on your
-computer. If you’re using Windows, you’ll need to download a separate
+computer. If you're using Windows, you'll need to download a separate
 program to access the shell.nux machine, you can access a shell
 through a program called Terminal, which is already available on your
-computer. If you’re using Windows, you can install a [Windows
+computer. If you're using Windows, you can install a [Windows
 Subsystem for
 Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10). We
 are going to the use RStudio Terminal.
 
-```{r, echo=FALSE, fig.align='center', out.width='100%'}
+```{r, echo=FALSE, fig.align='center', out.width='80%'}
 knitr::include_graphics("figs/rstudio_terminal.png")
 ```
 
@@ -76,10 +76,10 @@ shortcut to clear the screen.
 ### The Shell {-}
 
 The shell is a program where users can type commands. With the shell,
-it’s possible to invoke complicated programs like climate modeling
+it's possible to invoke complicated programs like climate modeling
 software or simple commands that create an empty directory with only
 one line of code. The most popular Unix shell is Bash (the Bourne
-Again SHell — so-called because it’s derived from a shell written by
+Again SHell — so-called because it's derived from a shell written by
 Stephen Bourne). Bash is the default shell on most modern
 implementations of Unix and in most packages that provide Unix-like
 tools for Windows.
@@ -92,12 +92,12 @@ $
 ```
 
 The shell typically uses `$` as the prompt, but may use a different
-symbol. In the examples for this lesson, we’ll show the prompt as $
+symbol. In the examples for this lesson, we'll show the prompt as $
 . Most importantly: when typing commands, either from these lessons or
 from other sources, do not type the prompt, only the commands that
 follow it.
 
-So let’s try our first command, `ls` which is short for listing. This
+So let's try our first command, `ls` which is short for listing. This
 command will list the contents of the current directory:
 
 ```
@@ -106,7 +106,7 @@ Desktop     Downloads   Movies      Pictures
 Documents   Library     Music       Public
 ```
 
-If the shell can’t find a program whose name is the command you typed,
+If the shell can't find a program whose name is the command you typed,
 it will print an error message such as:
 
 ```
@@ -123,7 +123,7 @@ Let's find out where we are by running a command called pwd (which
 stands for "print working directory"). At any moment, our current
 working directory is our current default directory, i.e., the
 directory that the computer assumes we want to run commands in, unless
-we explicitly specify something else. Here, the computer’s response is
+we explicitly specify something else. Here, the computer's response is
 /home/dcuser, which is the top level directory within our cloud
 system:
 
@@ -150,7 +150,7 @@ new directory called `shell_data`.
 
 `r msmbstyle::question_end()`
 
-Let’s say we want to navigate to the `shell_data` directory we saw
+Let's say we want to navigate to the `shell_data` directory we saw
 above. We can use the `cd` command (*change directory*) to get there:
 
 ```
@@ -176,7 +176,7 @@ $ man ls
 referred as man page or man file) for `bash` commands. It is a
 powerful resource to explore bash commands, understand their usage and
 flags. Some manual files are very long. You can scroll through the
-file using your keyboard’s down arrow or use the `Space` key to go
+file using your keyboard's down arrow or use the `Space` key to go
 forward one page and the `b` key to go backwards one page. When you
 are done reading, hit `q` to quit.
 
@@ -192,7 +192,7 @@ $ ls --help
 
 Use the `-l` option for the ls command to display more information for
 each item in the directory. What is one piece of additional
-information this long format gives you that you don’t see with the
+information this long format gives you that you don't see with the
 bare ls command?
 
 `r msmbstyle::question_end()`
@@ -200,7 +200,7 @@ bare ls command?
 
 ### Shortcut: Tab Completion {-}
 
-Typing out file or directory names can waste a lot of time and it’s
+Typing out file or directory names can waste a lot of time and it's
 easy to make typing mistakes. Instead we can use tab complete as a
 shortcut. When you start typing out the name of a directory or file,
 then hit the `Tab` key, the shell will try to fill in the rest of the
@@ -312,10 +312,10 @@ few useful tips for the names of your files.
    spaces are used to separate arguments on the command line it is
    better to avoid them in names of files and directories. You can use
    `-` or `_` instead.
-2. Don’t begin the name with `-` (dash). Commands treat names starting
+2. Don't begin the name with `-` (dash). Commands treat names starting
    with - as options.
 
-3. Stick with letters, numbers, . (period or ‘full stop’), - (dash)
+3. Stick with letters, numbers, . (period or ‘full stop'), - (dash)
    and _ (underscore).
 
 Many other characters have special meanings on the command line. There
@@ -398,9 +398,9 @@ Open one of the files that you just created with
 $ nano shell_notes.txt
 ```
 
-Let's type in a few lines of text. Once we’re happy with our text, we
+Let's type in a few lines of text. Once we're happy with our text, we
 can press `Ctrl+O` (press the `Ctrl` or `Control` key and, while
-holding it down, press the `O` key) to write our data to disk (we’ll
+holding it down, press the `O` key) to write our data to disk (we'll
 be asked what file we want to save this to: press `Return` to accept
 the suggested default).
 
@@ -642,16 +642,16 @@ data is was created, the owner (and group) of the file (twice lgatto
 here) and the files permissions.
 
 There are ten slots in the permissions list. The first character in
-this list is related to file type, not permissions, so we’ll ignore it
+this list is related to file type, not permissions, so we'll ignore it
 for now. The next three characters relate to the permissions that the
 file owner has, the next three relate to the permissions for group
 members, and the final three characters specify what other users
-outside of your group can do with the file. We’re going to concentrate
+outside of your group can do with the file. We're going to concentrate
 on the three positions that deal with your permissions (as the file
 owner).
 
 
-```{r, echo=FALSE, fig.align='center', out.width='50%', fig.cap="The 10 slots defining the file permission (figure from the Data Carpentry's [*Working with Files and Directories*](https://datacarpentry.org/shell-genomics/03-working-with-files/) lesson."}
+```{r, echo=FALSE, fig.align='center', out.width='100%', fig.cap="The 10 slots defining the file permission (figure from the Data Carpentry's [*Working with Files and Directories*](https://datacarpentry.org/shell-genomics/03-working-with-files/) lesson."}
 knitr::include_graphics("figs/rwx_figure.svg")
 ```
 
@@ -693,7 +693,7 @@ combine_all_simulations.sh`, you'll be asked if you want to override
 your file permissions:
 
 ```
-rm: remove write-protected regular file ‘combine_all_simulations.sh’? 
+rm: remove write-protected regular file ‘combine_all_simulations.sh'? 
 ```
 
 If you enter `n` (for no), the file will not be deleted. If you enter
@@ -702,7 +702,7 @@ security, as there is one more step between us and deleting our data
 files.
 
 **Important**: The `rm` command permanently removes the file. Be
-careful with this command. It doesn’t just nicely put the files in the
+careful with this command. It doesn't just nicely put the files in the
 Trash. They're really gone.
 
 By default, `rm` will not delete directories. You can tell `rm` to
