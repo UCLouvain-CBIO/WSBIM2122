@@ -25,7 +25,7 @@ hypothesis testing using the Wald test.
 
 
 ```{r, echo=FALSE, fig.align='center', out.width='60%', purl=TRUE}
-knitr::include_graphics("figs/deseq2_steps.png")
+knitr::include_graphics("./figs/deseq2_steps.png")
 ```
 
 
@@ -53,7 +53,7 @@ normalisation methods such as TPM (transcript per million), FPKM (fragment per m
 or RPKM (reads per million) do normalise read counts by gene length.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
-knitr::include_graphics("figs/read_length.png")
+knitr::include_graphics("./figs/read_length.png")
 ```
 
 
@@ -70,7 +70,7 @@ sample 2. Accounting for sequencing depth is necessary for differential expressi
 as samples are compared with each other.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
-knitr::include_graphics("figs/Sequencing_depth.png")
+knitr::include_graphics("./figs/Sequencing_depth.png")
 ```
 
 - **Library composition**
@@ -85,7 +85,7 @@ In this case, the library composition has changed but not the expression level o
 
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
-knitr::include_graphics("figs/library_composition.png")
+knitr::include_graphics("./figs/library_composition.png")
 ```
 
 In a real dataset, a few highly differentially expressed genes, differences in the number
@@ -119,7 +119,7 @@ This is performed by dividing each raw count values in a given sample by that sa
 scaling factor.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
-knitr::include_graphics("figs/SF_steps.png")
+knitr::include_graphics("./figs/SF_steps.png")
 ```
 
 
@@ -128,7 +128,7 @@ knitr::include_graphics("figs/SF_steps.png")
 Let's first have a look at the counts distribution for a typical RNAseq sample:
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
-knitr::include_graphics("figs/distribution_of_counts.png")
+knitr::include_graphics("./figs/distribution_of_counts.png")
 ```
 
 It is obvious that the count data is not normally distributed. Counts are integer values,
@@ -166,7 +166,7 @@ variance that is empirically observed in RNA-Seq experiments.
 
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
-knitr::include_graphics("figs/NB.png")
+knitr::include_graphics("./figs/NB.png")
 ```
 
 
@@ -194,7 +194,7 @@ is plotted in function of the mean expression level (mean counts of replicates).
 This produce the so-called "dispersion plot" where each gene is represented by a black dot.
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
-knitr::include_graphics("figs/dispersion_plot.png")
+knitr::include_graphics("./figs/dispersion_plot.png")
 ```
 
 Note that the dispersion plot highlights an intrinsic feature of RNAseq data:
@@ -228,7 +228,7 @@ differential expression analysis. The shrunken dispersion values will be used fo
 fitting of the model and differential expression testing.
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
-knitr::include_graphics("figs/disp_shrinkage.png")
+knitr::include_graphics("./figs/disp_shrinkage.png")
 ```
 
 
@@ -296,7 +296,7 @@ Choosing a cut off of 0.05 for padjusted values now implies that 5% of significa
 (but not 5% of all tests as before) will result in false positives.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
-knitr::include_graphics("figs/pval_histograms.png")
+knitr::include_graphics("./figs/pval_histograms.png")
 ```
 
 
