@@ -771,9 +771,9 @@ then we observe that the pvalues behaviour is now much nicer!
 
 ```{r}
 res_tbl %>%
-    filter(baseMean > metadata(res)$filterThreshold) %>%
-    pull(pvalue) %>%
-    hist
+    filter(baseMean > metadata(res)$filterThreshold) %>% 
+    pull(pvalue) %>% 
+    hist()
 ```
 
 `r msmbstyle::solution_end()`
