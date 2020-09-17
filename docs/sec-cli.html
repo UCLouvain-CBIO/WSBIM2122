@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 1 The terminal | Omics Data Analysis" />
+<meta property="og:title" content="Chapter 1 The shell | Omics Data Analysis" />
 <meta property="og:type" content="book" />
 
 
@@ -25,7 +25,7 @@ MathJax.Hub.Config({
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
-<title>Chapter 1 The terminal | Omics Data Analysis</title>
+<title>Chapter 1 The shell | Omics Data Analysis</title>
 
 <script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
@@ -143,12 +143,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
 <a href="index.html">Preamble</a>
-<a id="active-page" href="sec-cli.html"><span class="toc-section-number">1</span> The terminal</a>
+<a id="active-page" href="sec-cli.html"><span class="toc-section-number">1</span> The shell</a><ul class="toc-sections">
+<li class="toc"><a href="#introduction"> Introduction</a></li>
+<li class="toc"><a href="#navigating-files-and-directories"> Navigating Files and Directories</a></li>
+<li class="toc"><a href="#working-with-files-and-directories"> Working with Files and Directories</a></li>
+<li class="toc"><a href="#writing-scripts-and-working-with-data"> Writing Scripts and Working with Data</a></li>
+<li class="toc"><a href="#references"> References</a></li>
+</ul>
 <a href="sec-rmd.html"><span class="toc-section-number">2</span> R markdown</a>
 <a href="sec-linmod.html"><span class="toc-section-number">3</span> Linear models</a>
-<a href="sec-gsea.html"><span class="toc-section-number">4</span> Gene set enrichment analysis</a>
-<a href="sec-hts.html"><span class="toc-section-number">5</span> High throughput sequencing</a>
-<a href="sec-rnaseq.html"><span class="toc-section-number">6</span> Differential expression analysis</a>
+<a href="sec-hts.html"><span class="toc-section-number">4</span> High throughput sequencing</a>
+<a href="sec-rnaseq.html"><span class="toc-section-number">5</span> Differential expression analysis</a>
+<a href="sec-gsea.html"><span class="toc-section-number">6</span> Gene set enrichment analysis</a>
 <a href="sec-ms.html"><span class="toc-section-number">7</span> Mass spectrometry</a>
 <a href="sec-prot.html"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
 <a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
@@ -165,17 +171,143 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html><body><div id="sec:cli" class="section level1" number="1">
 <h1>
-<span class="header-section-number">Chapter 1</span> The terminal</h1>
-<p>Possible material:</p>
+<span class="header-section-number">Chapter 1</span> The shell</h1>
+<p>This chapter is based on the Data Carpentries <a href="https://swcarpentry.github.io/shell-novice/">The Unix
+Shell</a> and <a href="https://datacarpentry.org/shell-genomics/">Introduction
+to the Command Line for
+Genomics</a> lessons.</p>
+<div id="introduction" class="section level2" number="1.1">
+<h2>
+<span class="header-section-number">1.1</span> Introduction</h2>
+<p>Questions</p>
 <ul>
-<li><a href="https://swcarpentry.github.io/shell-novice/">Carpentries shell lesson</a></li>
-<li>The <a href="https://datacarpentry.org/genomics-workshop/">Carpentries genomics
-lession</a> has episodes
-on: <em>Introduction to the command line</em> and <em>Data wrangling and
-processing</em> (using the command line).</li>
-<li><a href="https://bioinformaticsworkbook.org/Appendix/Unix/unix-basics-1.html#gsc.tab=0">Introduction to Unix</a></li>
-<li>Also: <code>ssh</code>, using an editor remotely (<code>nano</code>).</li>
+<li>What is a command shell and why would I use one?</li>
+<li>How can I move around on my computer?</li>
+<li>How can I see what files and directories I have?</li>
+<li>How can I specify the location of a file or directory on my computer?</li>
 </ul>
+<p>Objectives</p>
+<ul>
+<li>Describe key reasons for learning shell.</li>
+<li>Navigate your file system using the command line.</li>
+<li>Access and read help files for bash programs and use help files to identify useful command options.</li>
+<li>Demonstrate the use of tab completion, and explain its advantages.</li>
+</ul>
+<div id="what-is-a-shell-and-why-should-i-care" class="section level3 unnumbered">
+<h3>What is a shell and why should I care?</h3>
+<p>A shell is a computer program that presents a command line interface
+which allows you to control your computer using commands entered with
+a keyboard instead of controlling graphical user interfaces (GUIs)
+with a mouse/keyboard combination.</p>
+<p>There are many reasons to learn about the shell:</p>
+<ul>
+<li>Many bioinformatics tools can only be used through a command line
+interface, or have extra capabilities in the command line version
+that are not available in the GUI. This is true, for example, of
+<a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">BLAST</a>, which offers many
+advanced functions only accessible to users who know how to use a
+shell.</li>
+<li>In bioinformatics you often need to do the same set of tasks with a
+large number of files. Learning the shell will allow you to automate
+those repetitive tasks and leave you free to do more exciting
+things.</li>
+<li>The shell makes your work less error-prone. When humans do the same
+thing a hundred different times (or even ten times), they’re likely
+to make a mistake. Your computer can do the same thing a thousand
+times with no mistakes.</li>
+<li>The shell makes your work more reproducible. When you carry out your
+work in the command-line (rather than a GUI), your computer keeps a
+record of every step that you’ve carried out, which you can use to
+re-do your work when you need to. It also gives you a way to
+communicate unambiguously what you’ve done, so that others can check
+your work or apply your process to new data.</li>
+<li>Many bioinformatic tasks require large amounts of computing power
+and can’t realistically be run on your own machine. These tasks are
+best performed using powerfull remote computers or cloud computing,
+which can only be accessed through a shell.</li>
+</ul>
+<p>In this lesson you will learn how to use the command line interface to
+move around in your file system.</p>
+</div>
+<div id="how-to-access-the-shell" class="section level3 unnumbered">
+<h3>How to access the shell</h3>
+<p>On a Mac or LiOn a Mac or Linux machine, you can access a shell
+through a program called Terminal, which is already available on your
+computer. If you’re using Windows, you’ll need to download a separate
+program to access the shell.nux machine, you can access a shell
+through a program called Terminal, which is already available on your
+computer. If you’re using Windows, you can install a <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Windows
+Subsystem for
+Linux</a>. We
+are going to the use RStudio Terminal.</p>
+<p><img src="figs/rstudio_terminal.png" width="50%" style="display: block; margin: auto;"></p>
+<p>At any point, you can use the <code>clear</code> command or the <code>Ctrl+L</code> keyboard
+shortcut to clear the screen.</p>
+</div>
+</div>
+<div id="navigating-files-and-directories" class="section level2" number="1.2">
+<h2>
+<span class="header-section-number">1.2</span> Navigating Files and Directories</h2>
+<p>Questions</p>
+<ul>
+<li>How can I perform operations on files outside of my working directory?</li>
+<li>What are some navigational shortcuts I can use to make my work more efficient?</li>
+</ul>
+<p>Objectives</p>
+<ul>
+<li>Use a single command to navigate multiple steps in your directory
+structure, including moving backwards (one level up).</li>
+<li>Perform operations on files in directories outside your working directory.</li>
+<li>Work with hidden directories and hidden files.</li>
+<li>Interconvert between absolute and relative paths.</li>
+<li>Employ navigational shortcuts to move around your file system.</li>
+</ul>
+</div>
+<div id="working-with-files-and-directories" class="section level2" number="1.3">
+<h2>
+<span class="header-section-number">1.3</span> Working with Files and Directories</h2>
+<p>Questions</p>
+<ul>
+<li>How can I view and search file contents?</li>
+<li>How can I create, copy and delete files and directories?</li>
+<li>How can I control who has permission to modify a file?</li>
+<li>How can I repeat recently used commands?</li>
+</ul>
+<p>Objectives</p>
+<ul>
+<li>View, search within, copy, move, and rename files. Create new directories.</li>
+<li>Use wildcards (<code>*</code>) to perform operations on multiple files.</li>
+<li>Make a file read only.</li>
+<li>Use the <code>history</code> command to view and repeat recently used commands.</li>
+</ul>
+</div>
+<div id="writing-scripts-and-working-with-data" class="section level2" number="1.4">
+<h2>
+<span class="header-section-number">1.4</span> Writing Scripts and Working with Data</h2>
+<p>Questions</p>
+<ul>
+<li>How can we automate a commonly used set of commands?</li>
+</ul>
+<p>Objectives</p>
+<ul>
+<li>Use the nano text editor to modify text files.</li>
+<li>Write a basic shell script.</li>
+<li>Use the bash command to execute a shell script.</li>
+<li>Use chmod to make a script an executable program.</li>
+</ul>
+</div>
+<div id="references" class="section level2" number="1.5">
+<h2>
+<span class="header-section-number">1.5</span> References</h2>
+<ul>
+<li><p>The Data Carpentries <a href="https://swcarpentry.github.io/shell-novice/">The Unix
+Shell</a> and
+<a href="https://datacarpentry.org/shell-genomics/">Introduction to the Command Line for
+Genomics</a> lessons.</p></li>
+<li><p><a href="https://bioinformaticsworkbook.org/Appendix/Unix/unix-basics-1.html#gsc.tab=0">Introduction to
+Unix</a></p></li>
+</ul>
+</div>
 </div></body></html>
 
 <p style="text-align: center;">

@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 5 High throughput sequencing | Omics Data Analysis" />
+<meta property="og:title" content="Chapter 4 High throughput sequencing | Omics Data Analysis" />
 <meta property="og:type" content="book" />
 
 
@@ -25,7 +25,7 @@ MathJax.Hub.Config({
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
-<title>Chapter 5 High throughput sequencing | Omics Data Analysis</title>
+<title>Chapter 4 High throughput sequencing | Omics Data Analysis</title>
 
 <script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
@@ -143,11 +143,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
 <a href="index.html">Preamble</a>
-<a href="sec-cli.html"><span class="toc-section-number">1</span> The terminal</a>
+<a href="sec-cli.html"><span class="toc-section-number">1</span> The shell</a>
 <a href="sec-rmd.html"><span class="toc-section-number">2</span> R markdown</a>
 <a href="sec-linmod.html"><span class="toc-section-number">3</span> Linear models</a>
-<a href="sec-gsea.html"><span class="toc-section-number">4</span> Gene set enrichment analysis</a>
-<a id="active-page" href="sec-hts.html"><span class="toc-section-number">5</span> High throughput sequencing</a><ul class="toc-sections">
+<a id="active-page" href="sec-hts.html"><span class="toc-section-number">4</span> High throughput sequencing</a><ul class="toc-sections">
 <li class="toc"><a href="#rna-seq-library-preparation"> RNA-seq library preparation</a></li>
 <li class="toc"><a href="#sequencing"> Sequencing</a></li>
 <li class="toc"><a href="#fastq-files"> fastq files</a></li>
@@ -156,7 +155,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="toc"><a href="#counting"> Counting</a></li>
 <li class="toc"><a href="#differential-expression-analysis"> Differential expression analysis</a></li>
 </ul>
-<a href="sec-rnaseq.html"><span class="toc-section-number">6</span> Differential expression analysis</a>
+<a href="sec-rnaseq.html"><span class="toc-section-number">5</span> Differential expression analysis</a>
+<a href="sec-gsea.html"><span class="toc-section-number">6</span> Gene set enrichment analysis</a>
 <a href="sec-ms.html"><span class="toc-section-number">7</span> Mass spectrometry</a>
 <a href="sec-prot.html"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
 <a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
@@ -171,9 +171,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec:hts" class="section level1" number="5">
+<html><body><div id="sec:hts" class="section level1" number="4">
 <h1>
-<span class="header-section-number">Chapter 5</span> High throughput sequencing</h1>
+<span class="header-section-number">Chapter 4</span> High throughput sequencing</h1>
 <p><strong>Learning Objectives</strong></p>
 <p>The aim of this chapter is to present high throughput sequencing by going through one of its
 key applications: RNAseq. It is a highly sensitive and accurate tool that has revolutionised
@@ -181,9 +181,9 @@ the study of transcriptomes. The objective is to give an overview of the technol
 <p>We will pass through the different steps starting from the library preparation and
 the sequencing process. We will explore the resulting fastq files and the downstream
 processing pipeline including quality control, alignment and counting steps.</p>
-<div id="rna-seq-library-preparation" class="section level2" number="5.1">
+<div id="rna-seq-library-preparation" class="section level2" number="4.1">
 <h2>
-<span class="header-section-number">5.1</span> RNA-seq library preparation</h2>
+<span class="header-section-number">4.1</span> RNA-seq library preparation</h2>
 <p>The starting point of a RNAseq experiment is the cDNA library preparation.
 RNA is first isolated from cells and purified to remove ribosomal RNA which
 constitute the majority of total RNA. This can be done by extracting poly(A) RNA or
@@ -198,9 +198,9 @@ only the first cDNA strand is sequenced. Strand-specificity leads to lower numbe
 reads (overlapping multiple genes).</p>
 <p><img src="figs/library.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
-<div id="sequencing" class="section level2" number="5.2">
+<div id="sequencing" class="section level2" number="4.2">
 <h2>
-<span class="header-section-number">5.2</span> Sequencing</h2>
+<span class="header-section-number">4.2</span> Sequencing</h2>
 <p>Once the library is ready, molecules from the library are sequenced in a high throughput
 manner to obtain short sequences from one end (single-end sequencing) or both ends (pair-end
 sequencing). Single-end sequencing is cheaper, but Paired-end sequencing improves the ability to
@@ -231,9 +231,9 @@ is then washed away and the process is repeated.</p>
 <p>For a dynamic view of the cluster amplification process, watch the
 <a href="https://www.youtube.com/watch?v=fCd6B5HRaZ8">Illumina video</a>.</p>
 </div>
-<div id="fastq-files" class="section level2" number="5.3">
+<div id="fastq-files" class="section level2" number="4.3">
 <h2>
-<span class="header-section-number">5.3</span> fastq files</h2>
+<span class="header-section-number">4.3</span> fastq files</h2>
 <p>The sequence data generated from the sequencer are received in text files called fastq files.
 For a single-read run, one fastq file is created for each sample. For a paired-end run,
 two separated fastq files are generated, each containing sequences from one end.</p>
@@ -271,17 +271,17 @@ the probability that the corresponding nucleotide call is incorrect.</li>
 </div>
 </div>
 </div>
-<div id="processing-pipeline" class="section level2" number="5.4">
+<div id="processing-pipeline" class="section level2" number="4.4">
 <h2>
-<span class="header-section-number">5.4</span> Processing pipeline</h2>
+<span class="header-section-number">4.4</span> Processing pipeline</h2>
 <p>The raw reads from fastq files will need to pass through a different tools to yield
 ultimately a count table, representing a snapshot of individual gene expression levels.
 The execution of this set of tools in a specified order is commonly referred to as a
 pipeline.</p>
 <p><img src="figs/pipeline.png" width="40%" style="display: block; margin: auto;"></p>
-<div id="quality-control" class="section level3" number="5.4.1">
+<div id="quality-control" class="section level3" number="4.4.1">
 <h3>
-<span class="header-section-number">5.4.1</span> Quality control</h3>
+<span class="header-section-number">4.4.1</span> Quality control</h3>
 <p>Of course, no one will analyse the sequences from the fastq file one by one to check
 their quality… Rather, a software called <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a>
 can be used. Then, another program such as <a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatics</a>
@@ -293,7 +293,7 @@ can help to clean the reads.</p>
 different features of the reads and generates a report that includes several diagnostic
 plots to highlight any problem the data may have.</p>
 <p>FastQC is run from the command line:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="sec-hts.html#cb5-1" aria-hidden="true"></a><span class="op">$</span><span class="st"> </span>fastqc SampleName.fastq </span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="sec-hts.html#cb5-1" aria-hidden="true"></a><span class="op">$</span><span class="st"> </span>fastqc SampleName.fastq</span></code></pre></div>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -436,9 +436,9 @@ adapters were correctly removed and if the per base sequence quality is higher a
 </div>
 </div>
 </div>
-<div id="alignment" class="section level2" number="5.5">
+<div id="alignment" class="section level2" number="4.5">
 <h2>
-<span class="header-section-number">5.5</span> Alignment</h2>
+<span class="header-section-number">4.5</span> Alignment</h2>
 <p>Next step is to map the reads to determine where in the genome the reads originated from.
 Many different aligners are available such as <a href="https://ccb.jhu.edu/software/hisat2/manual.shtml">HISAT2</a>,
 <a href="https://github.com/alexdobin/STAR">STAR</a>, <a href="http://bio-bwa.sourceforge.net">BWA</a>,
@@ -502,9 +502,9 @@ SAM files can be easily converted into BAM files using <a href="http://www.htsli
 it is sometimes mandatory to sort the SAM/BAM by chromosomal coordinates for downstream applications.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="sec-hts.html#cb11-1" aria-hidden="true"></a>samtools view <span class="op">-</span>Sb XXX.sam <span class="op">|</span><span class="st"> </span>samtools sort <span class="op">&gt;</span><span class="st"> </span>XXX.bam</span></code></pre></div>
 </div>
-<div id="counting" class="section level2" number="5.6">
+<div id="counting" class="section level2" number="4.6">
 <h2>
-<span class="header-section-number">5.6</span> Counting</h2>
+<span class="header-section-number">4.6</span> Counting</h2>
 <p>Now comes the quantification step. It can be performed with several tools such as
 <a href="https://pypi.org/project/HTSeq/">htseq-count</a> or <a href="http://bioinf.wehi.edu.au/featureCounts/">FeatureCounts</a>.
 We will describe the latter as it runs much faster. It was developed
@@ -551,12 +551,12 @@ for more details).</p>
 <span id="cb14-3"><a href="sec-hts.html#cb14-3" aria-hidden="true"></a><span class="op">-</span>a annotations.gtf \  <span class="co"># name of the annotation file</span></span>
 <span id="cb14-4"><a href="sec-hts.html#cb14-4" aria-hidden="true"></a><span class="op">-</span>t exon \             <span class="co"># feature type in GTF annotation</span></span>
 <span id="cb14-5"><a href="sec-hts.html#cb14-5" aria-hidden="true"></a><span class="op">-</span>g gene_id \          <span class="co"># Meta-features used in GTF annotation</span></span>
-<span id="cb14-6"><a href="sec-hts.html#cb14-6" aria-hidden="true"></a><span class="op">-</span>s <span class="dv">0</span> \                <span class="co"># strand-specificity  </span></span>
+<span id="cb14-6"><a href="sec-hts.html#cb14-6" aria-hidden="true"></a><span class="op">-</span>s <span class="dv">0</span> \                <span class="co"># strand-specificity</span></span>
 <span id="cb14-7"><a href="sec-hts.html#cb14-7" aria-hidden="true"></a><span class="op">-</span>o counts.tsv \       <span class="co"># Name of the output file</span></span>
-<span id="cb14-8"><a href="sec-hts.html#cb14-8" aria-hidden="true"></a>mapping_results.bam </span></code></pre></div>
+<span id="cb14-8"><a href="sec-hts.html#cb14-8" aria-hidden="true"></a>mapping_results.bam</span></code></pre></div>
 <p>Here is an example of featurecounts output file. The last column gives the raw counts
 of each gene in that sample.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="sec-hts.html#cb15-1" aria-hidden="true"></a>counts_result &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="dt">file =</span> <span class="st">"data/RNAseq_pipeline/OD01_10_featurecounts.tsv"</span>, <span class="dt">skip =</span> <span class="dv">1</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="sec-hts.html#cb15-1" aria-hidden="true"></a>counts_result &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="dt">file =</span> <span class="st">"data/RNAseq_pipeline/OD01_10_featurecounts.tsv"</span>, <span class="dt">skip =</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   Geneid = col_character(),
@@ -568,8 +568,8 @@ of each gene in that sample.</p>
 ##   OD01_10.bam = col_double()
 ## )</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="sec-hts.html#cb17-1" aria-hidden="true"></a><span class="kw">datatable</span>(<span class="kw">head</span>(counts_result))</span></code></pre></div>
-<div id="htmlwidget-4f55321a9aab21dce4b7" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4f55321a9aab21dce4b7">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],["ENSG00000223972","ENSG00000227232","ENSG00000278267","ENSG00000243485","ENSG00000284332","ENSG00000237613"],["1;1;1;1;1;1;1;1;1","1;1;1;1;1;1;1;1;1;1;1","1","1;1;1;1;1","1","1;1;1;1;1"],["11869;12010;12179;12613;12613;12975;13221;13221;13453","14404;15005;15796;16607;16858;17233;17606;17915;18268;24738;29534","17369","29554;30267;30564;30976;30976","30366","34554;35245;35277;35721;35721"],["12227;12057;12227;12721;12697;13052;13374;14409;13670","14501;15038;15947;16765;17055;17368;17742;18061;18366;24891;29570","17436","30039;30667;30667;31109;31097","30503","35174;35481;35481;36073;36081"],["+;+;+;+;+;+;+;+;+","-;-;-;-;-;-;-;-;-;-;-","-","+;+;+;+;+","+","-;-;-;-;-"],[1735,1351,68,1021,138,1219],[0,28,4,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Geneid<\/th>\n      <th>Chr<\/th>\n      <th>Start<\/th>\n      <th>End<\/th>\n      <th>Strand<\/th>\n      <th>Length<\/th>\n      <th>OD01_10.bam<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[6,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><div class="question">
+<div id="htmlwidget-814c5644bd810d19f4f8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-814c5644bd810d19f4f8">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],["ENSG00000223972","ENSG00000227232","ENSG00000278267","ENSG00000243485","ENSG00000284332","ENSG00000237613"],["1;1;1;1;1;1;1;1;1","1;1;1;1;1;1;1;1;1;1;1","1","1;1;1;1;1","1","1;1;1;1;1"],["11869;12010;12179;12613;12613;12975;13221;13221;13453","14404;15005;15796;16607;16858;17233;17606;17915;18268;24738;29534","17369","29554;30267;30564;30976;30976","30366","34554;35245;35277;35721;35721"],["12227;12057;12227;12721;12697;13052;13374;14409;13670","14501;15038;15947;16765;17055;17368;17742;18061;18366;24891;29570","17436","30039;30667;30667;31109;31097","30503","35174;35481;35481;36073;36081"],["+;+;+;+;+;+;+;+;+","-;-;-;-;-;-;-;-;-;-;-","-","+;+;+;+;+","+","-;-;-;-;-"],[1735,1351,68,1021,138,1219],[0,28,4,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Geneid<\/th>\n      <th>Chr<\/th>\n      <th>Start<\/th>\n      <th>End<\/th>\n      <th>Strand<\/th>\n      <th>Length<\/th>\n      <th>OD01_10.bam<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[6,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><div class="question">
 <p class="question-begin">
 ► Question
 </p>
@@ -608,18 +608,18 @@ of each gene in that sample.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="sec-hts.html#cb22-1" aria-hidden="true"></a><span class="kw">summary</span>(counts_result<span class="op">$</span>OD01_<span class="fl">10.</span>bam)</span></code></pre></div>
 <pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
 ##      0.0      0.0      0.0    306.9      7.0 167208.0</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="sec-hts.html#cb24-1" aria-hidden="true"></a>counts_result <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb24-2"><a href="sec-hts.html#cb24-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(OD01_<span class="fl">10.</span>bam <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="sec-hts.html#cb24-1" aria-hidden="true"></a>counts_result <span class="op">%&gt;%</span></span>
+<span id="cb24-2"><a href="sec-hts.html#cb24-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(OD01_<span class="fl">10.</span>bam <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span></span>
 <span id="cb24-3"><a href="sec-hts.html#cb24-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">nrow</span>()</span></code></pre></div>
 <pre><code>## [1] 36619</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Plot the distribution of counts. How does it look like?</li>
 </ol>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="sec-hts.html#cb26-1" aria-hidden="true"></a>counts_result <span class="op">%&gt;%</span><span class="st"> </span></span>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="sec-hts.html#cb26-1" aria-hidden="true"></a>counts_result <span class="op">%&gt;%</span></span>
 <span id="cb26-2"><a href="sec-hts.html#cb26-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">counts =</span> OD01_<span class="fl">10.</span>bam) <span class="op">%&gt;%</span></span>
 <span id="cb26-3"><a href="sec-hts.html#cb26-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">log2</span>(counts <span class="op">+</span><span class="st"> </span><span class="dv">1</span>))) <span class="op">+</span></span>
-<span id="cb26-4"><a href="sec-hts.html#cb26-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>) </span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-33-1.png" width="672"></p>
+<span id="cb26-4"><a href="sec-hts.html#cb26-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>)</span></code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-34-1.png" width="672"></p>
 <p>Note that a “pseudo-count” was added before the log2 transformation of the counts,
 to avoid elimination of counts equal to zero.</p>
 <p class="solution-end">
@@ -628,9 +628,9 @@ to avoid elimination of counts equal to zero.</p>
 </div>
 </div>
 </div>
-<div id="differential-expression-analysis" class="section level2" number="5.7">
+<div id="differential-expression-analysis" class="section level2" number="4.7">
 <h2>
-<span class="header-section-number">5.7</span> Differential expression analysis</h2>
+<span class="header-section-number">4.7</span> Differential expression analysis</h2>
 <p>The aim of an RNAseq experiment is often to compare different types of cells, or to
 compare treated cells to control cells, to see if some genes are up- or down- regulated.</p>
 <p><img src="figs/DE_analysis.png" width="100%" style="display: block; margin: auto;"></p>
@@ -643,7 +643,7 @@ As it addresses relatively complex statistical concepts, it will be covered in t
 </div></body></html>
 
 <p style="text-align: center;">
-<a href="sec-gsea.html"><button class="btn btn-default">Previous</button></a>
+<a href="sec-linmod.html"><button class="btn btn-default">Previous</button></a>
 <a href="sec-rnaseq.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 

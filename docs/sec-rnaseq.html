@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 6 Differential expression analysis | Omics Data Analysis" />
+<meta property="og:title" content="Chapter 5 Differential expression analysis | Omics Data Analysis" />
 <meta property="og:type" content="book" />
 
 
@@ -25,7 +25,7 @@ MathJax.Hub.Config({
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
-<title>Chapter 6 Differential expression analysis | Omics Data Analysis</title>
+<title>Chapter 5 Differential expression analysis | Omics Data Analysis</title>
 
 <script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
@@ -143,16 +143,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
 <a href="index.html">Preamble</a>
-<a href="sec-cli.html"><span class="toc-section-number">1</span> The terminal</a>
+<a href="sec-cli.html"><span class="toc-section-number">1</span> The shell</a>
 <a href="sec-rmd.html"><span class="toc-section-number">2</span> R markdown</a>
 <a href="sec-linmod.html"><span class="toc-section-number">3</span> Linear models</a>
-<a href="sec-gsea.html"><span class="toc-section-number">4</span> Gene set enrichment analysis</a>
-<a href="sec-hts.html"><span class="toc-section-number">5</span> High throughput sequencing</a>
-<a id="active-page" href="sec-rnaseq.html"><span class="toc-section-number">6</span> Differential expression analysis</a><ul class="toc-sections">
+<a href="sec-hts.html"><span class="toc-section-number">4</span> High throughput sequencing</a>
+<a id="active-page" href="sec-rnaseq.html"><span class="toc-section-number">5</span> Differential expression analysis</a><ul class="toc-sections">
 <li class="toc"><a href="#theory-behind-deseq2"> Theory behind DESeq2</a></li>
 <li class="toc"><a href="#running-deseq2"> Running DESeq2</a></li>
 <li class="toc"><a href="#a-more-complex-design"> A more complex design</a></li>
 </ul>
+<a href="sec-gsea.html"><span class="toc-section-number">6</span> Gene set enrichment analysis</a>
 <a href="sec-ms.html"><span class="toc-section-number">7</span> Mass spectrometry</a>
 <a href="sec-prot.html"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
 <a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
@@ -167,18 +167,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec:rnaseq" class="section level1" number="6">
+<html><body><div id="sec:rnaseq" class="section level1" number="5">
 <h1>
-<span class="header-section-number">Chapter 6</span> Differential expression analysis</h1>
+<span class="header-section-number">Chapter 5</span> Differential expression analysis</h1>
 <p><strong>Learning Objectives</strong></p>
 <p>The goal of this chapter is</p>
 <ul>
 <li><p>to understand the different theorical concepts behind a differential expression analysis</p></li>
 <li><p>to provide a real-life example of DE analysis analysis running DESeq2 step-by-step</p></li>
 </ul>
-<div id="theory-behind-deseq2" class="section level2" number="6.1">
+<div id="theory-behind-deseq2" class="section level2" number="5.1">
 <h2>
-<span class="header-section-number">6.1</span> Theory behind DESeq2</h2>
+<span class="header-section-number">5.1</span> Theory behind DESeq2</h2>
 <p>DESeq2 is bioconductor package widely used for differential expression analysis.
 For more information read the original paper <span class="citation">(Love, Huber, and Anders <label for="tufte-mn-7" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-7" class="margin-toggle">2014<span class="marginnote">Love, M, W Huber, and S Anders. 2014. “Moderated Estimation of Fold Change and Dispersion for Rna-Seq Data with Deseq2.” <em>Genome Biology</em> 15 (5): 550–8. <a href="https://doi.org/10.1186/s13059-014-0550-8">https://doi.org/10.1186/s13059-014-0550-8</a>.</span>)</span> and the <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2 vignette</a>.</p>
 <p>The starting point of the analysis is a count matrix, and the goal is to identify
@@ -189,9 +189,9 @@ dispersions and shrinks these estimates to generate more accurate estimates of d
 to model the counts. Finally, DESeq2 fits a negative binomial model and performs
 hypothesis testing using the Wald test.</p>
 <p><img src="figs/deseq2_steps.png" width="60%" style="display: block; margin: auto;"></p>
-<div id="normalisation" class="section level3" number="6.1.1">
+<div id="normalisation" class="section level3" number="5.1.1">
 <h3>
-<span class="header-section-number">6.1.1</span> Normalisation</h3>
+<span class="header-section-number">5.1.1</span> Normalisation</h3>
 <ul>
 <li><strong>Why is it mandatory to normalise?</strong></li>
 </ul>
@@ -264,9 +264,9 @@ This is performed by dividing each raw count values in a given sample by that sa
 scaling factor.</p>
 <p><img src="figs/SF_steps.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
-<div id="count-modeling" class="section level3" number="6.1.2">
+<div id="count-modeling" class="section level3" number="5.1.2">
 <h3>
-<span class="header-section-number">6.1.2</span> Count modeling</h3>
+<span class="header-section-number">5.1.2</span> Count modeling</h3>
 <p>Let’s first have a look at the counts distribution for a typical RNAseq sample:</p>
 <p><img src="figs/distribution_of_counts.png" width="80%" style="display: block; margin: auto;"></p>
 <p>It is obvious that the count data is not normally distributed. Counts are integer values,
@@ -300,9 +300,9 @@ an extra parameter <span class="math inline">\(α\)</span> called the “dispers
 variance that is empirically observed in RNA-Seq experiments.</p>
 <p><img src="figs/NB.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
-<div id="dispersion-estimation" class="section level3" number="6.1.3">
+<div id="dispersion-estimation" class="section level3" number="5.1.3">
 <h3>
-<span class="header-section-number">6.1.3</span> Dispersion estimation</h3>
+<span class="header-section-number">5.1.3</span> Dispersion estimation</h3>
 <p>Having modelised counts by a negative-binomial distribution, next step is to estimate,
 for each gene, the two parameters of the distribution (mean and dispersion). The mean
 will be estimated easily from the observed normalized counts in both conditions, but
@@ -348,21 +348,21 @@ differential expression analysis. The shrunken dispersion values will be used fo
 fitting of the model and differential expression testing.</p>
 <p><img src="figs/disp_shrinkage.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div id="glm" class="section level3" number="6.1.4">
+<div id="glm" class="section level3" number="5.1.4">
 <h3>
-<span class="header-section-number">6.1.4</span> GLM</h3>
+<span class="header-section-number">5.1.4</span> GLM</h3>
 <p>Adapt this paragraph in function of Laurent’s chapter on linear models.</p>
 <p>DESeq2 fits a generalized linear model of the form: <span class="math inline">\(log2(qij)=xj.βi\)</span>, and <span class="math inline">\(βi\)</span>
 coefficients are computed. They give estimates of the log fold changes for gene i
 for each column of the model matrix. Standard errors for the log2 fold changes are
 also estimated.</p>
 </div>
-<div id="statistical-test" class="section level3" number="6.1.5">
+<div id="statistical-test" class="section level3" number="5.1.5">
 <h3>
-<span class="header-section-number">6.1.5</span> Statistical test</h3>
-<div id="wald-test" class="section level4" number="6.1.5.1">
+<span class="header-section-number">5.1.5</span> Statistical test</h3>
+<div id="wald-test" class="section level4" number="5.1.5.1">
 <h4>
-<span class="header-section-number">6.1.5.1</span> Wald test</h4>
+<span class="header-section-number">5.1.5.1</span> Wald test</h4>
 <p>The ultimate goal of a test for differential expression is to decide whether,
 for a given gene, an observed difference in read counts is significant, that is,
 whether it is greater than what would be expected just due to natural random variation.
@@ -376,9 +376,9 @@ and a p-value is computed reporting the probability that a z-statistic at least
 as extreme as the observed value would be selected at random. In principle, if this
 p-value is small (below a certain cutoff) the null hypothesis is rejected.</p>
 </div>
-<div id="multiple-testing-correction" class="section level4" number="6.1.5.2">
+<div id="multiple-testing-correction" class="section level4" number="5.1.5.2">
 <h4>
-<span class="header-section-number">6.1.5.2</span> Multiple testing correction</h4>
+<span class="header-section-number">5.1.5.2</span> Multiple testing correction</h4>
 <ul>
 <li><strong>False discovery rate (FDR)</strong></li>
 </ul>
@@ -437,9 +437,9 @@ genes which will have a significant padjusted value.</p>
 </div>
 </div>
 </div>
-<div id="running-deseq2" class="section level2" number="6.2">
+<div id="running-deseq2" class="section level2" number="5.2">
 <h2>
-<span class="header-section-number">6.2</span> Running DESeq2</h2>
+<span class="header-section-number">5.2</span> Running DESeq2</h2>
 <p>Let’s start by installing the
 <a href="https://bioconductor.org/packages/release/bioc/html/DESeq2.html">DESeq2</a> package.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="sec-rnaseq.html#cb27-1" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"DESeq2"</span>))</span>
@@ -447,9 +447,9 @@ genes which will have a significant padjusted value.</p>
 <span id="cb27-3"><a href="sec-rnaseq.html#cb27-3" aria-hidden="true"></a><span class="kw">library</span>(DESeq2)</span>
 <span id="cb27-4"><a href="sec-rnaseq.html#cb27-4" aria-hidden="true"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
 <p>We will run a DESeq2 analysis using real data.</p>
-<div id="construct-deseqdataset-object" class="section level3" number="6.2.1">
+<div id="construct-deseqdataset-object" class="section level3" number="5.2.1">
 <h3>
-<span class="header-section-number">6.2.1</span> Construct DESeqDataSet object</h3>
+<span class="header-section-number">5.2.1</span> Construct DESeqDataSet object</h3>
 <p>Let’s first load the count matrix and the sample metadata.
 This dataset corresponds to RNAseq data done on a cell line
 treated a not by a siRNA.</p>
@@ -532,16 +532,16 @@ accessed with <code>metadata()</code>.</li>
 <span id="cb39-3"><a href="sec-rnaseq.html#cb39-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">log2</span>(counts <span class="op">+</span><span class="st"> </span><span class="dv">1</span>), <span class="dt">fill =</span> sample)) <span class="op">+</span></span>
 <span id="cb39-4"><a href="sec-rnaseq.html#cb39-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>) <span class="op">+</span></span>
 <span id="cb39-5"><a href="sec-rnaseq.html#cb39-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sample)</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-49-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-50-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
 </div>
-<div id="run-deseq2" class="section level3" number="6.2.2">
+<div id="run-deseq2" class="section level3" number="5.2.2">
 <h3>
-<span class="header-section-number">6.2.2</span> Run DESeq2</h3>
+<span class="header-section-number">5.2.2</span> Run DESeq2</h3>
 <p>The standard differential expression analysis steps are wrapped into a single
 function <code>DESeq()</code>. This function will automatically run the following other functions:</p>
 <ul>
@@ -581,14 +581,14 @@ forget to re-run DESeq() function after the re-leveling operation.</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="sec-rnaseq.html#cb59-1" aria-hidden="true"></a><span class="kw">resultsNames</span>(dds)</span></code></pre></div>
 <pre><code>## [1] "Intercept"            "Condition_KD_vs_mock"</code></pre>
 </div>
-<div id="data-exploration" class="section level3" number="6.2.3">
+<div id="data-exploration" class="section level3" number="5.2.3">
 <h3>
-<span class="header-section-number">6.2.3</span> Data exploration</h3>
+<span class="header-section-number">5.2.3</span> Data exploration</h3>
 <p>Before anything else, a good practice is to explore the data
 and perform quality controls checks.</p>
-<div id="pca" class="section level4" number="6.2.3.1">
+<div id="pca" class="section level4" number="5.2.3.1">
 <h4>
-<span class="header-section-number">6.2.3.1</span> PCA</h4>
+<span class="header-section-number">5.2.3.1</span> PCA</h4>
 <p>It is highly recommended to starts by a PCA to assess overall similarity between the samples:</p>
 <ul>
 <li><p>Which samples are similar/different to each other?</p></li>
@@ -623,9 +623,9 @@ across all samples. See <code>?rlog</code> for more details about the function.<
 </div>
 </div>
 </div>
-<div id="inspecting-size-factors" class="section level4" number="6.2.3.2">
+<div id="inspecting-size-factors" class="section level4" number="5.2.3.2">
 <h4>
-<span class="header-section-number">6.2.3.2</span> Inspecting size factors</h4>
+<span class="header-section-number">5.2.3.2</span> Inspecting size factors</h4>
 <p>It is also advisable to investigate any systematic bias in the sequencing data, such as
 whether one sample has been sequenced more deeply than others. One can extract size factors
 using the <code>sizeFactors()</code> function.
@@ -668,9 +668,9 @@ of extreme outliers.</p>
 </div>
 </div>
 </div>
-<div id="dispersion-plot" class="section level4" number="6.2.3.3">
+<div id="dispersion-plot" class="section level4" number="5.2.3.3">
 <h4>
-<span class="header-section-number">6.2.3.3</span> Dispersion plot</h4>
+<span class="header-section-number">5.2.3.3</span> Dispersion plot</h4>
 <p>Plotting the dispersion estimates is a useful diagnostic.
 This dispersion plot is typical, with the final dispersion, estimates shrunk from the
 gene-wise estimates towards the fitted estimates.</p>
@@ -678,9 +678,9 @@ gene-wise estimates towards the fitted estimates.</p>
 <p><img src="WSBIM2122_files/figure-html/dispersion_plot-1.png" width="672"></p>
 </div>
 </div>
-<div id="results" class="section level3" number="6.2.4">
+<div id="results" class="section level3" number="5.2.4">
 <h3>
-<span class="header-section-number">6.2.4</span> Results</h3>
+<span class="header-section-number">5.2.4</span> Results</h3>
 <p>Results can then be extracted using the <code>results()</code>function.</p>
 <p>The <code>name</code> parameter must be an element of resultsNames(object), it specifies the
 the samples to compare.</p>
@@ -782,9 +782,9 @@ that have been filtered out by the independent filtering procedure.</p>
 </p>
 </div>
 </div>
-<div id="independent-filtering-exploration" class="section level4" number="6.2.4.1">
+<div id="independent-filtering-exploration" class="section level4" number="5.2.4.1">
 <h4>
-<span class="header-section-number">6.2.4.1</span> Independent filtering exploration</h4>
+<span class="header-section-number">5.2.4.1</span> Independent filtering exploration</h4>
 <p>The filtering threshold that has been used to filter low count genes can be extracted
 from the results metadata.</p>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="sec-rnaseq.html#cb74-1" aria-hidden="true"></a><span class="kw">metadata</span>(res)<span class="op">$</span>filterThreshold</span></code></pre></div>
@@ -804,7 +804,7 @@ rejections is within 1 residual standard deviation to the peak of the curve.</p>
 <span id="cb76-5"><a href="sec-rnaseq.html#cb76-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span></span>
 <span id="cb76-6"><a href="sec-rnaseq.html#cb76-6" aria-hidden="true"></a>               <span class="kw">as.numeric</span>(<span class="kw">sub</span>(<span class="st">'%'</span>, <span class="dt">replacement =</span> <span class="st">''</span>, <span class="kw">names</span>(<span class="kw">metadata</span>(res)<span class="op">$</span>filterThreshold)))<span class="op">/</span><span class="dv">100</span>,</span>
 <span id="cb76-7"><a href="sec-rnaseq.html#cb76-7" aria-hidden="true"></a>             <span class="dt">color =</span> <span class="st">'red'</span>)</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-59-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-60-1.png" width="672"></p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -886,16 +886,16 @@ Check how many genes have no padj?</li>
 </div>
 </div>
 </div>
-<div id="pvalues-distribution" class="section level4" number="6.2.4.2">
+<div id="pvalues-distribution" class="section level4" number="5.2.4.2">
 <h4>
-<span class="header-section-number">6.2.4.2</span> pvalues distribution</h4>
+<span class="header-section-number">5.2.4.2</span> pvalues distribution</h4>
 <p>Another useful diagnostic plot is the histogram of pvalues.
 It can give you an immediate idea of the proportion of genes differentially expressed,
 (the taller the is the left peak, the more p-values are close to 0 and therefore
 significant). Furthermore, it gives an idea of how the test behaved across all your
 hypotheses, and immediately diagnoses some potential problems.</p>
 <div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="sec-rnaseq.html#cb95-1" aria-hidden="true"></a><span class="kw">hist</span>(res_tbl<span class="op">$</span>pvalue)</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-63-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-64-1.png" width="672"></p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -957,16 +957,16 @@ then we observe that the pvalues behaviour is now much nicer!</p>
 <span id="cb100-2"><a href="sec-rnaseq.html#cb100-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">filter</span>(baseMean <span class="op">&gt;</span><span class="st"> </span><span class="kw">metadata</span>(res)<span class="op">$</span>filterThreshold) <span class="op">%&gt;%</span></span>
 <span id="cb100-3"><a href="sec-rnaseq.html#cb100-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">pull</span>(pvalue) <span class="op">%&gt;%</span></span>
 <span id="cb100-4"><a href="sec-rnaseq.html#cb100-4" aria-hidden="true"></a><span class="st">    </span>hist</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-65-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-66-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
 </div>
-<div id="ma-plot" class="section level4" number="6.2.4.3">
+<div id="ma-plot" class="section level4" number="5.2.4.3">
 <h4>
-<span class="header-section-number">6.2.4.3</span> MA-plot</h4>
+<span class="header-section-number">5.2.4.3</span> MA-plot</h4>
 <p>Another interesting plot is the MA-plot (“Mean-Average” plot), a scatter plot of
 log2FC versus the mean of normalised counts. Genes with a padjusted value lower than
 0.05 are plotted in red. The plot highlights the fact that genes with low read counts show
@@ -975,17 +975,17 @@ even though are likely not really differentially expressed.
 In the MA-plot, we hope to observe some genes located in the upper/lower right
 quadrant of the plots (the most interesting candidates).</p>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="sec-rnaseq.html#cb101-1" aria-hidden="true"></a><span class="kw">plotMA</span>(res, <span class="dt">alpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-66-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-67-1.png" width="672"></p>
 </div>
-<div id="volcano-plot" class="section level4" number="6.2.4.4">
+<div id="volcano-plot" class="section level4" number="5.2.4.4">
 <h4>
-<span class="header-section-number">6.2.4.4</span> Volcano-plot</h4>
+<span class="header-section-number">5.2.4.4</span> Volcano-plot</h4>
 <p>Drawing a volcano-plot is also informative for data interpretation.</p>
 <div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="sec-rnaseq.html#cb102-1" aria-hidden="true"></a>res_tbl <span class="op">%&gt;%</span></span>
 <span id="cb102-2"><a href="sec-rnaseq.html#cb102-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(padj)) <span class="op">%&gt;%</span></span>
 <span id="cb102-3"><a href="sec-rnaseq.html#cb102-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span> log2FoldChange, <span class="dt">y =</span> <span class="op">-</span><span class="kw">log10</span>(padj))) <span class="op">+</span></span>
 <span id="cb102-4"><a href="sec-rnaseq.html#cb102-4" aria-hidden="true"></a><span class="st">   </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">"gray40"</span>)</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-67-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-68-1.png" width="672"></p>
 <p>Recall that the most interesting features are those towards to top corners given
 that they have a small pvalues and large fold-changes.
 The volcano-plot can be useful to define padjusted and log2FC thresholds.
@@ -1005,11 +1005,11 @@ differentially expressed genes that have a padj_thr &lt;- 1e-5 and an absolute l
 <span id="cb103-12"><a href="sec-rnaseq.html#cb103-12" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> log2FC_thr) <span class="op">+</span></span>
 <span id="cb103-13"><a href="sec-rnaseq.html#cb103-13" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="op">-</span>log2FC_thr) <span class="op">+</span></span>
 <span id="cb103-14"><a href="sec-rnaseq.html#cb103-14" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="op">-</span><span class="kw">log10</span>(padj_thr))</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-68-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-69-1.png" width="672"></p>
 </div>
-<div id="plot-counts-of-genes" class="section level4" number="6.2.4.5">
+<div id="plot-counts-of-genes" class="section level4" number="5.2.4.5">
 <h4>
-<span class="header-section-number">6.2.4.5</span> Plot counts of genes</h4>
+<span class="header-section-number">5.2.4.5</span> Plot counts of genes</h4>
 <p>It may be also useful to check the validity of the analysis by simply assessing the expression
 level of the most highly differentially expressed genes.</p>
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="sec-rnaseq.html#cb104-1" aria-hidden="true"></a>best_genes &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></span>
@@ -1033,7 +1033,7 @@ level of the most highly differentially expressed genes.</p>
 <span id="cb104-19"><a href="sec-rnaseq.html#cb104-19" aria-hidden="true"></a>        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),</span>
 <span id="cb104-20"><a href="sec-rnaseq.html#cb104-20" aria-hidden="true"></a>        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>))</span></code></pre></div>
 <pre><code>## Joining, by = "sample"</code></pre>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-69-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-70-1.png" width="672"></p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -1043,7 +1043,7 @@ level of the most highly differentially expressed genes.</p>
 <li>Identify and inspect counts of the genes plotted in red in the following volcano-plot.
 These genes have a very large log2FC (|log2FC| &gt; 5) but are far from bearing the lowest padjusted value (their padjusted value is between 0.05 and 1e-5).</li>
 </ol>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-70-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-71-1.png" width="672"></p>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Compare counts with previous counts plots (counts of genes with lowest pvalues).
 what is the most striking?</p></li>
@@ -1090,7 +1090,7 @@ These genes have a very large log2FC (|log2FC| &gt; 5) but are far from bearing 
 <span id="cb108-12"><a href="sec-rnaseq.html#cb108-12" aria-hidden="true"></a>        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),</span>
 <span id="cb108-13"><a href="sec-rnaseq.html#cb108-13" aria-hidden="true"></a>        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>))</span></code></pre></div>
 <pre><code>## Joining, by = "sample"</code></pre>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-71-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-72-1.png" width="672"></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Compare counts with previous counts plots (counts of genes with lowest pvalues).
 what is the most striking?</li>
@@ -1105,16 +1105,16 @@ This will result in higher dispersion values, and larger pvalues.</p>
 <span id="cb110-3"><a href="sec-rnaseq.html#cb110-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">gather</span>(group, dispersion) <span class="op">%&gt;%</span></span>
 <span id="cb110-4"><a href="sec-rnaseq.html#cb110-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> dispersion)) <span class="op">+</span></span>
 <span id="cb110-5"><a href="sec-rnaseq.html#cb110-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-72-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-73-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
 </div>
-<div id="adding-gene-name-to-result-table" class="section level4" number="6.2.4.6">
+<div id="adding-gene-name-to-result-table" class="section level4" number="5.2.4.6">
 <h4>
-<span class="header-section-number">6.2.4.6</span> Adding gene name to result table</h4>
+<span class="header-section-number">5.2.4.6</span> Adding gene name to result table</h4>
 <p>The result table only uses Ensembl gene IDs, but gene names may be more informative.
 Bioconductor’s biomaRt package can help with mapping various ID schemes to each other.</p>
 <div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="sec-rnaseq.html#cb111-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"biomaRt"</span>)</span>
@@ -1143,13 +1143,13 @@ Bioconductor’s biomaRt package can help with mapping various ID schemes to eac
 </div>
 </div>
 </div>
-<div id="a-more-complex-design" class="section level2" number="6.3">
+<div id="a-more-complex-design" class="section level2" number="5.3">
 <h2>
-<span class="header-section-number">6.3</span> A more complex design</h2>
-<p>Actually, the experiment was in reality done on 2 different cell lines, epithelial and fibroblasts cells.</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="sec-rnaseq.html#cb115-1" aria-hidden="true"></a><span class="co">#load("data/deseq2/counts_both.rda")</span></span>
-<span id="cb115-2"><a href="sec-rnaseq.html#cb115-2" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">"data/deseq2/coldata_both.rda"</span>)</span>
-<span id="cb115-3"><a href="sec-rnaseq.html#cb115-3" aria-hidden="true"></a>coldata</span></code></pre></div>
+<span class="header-section-number">5.3</span> A more complex design</h2>
+<p>Actually, the experiment was in reality done on 2 different cell
+lines, epithelial and fibroblasts cells.</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="sec-rnaseq.html#cb115-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">"data/deseq2/coldata_both.rda"</span>)</span>
+<span id="cb115-2"><a href="sec-rnaseq.html#cb115-2" aria-hidden="true"></a>coldata</span></code></pre></div>
 <pre><code>##          Cell       Type Condition
 ## OD01_2  HEC1A Epithelial      mock
 ## OD01_4  HEC1A Epithelial      mock
@@ -1163,37 +1163,25 @@ Bioconductor’s biomaRt package can help with mapping various ID schemes to eac
 ## OD01_11 THESC Fibroblast        KD
 ## OD01_7  THESC Fibroblast        KD
 ## OD01_9  THESC Fibroblast        KD</code></pre>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="sec-rnaseq.html#cb117-1" aria-hidden="true"></a><span class="co">#head(counts)</span></span>
-<span id="cb117-2"><a href="sec-rnaseq.html#cb117-2" aria-hidden="true"></a><span class="co">#dim(counts)</span></span></code></pre></div>
-<div class="question" id="">
+<div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
-
-
-
-<p>Start the whole analysis again, using all samples, and try to identify genes that are differentially
-expressed in both types of cells.</p>
-<div class="question" id="">
-<p class="question-begin">
-► Question
+<p>Start the whole analysis again, using all samples, and try to identify
+genes that are differentially expressed in both types of cells.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
 </p>
-<div class="question-body">
-
-
-
-
 </div>
 </div>
-</div>
-</div>
+
 </div>
 </div></body></html>
 
 <p style="text-align: center;">
 <a href="sec-hts.html"><button class="btn btn-default">Previous</button></a>
-<a href="sec-ms.html"><button class="btn btn-default">Next</button></a>
+<a href="sec-gsea.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
 2020-09-17

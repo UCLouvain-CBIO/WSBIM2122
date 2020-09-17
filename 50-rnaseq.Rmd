@@ -954,19 +954,17 @@ head(res_tbl)
 
 ## A more complex design
 
-Actually, the experiment was in reality done on 2 different cell lines, epithelial and fibroblasts cells.
+Actually, the experiment was in reality done on 2 different cell
+lines, epithelial and fibroblasts cells.
 
 ```{r}
-#load("data/deseq2/counts_both.rda")
 load("data/deseq2/coldata_both.rda")
 coldata
-#head(counts)
-#dim(counts)
 ```
 
 `r msmbstyle::question_begin()`
 
-Start the whole analysis again, using all samples, and try to identify genes that are differentially
-expressed in both types of cells.
+Start the whole analysis again, using all samples, and try to identify
+genes that are differentially expressed in both types of cells.
 
-`r msmbstyle::question_begin()`
+`r msmbstyle::question_end()`
