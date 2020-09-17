@@ -237,9 +237,11 @@ knitr::include_graphics("./figs/disp_shrinkage.png")
 Adapt this paragraph in function of Laurent's chapter on linear models.
 
 DESeq2 fits a generalized linear model of the form: $log2(qij)=xj.βi$, and $βi$
-coefficients are computed. They give estimates of the log fold changes for gene i
+coefficients are computed. They give estimates of the log fold changes[^logFC_shrinkage] for gene i
 for each column of the model matrix. Standard errors for the log2 fold changes are
 also estimated.
+
+[^logFC_shrinkage]: DESeq2 offers further options to shrink LFC estimates. This is useful for ranking and visualization (see [DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html) for more information).
 
 ### Statistical test
 
@@ -550,14 +552,27 @@ plotDispEsts(dds)
 
 Results can then be extracted using the `results()`function.
 
-The `name` parameter must be an element of resultsNames(object), it specifies the
-the samples to compare.
+The `name` parameter must be an element of resultsNames(object): it specifies the
+the samples to compare. Note that the `contrast` argument of `results()` can also be used to 
+extract results of interest. In this case, the two following commands will give the same 
+results[^contrast].
 
-Let's inspect the results and their signification.
+[^contrast]: Using the `name` argument is however sometimes necessary to extract specific 
+coefficients from more complex designs. 
 
 ```{r}
 res <- results(dds,
                name = "Condition_KD_vs_mock")
+```
+
+```{r}
+res <- results(dds,
+               contrast = c("Condition", "KD", "mock"))
+```
+
+Let's inspect the results and their signification.
+
+```{r}
 res_tbl <- as_tibble(res, rownames = "ENSEMBL")
 res_tbl
 ```
