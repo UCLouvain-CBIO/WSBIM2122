@@ -65,7 +65,7 @@ Subsystem for
 Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10). We
 are going to the use RStudio Terminal.
 
-```{r, echo=FALSE, fig.align='center', out.width='50%'}
+```{r, echo=FALSE, fig.align='center', out.width='100%'}
 knitr::include_graphics("figs/rstudio_terminal.png")
 ```
 
@@ -119,24 +119,8 @@ corresponding to that command is not installed.
 
 ## Navigating Files and Directories
 
-Questions
-
-- How can I perform operations on files outside of my working directory?
-- What are some navigational shortcuts I can use to make my work more efficient?
-
-Objectives
-
-- Use a single command to navigate multiple steps in your directory
-  structure, including moving backwards (one level up).
-- Perform operations on files in directories outside your working directory.
-- Work with hidden directories and hidden files.
-- Interconvert between absolute and relative paths.
-- Employ navigational shortcuts to move around your file system.
-
-
-
-Let’s find out where we are by running a command called pwd (which
-stands for “print working directory”). At any moment, our current
+Let's find out where we are by running a command called pwd (which
+stands for "print working directory"). At any moment, our current
 working directory is our current default directory, i.e., the
 directory that the computer assumes we want to run commands in, unless
 we explicitly specify something else. Here, the computer’s response is
@@ -155,7 +139,7 @@ To create a shared set of files and directories, we will use the
 unlink("shell_data", recursive = TRUE, force = TRUE)
 ```
 
-```{r prepare_shell_data}
+```{r prepare_shell_data, eval = FALSE}
 rWSBIM2122::prepare_shell()
 ```
 
@@ -503,10 +487,234 @@ shell_data/new_dir/data/sim_100.fas
 
 ## Data analysis in the shell
 
+Above, you searched for the `TATATA` pattern in one of the `fas`
+files. We could do the same thing without opening the file with the
+`grep` command.
 
+```
+$ grep TATATA seq_1.fas
+```
+
+The command above greps all the lines that match the pattern of
+interest and prints them in the standard output. If there's one a few,
+we could easily count the lines. Firstly, this approach is error
+prone, as it relies on a manual step. Secondly, it doesn't
+scale. Instead, we can use the `wc`, short for *word count*
+command. Let first test it on the `seq_1.fas` file:
+
+```
+$ wc seq_1.fas
+```
+
+`r msmbstyle::question_begin()`
+
+- Read the `wc` manual page to understand the output.
+
+- Can you adapt the command above to return the number of lines only.
+
+`r msmbstyle::question_end()`
+
+
+
+Below we first *redirect* the output of `grep` into a new file and
+then count the number of lines with `wc`:
+
+
+```
+$ grep TATATA seq_1.fas > tatata_1
+$ wc tatata_1
+```
+
+The `> file.txt` redirects the output to a file called `file.txt`. If
+a file named `file.txt` already exists, the it will be overwritten. If
+however, you want to add the output to `file.txt`, then you should use
+`>>`. Execute following lines to compare the two redirection
+operators.
+
+```
+$ wc -l seq_1.fas > nlines1.txt
+$ wc -l seq_2.fas > nlines1.txt
+$ wc -l seq_1.fas > nlines2.txt
+$ wc -l seq_2.fas >> nlines2.txt
+cat nlines1.txt
+cat nlines2.txt
+```
+
+To avoid the creation of this intermediate file, the output of `grep`
+can be directly piped into `wc`:
+
+```
+$ grep TATATA seq_1.fas | wc
+```
+
+`r msmbstyle::question_begin()`
+
+Cound the number of line containing the `TATATA` pattern in all the
+`fas` files.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin()`
+
+- How many `fas` files do you have?
+
+- Use `head` to extract only the sequence headers (the first lines)
+  from all the `fas` files.
+
+- Use `grep` to extract only the sequence headers (the first lines)
+  from all the `fas` files. 
+
+- Use `grep` to extract everything but the sequence headers from all
+  the `fas` files. See the `grep` manual page to find an appropriate
+  tag.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin()`
+- Navigate to your directory containing the `sim_*.csv` files.
+- Look at a couple of them and familiarise yourselves with their
+  content.
+- How many files are there? 
+- How many points where simulated over all files?
+- How many points with `id` b where simulated over all files?
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin()`
+
+Image that you task is to load all the simulation data into R to
+compare the `x` and `y` values for each `id`. You could [read each
+file into R individually and then combine the
+data](https://uclouvain-cbio.github.io/WSBIM1207/sec-prog.html#analysing-data-from-multiple-files).
+
+An alternative would be to use what we have learned so far to create a
+single file, `all_sims.csv` containing all the simulation data.
+
+Check that the number of line in `all_sims.csv` matches what you found above.
+
+`r msmbstyle::question_end()`
 
 
 ## Writing scripts
+
+A really powerful thing about the command line is that you can write
+scripts. Scripts let you save commands to run them and also lets you
+put multiple commands together. Though writing scripts may require an
+additional time investment initially, this can save you time as you
+run them repeatedly. Scripts can also address the challenge of
+reproducibility: if you need to repeat an analysis, you retain a
+record of your command history within the script.
+
+Let's create a shell script that combines all the simulation files
+into a single new file. This will allow us to easily recreate that
+file once additional simulations are performed.
+
+- Start by creating a neww file that will contain the script, giving
+  it the extension `.sh`.
+
+```
+touch combine_all_simulations.sh
+```
+
+- Add the shell commands from the exercise into that file. You can use
+  an editor, either `nano` directly from the terminal, or RStudio.
+
+- Executre your script with 
+
+```
+sh combine_all_simulations.sh
+```
+
+### Making the script into a program {-}
+
+Let's test the `-l` (for long) tag of `ls`
+
+```
+$ ls combine_all_simulations.sh
+-rw-rw-r-- 1 lgatto lgatto 79 sept. 17 22:32 combine_all_simulations.sh
+```
+
+This long output gives us, in addition to the file name, the time and
+data is was created, the owner (and group) of the file (twice lgatto
+here) and the files permissions.
+
+There are ten slots in the permissions list. The first character in
+this list is related to file type, not permissions, so we’ll ignore it
+for now. The next three characters relate to the permissions that the
+file owner has, the next three relate to the permissions for group
+members, and the final three characters specify what other users
+outside of your group can do with the file. We’re going to concentrate
+on the three positions that deal with your permissions (as the file
+owner).
+
+
+```{r, echo=FALSE, fig.align='center', out.width='50%', fig.cap="The 10 slots defining the file permission (figure from the Data Carpentry's [*Working with Files and Directories*](https://datacarpentry.org/shell-genomics/03-working-with-files/) lesson."}
+knitr::include_graphics("figs/rwx_figure.svg")
+```
+
+Here the three positions that relate to the file owner are `rw-`. The
+`r` means that you have permission to read the file, the `w` indicates
+that you have permission to write to (i.e. make changes to) the file,
+and the third position is a `-`, indicating that you don't have
+permission to execute that file, i.e. to run it as a program.
+
+
+Our goal for now is to change permissions on this file so that it
+becomes executable. An for security purposes, we want only the file
+owner to be able to execute it.
+
+```
+$ chmod u+x combine_all_simulations.sh
+$ ls -l combine_all_simulations.sh
+-rwxrw-r-- 1 lgatto lgatto 79 sept. 17 22:32 combine_all_simulations.sh
+```
+
+And now, it will be possible to execute the script without excplicitly
+using `sh`.
+
+```
+combine_all_simulations.sh
+```
+
+If you want to make sure you don't want to inadvertently delete a
+file, it is possible to remove all `w` permissions:
+
+```
+$ chmod a+w combine_all_simulations.sh
+$ ls -l combine_all_simulations.sh
+-r-xr--r-- 1 lgatto lgatto 79 sept. 17 22:32 combine_all_simulations.sh
+```
+
+If you now try to delete the file with `rm
+combine_all_simulations.sh`, you'll be asked if you want to override
+your file permissions:
+
+```
+rm: remove write-protected regular file ‘combine_all_simulations.sh’? 
+```
+
+If you enter `n` (for no), the file will not be deleted. If you enter
+`y`, you will delete the file. This gives us an extra measure of
+security, as there is one more step between us and deleting our data
+files.
+
+**Important**: The `rm` command permanently removes the file. Be
+careful with this command. It doesn’t just nicely put the files in the
+Trash. They're really gone.
+
+By default, `rm` will not delete directories. You can tell `rm` to
+delete a directory using the `-r` (recursive) option. 
+
+To complete this chapter on shell, let's conclude by mentioning the R
+`system()` and `system2()` functions, that enable to invoke a system
+command such as a shell script:
+
+```{r system, eval = FALSE}
+system("combine_all_simulations.sh")
+```
 
 
 ## References

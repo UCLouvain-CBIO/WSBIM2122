@@ -1,6 +1,21 @@
 # R markdown {#sec:rmd}
 
-- refresher
+We have already seen how to implement [reproducible
+report](https://uclouvain-cbio.github.io/WSBIM1207/sec-rr.html) using
+the
+[Rmarkdown](https://uclouvain-cbio.github.io/WSBIM1207/sec-rr.html#knitr-and-rmarkdown)
+[package](http://rmarkdown.rstudio.com/) in the WSBIM1207 cours.
+
+
+Here, we are going to see a few additional capabilities
+
+
+## Knitting from within R
+
+There will be cases when the `Knit` button in RStudio will not be
+available. A typical example
+
+- `rmarkdown::render`
 - caching
 - slides
 - references
