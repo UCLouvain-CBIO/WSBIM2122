@@ -1,12 +1,726 @@
-# The terminal {#sec:cli}
+# The shell {#sec:cli}
+
+This chapter is based on the Data Carpentries [The Unix
+Shell](https://swcarpentry.github.io/shell-novice/) and [Introduction
+to the Command Line for
+Genomics](https://datacarpentry.org/shell-genomics/) lessons.
+
+## Introduction
 
 
-Possible material:
+Learning objectives:
 
-- [Carpentries shell lesson](https://swcarpentry.github.io/shell-novice/)
-- The [Carpentries genomics
-  lession](https://datacarpentry.org/genomics-workshop/) has episodes
-  on: *Introduction to the command line* and *Data wrangling and
-  processing* (using the command line).
-- [Introduction to Unix](https://bioinformaticsworkbook.org/Appendix/Unix/unix-basics-1.html#gsc.tab=0)
-- Also: `ssh`, using an editor remotely (`nano`).
+- Learn what the shell is and why it is important for bioinformatics.
+- Learn how to work with files and navigate directories.
+- Learn how run shell scipts.
+
+
+
+### What is a shell and why should I care? {-}
+
+A shell is a computer program that presents a command line interface
+which allows you to control your computer using commands entered with
+a keyboard instead of controlling graphical user interfaces (GUIs)
+with a mouse/keyboard combination.
+
+There are many reasons to learn about the shell:
+
+- Many bioinformatics tools can only be used through a command line
+  interface, or have extra capabilities in the command line version
+  that are not available in the GUI. This is true, for example, of
+  [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi), which offers many
+  advanced functions only accessible to users who know how to use a
+  shell.
+- In bioinformatics you often need to do the same set of tasks with a
+  large number of files. Learning the shell will allow you to automate
+  those repetitive tasks and leave you free to do more exciting
+  things.
+- The shell makes your work less error-prone. When humans do the same
+  thing a hundred different times (or even ten times), they're likely
+  to make a mistake. Your computer can do the same thing a thousand
+  times with no mistakes.
+- The shell makes your work more reproducible. When you carry out your
+  work in the command-line (rather than a GUI), your computer keeps a
+  record of every step that you've carried out, which you can use to
+  re-do your work when you need to. It also gives you a way to
+  communicate unambiguously what you've done, so that others can check
+  your work or apply your process to new data.
+- Many bioinformatic tasks require large amounts of computing power
+  and can't realistically be run on your own machine. These tasks are
+  best performed using powerfull remote computers or cloud computing,
+  which can only be accessed through a shell.
+
+In this lesson you will learn how to use the command line interface to
+move around in your file system.
+
+### How to access the shell {-}
+
+On a Mac or LiOn a Mac or Linux machine, you can access a shell
+through a program called Terminal, which is already available on your
+computer. If you're using Windows, you'll need to download a separate
+program to access the shell.nux machine, you can access a shell
+through a program called Terminal, which is already available on your
+computer. If you're using Windows, you can install a [Windows
+Subsystem for
+Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10). We
+are going to the use RStudio Terminal.
+
+```{r, echo=FALSE, fig.align='center', out.width='80%'}
+knitr::include_graphics("figs/rstudio_terminal.png")
+```
+
+At any point, you can use the `clear` command or the `Ctrl+L` keyboard
+shortcut to clear the screen.
+
+
+### The Shell {-}
+
+The shell is a program where users can type commands. With the shell,
+it's possible to invoke complicated programs like climate modeling
+software or simple commands that create an empty directory with only
+one line of code. The most popular Unix shell is Bash (the Bourne
+Again SHell — so-called because it's derived from a shell written by
+Stephen Bourne). Bash is the default shell on most modern
+implementations of Unix and in most packages that provide Unix-like
+tools for Windows.
+
+When the shell is first opened, you are presented with a prompt,
+indicating that the shell is waiting for input.
+
+```
+$
+```
+
+The shell typically uses `$` as the prompt, but may use a different
+symbol. In the examples for this lesson, we'll show the prompt as $
+. Most importantly: when typing commands, either from these lessons or
+from other sources, do not type the prompt, only the commands that
+follow it.
+
+So let's try our first command, `ls` which is short for listing. This
+command will list the contents of the current directory:
+
+```
+$ ls
+Desktop     Downloads   Movies      Pictures
+Documents   Library     Music       Public
+```
+
+If the shell can't find a program whose name is the command you typed,
+it will print an error message such as:
+
+```
+$ ks
+ks: command not found
+```
+
+This might happen if the command was mis-typed or if the program
+corresponding to that command is not installed.
+
+## Navigating Files and Directories
+
+Let's find out where we are by running a command called pwd (which
+stands for "print working directory"). At any moment, our current
+working directory is our current default directory, i.e., the
+directory that the computer assumes we want to run commands in, unless
+we explicitly specify something else. Here, the computer's response is
+/home/dcuser, which is the top level directory within our cloud
+system:
+
+```
+$ pwd
+/home/lgatto
+```
+
+To create a shared set of files and directories, we will use the
+`rWSBIM2122::prepare_shell()` function in RStudio's R console:
+
+```{r rm_wsbim2122_data, echo = FALSE}
+unlink("wsbim2122_data", recursive = TRUE, force = TRUE)
+```
+
+```{r prepare_wsbim2122_data}
+rWSBIM2122::prepare_shell()
+```
+
+`r msmbstyle::question_begin()`
+
+Using the `ls` shell command in the Terminal, verify that you have a
+new directory called `wsbim2122_data`.
+
+`r msmbstyle::question_end()`
+
+Let's say we want to navigate to the `wsbim2122_data` directory we saw
+above. We can use the `cd` command (*change directory*) to get there:
+
+```
+$ cd wsbim2122_data
+```
+
+`r msmbstyle::question_begin()`
+
+What files and/or directories can you find in the `wsbim2122_data`
+directory? You can make the `ls` output more comprehensible by using
+the flag `-F`, which tells ls to add a trailing `/` to the names of
+directories.
+
+`r msmbstyle::question_end()`
+
+`ls` has lots of other options. To find out what they are, we can type:
+
+```
+$ man ls
+```
+
+`man` (short for manual) displays detailed documentation (also
+referred as man page or man file) for `bash` commands. It is a
+powerful resource to explore bash commands, understand their usage and
+flags. Some manual files are very long. You can scroll through the
+file using your keyboard's down arrow or use the `Space` key to go
+forward one page and the `b` key to go backwards one page. When you
+are done reading, hit `q` to quit.
+
+An alternative to access the manual page (and sometimes, depending on
+the environment, only one is available) is the pass `--help` to the
+command:
+
+```
+$ ls --help
+```
+
+`r msmbstyle::question_begin()`
+
+Use the `-l` option for the ls command to display more information for
+each item in the directory. What is one piece of additional
+information this long format gives you that you don't see with the
+bare ls command?
+
+`r msmbstyle::question_end()`
+
+
+### Shortcut: Tab Completion {-}
+
+Typing out file or directory names can waste a lot of time and it's
+easy to make typing mistakes. Instead we can use tab complete as a
+shortcut. When you start typing out the name of a directory or file,
+then hit the `Tab` key, the shell will try to fill in the rest of the
+directory or file name.
+
+Return to your home directory:
+
+```
+$ cd
+```
+
+then enter:
+
+```
+$ cd she<tab>
+```
+
+The shell will fill in the rest of the directory name for
+`wsbim2122_data`.
+
+Tab completion isn't limited to `cd`; it works with any shell command.
+
+Using tab completion will save you a lot of typos and time!
+
+```
+$ cd shell_date
+cd: shell_date: No such file or directory
+```
+
+### Hidden files and directories
+
+Files and directories that start with a `.` are hidden, i.e that they
+won't show up with `ls`. To display *all* files and directories,
+including the hidden ones, you can use the `-a` flag.
+
+```
+$ ls -a
+```
+
+You can combine multiple flags in two ways:
+
+```
+$ ls -F -a
+$ ls -Fa
+```
+
+In addition to these hidden files, such as `.bash_profile`, you will
+also two hidden directories, namely `.` and `..`. `.` refers to the
+current directory (the one shown by `pwd`) and `..` refers to the
+parent directory.
+
+We have seen how we can use `cd wsbim2122_data` to move into
+`wsbim2122_data`. To move back out of `wsbim2122_data`, you can use:
+
+```
+$ cd ..
+```
+
+The shell interprets the character `~` (tilde) at the start of a path
+to mean *the current user's home directory*.
+
+`r msmbstyle::question_begin()`
+
+- Navitage to the `wsbim2122_data` directory. From there, list the files
+  and direcoties in it's parent directory.
+
+- Using a single command, list the files and directries in your home
+  directory. Make sure this command will work from anywhere on your
+  system.
+
+`r msmbstyle::question_end()`
+
+
+## Working with Files and Directories
+
+To create a directory, you can use the `mkdir` command, short for
+*make directory*:
+
+```
+$ mkdir my_dir
+```
+
+To create (empty) files, use the `touch` command:
+
+```
+$ touch my_file.txt
+```
+
+`r msmbstyle::question_begin()`
+
+Make sure you are in the `wsbim2122_data` directory and create a new one
+called `wsbim2122_notes` and, in that directory, 3 files respectively
+called `shell_notes.txt`, `report.Rmd` and `omics.md`.
+
+`r msmbstyle::question_end()`
+
+Note that the files created above contain a **file name*
+(`shell_notes`, `report`, `omics`) and the **file extension** (`txt`,
+`Rmd` and `md`)! You can of course create a file without extension,
+but you (and the computer) won't know what type of file it is from its
+name.
+
+The tips about variable naming that we saw in previous years also hold
+for file names. Complicated names of files and directories can make
+your life painful when working on the command line. Here we provide a
+few useful tips for the names of your files.
+
+1. Don't use spaces. Spaces can make a name more meaningful, but since
+   spaces are used to separate arguments on the command line it is
+   better to avoid them in names of files and directories. You can use
+   `-` or `_` instead.
+2. Don't begin the name with `-` (dash). Commands treat names starting
+   with - as options.
+
+3. Stick with letters, numbers, . (period or ‘full stop'), - (dash)
+   and _ (underscore).
+
+Many other characters have special meanings on the command line. There
+are special characters that can cause your command to not work as
+expected and can even result in data loss.
+
+If you need to refer to names of files or directories that have spaces
+or other special characters, you should surround the name in quotes
+("").
+
+### Viewing files {-}
+
+To view a file, you can use `cat` to display the whole file at
+once. This might work for the file that you just edited (try it out),
+but not for any of the files in the `wsbim2122_data/data` directory.
+
+`r msmbstyle::question_begin()`
+
+- Navigate to the `wsbim2122_data/data` directory.
+- View the content of one of the files starting with `seq`.
+- Use either of `head` or `tail` to view the few first and last lines
+  of that fils.
+- How many first and last lines to you see? Read the `head` manual
+  page to view the 20 first/last lines.
+
+`r msmbstyle::question_end()`
+
+
+`cat` is a terrific program, but when the file is really big, it can
+be annoying to use. The program, `less`, is useful for this
+case. `less` opens the file as read only, and lets you navigate
+through it. The navigation commands are identical to the man program:
+
+- use `b` to go backward
+- use `g` to go to the beginning
+- use `G` to go to the end
+- use `q` to quit
+
+`r msmbstyle::question_begin()`
+
+View any of the `seq` using `less`.
+
+`r msmbstyle::question_end()`
+
+
+`less` also gives you a way of searching through files. Use the `/`
+key to begin a search. Enter the word you would like to search for and
+press enter. The screen will jump to the next location where that word
+is found.
+
+**Shortcut**: If you hit `/` then `enter`, less will repeat the
+previous search. less searches from the current location and works its
+way forward. Scroll up a couple lines on your terminal to verify you
+are at the beginning of the file. Note, if you are at the end of the
+file and search for the sequence `CAA`, less will not find it. You
+either need to go to the beginning of the file (by typing g) and
+search again using `/` or you can use `?` to search backwards in the
+same way you used `/` previously.
+
+`r msmbstyle::question_begin()`
+
+Search for the sequence `TATATA` in your file.
+
+`r msmbstyle::question_end()`
+
+### Using a text editor in the shell? {-}
+
+For this course, given that we are using RStudio, you will be able to
+view and edit your files with it directly. However, this won't be
+possible if you use the terminal outside of RStudio, such as when you
+connect to a server.
+
+There exist several text-based editors, i.e. editors that can be used
+in the shell without a dedicated graphical user interface. Here, we
+will use `nano` for its simplicity.
+
+Open one of the files that you just created with
+
+```
+$ nano shell_notes.txt
+```
+
+Let's type in a few lines of text. Once we're happy with our text, we
+can press `Ctrl+O` (press the `Ctrl` or `Control` key and, while
+holding it down, press the `O` key) to write our data to disk (we'll
+be asked what file we want to save this to: press `Return` to accept
+the suggested default).
+
+Once our file is saved, we can use `Ctrl+X` to quit the editor and
+return to the shell.
+
+### Creating, moving, copying, and removing {-}
+
+Make sure you are inside the `wsbim2122_data/data` directory and create
+two new directories, namely `fas` and `sim`.
+
+To copy the `seq_1.fas` file into the `fas`:
+
+```
+$ cp seq_1.fas fas
+```
+
+`r msmbstyle::question_begin()`
+
+- Verify that the file now also exists in the `fas` directory.
+- Copy the `sim_1.csv` file into the `sim` directory and check that it
+  worked.
+
+`r msmbstyle::question_end()`
+
+
+To move the `seq_2.fas` file into the `fas`:
+
+```
+$ mv seq_2.fas fas
+```
+
+`r msmbstyle::question_begin()`
+
+- Verify that the file now also exists in the `fas` directory only.
+- Move the `sim_2.csv` file into the `sim` directory and check that it
+  worked.
+
+`r msmbstyle::question_end()`
+
+We now have two copies of the `seq_1.fas` and `sim_1.csv` files. The
+`rm` command can be used to delete them, either one by one
+
+```
+$ rm seq_1.fas
+$ rm sim_1.fas
+```
+
+or in one go
+
+```
+$ rm seq_1.fas sim_1.fas
+```
+
+We can use wildcards for accessing or manipulate multiple files at
+once. For instance, to move all `fas` files to the `seq` directory, we
+can:
+
+```
+$ mv seq*.fas seq
+```
+
+`r msmbstyle::question_begin()`
+
+1. Copy all the `csv` files into the `sim` directory.
+2. Delete all `csv` files in the `data` directory.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin()`
+
+Reproduce the following folder structure
+
+```
+wsbim2122_data/new_dir
+wsbim2122_data/new_dir/file1.txt
+wsbim2122_data/new_dir/file2.txt
+wsbim2122_data/new_dir/data/seq_1.fas
+wsbim2122_data/new_dir/data/sim_100.fas
+```
+
+`r msmbstyle::question_end()`
+
+## Data analysis in the shell
+
+Above, you searched for the `TATATA` pattern in one of the `fas`
+files. We could do the same thing without opening the file with the
+`grep` command.
+
+```
+$ grep TATATA seq_1.fas
+```
+
+The command above greps all the lines that match the pattern of
+interest and prints them in the standard output. If there's one a few,
+we could easily count the lines. Firstly, this approach is error
+prone, as it relies on a manual step. Secondly, it doesn't
+scale. Instead, we can use the `wc`, short for *word count*
+command. Let first test it on the `seq_1.fas` file:
+
+```
+$ wc seq_1.fas
+```
+
+`r msmbstyle::question_begin()`
+
+- Read the `wc` manual page to understand the output.
+
+- Can you adapt the command above to return the number of lines only.
+
+`r msmbstyle::question_end()`
+
+
+
+Below we first *redirect* the output of `grep` into a new file and
+then count the number of lines with `wc`:
+
+
+```
+$ grep TATATA seq_1.fas > tatata_1
+$ wc tatata_1
+```
+
+The `> file.txt` redirects the output to a file called `file.txt`. If
+a file named `file.txt` already exists, the it will be overwritten. If
+however, you want to add the output to `file.txt`, then you should use
+`>>`. Execute following lines to compare the two redirection
+operators.
+
+```
+$ wc -l seq_1.fas > nlines1.txt
+$ wc -l seq_2.fas > nlines1.txt
+$ wc -l seq_1.fas > nlines2.txt
+$ wc -l seq_2.fas >> nlines2.txt
+cat nlines1.txt
+cat nlines2.txt
+```
+
+To avoid the creation of this intermediate file, the output of `grep`
+can be directly piped into `wc`:
+
+```
+$ grep TATATA seq_1.fas | wc
+```
+
+`r msmbstyle::question_begin()`
+
+Cound the number of line containing the `TATATA` pattern in all the
+`fas` files.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin()`
+
+- How many `fas` files do you have?
+
+- Use `head` to extract only the sequence headers (the first lines)
+  from all the `fas` files.
+
+- Use `grep` to extract only the sequence headers (the first lines)
+  from all the `fas` files. 
+
+- Use `grep` to extract everything but the sequence headers from all
+  the `fas` files. See the `grep` manual page to find an appropriate
+  tag.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin()`
+- Navigate to your directory containing the `sim_*.csv` files.
+- Look at a couple of them and familiarise yourselves with their
+  content.
+- How many files are there? 
+- How many points where simulated over all files?
+- How many points with `id` b where simulated over all files?
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin()`
+
+Image that you task is to load all the simulation data into R to
+compare the `x` and `y` values for each `id`. You could [read each
+file into R individually and then combine the
+data](https://uclouvain-cbio.github.io/WSBIM1207/sec-prog.html#analysing-data-from-multiple-files).
+
+An alternative would be to use what we have learned so far to create a
+single file, `all_sims.csv` containing all the simulation data.
+
+Check that the number of line in `all_sims.csv` matches what you found above.
+
+`r msmbstyle::question_end()`
+
+
+## Writing scripts
+
+A really powerful thing about the command line is that you can write
+scripts. Scripts let you save commands to run them and also lets you
+put multiple commands together. Though writing scripts may require an
+additional time investment initially, this can save you time as you
+run them repeatedly. Scripts can also address the challenge of
+reproducibility: if you need to repeat an analysis, you retain a
+record of your command history within the script.
+
+Let's create a shell script that combines all the simulation files
+into a single new file. This will allow us to easily recreate that
+file once additional simulations are performed.
+
+- Start by creating a neww file that will contain the script, giving
+  it the extension `.sh`.
+
+```
+touch combine_all_simulations.sh
+```
+
+- Add the shell commands from the exercise into that file. You can use
+  an editor, either `nano` directly from the terminal, or RStudio.
+
+- Executre your script with 
+
+```
+sh combine_all_simulations.sh
+```
+
+### Making the script into a program {-}
+
+Let's test the `-l` (for long) tag of `ls`
+
+```
+$ ls combine_all_simulations.sh
+-rw-rw-r-- 1 lgatto lgatto 79 sept. 17 22:32 combine_all_simulations.sh
+```
+
+This long output gives us, in addition to the file name, the time and
+data is was created, the owner (and group) of the file (twice lgatto
+here) and the files permissions.
+
+There are ten slots in the permissions list. The first character in
+this list is related to file type, not permissions, so we'll ignore it
+for now. The next three characters relate to the permissions that the
+file owner has, the next three relate to the permissions for group
+members, and the final three characters specify what other users
+outside of your group can do with the file. We're going to concentrate
+on the three positions that deal with your permissions (as the file
+owner).
+
+
+```{r, echo=FALSE, fig.align='center', out.width='100%', fig.cap="The 10 slots defining the file permission (figure from the Data Carpentry's [*Working with Files and Directories*](https://datacarpentry.org/shell-genomics/03-working-with-files/) lesson."}
+knitr::include_graphics("figs/rwx_figure.svg")
+```
+
+Here the three positions that relate to the file owner are `rw-`. The
+`r` means that you have permission to read the file, the `w` indicates
+that you have permission to write to (i.e. make changes to) the file,
+and the third position is a `-`, indicating that you don't have
+permission to execute that file, i.e. to run it as a program.
+
+
+Our goal for now is to change permissions on this file so that it
+becomes executable. An for security purposes, we want only the file
+owner to be able to execute it.
+
+```
+$ chmod u+x combine_all_simulations.sh
+$ ls -l combine_all_simulations.sh
+-rwxrw-r-- 1 lgatto lgatto 79 sept. 17 22:32 combine_all_simulations.sh
+```
+
+And now, it will be possible to execute the script without excplicitly
+using `sh`.
+
+```
+combine_all_simulations.sh
+```
+
+If you want to make sure you don't want to inadvertently delete a
+file, it is possible to remove all `w` permissions:
+
+```
+$ chmod a+w combine_all_simulations.sh
+$ ls -l combine_all_simulations.sh
+-r-xr--r-- 1 lgatto lgatto 79 sept. 17 22:32 combine_all_simulations.sh
+```
+
+If you now try to delete the file with `rm
+combine_all_simulations.sh`, you'll be asked if you want to override
+your file permissions:
+
+```
+rm: remove write-protected regular file ‘combine_all_simulations.sh'? 
+```
+
+If you enter `n` (for no), the file will not be deleted. If you enter
+`y`, you will delete the file. This gives us an extra measure of
+security, as there is one more step between us and deleting our data
+files.
+
+**Important**: The `rm` command permanently removes the file. Be
+careful with this command. It doesn't just nicely put the files in the
+Trash. They're really gone.
+
+By default, `rm` will not delete directories. You can tell `rm` to
+delete a directory using the `-r` (recursive) option. 
+
+To complete this chapter on shell, let's conclude by mentioning the R
+`system()` and `system2()` functions, that enable to invoke a system
+command such as a shell script:
+
+```{r system, eval = FALSE}
+system("combine_all_simulations.sh")
+```
+
+
+## References
+
+- The Data Carpentries [The Unix
+  Shell](https://swcarpentry.github.io/shell-novice/) and
+  [Introduction to the Command Line for
+  Genomics](https://datacarpentry.org/shell-genomics/) lessons.
+- *Bioinformatics Data Skills* [@Buffalo:2015].

@@ -1,3 +1,4 @@
-docs/sec-gsea.html
-docs/sec-hts.html
-docs/sec-rnaseq.html
+_bookdown_files
+WSBIM2122.Rmd
+shell_data
+wsbim2122_data

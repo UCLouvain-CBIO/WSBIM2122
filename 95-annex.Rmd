@@ -1,7 +1,12 @@
 # Annex {#sec:anx}
 
-- Consignes rapport
+
+## Available platforms
+
+
+## Project reports
+
 - Structure rapport: abstract, intro, m&m, res, ccl, references,
   contributions.
 - Presentations et question/réponses.
-- Examen.
+

@@ -59,15 +59,17 @@ knitr::include_graphics("./figs/read_length.png")
 
 - **Sequencing depth**
 
-Each sequencing experiment will produce a certain number of reads expected to be
-typically around tens of millions. A fraction of the raw sequencing reads will be
-discarded during the quality control, the alignment and the counting processes,
-which implies that the total number of reads for each sample will be different.
+Each sequencing experiment will produce a certain number of reads
+expected to be typically around tens of millions. A fraction of the
+raw sequencing reads will be discarded during the quality control, the
+alignment and the counting processes, which implies that the total
+number of reads for each sample will be different.
 
-As shown in the following example, all genes seem to be expressed at higher levels in
-sample 1 than in sample 2, but this is likely because sample 1 has twice more reads than
-sample 2. Accounting for sequencing depth is necessary for differential expression analysis
-as samples are compared with each other.
+As shown in the following example, all genes seem to be expressed at
+higher levels in sample 1 than in sample 2, but this is likely because
+sample 1 has twice more reads than sample 2. Accounting for sequencing
+depth is necessary for differential expression analysis as samples are
+compared with each other.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
 knitr::include_graphics("./figs/Sequencing_depth.png")
@@ -75,48 +77,58 @@ knitr::include_graphics("./figs/Sequencing_depth.png")
 
 - **Library composition**
 
-The library composition might also be different in samples. To illustrate this,
-let's imagine a basic cell expressing only 2 genes (genes A and B) and assume that
-a drug treatment induces a strong expression of gene C. If the normalisation was done
-using total number of reads only, then the counts of gene A would be divided by 4 in
-control cells, while it would be divided by 12 in treated cells. This would lead to the
-misleading conclusion that the treatment has reduced 3 times the expression of gene A.
-In this case, the library composition has changed but not the expression level of gene A.
+The library composition might also be different in samples. To
+illustrate this, let's imagine a basic cell expressing only 2 genes
+(genes A and B) and assume that a drug treatment induces a strong
+expression of gene C. If the normalisation was done using total number
+of reads only, then the counts of gene A would be divided by 4 in
+control cells, while it would be divided by 12 in treated cells. This
+would lead to the misleading conclusion that the treatment has reduced
+3 times the expression of gene A.  In this case, the library
+composition has changed but not the expression level of gene A.
 
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
 knitr::include_graphics("./figs/library_composition.png")
 ```
 
-In a real dataset, a few highly differentially expressed genes, differences in the number
-of genes expressed between samples, or presence of contaminations can skew library composition.
-Accounting for it is highly recommended for accurate comparison of expression between samples [@Anders:2010].
+In a real dataset, a few highly differentially expressed genes,
+differences in the number of genes expressed between samples, or
+presence of contaminations can skew library composition.  Accounting
+for it is highly recommended for accurate comparison of expression
+between samples [@Anders:2010].
 
 - **DESeq2 normalisation method**
 
-DESeq2 will use a normalisation method that takes into account both library size
-and library composition. To normalise for sequencing depth and RNA composition, DESeq2
-uses the median of ratios method.
+DESeq2 will use a normalisation method that takes into account both
+library size and library composition. To normalise for sequencing
+depth and RNA composition, DESeq2 uses the median of ratios method.
 
-Step 1: DESeq2 creates a pseudo-reference sample (row-wise geometric mean).
-It calculates the geometric mean of each gene. Geometric mean is used instead of
-classical mean because it uses log values. It is hence more robust as it is less influenced
-by extreme values. The geometric means constitute a pseudo-reference sample.
+**Step 1**: DESeq2 creates a pseudo-reference sample (row-wise
+geometric mean).  It calculates the geometric mean of each
+gene. Geometric mean is used instead of classical mean because it uses
+log values. It is hence more robust as it is less influenced by
+extreme values. The geometric means constitute a pseudo-reference
+sample.
 
-Step 2: For every gene in a sample, the ratios (sample/pseudo-reference sample) are calculated.
-Since the majority of genes are not differentially expressed, the majority of genes in
+**Step 2**: For every gene in a sample, the ratios
+(sample/pseudo-reference sample) are calculated.  Since the majority
+of genes are not differentially expressed, the majority of genes in
 each sample should have similar ratios within the sample.
 
-Step 3: The median value of all ratios for a given sample is taken as the size factor for that
-sample. Importantly, the method is based on the assumption that the majority of genes are
-not differentially expressed, which implies that rare genes that are really up-regulated /
-down-regulated should not influence the median. Furthermore, the median is calculated skipping
-genes with a geometric mean of zero. This will hence automatically eliminate genes expressed
-in some samples but not in others and will help to focus the scaling factor on housekeeping genes.
+**Step 3**: The median value of all ratios for a given sample is taken as
+the size factor for that sample. Importantly, the method is based on
+the assumption that the majority of genes are not differentially
+expressed, which implies that rare genes that are really up-regulated
+/ down-regulated should not influence the median. Furthermore, the
+median is calculated skipping genes with a geometric mean of
+zero. This will hence automatically eliminate genes expressed in some
+samples but not in others and will help to focus the scaling factor on
+housekeeping genes.
 
-Step 4: DESeq2 calculates the normalised counts using the scaling factor
-This is performed by dividing each raw count values in a given sample by that sample’s
-scaling factor.
+**Step 4**: DESeq2 calculates the normalised counts using the scaling
+factor This is performed by dividing each raw count values in a given
+sample by that sample’s scaling factor.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
 knitr::include_graphics("./figs/SF_steps.png")
@@ -125,44 +137,53 @@ knitr::include_graphics("./figs/SF_steps.png")
 
 ### Count modeling
 
-Let's first have a look at the counts distribution for a typical RNAseq sample:
+Let's first have a look at the counts distribution for a typical
+RNAseq sample:
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
 knitr::include_graphics("./figs/distribution_of_counts.png")
 ```
 
-It is obvious that the count data is not normally distributed. Counts are integer values,
-always positive, and we observe a large number of genes with low counts (or counts about zero),
-and a few number of genes with a very high count level.
+It is obvious that the count data is not normally distributed. Counts
+are integer values, always positive, and we observe a large number of
+genes with low counts (or counts about zero), and a few number of
+genes with a very high count level.
 
-As seen in the [WSBIM1322 course](http://bit.ly/WSBIM1322) with the example of the coin toss,
-count data are often modelised by a binomial distribution with parameters n and p where p is the
-discrete probability distribution of the number of successes in a sequence of n
-independent experiments. In an RNAseq experiment, p would be the probability of getting
-a read associated to a particular gene given that n total number of reads were sequenced
-in the experiment. However, when n is large and p is low, Poisson distribution is used
-instead of binomial. It describes typically the distribution of a rare event in a large
-population, which fits better to RNAseq. Indeed, for each sample, the total number of reads
-tends to be in millions, while the counts per gene can vary considerably but tend to be
-in tens, hundreds or thousands. Therefore, the chance of a given read to be mapped to any
-specific gene is extremely small.
+As seen in the [WSBIM1322 course](http://bit.ly/WSBIM1322) with the
+example of the coin toss, count data are often modelised by a binomial
+distribution with parameters n and p where p is the discrete
+probability distribution of the number of successes in a sequence of n
+independent experiments. In an RNAseq experiment, p would be the
+probability of getting a read associated to a particular gene given
+that n total number of reads were sequenced in the
+experiment. However, when n is large and p is low, Poisson
+distribution is used instead of binomial. It describes typically the
+distribution of a rare event in a large population, which fits better
+to RNAseq. Indeed, for each sample, the total number of reads tends to
+be in millions, while the counts per gene can vary considerably but
+tend to be in tens, hundreds or thousands. Therefore, the chance of a
+given read to be mapped to any specific gene is extremely small.
 
-The Poisson distribution has only one parameter indicating its expected mean.
-Its variance and all other properties follow from it. In particular, one key assumption
-of the Poisson distribution is that the variance equals the mean. Applying a Poisson
-distribution to Rnaseq counts holds true when comparing technical replicates from a same
-sample, where the variance only reflects the counting noise. But when comparing biological
-replicates, counting noise is not the only source of variance. The observed count values for
-each gene within biological replicates fluctuate more importantly, due to the combination of
-biological and technical factors: inter-individual variations in gene expression, sample purity,
-cell reponses to environment (e.g. heat-shock)... Due to this overdispersion, the Poisson
-distribution doesn't fit that well to RNAseq counts.
+The Poisson distribution has only one parameter indicating its
+expected mean.  Its variance and all other properties follow from
+it. In particular, one key assumption of the Poisson distribution is
+that the variance equals the mean. Applying a Poisson distribution to
+Rnaseq counts holds true when comparing technical replicates from a
+same sample, where the variance only reflects the counting noise. But
+when comparing biological replicates, counting noise is not the only
+source of variance. The observed count values for each gene within
+biological replicates fluctuate more importantly, due to the
+combination of biological and technical factors: inter-individual
+variations in gene expression, sample purity, cell reponses to
+environment (e.g. heat-shock)... Due to this overdispersion, the
+Poisson distribution doesn't fit that well to RNAseq counts.
 
-Actually, RNAseq counts are better modelised by an alternative distribution,
-the negative-binomial. It is derived from the Poisson distribution but the
-negative-binomial distribution has, in addition to the mean parameter,
-an extra parameter $α$ called the “dispersion” parameter to model this “extra”
-variance that is empirically observed in RNA-Seq experiments.
+Actually, RNAseq counts are better modelised by an alternative
+distribution, the negative-binomial. It is derived from the Poisson
+distribution but the negative-binomial distribution has, in addition
+to the mean parameter, an extra parameter $α$ called the “dispersion”
+parameter to model this “extra” variance that is empirically observed
+in RNA-Seq experiments.
 
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
@@ -172,53 +193,64 @@ knitr::include_graphics("./figs/NB.png")
 
 ### Dispersion estimation
 
-Having modelised counts by a negative-binomial distribution, next step is to estimate, 
-for each gene, the two parameters of the distribution (mean and dispersion). The mean 
-will be estimated easily from the observed normalised counts in both conditions, but 
-the dispersion is not that trivial to estimate.
+Having modelised counts by a negative-binomial distribution, next step
+is to estimate, for each gene, the two parameters of the distribution
+(mean and dispersion). The mean will be estimated easily from the
+observed normalised counts in both conditions, but the dispersion is
+not that trivial to estimate.
 
-Dispersion is a measure of spread or variability in the data ($α= CV^2$). A gene with
-a dispersion value of 0.04 means 20% variation around the expected mean. Estimate the
-dispersion for each gene would be quite straightforward if we had for each condition,
-hundreds of replicates. Of course, this is not feasible for economic reasons, and
-experiments are usually done on only 3-5 replicates. But how to estimate dispersion
-reliably based on such a little number of samples? To overcome this problem, DESeq2
-makes the assumption that genes of similar expression levels have similar dispersions
-and it will use information coming from other genes expressed at similar level.
+Dispersion is a measure of spread or variability in the data ($α=
+CV^2$). A gene with a dispersion value of 0.04 means 20% variation
+around the expected mean. Estimate the dispersion for each gene would
+be quite straightforward if we had for each condition, hundreds of
+replicates. Of course, this is not feasible for economic reasons, and
+experiments are usually done on only 3-5 replicates. But how to
+estimate dispersion reliably based on such a little number of samples?
+To overcome this problem, DESeq2 makes the assumption that genes of
+similar expression levels have similar dispersions and it will use
+information coming from other genes expressed at similar level.
 
-**Step1: Dispersion for each gene is estimated separately.**
-An initial estimation of dispersion for each gene is first estimated using maximum
-likelihood estimation. In other words, given the count values of the replicates, the
-most likely estimate of dispersion is calculated. For each gene, the dispersion estimate
-is plotted in function of the mean expression level (mean counts of replicates).
-This produce the so-called "dispersion plot" where each gene is represented by a black dot.
+**Step1: Dispersion for each gene is estimated separately.** An
+initial estimation of dispersion for each gene is first estimated
+using maximum likelihood estimation. In other words, given the count
+values of the replicates, the most likely estimate of dispersion is
+calculated. For each gene, the dispersion estimate is plotted in
+function of the mean expression level (mean counts of replicates).
+This produce the so-called "dispersion plot" where each gene is
+represented by a black dot.
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
 knitr::include_graphics("./figs/dispersion_plot.png")
 ```
 
-Note that the dispersion plot highlights an intrinsic feature of RNAseq data:
-genes with low read counts show substantially higher dispersion than highly expressed genes.
+Note that the dispersion plot highlights an intrinsic feature of
+RNAseq data: genes with low read counts show substantially higher
+dispersion than highly expressed genes.
 
-**Step 2: A curve is fitted to gene-wise dispersion estimates**.
-A curve is fitted (displayed as a red line in the dispersion plot), which represents the
-estimate for the expected dispersion value for genes of a given expression strength.
-The idea behind fitting a curve to the data is that different genes will have different
-scales of biological variability, but, over all genes, there will be a distribution of
-reasonable estimates of dispersion.
+**Step 2: A curve is fitted to gene-wise dispersion estimates**. A
+curve is fitted (displayed as a red line in the dispersion plot),
+which represents the estimate for the expected dispersion value for
+genes of a given expression strength.  The idea behind fitting a curve
+to the data is that different genes will have different scales of
+biological variability, but, over all genes, there will be a
+distribution of reasonable estimates of dispersion.
 
-**Step 3: Shrinkage of gene-wise dispersion estimates toward the values predicted by the curve**.
-Initial gene-wise dispersion estimates will be shrinked (by an empirical Bayes approach)
-towards this fitted curve to obtain the final dispersion estimates. The adjusted dispersion
-values are represented by the blue dots in the dispersion plot. For a certain number of genes,
-the adjusted dispersion will be significantly increased and this will limit the number of
-false-positive that could arise from an underestimated dispersion. Dispersion estimates
-that are slightly above the curve are also shrunk toward the curve. However, genes with
-extremely high dispersion[^outlierSD] values are not. In fact DESeq2 assumes that these
-genes might not follow the modeling assumptions and could have higher variability than others
-for biological or technical reasons. For these genes, shrinking the values toward the curve
-could result in false positives. These genes are shown surrounded by blue circles in the
-dispersion plot.
+**Step 3: Shrinkage of gene-wise dispersion estimates toward the
+values predicted by the curve**.  Initial gene-wise dispersion
+estimates will be shrinked (by an empirical Bayes approach) towards
+this fitted curve to obtain the final dispersion estimates. The
+adjusted dispersion values are represented by the blue dots in the
+dispersion plot. For a certain number of genes, the adjusted
+dispersion will be significantly increased and this will limit the
+number of false-positive that could arise from an underestimated
+dispersion. Dispersion estimates that are slightly above the curve are
+also shrunk toward the curve. However, genes with extremely high
+dispersion[^outlierSD] values are not. In fact DESeq2 assumes that
+these genes might not follow the modeling assumptions and could have
+higher variability than others for biological or technical
+reasons. For these genes, shrinking the values toward the curve could
+result in false positives. These genes are shown surrounded by blue
+circles in the dispersion plot.
 
 [^outlierSD]: genes with extremely high dispersion are those for which the adjusted
 dispersion is more than 2 residual standard deviations above the curve.
@@ -245,57 +277,67 @@ also estimated.
 
 ### Statistical test
 
-#### Wald test
+#### Wald test {-}
 
-The ultimate goal of a test for differential expression is to decide whether,
-for a given gene, an observed difference in read counts is significant, that is,
-whether it is greater than what would be expected just due to natural random variation.
-The null hypothesis $H_0$ is that there is no differential expression across two sample groups,
-which is the same as saying that the log2foldchange = 0. A statistical test, the Wald test,
-will determine whether the data provides sufficient evidence to conclude that this value
-is really different from zero.
+The ultimate goal of a test for differential expression is to decide
+whether, for a given gene, an observed difference in read counts is
+significant, that is, whether it is greater than what would be
+expected just due to natural random variation.  The null hypothesis
+$H_0$ is that there is no differential expression across two sample
+groups, which is the same as saying that the log2 fold-change = 0. A
+statistical test, the Wald test, will determine whether the data
+provides sufficient evidence to conclude that this value is really
+different from zero.
 
-For the Wald test, the log2foldchange is divided by its standard error, resulting
-in a z-statistic. The z-statistic is compared to a standard normal distribution,
-and a p-value is computed reporting the probability that a z-statistic at least
-as extreme as the observed value would be selected at random. In principle, if this
-p-value is small (below a certain cutoff) the null hypothesis is rejected.
+For the Wald test, the log2 fold-change is divided by its standard
+error, resulting in a z-statistic. The z-statistic is compared to a
+standard normal distribution, and a p-value is computed reporting the
+probability that a z-statistic at least as extreme as the observed
+value would be selected at random. In principle, if this p-value is
+small (below a certain cutoff) the null hypothesis is rejected.
 
-#### Multiple testing correction
+#### Multiple testing correction {-}
 
 
 - **False discovery rate (FDR)**
 
 
-Recall that a pvalue of 0.05 means that there is only 5% chance of getting this data 
-if no real difference existed (if $H_0$ was really true). In other words, choosing a cut 
-off of 0.05 means there is 5% chance that the wrong decision is made (resulting in a 
-false positive). But remember the problematic of multiple testing seen in chapter 7 
-from [WSBIM1322 course](http://bit.ly/WSBIM1322).
+Recall that a pvalue of 0.05 means that there is only 5% chance of
+getting this data if no real difference existed (if $H_0$ was really
+true). In other words, choosing a cut off of 0.05 means there is 5%
+chance that the wrong decision is made (resulting in a false
+positive). But remember the problematic of multiple testing seen in
+chapter 7 from [WSBIM1322 course](http://bit.ly/WSBIM1322).
 
-In a typical RNAseq differential expression analysis, we might have about 20,000 genes
-to test and usually only a fraction of genes is really differentially expressed.
-Imagine a drug treatment that modifies the expression of about 1000 genes, but that has
-no impact on the other ones. The first histogram shows how the distribution of pvalues
-for truly modified genes ($H_0$ is false) would look like: most of the pvalues would be
-very small. Using a pvalue cutoff of 0.05 should permit to identify most of these
-differentially expressed genes. The second histogram shows the distribution of pvalues
-for unmodified genes ($H_0$ is true). Here the p-values are uniformly distributed between
-0 and 1, and we can see that 5% of these genes appear to be significant even though this
-is only by chance as the drug had no real effect on them. But 5% of 19000 genes means ...
-950 false positive genes! Hence, pvalues obtained from the Wald test must be corrected
-for multiple testing to avoid excess false positives.
+In a typical RNAseq differential expression analysis, we might have
+about 20,000 genes to test and usually only a fraction of genes is
+really differentially expressed.  Imagine a drug treatment that
+modifies the expression of about 1000 genes, but that has no impact on
+the other ones. The first histogram shows how the distribution of
+pvalues for truly modified genes ($H_0$ is false) would look like:
+most of the pvalues would be very small. Using a pvalue cutoff of 0.05
+should permit to identify most of these differentially expressed
+genes. The second histogram shows the distribution of pvalues for
+unmodified genes ($H_0$ is true). Here the p-values are uniformly
+distributed between 0 and 1, and we can see that 5% of these genes
+appear to be significant even though this is only by chance as the
+drug had no real effect on them. But 5% of 19000 genes means ...  950
+false positive genes! Hence, pvalues obtained from the Wald test must
+be corrected for multiple testing to avoid excess false positives.
 
 By default DESeq2 uses Benjamini-Hochberg method to adjust pvalues.
-The third histogram bellow illustrates the principle behind this False discovery rate (FDR) 
-adjustment. As differential expression analysis is done on the whole set of genes, the 
-resulting pvalues will have a distribution corresponding to the combination of both histograms. 
-Most of the p-values are uniformly distributed between 0 and 1 but there is a spike to the 
-left close to zero, due to those p-values for which $H_0$ is false. The correction approach 
-helps to estimate how many of the significant values are actually false positives. 
-It tries to find the height where the p-value distribution flattens out (corresponding to 
-the red line) and incorporates this height value into the calculation of FDR adjusted p-values. 
-Choosing a cut off of 0.05 for padjusted values now implies that 5% of significant tests 
+The third histogram bellow illustrates the principle behind this False
+discovery rate (FDR) adjustment. As differential expression analysis
+is done on the whole set of genes, the resulting pvalues will have a
+distribution corresponding to the combination of both histograms.
+Most of the p-values are uniformly distributed between 0 and 1 but
+there is a spike to the left close to zero, due to those p-values for
+which $H_0$ is false. The correction approach helps to estimate how
+many of the significant values are actually false positives.  It tries
+to find the height where the p-value distribution flattens out
+(corresponding to the red line) and incorporates this height value
+into the calculation of FDR adjusted p-values.  Choosing a cut off of
+0.05 for padjusted values now implies that 5% of significant tests
 (but not 5% of all tests as before) will result in false positives.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
@@ -358,8 +400,8 @@ This dataset corresponds to RNAseq data done on a cell line
 treated a not by a siRNA.
 
 ```{r}
-load("data/deseq2/counts.rda")
-load("data/deseq2/coldata.rda")
+load("wsbim2122_data/deseq2/counts.rda")
+load("wsbim2122_data/deseq2/coldata.rda")
 coldata
 head(counts)
 dim(counts)
@@ -458,8 +500,7 @@ resultsNames(dds)
 Before anything else, a good practice is to explore the data
 and perform quality controls checks.
 
-
-#### PCA
+#### PCA {-}
 
 It is highly recommended to starts by a PCA to assess overall similarity between the samples:
 
@@ -500,7 +541,7 @@ How would you interprete this PCA?
 
 `r msmbstyle::question_end()`
 
-#### Inspecting size factors
+#### Inspecting size factors {-}
 
 It is also advisable to investigate any systematic bias in the sequencing data, such as
 whether one sample has been sequenced more deeply than others. One can extract size factors
@@ -538,7 +579,7 @@ SF / SD
 
 `r msmbstyle::solution_end()`
 
-#### Dispersion plot
+#### Dispersion plot {-}
 
 Plotting the dispersion estimates is a useful diagnostic.
 This dispersion plot is typical, with the final dispersion, estimates shrunk from the
@@ -640,7 +681,7 @@ that have been filtered out by the independent filtering procedure.
 
 `r msmbstyle::solution_end()`
 
-#### Independent filtering exploration
+#### Independent filtering exploration {-}
 
 The filtering threshold that has been used to filter low count genes can be extracted
 from the results metadata.
@@ -737,7 +778,7 @@ as_tibble(res_bis, rownames = "ENSEMBL") %>%
 `r msmbstyle::solution_end()`
 
 
-#### pvalues distribution
+#### p-values distribution {-}
 
 Another useful diagnostic plot is the histogram of pvalues.
 It can give you an immediate idea of the proportion of genes differentially expressed,
@@ -777,11 +818,12 @@ res_tbl %>%
 We observe that most of the genes that have a pvalue around 0.8
 (corresponding to genes belonging to the second peak) have a pvalue,
 but no padjusted value. These are hence genes that were filtered out
-by the independent filtering process. This means that DESeq2 does calculate
-a pvalue for every gene (except for those that have a basemean = 0), but
-the pvalue adjustement is computed later only on genes that pass the independent
-filtering threshold. If we plot again the pvalues histogram using filtered genes only,
-then we observe that the pvalues behaviour is now much nicer!
+by the independent filtering process. This means that DESeq2 does
+calculate a pvalue for every gene (except for those that have a
+basemean = 0), but the pvalue adjustement is computed later only on
+genes that pass the independent filtering threshold. If we plot again
+the pvalues histogram using filtered genes only, then we observe that
+the pvalues behaviour is now much nicer!
 
 
 ```{r}
@@ -794,21 +836,22 @@ res_tbl %>%
 `r msmbstyle::solution_end()`
 
 
-#### MA-plot
+#### MA-plot {-}
 
-Another interesting plot is the MA-plot ("Mean-Average" plot), a scatter plot of
-log2FC versus the mean of normalised counts. Genes with a padjusted value lower than
-0.05 are plotted in red. The plot highlights the fact that genes with low read counts show
-substantially higher variability than highly expressed genes, resulting in a strong log2FC
-even though are likely not really differentially expressed.
-In the MA-plot, we hope to observe some genes located in the upper/lower right
-quadrant of the plots (the most interesting candidates).
+Another interesting plot is the MA-plot ("Mean-Average" plot), a
+scatter plot of log2FC versus the mean of normalised counts. Genes
+with a padjusted value lower than 0.05 are plotted in red. The plot
+highlights the fact that genes with low read counts show substantially
+higher variability than highly expressed genes, resulting in a strong
+log2FC even though are likely not really differentially expressed.  In
+the MA-plot, we hope to observe some genes located in the upper/lower
+right quadrant of the plots (the most interesting candidates).
 
 ```{r}
 plotMA(res, alpha = 0.05)
 ```
 
-#### Volcano-plot
+#### Volcano-plot {-}
 
 Drawing a volcano-plot is also informative for data interpretation.
 
@@ -843,7 +886,7 @@ res_tbl %>%
   geom_hline(yintercept = -log10(padj_thr))
 ```
 
-#### Plot counts of genes
+#### Plot counts of genes {-}
 
 It may be also useful to check the validity of the analysis by simply assessing the expression
 level of the most highly differentially expressed genes.
@@ -943,7 +986,7 @@ data.frame(best_genes = dispersions(dds[best_genes$ENSEMBL,]),
 ```
 `r msmbstyle::solution_end()`
 
-#### Adding gene name to result table
+#### Adding gene name to result table {-}
 
 The result table only uses Ensembl gene IDs, but gene names may be more informative.
 Bioconductor’s biomaRt package can help with mapping various ID schemes to each other.
@@ -972,19 +1015,17 @@ head(res_tbl)
 
 ## A more complex design
 
-Actually, the experiment was in reality done on 2 different cell lines, epithelial and fibroblasts cells.
+Actually, the experiment was in reality done on 2 different cell
+lines, epithelial and fibroblasts cells.
 
 ```{r}
-#load("data/deseq2/counts_both.rda")
-load("data/deseq2/coldata_both.rda")
+load("wsbim2122_data/deseq2/coldata_both.rda")
 coldata
-#head(counts)
-#dim(counts)
 ```
 
 `r msmbstyle::question_begin()`
 
-Start the whole analysis again, using all samples, and try to identify genes that are differentially
-expressed in both types of cells.
+Start the whole analysis again, using all samples, and try to identify
+genes that are differentially expressed in both types of cells.
 
-`r msmbstyle::question_begin()`
+`r msmbstyle::question_end()`
