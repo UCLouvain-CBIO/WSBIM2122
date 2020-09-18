@@ -192,15 +192,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2>Setup</h2>
 <p>We will be using the <a href="https://www.r-project.org/">R environment for statistical computing</a> as main data science language. We will also use the <a href="https://www.rstudio.com/products/RStudio/">RStudio</a> interface to interact with R and write scripts and reports. Both R and RStudio are easy to install and works on all major operating systems.</p>
 <p>Once R and RStudio are installed, a set of packages will need to be installed. See section <a href="sec-si.html#sec:setup2">11.1</a> for details.</p>
-<!-- The `rWSBIM2122` package provides some pre-formatted data used in this -->
-<!-- course. It can be installed with -->
-<!-- ```{r, eval = FALSE} -->
-<!-- BiocManager::install("UCLouvain-CBIO/rWSBIM2122") -->
-<!-- ``` -->
-<!-- and then loaded with -->
-<!-- ```{r rwsbim1322, message = FALSE, warning = FALSE} -->
-<!-- library("rWSBIM2122") -->
-<!-- ``` -->
+<p>The <code>rWSBIM2122</code> package provides some pre-formatted data used in this course. It can be installed with</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"UCLouvain-CBIO/rWSBIM2122"</span>)</code></pre></div>
+<p>and then loaded with</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"rWSBIM2122"</span>)</code></pre></div>
 <p>To build this book, you'll need <code>bookdown</code> <span class="citation">(Xie <label for="tufte-mn-4" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-4" class="margin-toggle">2020a<span class="marginnote">Xie, Yihui. 2020a. <em>Bookdown: Authoring Books and Technical Documents with R Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown" class="uri">https://CRAN.R-project.org/package=bookdown</a>.</span>)</span> and a fork<label for="tufte-sn-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="tufte-sn-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> <a href="https://github.com/lgatto/msmbstyle" class="uri">https://github.com/lgatto/msmbstyle</a></span> of <a href="https://github.com/grimbough/msmbstyle/"><code>msmbstyle</code> style</a> <span class="citation">(Smith <label for="tufte-mn-5" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-5" class="margin-toggle">2020<span class="marginnote">Smith, Mike. 2020. <em>Msmbstyle: MSMB Styles for R Markdown Documents</em>.</span>)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"bookdown"</span>)
 devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"lgatto/msmbstyle"</span>)</code></pre></div>
