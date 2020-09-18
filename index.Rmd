@@ -96,8 +96,8 @@ participating in this project you agree to abide by its terms.
 
 If you use this course, please cite it as
 
-> Laurent Gatto. *UCLouvain-CBIO/WSBIM2122: Omics data analysis.*
-> https://github.com/UCLouvain-CBIO/WSBIM2122.
+> Laurent Gatto and Axelle Loriot. *UCLouvain-CBIO/WSBIM2122: Omics
+> data analysis.* https://github.com/UCLouvain-CBIO/WSBIM2122.
 
 
 ## License {-}
