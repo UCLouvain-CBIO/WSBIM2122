@@ -612,7 +612,7 @@ Let's create a shell script that combines all the simulation files
 into a single new file. This will allow us to easily recreate that
 file once additional simulations are performed.
 
-- Start by creating a neww file that will contain the script, giving
+- Start by creating a new file that will contain the script, giving
   it the extension `.sh`.
 
 ```
@@ -622,7 +622,7 @@ touch combine_all_simulations.sh
 - Add the shell commands from the exercise into that file. You can use
   an editor, either `nano` directly from the terminal, or RStudio.
 
-- Executre your script with 
+- Execute your script with 
 
 ```
 sh combine_all_simulations.sh

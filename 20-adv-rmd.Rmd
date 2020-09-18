@@ -121,7 +121,7 @@ function, where `time` is the time interval to suspend execution for, in seconds
 - Create a new `Rmd` document with a single code chunk calling
   `Sys.sleep(5)`. Compile it twice and compare the compilation times.
   
-- The `system.time()` functionn can be used to measure the time to run
+- The `system.time()` function can be used to measure the time to run
   a fonction in R. Instead of manually comparing the compilation
   timings, wrap a call to `render()` in `system.time()` to let R
   record the compilation timings. Hint: you can set `render(quiet =
