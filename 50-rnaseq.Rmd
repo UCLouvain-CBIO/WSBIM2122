@@ -269,11 +269,9 @@ knitr::include_graphics("./figs/disp_shrinkage.png")
 Adapt this paragraph in function of Laurent's chapter on linear models.
 
 DESeq2 fits a generalized linear model of the form: $log2(qij)=xj.βi$, and $βi$
-coefficients are computed. They give estimates of the log fold changes[^logFC_shrinkage] for gene i
+coefficients are computed. They give estimates of the log fold changes for gene i
 for each column of the model matrix. Standard errors for the log2 fold changes are
 also estimated.
-
-[^logFC_shrinkage]: DESeq2 offers further options to shrink LFC estimates. This is useful for ranking and visualization (see [DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html) for more information).
 
 ### Statistical test
 
@@ -635,6 +633,11 @@ mock condition, while a negative log2FC indicate a down-regulation.
 **pvalue**: The pvalue of the test for the gene
 
 **padj**: pvalue adjusted for multiple testing
+
+
+Note that DESeq2 offers further options to shrink LFC estimates. This is useful for 
+ranking and visualization (see [DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html) 
+for more information).
 
 
 `r msmbstyle::question_begin()`
