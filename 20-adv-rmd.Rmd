@@ -142,7 +142,7 @@ file to confirm that the chunk is executed.
 
 ## Writing slides in Rmarkdown
 
-So far, we have used Rmarkdown to produce docuemnts, in pdf or in
+So far, we have used Rmarkdown to produce documents, in pdf or in
 html. Rmarkdown can be used to produce various types of documents
 using different templates. In particular, when generating slides for a
 presentation about data analysis, it might be convenient to use and
