@@ -1,1 +1,87 @@
 # Linear models {#sec:linmod}
+
+The objective of this chapter is to provide students with an intuitive
+understanding of how linear models are used in significance testing,
+and more specifically
+
+- show how linear models are equivalent to a t-test
+- demonstrate their flexibility.
+
+## Starting with a t-test
+
+`r msmbstyle::question_begin()`
+
+Load the `gexp` data from the `rWSBIM2122` package (version >= 0.2.2)
+as show below. It provides the log2 expression of a single gene of
+interest measured in two groups of interest.
+
+```{r gexp}
+library(rWSBIM2122)
+data(gexp)
+gexp
+```
+
+Using a t-test, compare the expression in groups 1 and 2. In
+particular, report the mean expression of each group, the log2
+fold-change, the associated p-value and visualise the data.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+```{r gexp_t_test1}
+t.test(expression ~ group, data = gexp)
+```
+
+```{r gexp_vis1}
+p <- ggplot(gexp, aes(x = group, y = expression)) +
+    geom_boxplot() + geom_jitter()
+```
+
+`r msmbstyle::solution_begin()`
+
+## The linear model equivalence
+
+Let's now use linear regression and the `lm()` function to model the
+expression in groups 1 and 2:
+
+```{r mod1}
+mod1 <- lm(expression ~ group, data = gexp)
+mod1
+```
+
+We see that 
+1. the intercept corresponds to the mean in group 1, and 
+2. the slope (`group2` coefficient) of the model corresponds to the
+   log2 fold-change and that, as expected, the mean of group 2 is
+   *intercept + slope*.
+
+We can also extract the p-value associated with the slope:
+
+```{r}
+summary(mod1)
+```
+
+The p-value is slightly different due to the heteroscedasticity
+assumption that wasn't set in the t-test, which we can repeat:
+
+
+```{r}
+t.test(expression ~ group, data = x, var.equal = TRUE)
+```
+
+```{r}
+p + geom_abline(intercept = 2.75 - 1, slope = 1.58) 
+```
+
+## Paired t-test and additional coefficients in the model
+
+
+```{r}
+p <- ggplot(gene_expression, aes(x = group, y = expression)) + geom_boxplot() + geom_point(aes(colour = ID), size = 4) +  geom_segment(data = sleep2, aes(x = group.x, xend = group.y, y = extra.x, yend = extra.y, colour = factor(1:10))) + 
+```
+
+
+
+## Model generalisation
