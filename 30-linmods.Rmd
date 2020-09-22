@@ -57,7 +57,7 @@ translates as follows:
 
 - the expression in group 1 (i.e. when $x = 0$) is equal to $\beta_0$
   (the average expression of group 1);
-- the expression in group 2 (i.e. when $x = 0\1$) is equal to
+- the expression in group 2 (i.e. when $x = 1$) is equal to
   $\beta_0$ + $\beta_1$ (the difference between group 1 and group 2).
 
 We model this with
@@ -85,25 +85,30 @@ p  +
                 slope = coefficients(mod1)[2])
 ```
 
-We can also extract the p-value associated with the slope:
+Note that above, we need to subtract the slope from the intercept when
+plotting the linear model because groups 1 and 2 are encoded as 0 and
+1 in the model, but plotted as 1 and 2 on the figure.
+
+We can also extract the p-value associated with the coefficients:
 
 ```{r}
 summary(mod1)
 ```
 
-that is computer as 
+that are computer as 
 
-$$t_{score} = \frac{\beta_1 - 0}{SE_{\beta_1}}$$
+$$t_{score} = \frac{\beta_i - 0}{SE_{\beta_i}}$$
 
 that has a t-distribution with n − 2 degrees of freedom if the null
 hypothesis is true. We use a t-test that tests whether the slope is
 different from 0: 
 
-- $H_0$: $\beta_1 = 0$ 
-- $H_1$: $\beta_1 \neq 0$ 
+- $H_0$: $\beta_i = 0$ 
+- $H_1$: $\beta_i \neq 0$ 
 
-The p-value is slightly different due to the heteroscedasticity
-assumption that wasn't set in the t-test, which we can repeat:
+The p-values for the slope $\beta_1$ is slightly different due to the
+heteroscedasticity assumption that wasn't set in the t-test, which we
+can repeat:
 
 
 ```{r}
@@ -111,7 +116,7 @@ t.test(expression ~ group, data = gexp, var.equal = TRUE)
 ```
 
 
-## Paired t-test and additional coefficients in the model
+## Paired t-test
 
 `r msmbstyle::question_begin()`
 
@@ -146,7 +151,7 @@ ggplot(gexp, aes(x = group, y = expression)) +
 
 This comparison can be replicated using a linar model 
 
-$$y = \beta_0 + \beta_1 \times x + \beta_2 \times ID + \epsilon$$
+$$y = \beta_0 + \beta_1 \times group + \beta_2 \times ID + \epsilon$$
 
 where the $\beta_2$ coefficient will encode the relation between pairs
 of individuals. We model this with
