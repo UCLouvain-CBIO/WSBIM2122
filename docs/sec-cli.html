@@ -351,13 +351,13 @@ directory or file name.</p>
 <p>Return to your home directory:</p>
 <pre><code>$ cd</code></pre>
 <p>then enter:</p>
-<pre><code>$ cd she&lt;tab&gt;</code></pre>
+<pre><code>$ cd wsbi&lt;tab&gt;</code></pre>
 <p>The shell will fill in the rest of the directory name for
 <code>wsbim2122_data</code>.</p>
 <p>Tab completion isn’t limited to <code>cd</code>; it works with any shell command.</p>
 <p>Using tab completion will save you a lot of typos and time!</p>
-<pre><code>$ cd shell_date
-cd: shell_date: No such file or directory</code></pre>
+<pre><code>$ cd wsbim2122_date
+cd: wsbim2122_date: No such file or directory</code></pre>
 </div>
 <div id="hidden-files-and-directories" class="section level3" number="1.2.1">
 <h3>
@@ -418,7 +418,7 @@ called <code>shell_notes.txt</code>, <code>report.Rmd</code> and <code>omics.md<
 </p>
 </div>
 </div>
-<p>Note that the files created above contain a **file name*
+<p>Note that the files created above contain a <strong>file name</strong>
 (<code>shell_notes</code>, <code>report</code>, <code>omics</code>) and the <strong>file extension</strong> (<code>txt</code>,
 <code>Rmd</code> and <code>md</code>)! You can of course create a file without extension,
 but you (and the computer) won’t know what type of file it is from its
@@ -792,7 +792,7 @@ $ ls -l combine_all_simulations.sh
 -r-xr--r-- 1 lgatto lgatto 79 sept. 17 22:32 combine_all_simulations.sh</code></pre>
 <p>If you now try to delete the file with <code>rm combine_all_simulations.sh</code>, you’ll be asked if you want to override
 your file permissions:</p>
-<pre><code>rm: remove write-protected regular file ‘combine_all_simulations.sh'? </code></pre>
+<pre><code>rm: remove write-protected regular file ‘combine_all_simulations.sh'?</code></pre>
 <p>If you enter <code>n</code> (for no), the file will not be deleted. If you enter
 <code>y</code>, you will delete the file. This gives us an extra measure of
 security, as there is one more step between us and deleting our data

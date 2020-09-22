@@ -215,7 +215,7 @@ $ cd
 then enter:
 
 ```
-$ cd she<tab>
+$ cd wsbi<tab>
 ```
 
 The shell will fill in the rest of the directory name for
@@ -226,8 +226,8 @@ Tab completion isn't limited to `cd`; it works with any shell command.
 Using tab completion will save you a lot of typos and time!
 
 ```
-$ cd shell_date
-cd: shell_date: No such file or directory
+$ cd wsbim2122_date
+cd: wsbim2122_date: No such file or directory
 ```
 
 ### Hidden files and directories
@@ -297,7 +297,7 @@ called `shell_notes.txt`, `report.Rmd` and `omics.md`.
 
 `r msmbstyle::question_end()`
 
-Note that the files created above contain a **file name*
+Note that the files created above contain a **file name**
 (`shell_notes`, `report`, `omics`) and the **file extension** (`txt`,
 `Rmd` and `md`)! You can of course create a file without extension,
 but you (and the computer) won't know what type of file it is from its
@@ -563,7 +563,7 @@ Cound the number of line containing the `TATATA` pattern in all the
   from all the `fas` files.
 
 - Use `grep` to extract only the sequence headers (the first lines)
-  from all the `fas` files. 
+  from all the `fas` files.
 
 - Use `grep` to extract everything but the sequence headers from all
   the `fas` files. See the `grep` manual page to find an appropriate
@@ -576,7 +576,7 @@ Cound the number of line containing the `TATATA` pattern in all the
 - Navigate to your directory containing the `sim_*.csv` files.
 - Look at a couple of them and familiarise yourselves with their
   content.
-- How many files are there? 
+- How many files are there?
 - How many points where simulated over all files?
 - How many points with `id` b where simulated over all files?
 
@@ -622,7 +622,7 @@ touch combine_all_simulations.sh
 - Add the shell commands from the exercise into that file. You can use
   an editor, either `nano` directly from the terminal, or RStudio.
 
-- Execute your script with 
+- Execute your script with
 
 ```
 sh combine_all_simulations.sh
@@ -693,7 +693,7 @@ combine_all_simulations.sh`, you'll be asked if you want to override
 your file permissions:
 
 ```
-rm: remove write-protected regular file ‘combine_all_simulations.sh'? 
+rm: remove write-protected regular file ‘combine_all_simulations.sh'?
 ```
 
 If you enter `n` (for no), the file will not be deleted. If you enter
@@ -706,7 +706,7 @@ careful with this command. It doesn't just nicely put the files in the
 Trash. They're really gone.
 
 By default, `rm` will not delete directories. You can tell `rm` to
-delete a directory using the `-r` (recursive) option. 
+delete a directory using the `-r` (recursive) option.
 
 To complete this chapter on shell, let's conclude by mentioning the R
 `system()` and `system2()` functions, that enable to invoke a system
