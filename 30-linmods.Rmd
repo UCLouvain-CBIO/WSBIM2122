@@ -34,28 +34,56 @@ fold-change, the associated p-value and visualise the data.
 t.test(expression ~ group, data = gexp)
 ```
 
-```{r gexp_vis1}
+```{r gexp_vis1, message = FALSE}
+library("ggplot2")
 p <- ggplot(gexp, aes(x = group, y = expression)) +
     geom_boxplot() + geom_jitter()
+p
 ```
 
-`r msmbstyle::solution_begin()`
+`r msmbstyle::solution_end()`
 
 ## The linear model equivalence
 
+
 Let's now use linear regression and the `lm()` function to model the
 expression in groups 1 and 2:
+
+$$y = \beta_0 + \beta_1 \times x + \epsilon$$
+
+where $y$ is the expression we want to mode and $x$ represents the two
+groups that are generally encode as 0 and 1. The expression above
+translates as follows:
+
+- the expression in group 1 (i.e. when $x = 0$) is equal to $\beta_0$
+  (the average expression of group 1);
+- the expression in group 2 (i.e. when $x = 0\1$) is equal to
+  $\beta_0$ + $\beta_1$ (the difference between group 1 and group 2).
+
+We model this with
 
 ```{r mod1}
 mod1 <- lm(expression ~ group, data = gexp)
 mod1
 ```
 
-We see that 
+An indeed, we see that
+
 1. the intercept corresponds to the mean in group 1, and 
 2. the slope (`group2` coefficient) of the model corresponds to the
    log2 fold-change and that, as expected, the mean of group 2 is
    *intercept + slope*.
+
+We can visualise this linear model with:
+
+```{r}
+p  +
+    geom_point(data = data.frame(x = c(1, 2), y = c(2.75, 4.33)),
+               aes(x = x, y = y),
+               colour = "red", size = 5) +
+    geom_abline(intercept = coefficients(mod1)[1] - coefficients(mod1)[2],
+                slope = coefficients(mod1)[2])
+```
 
 We can also extract the p-value associated with the slope:
 
@@ -63,25 +91,155 @@ We can also extract the p-value associated with the slope:
 summary(mod1)
 ```
 
+that is computer as 
+
+$$t_{score} = \frac{\beta_1 - 0}{SE_{\beta_1}}$$
+
+that has a t-distribution with n − 2 degrees of freedom if the null
+hypothesis is true. We use a t-test that tests whether the slope is
+different from 0: 
+
+- $H_0$: $\beta_1 = 0$ 
+- $H_1$: $\beta_1 \neq 0$ 
+
 The p-value is slightly different due to the heteroscedasticity
 assumption that wasn't set in the t-test, which we can repeat:
 
 
 ```{r}
-t.test(expression ~ group, data = x, var.equal = TRUE)
+t.test(expression ~ group, data = gexp, var.equal = TRUE)
 ```
 
-```{r}
-p + geom_abline(intercept = 2.75 - 1, slope = 1.58) 
-```
 
 ## Paired t-test and additional coefficients in the model
 
+`r msmbstyle::question_begin()`
 
-```{r}
-p <- ggplot(gene_expression, aes(x = group, y = expression)) + geom_boxplot() + geom_point(aes(colour = ID), size = 4) +  geom_segment(data = sleep2, aes(x = group.x, xend = group.y, y = extra.x, yend = extra.y, colour = factor(1:10))) + 
+Repeat the test comparing the gene expression between group 1 and
+group 2 using a *paired* t-test. Report the mean expression of each
+group, the log2 fold-change, the associated p-value and visualise the
+data.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+```{r gexp_t_test2}
+t.test(expression ~ group, data = gexp, paired = TRUE)
+```
+
+```{r gexp_vis2}
+gexp2 <- dplyr::full_join(gexp[1:10, ], gexp[11:20, ],
+                          by = "ID", suffix = c("_1", "_2"))
+
+ggplot(gexp, aes(x = group, y = expression)) +
+    geom_boxplot() + 
+    geom_point(aes(colour = ID), size = 4) +
+    geom_segment(data = gexp2,
+                 aes(x = group_1, xend = group_2,
+                     y = expression_1, yend = expression_2,
+                     colour = factor(1:10)))
 ```
 
 
+`r msmbstyle::solution_end()`
+
+This comparison can be replicated using a linar model 
+
+$$y = \beta_0 + \beta_1 \times x + \beta_2 \times ID + \epsilon$$
+
+where the $\beta_2$ coefficient will encode the relation between pairs
+of individuals. We model this with
+
+```{r mod2}
+mod2 <- lm(expression ~ group + ID, data = gexp)
+mod2
+```
+
+The `group2` coefficient still corresponds to the fold-change between
+the two groups. The coefficients `ID2` to `ID10` correspond to the
+respective differences between the average expression of `ID1` and
+`ID2` to `ID10`. 
+
+```{r}
+avg_id <- (gexp2$expression_1 + gexp2$expression_2)/2
+coefs_id <- avg_id[-1] - avg_id[1]
+names(coefs_id) <- paste0("ID", 2:10)
+coefs_id
+```
+
+As above, a summary of the model will give us the statistical
+significance for the different coefficients.
+
+```{r}
+summary(mod2)
+```
+
+`r msmbstyle::question_begin()`
+
+Interpret the summary of `mod2` computed above.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+We see that the `group2` coefficient, that tests the difference
+between the two groups is now significant. It is identical to the
+paired t-test above.
+
+
+The respective ID coefficients compare the average expression in these
+IDs agains the average expression of ID1. We can indeed see that ID6
+and ID7, that have significant coefficients, are the most different
+from ID1.
+
+`r msmbstyle::solution_end()`
 
 ## Model generalisation
+
+In the example above, we had two variables that influenced the gene
+expression, namely the group and the specific individual and we ended
+up with a model that included both of these[^tilda]:
+
+[^tilda]: We will drop the left-hand side term of our formula, setting
+    it by default as the quantiative expression data.
+
+
+```{r, eval = FALSE}
+~ group + ID
+```
+
+Any additional variables could be added to the model if deemed necessary.
+
+
+`r msmbstyle::question_begin()`
+
+We have measured the gene expression in cell lines U2OS and Jurkat
+(defined as variable `cell_line`), each in the presence of drug A or B
+(defined as variable `drug`). How would you define the test formula?
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin()`
+
+As above, we have measured the gene expression in cell lines U2OS and
+Jurkat (defined as variable `cell_line`), each in the presence of drug
+A or B (defined as variable `drug`). This time however, two operators
+(defined as variable `operator`) have shared the work. How would you
+define the test formula?
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin()`
+
+We have measured the gene expression in cell lines U2OS and Jurkat
+(defined as variable `cell_line`), each in the presence of drug A, B
+or C (defined as variable `drug`). How would you define the test
+formula? How many coefficients will you have? Describe them.
+
+`r msmbstyle::question_end()`
+
+
+## Interactions between variables
+
