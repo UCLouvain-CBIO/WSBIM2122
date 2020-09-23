@@ -13,7 +13,8 @@ and more specifically
 
 Load the `gexp` data from the `rWSBIM2122` package (version >= 0.2.2)
 as show below. It provides the log2 expression of a single gene of
-interest measured in two groups of interest.
+interest measured in two groups, namely 1 and 2. Ignore the `ID`
+column for now.
 
 ```{r gexp}
 library(rWSBIM2122)
@@ -51,8 +52,8 @@ expression in groups 1 and 2:
 
 $$y = \beta_0 + \beta_1 \times x + \epsilon$$
 
-where $y$ is the expression we want to mode and $x$ represents the two
-groups that are generally encode as 0 and 1. The expression above
+where $y$ is the expression we want to model and $x$ represents the
+two groups that are generally encoded as 0 and 1. The expression above
 translates as follows:
 
 - the expression in group 1 (i.e. when $x = 0$) is equal to $\beta_0$
@@ -69,7 +70,7 @@ mod1
 
 An indeed, we see that
 
-1. the intercept corresponds to the mean in group 1, and 
+1. the intercept corresponds to the mean in group 1, and
 2. the slope (`group2` coefficient) of the model corresponds to the
    log2 fold-change and that, as expected, the mean of group 2 is
    *intercept + slope*.
@@ -95,19 +96,19 @@ We can also extract the p-value associated with the coefficients:
 summary(mod1)
 ```
 
-that are computer as 
+that are computer as
 
 $$t_{score} = \frac{\beta_i - 0}{SE_{\beta_i}}$$
 
 that has a t-distribution with n − 2 degrees of freedom if the null
 hypothesis is true. We use a t-test that tests whether the slope is
-different from 0: 
+different from 0:
 
-- $H_0$: $\beta_i = 0$ 
-- $H_1$: $\beta_i \neq 0$ 
+- $H_0$: $\beta_i = 0$
+- $H_1$: $\beta_i \neq 0$
 
 The p-values for the slope $\beta_1$ is slightly different due to the
-heteroscedasticity assumption that wasn't set in the t-test, which we
+homoscedasticity assumption that wasn't set in the t-test, which we
 can repeat:
 
 
@@ -120,10 +121,17 @@ t.test(expression ~ group, data = gexp, var.equal = TRUE)
 
 `r msmbstyle::question_begin()`
 
+The `ID` variable in the `gexp` data provides the unique sample
+identifier: it is the sample in which an expression of 2.7 was
+measured in group 1 and 3.9 in group 2.
+
 Repeat the test comparing the gene expression between group 1 and
 group 2 using a *paired* t-test. Report the mean expression of each
 group, the log2 fold-change, the associated p-value and visualise the
 data.
+
+Compare the p-values obtained in the paired and unpaired designs and
+explain the differences.
 
 `r msmbstyle::question_end()`
 
@@ -138,7 +146,7 @@ gexp2 <- dplyr::full_join(gexp[1:10, ], gexp[11:20, ],
                           by = "ID", suffix = c("_1", "_2"))
 
 ggplot(gexp, aes(x = group, y = expression)) +
-    geom_boxplot() + 
+    geom_boxplot() +
     geom_point(aes(colour = ID), size = 4) +
     geom_segment(data = gexp2,
                  aes(x = group_1, xend = group_2,
@@ -146,10 +154,17 @@ ggplot(gexp, aes(x = group, y = expression)) +
                      colour = factor(1:10)))
 ```
 
+In the unpaired design, the variances in groups 1 and 2 are
+`r round(var(gexp2$expression_1), 2)` and
+`r round(var(gexp2$expression_2), 2)` respectively,
+and do not take into account the paired relation between
+samples. Using a paired design allows for a smaller estimation of the
+observed variability, leading to a greater t statistic and a smaller
+p-value.
 
 `r msmbstyle::solution_end()`
 
-This comparison can be replicated using a linar model 
+This comparison can be replicated using a linar model
 
 $$y = \beta_0 + \beta_1 \times group + \beta_2 \times ID + \epsilon$$
 
@@ -164,7 +179,7 @@ mod2
 The `group2` coefficient still corresponds to the fold-change between
 the two groups. The coefficients `ID2` to `ID10` correspond to the
 respective differences between the average expression of `ID1` and
-`ID2` to `ID10`. 
+`ID2` to `ID10`.
 
 ```{r}
 avg_id <- (gexp2$expression_1 + gexp2$expression_2)/2
@@ -194,7 +209,7 @@ paired t-test above.
 
 
 The respective ID coefficients compare the average expression in these
-IDs agains the average expression of ID1. We can indeed see that ID6
+IDs against the average expression of ID1. We can indeed see that ID6
 and ID7, that have significant coefficients, are the most different
 from ID1.
 
@@ -214,14 +229,15 @@ up with a model that included both of these[^tilda]:
 ~ group + ID
 ```
 
-Any additional variables could be added to the model if deemed necessary.
+Any additional variables could be added to the model if deemed
+necessary.
 
 
 `r msmbstyle::question_begin()`
 
 We have measured the gene expression in cell lines U2OS and Jurkat
 (defined as variable `cell_line`), each in the presence of drug A or B
-(defined as variable `drug`). How would you define the test formula?
+(defined as variable `drug`). How would you define the model formula?
 
 `r msmbstyle::question_end()`
 
@@ -231,7 +247,7 @@ As above, we have measured the gene expression in cell lines U2OS and
 Jurkat (defined as variable `cell_line`), each in the presence of drug
 A or B (defined as variable `drug`). This time however, two operators
 (defined as variable `operator`) have shared the work. How would you
-define the test formula?
+define the model formula?
 
 `r msmbstyle::question_end()`
 
@@ -240,11 +256,11 @@ define the test formula?
 
 We have measured the gene expression in cell lines U2OS and Jurkat
 (defined as variable `cell_line`), each in the presence of drug A, B
-or C (defined as variable `drug`). How would you define the test
-formula? How many coefficients will you have? Describe them.
+or C (defined as variable `drug`). How would you define the model
+formula? Which coefficient would you include in the hypothesis test to
+assess the drug effect?
 
 `r msmbstyle::question_end()`
 
 
 ## Interactions between variables
-
