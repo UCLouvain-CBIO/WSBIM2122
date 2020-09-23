@@ -264,3 +264,143 @@ assess the drug effect?
 
 
 ## Interactions between variables
+
+
+Consider the following design: two genotypes of plants, wild type and
+a mutant that shows some resistance to drought, that are grown,
+collected and analysed by RNA sequencing under normal, humid and dry
+conditions. The researchers that set up this experiment expect that
+the two genotypes will produce, for some key genes, opposite responses
+in the extreme conditions: that the expression of some genes will
+increase in the mutant under dry conditions while it will decrease
+under humid conditions.
+
+```{r, echo = FALSE}
+des <- data.frame(sample = 1:12,
+                  genotype = rep(c("WT", "MT"), each = 6),
+                  condition = rep(c("normal", "dry", "humid"), 4))
+DT::datatable(des, rownames = FALSE,
+              class = 'cell-border stripe',
+              options = list(
+                  pageLength = 12,
+                  autoWidth = TRUE))
+```
+
+Such situation require a new model formula syntax, that
+
+```{r, eval = FALSE}
+~ genotype*condition
+```
+
+which is equivalent to
+
+```{r, eval = FALSE}
+~ genotype + condition + genotype*condition
+```
+
+Here, coefficients are estimated for `genotype`, `condition` and the
+**interaction** between the two.
+
+## Exercise
+
+`r msmbstyle::question_begin()`
+
+Load the `lmdata` data available in the `rWSBIM2122` package (version
+0.2.2 or later), which provides a factorial design (2 factors,
+`condition` and `cell_type` with 2 levels each) with gene expression
+for 5 genes and 12 samples.
+
+```{r}
+data(lmdata, package = "rWSBIM2122")
+```
+
+Analyse each gene with a linear model, defining an appropriate model
+formula, and interpret the results for each gene. You can visualise
+the data to help with the interpretation.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+```{r, message = FALSE}
+library("tidyverse")
+## Prepare the data
+x <-
+    data.frame(lmdata) %>%
+    rownames_to_column() %>%
+    pivot_longer(names_to = "sample", values_to = "expression", -rowname) %>%
+    full_join(lmannot) %>%
+    mutate(sample = sub("sample_", "", sample))
+```
+
+```{r}
+## Analyse gene 1
+x_i <- filter(x, rowname == "gene_1")
+x_i
+mod_i <- lm(expression ~ condition*cell_type, data = x_i)
+summary(mod_i)
+
+ggplot(x_i, aes(x = sample, y = expression,
+                colour = condition,
+                shape = cell_type)) +
+    geom_point()
+```
+
+```{r}
+## Analyse gene 2
+x_i <- filter(x, rowname == "gene_2")
+x_i
+mod_i <- lm(expression ~ condition*cell_type, data = x_i)
+summary(mod_i)
+
+ggplot(x_i, aes(x = sample, y = expression, colour = cell_type)) +
+    geom_point() +
+    facet_wrap(~ condition)
+```
+
+```{r}
+## Analyse gene 3
+x_i <- filter(x, rowname == "gene_3")
+x_i
+mod_i <- lm(expression ~ condition*cell_type, data = x_i)
+summary(mod_i)
+
+ggplot(x_i, aes(x = sample, y = expression, colour = condition)) +
+    geom_point() +
+    facet_wrap(~ cell_type)
+```
+
+```{r}
+## Analyse gene 4
+x_i <- filter(x, rowname == "gene_4")
+x_i
+mod_i <- lm(expression ~ condition*cell_type, data = x_i)
+summary(mod_i)
+
+ggplot(x_i, aes(x = sample, y = expression,
+                colour = condition,
+                shape = cell_type)) +
+    geom_point()
+```
+
+
+```{r}
+## Analyse gene 5
+x_i <- filter(x, rowname == "gene_5")
+x_i
+mod_i <- lm(expression ~ condition*cell_type, data = x_i)
+summary(mod_i)
+
+group_by(x_i, cell_type, condition) %>% summarise(mean = mean(expression))
+group_by(x_i, cell_type) %>% summarise(mean = mean(expression))
+group_by(x_i, condition) %>% summarise(mean = mean(expression))
+
+ggplot(x_i, aes(x = sample, y = expression,
+                colour = condition,
+                shape = cell_type)) +
+    geom_point() +
+    facet_grid(cell_type ~ condition)
+```
+
+`r msmbstyle::solution_end()`
