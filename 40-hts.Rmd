@@ -101,7 +101,7 @@ For a dynamic view of the cluster amplification process, watch the
 ## fastq files
 
 The sequence data generated from the sequencer are received in text
-files called fastq files.  For a single-read run, one fastq file is
+files called fastq files.  For a single-end run, one fastq file is
 created for each sample. For a paired-end run, two separated fastq
 files are generated, each containing sequences from one end.
 
@@ -391,14 +391,14 @@ knitr::include_graphics("figs/spliced_alignment.png")
 
 
 Here we show an example of what the command could look like when using
-[HISAT2](https://ccb.jhu.edu/software/hisat2/manual.shtml) aligner,
+[HISAT2](http://daehwankimlab.github.io/hisat2/) aligner,
 launched with default parameters.  In this basic configuration,
 mandatory parameters are of course the fastq file(s) and the sequence
 of the genome on which the reads have to be aligned. In practical, the
 genome's sequence is not given as it is but in an indexed form
 [^Indexed_genome]. Of course many of other parameters can be fine
 tuned (see the
-[manual](https://ccb.jhu.edu/software/hisat2/manual.shtml) for more
+[manual](http://daehwankimlab.github.io/hisat2/manual/) for more
 details).  The alignment output file data is a `sam` file (see below).
 
 [^Indexed_genome]: Genome indexing allows the aligner to quickly find
