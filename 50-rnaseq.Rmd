@@ -12,9 +12,9 @@ The goal of this chapter is
 ## Theory behind DESeq2
 
 A large number of computational methods have been developed for differential expression analysis 
-[@Seyednasrollah:2015], differing slightly in their methodology. Here we will present DESeq2, a bioconductor package 
-dedicated to this type of analysis which is very frequently used. For more information read the 
-original paper [@Huber:2014] and the [DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).
+[@Seyednasrollah:2015], differing slightly in their methodology. Here we will present DESeq2, 
+a bioconductor package dedicated to this type of analysis which is very frequently used. For more 
+information read the original paper [@Huber:2014] and the [DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).
 
 The starting point of the analysis is a count matrix, and the goal is to identify
 genes that are differentially expressed between samples.

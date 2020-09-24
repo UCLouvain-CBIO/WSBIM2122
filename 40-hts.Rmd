@@ -467,14 +467,51 @@ Field 12: Optional. See [hisat2 manual](http://daehwankimlab.github.io/hisat2/ma
 
 **BAM format**
 
-BAM file is a compressed binary version of SAM file.  SAM files can be
+The BAM file is a compressed binary version of SAM file. SAM files can be
 easily converted into BAM files using [samtools](http://www.htslib.org
 software), and it is sometimes mandatory to sort the SAM/BAM by
 chromosomal coordinates for downstream applications.
 
 ```{r, eval = F}
-samtools view -Sb XXX.sam | samtools sort > XXX.bam
+samtools view -Sb SampleName.sam | samtools sort > SampleName.bam
 ```
+
+**Alignment visualisation**
+
+Alignements described in BAM files can easily be viewed using 
+[IGV](https://software.broadinstitute.org/software/igv/) (Integrative Genomics Viewer), 
+a very useful interactive tool for the visual exploration of genomic data.
+
+IGV requires that BAM files have an associated index file[^Indexed_bam].
+Samtools can be used to index the BAM file. The following command would create
+the indexed SampleName.bam.bai file. 
+
+[^Indexed_bam]: Indexing a BAM file allows IGV to quickly extract alignments overlapping 
+particular genomic regions 
+
+```{r, eval = F}
+samtools index SampleName.bam
+```
+
+Bam file can be loaded in IGV[^note_on_index].
+Below is an example of visualisation of a bam file using IGV, focusing on CDKN1A gene.
+
+[^note_on_index]: Note that the index file must reside in the same directory as the bam 
+file that it indexes, and it must have the same basename
+
+```{r, echo = FALSE, fig.align = 'center', out.width = '100%', purl = TRUE}
+knitr::include_graphics("figs/IGV.png")
+```
+
+
+Loading a BAM file creates 3 associated tracks:  
+
+- Coverage Track to view depth of coverage
+
+- Splice Junction Track which provides an alternative view of reads spanning splice junctions
+
+- Alignment Track to view individual aligned reads
+
 
 ## Counting
 
@@ -517,13 +554,13 @@ for more details).
 
 ```
 featureCounts \
--p \                  # paired (fragments counted  instead  of  reads)
--a annotations.gtf \  # name of the annotation file
--t exon \             # feature type in GTF annotation
+-p \                    # paired (fragments counted  instead  of  reads)
+-a annotations.gtf \    # name of the annotation file
+-t exon \               # feature type in GTF annotation
 -g gene_id \          # Meta-features used in GTF annotation
 -s 0 \                # strand-specificity
--o counts.tsv \       # Name of the output file
-mapping_results.bam
+-o SampleName_counts.tsv \       # Name of the output file
+SampleName.bam        # bam file
 ```
 
 Here is an example of featurecounts output file. The last column gives
