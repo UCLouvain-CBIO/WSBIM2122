@@ -638,6 +638,12 @@ results can be merged in a single count matrix, were each column represents a sa
 and each line represents a gene. This count matrix will be the starting point of a 
 differential expression analysis.
 
+```{r, echo = F}
+load("wsbim2122_data/deseq2/counts.rda")
+head(counts)
+```
+
+
 `r msmbstyle::question_begin()`
 
 Imagine you had initially 6 samples (3 control and 3 treated samples) that you have 
@@ -648,11 +654,10 @@ in the folder `wsbim_data/count_data/`. Use these files to create a count matrix
 
 `r msmbstyle::solution_begin()`
 
-```{r}
+```{r, message = FALSE}
 samples <- list.files("wsbim2122_data/count_data/", pattern = "*tsv.gz")
 counts <- read_tsv(file = paste0("wsbim2122_data/count_data/", samples[1])) %>%  
   select(ends_with('.bam'))
-
 for (sample in samples[-1]){
   tmp <- read_tsv(file = paste0("wsbim2122_data/count_data/", sample)) %>% 
     select(ends_with('.bam'))

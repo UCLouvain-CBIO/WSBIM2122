@@ -12,9 +12,10 @@ The goal of this chapter is
 ## Theory behind DESeq2
 
 A large number of computational methods have been developed for differential expression analysis 
-[@Seyednasrollah:2015], differing slightly in their methodology. Here we will present DESeq2, 
-a bioconductor package dedicated to this type of analysis which is very frequently used. For more 
-information read the original paper [@Huber:2014] and the [DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).
+[@Seyednasrollah:2015], differing slightly in their methodology. Here we will present DESeq2,
+a widely used bioconductor package dedicated to this type of analysis. For more information read 
+the original paper [@Huber:2014] and the 
+[DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html).
 
 The starting point of the analysis is a count matrix, and the goal is to identify
 genes that are differentially expressed between samples.
@@ -22,8 +23,8 @@ genes that are differentially expressed between samples.
 The different steps of the analysis are illustrated in the figure below. Briefly,
 DESeq2 starts by normalising the raw counts. Then, it estimates the gene-wise
 dispersions and shrinks these estimates to generate more accurate estimates of dispersion
-to model the counts. Finally, DESeq2 fits a negative binomial model and performs
-hypothesis testing using the Wald test.
+to model the counts. Finally, DESeq2 fits a generalized linear model, performs hypothesis 
+testing and generates a list of differentially expressed genes.
 
 
 ```{r, echo=FALSE, fig.align='center', out.width='60%', purl=TRUE}
@@ -79,15 +80,15 @@ knitr::include_graphics("./figs/Sequencing_depth.png")
 
 - **Library composition**
 
-The library composition might also be different in samples. To
+The library composition might also be different accross samples. To
 illustrate this, let's imagine a basic cell expressing only 2 genes
-(genes A and B) and assume that a drug treatment induces a strong
-expression of gene C. If the normalisation was done using total number
-of reads only, then the counts of gene A would be divided by 4 in
-control cells, while it would be divided by 12 in treated cells. This
+(genes 1 and 2) and assume that a drug treatment induces a strong
+expression of gene 3. If the normalisation was done using total number
+of reads only, then the counts of gene 1 would be divided by 15 in
+control cells, while it would be divided by 165 in treated cells. This
 would lead to the misleading conclusion that the treatment has reduced
-3 times the expression of gene A.  In this case, the library
-composition has changed but not the expression level of gene A.
+11 times the expression of gene 1. In this case, the library
+composition has changed but not the expression level of gene 1.
 
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
@@ -106,30 +107,26 @@ DESeq2 will use a normalisation method that takes into account both
 library size and library composition. To normalise for sequencing
 depth and RNA composition, DESeq2 uses the median of ratios method.
 
-**Step 1**: DESeq2 creates a pseudo-reference sample (row-wise
-geometric mean).  It calculates the geometric mean of each
-gene. Geometric mean is used instead of classical mean because it uses
-log values. It is hence more robust as it is less influenced by
-extreme values. The geometric means constitute a pseudo-reference
-sample.
+**Step 1**: DESeq2 creates a pseudo-reference sample by calculating a
+row-wise geometric mean (for each gene). Geometric mean is used instead 
+of classical mean because it uses log values. It is hence more robust 
+as it is less influenced by extreme values. 
 
-**Step 2**: For every gene in a sample, the ratios
-(sample/pseudo-reference sample) are calculated.  Since the majority
-of genes are not differentially expressed, the majority of genes in
-each sample should have similar ratios within the sample.
+**Step 2**: For every gene in every sample, ratios of
+counts/pseudo-reference sample are calculated.
 
 **Step 3**: The median value of all ratios for a given sample is taken as
 the size factor for that sample. Importantly, the method is based on
 the assumption that the majority of genes are not differentially
 expressed, which implies that rare genes that are really up-regulated
-/ down-regulated should not influence the median. Furthermore, the
+or down-regulated should not influence the median. Furthermore, the
 median is calculated skipping genes with a geometric mean of
 zero. This will hence automatically eliminate genes expressed in some
 samples but not in others and will help to focus the scaling factor on
 housekeeping genes.
 
 **Step 4**: DESeq2 calculates the normalised counts using the scaling
-factor This is performed by dividing each raw count values in a given
+factor. This is performed by dividing each raw count values in a given
 sample by that sample’s scaling factor.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
@@ -206,7 +203,7 @@ CV^2$). A gene with a dispersion value of 0.04 means 20% variation
 around the expected mean. Estimate the dispersion for each gene would
 be quite straightforward if we had for each condition, hundreds of
 replicates. Of course, this is not feasible for economic reasons, and
-experiments are usually done on only 3-5 replicates. But how to
+experiments are often done on only 3 replicates. But how to
 estimate dispersion reliably based on such a little number of samples?
 To overcome this problem, DESeq2 makes the assumption that genes of
 similar expression levels have similar dispersions and it will use
