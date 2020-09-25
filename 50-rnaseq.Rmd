@@ -5,7 +5,6 @@
 The goal of this chapter is
 
 - to understand the different theorical concepts behind a differential expression analysis
-
 - to provide a real-life example of DE analysis analysis running DESeq2 step-by-step
 
 
@@ -185,10 +184,17 @@ parameter to model this “extra” variance that is empirically observed
 in RNA-Seq experiments.
 
 
-```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
+```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
 knitr::include_graphics("./figs/NB.png")
 ```
 
+
+
+$K_{ij}$ represents the raw count for gene i in sample j
+
+$µ_{ij}$ represents the mean of gene i in sample j
+
+$\alpha_i$ represents the dispersion of gene i
 
 ### Dispersion estimation
 
@@ -198,7 +204,7 @@ is to estimate, for each gene, the two parameters of the distribution
 observed normalised counts in both conditions, but the dispersion is
 not that trivial to estimate.
 
-Dispersion is a measure of spread or variability in the data ($α=
+Dispersion is a measure of spread or variability in the data ($α = 
 CV^2$). A gene with a dispersion value of 0.04 means 20% variation
 around the expected mean. Estimate the dispersion for each gene would
 be quite straightforward if we had for each condition, hundreds of
@@ -254,23 +260,54 @@ circles in the dispersion plot.
 [^outlierSD]: genes with extremely high dispersion are those for which the adjusted
 dispersion is more than 2 residual standard deviations above the curve.
 
-This shrinkage method is particularly important to reduce false positives in the
-differential expression analysis. The shrunken dispersion values will be used for
-fitting of the model and differential expression testing.
+Dispersion shrinkage is particularly important to reduce false positives in the
+differential expression analysis. 
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
 knitr::include_graphics("./figs/disp_shrinkage.png")
 ```
 
 
-### GLM
+The dispersion parameter $\alpha_i$ defines the relationship between 
+the variance of the observed count and its mean value[^small_alpha]. 
 
-Adapt this paragraph in function of Laurent's chapter on linear models.
+[^small_alpha]: Note that as dispersion parameter gets lower and lower, 
+the variance converges to the same value as the mean, and the negative 
+binomial turns into a Poisson distribution.
 
-DESeq2 fits a generalized linear model of the form: $log2(qij)=xj.βi$, and $βi$
-coefficients are computed. They give estimates of the log fold changes for gene i
-for each column of the model matrix. Standard errors for the log2 fold changes are
-also estimated.
+
+```{r, echo=FALSE, fig.align='center', out.width='60%', purl=TRUE}
+knitr::include_graphics("./figs/VAR.png")
+```
+
+
+### Generalized linear model
+
+
+DESeq2 fits a generalized linear model of the form: $$log2(q_{ij}) = \Sigma x_j.β_i$$
+
+where $q_{ij}$ represents the normalised counts for gene i in sample j and $β_i$ represents 
+the log2FC between conditions. $β_i$ coefficients are computed from the data and standard 
+errors for the log2 fold changes are  calculated.
+
+
+
+
+In the case of a simple design with one condition (a treatment effect for example), the model 
+can be written
+
+$$log2(q_{ij}) = \beta_0 + \beta_1\times x_j + \epsilon$$
+$\beta_0$ is the log2 expression level in the reference (control samples) 
+
+$\beta_1$ is the log2FC between treated and control cells
+
+$x_j$ = 0 if sample j is the control sample 
+
+$x_j$ = 1 if sample j is the treated sample 
+
+
+
+
 
 ### Statistical test
 
@@ -281,7 +318,7 @@ whether, for a given gene, an observed difference in read counts is
 significant, that is, whether it is greater than what would be
 expected just due to natural random variation.  The null hypothesis
 $H_0$ is that there is no differential expression across two sample
-groups, which is the same as saying that the log2 fold-change = 0. A
+groups, which is the same as saying that the log2FC = 0. A
 statistical test, the Wald test, will determine whether the data
 provides sufficient evidence to conclude that this value is really
 different from zero.
@@ -393,8 +430,8 @@ We will run a DESeq2 analysis using real data.
 ### Construct DESeqDataSet object
 
 Let's first load the count matrix and the sample metadata.
-This dataset corresponds to RNAseq data done on a cell line
-treated a not by a siRNA.
+This dataset corresponds to RNAseq data from a cell line
+treated or not by a siRNA.
 
 ```{r}
 load("wsbim2122_data/deseq2/counts.rda")
