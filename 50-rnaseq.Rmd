@@ -1105,6 +1105,8 @@ library("org.Hs.eg.db")
 
 # Add gene name column
 mart <- useDataset("hsapiens_gene_ensembl", useMart("ensembl"))
+#Attributes define the values we are interested in to retrieve.
+#listAttributes(mart)
 ensembl_to_geneName <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), mart = mart)
 names(ensembl_to_geneName) <- c("ENSEMBL", "gene")
 
