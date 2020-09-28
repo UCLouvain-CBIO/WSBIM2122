@@ -948,7 +948,7 @@ res_tbl %>%
 
 Another interesting plot is the MA-plot ("Mean-Average" plot), a
 scatter plot of log2FC versus the mean of normalised counts. Genes
-with a padjusted value lower than 0.05 are plotted in red. The plot
+with a padjusted value lower than 0.05 are colored. The plot
 highlights the fact that genes with low read counts show substantially
 higher variability than highly expressed genes, resulting in a strong
 log2FC even though are likely not really differentially expressed.  In
@@ -1004,14 +1004,10 @@ best_genes <- res_tbl %>%
   arrange(padj)  %>%
   head(6)
 
-# ordered_samples <- c(rownames(coldata[coldata$Condition == "mock", ]),
-#                      rownames(coldata[coldata$Condition == "KD", ]))
-
 as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = T),
           rownames = 'ENSEMBL') %>%
   gather(sample, counts, -ENSEMBL) %>%
   left_join(as_tibble(coldata, rownames = "sample")) %>%
-#  mutate(sample = factor(sample, levels = ordered_samples)) %>%
   ggplot(aes(x = sample, y = counts, fill = Condition)) +
   geom_bar(stat = 'identity', color = "gray30") +
   facet_wrap( ~ ENSEMBL, scales = "free", ncol = 3) +
@@ -1065,7 +1061,6 @@ as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = T),
           rownames = 'ENSEMBL') %>%
   gather(sample, counts, -ENSEMBL) %>%
   left_join(as_tibble(coldata, rownames = "sample")) %>%
-  #mutate(sample = factor(sample, levels = ordered_samples)) %>%
   ggplot(aes(x = sample, y = counts, fill = Condition)) +
   geom_bar(stat = 'identity', color = "gray30") +
   facet_wrap( ~ ENSEMBL, scales = "free", ncol = 3) +
