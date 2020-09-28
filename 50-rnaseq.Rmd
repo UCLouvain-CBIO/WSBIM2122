@@ -104,7 +104,13 @@ between samples [@Anders:2010].
 
 DESeq2 will use a normalisation method that takes into account both
 library size and library composition. To normalise for sequencing
-depth and RNA composition, DESeq2 uses the median of ratios method.
+depth and RNA composition, DESeq2 uses the median of ratios method:
+
+```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
+knitr::include_graphics("./figs/SF_formula.png")
+```
+
+Let's try to understand what is behind this formula.
 
 **Step 1**: DESeq2 creates a pseudo-reference sample by calculating a
 row-wise geometric mean (for each gene). Geometric mean is used instead 
@@ -196,13 +202,26 @@ $µ_{ij}$ represents the mean of gene i in sample j
 
 $\alpha_i$ represents the dispersion of gene i
 
+
+The dispersion parameter $\alpha_i$ defines the relationship between 
+the variance of the observed count and its mean value[^small_alpha]. 
+
+[^small_alpha]: Note that as dispersion parameter gets lower and lower, 
+the variance converges to the same value as the mean, and the negative 
+binomial turns into a Poisson distribution.
+
+
+```{r, echo=FALSE, fig.align='center', out.width='60%', purl=TRUE}
+knitr::include_graphics("./figs/VAR.png")
+```
+
 ### Dispersion estimation
 
 Having modelised counts by a negative-binomial distribution, next step
 is to estimate, for each gene, the two parameters of the distribution
 (mean and dispersion). The mean will be estimated easily from the
 observed normalised counts in both conditions, but the dispersion is
-not that trivial to estimate.
+not that trivial to estimate accurately.
 
 Dispersion is a measure of spread or variability in the data ($α = 
 CV^2$). A gene with a dispersion value of 0.04 means 20% variation
@@ -268,17 +287,7 @@ knitr::include_graphics("./figs/disp_shrinkage.png")
 ```
 
 
-The dispersion parameter $\alpha_i$ defines the relationship between 
-the variance of the observed count and its mean value[^small_alpha]. 
 
-[^small_alpha]: Note that as dispersion parameter gets lower and lower, 
-the variance converges to the same value as the mean, and the negative 
-binomial turns into a Poisson distribution.
-
-
-```{r, echo=FALSE, fig.align='center', out.width='60%', purl=TRUE}
-knitr::include_graphics("./figs/VAR.png")
-```
 
 
 ### Generalized linear model
@@ -287,11 +296,7 @@ knitr::include_graphics("./figs/VAR.png")
 DESeq2 fits a generalized linear model of the form: $$log2(q_{ij}) = \Sigma x_j.β_i$$
 
 where $q_{ij}$ represents the normalised counts for gene i in sample j and $β_i$ represents 
-the log2FC between conditions. $β_i$ coefficients are computed from the data and standard 
-errors for the log2 fold changes are  calculated.
-
-
-
+the log2FC between conditions. $β_i$ coefficients are computed from the data.
 
 In the case of a simple design with one condition (a treatment effect for example), the model 
 can be written
@@ -306,20 +311,26 @@ $x_j$ = 0 if sample j is the control sample
 $x_j$ = 1 if sample j is the treated sample 
 
 
-
-
-
 ### Statistical test
 
 #### Wald test {-}
 
+
+The logFC are computed from the GLM, and these are associated to standard 
+errors that depend on the variance of the counts.
+
+```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
+knitr::include_graphics("./figs/z_stat.png")
+```
+
 The ultimate goal of a test for differential expression is to decide
 whether, for a given gene, an observed difference in read counts is
 significant, that is, whether it is greater than what would be
-expected just due to natural random variation.  The null hypothesis
-$H_0$ is that there is no differential expression across two sample
-groups, which is the same as saying that the log2FC = 0. A
-statistical test, the Wald test, will determine whether the data
+expected just due to natural random variation. 
+
+The null hypothesis $H_0$ is that there is no differential expression across 
+the sample groups, which is the same as saying that the log2FC = 0. 
+A statistical test, the Wald test, will determine whether the data
 provides sufficient evidence to conclude that this value is really
 different from zero.
 
@@ -367,12 +378,14 @@ distribution corresponding to the combination of both histograms.
 Most of the p-values are uniformly distributed between 0 and 1 but
 there is a spike to the left close to zero, due to those p-values for
 which $H_0$ is false. The correction approach helps to estimate how
-many of the significant values are actually false positives.  It tries
+many of the significant values are actually false positives. It tries
 to find the height where the p-value distribution flattens out
 (corresponding to the red line) and incorporates this height value
-into the calculation of FDR adjusted p-values.  Choosing a cut off of
-0.05 for padjusted values now implies that 5% of significant tests
-(but not 5% of all tests as before) will result in false positives.
+into the calculation of FDR adjusted p-values.
+
+Choosing a cut off of 0.05 for padjusted values now implies that 5% of 
+significant tests (but not 5% of all tests as before) will result in false 
+positives.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
 knitr::include_graphics("./figs/pval_histograms.png")
@@ -381,7 +394,7 @@ knitr::include_graphics("./figs/pval_histograms.png")
 
 
 
-- **Independentfiltering**
+- **Independent filtering**
 
 Multiple testing adjustment tends to be associated with a loss of power.
 To counteract this effect, one possibility is to filter out those tests from
@@ -404,8 +417,11 @@ of samples to the treatment and control group and hence independent.
 
 The mean expression threshold used by DESeq2 for independentfiltering is defined
 automatically by the software. It is chosen in a way that maximizes the number of
-genes which will have a significant padjusted value.
+genes which will have a significant p-adjusted value.
 
+```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
+knitr::include_graphics("./figs/IF_threshold.png")
+```
 
 ## Running DESeq2
 
@@ -678,17 +694,31 @@ for more information).
 
 `r msmbstyle::question_begin()`
 
-Inspect the results table.
 
-1. Identify the 5 genes with the lowest padjusted value?
 
-2. How many genes have no padjusted value? Why?
+1. Inspect the results table and identify the 5 "best genes" showing 
+the lowest padjusted value.
+
+2. Calculate the mean expression level of these 5 "best genes" using 
+the function `count()`. Compare with baseMean values.
+
+3. Extract the ß coefficient of these 5 "best genes" from the GLM 
+using the function `coefficient()`. Compare with log2FoldChange values.
+
+4. using the function `count()`, calculate the expression levels (in log2) 
+of these 5 "best genes" in mock cells. Compare with ß coefficients.
+
+5. Calculate the expression levels (in log2) of these 5 "best genes" 
+in KD cells. Compare with ß coefficients.
+
+6. How many genes have no padjusted value? Why?
 
 `r msmbstyle::question_end()`
 
 `r msmbstyle::solution_begin()`
 
-1. Identify the 5 genes with the lowest padjusted value?
+1. Inspect the results table and identify the 5 "best genes" showing 
+the lowest padjusted value.
 
 ```{r}
 res_tbl %>%
@@ -696,7 +726,46 @@ res_tbl %>%
   head(5)
 ```
 
-2. How many genes have no padjusted value? Why?
+2. Calculate the mean expression level of these 5 "best genes" using 
+the function `count()`. Compare with baseMean values.
+
+```{r}
+best_genes <- res_tbl %>%
+  arrange(padj) %>%
+  head(5) %>% pull(ENSEMBL)
+
+rowMeans(counts(dds[best_genes], normalize = TRUE))
+```
+
+3. Extract the ß coefficient of these 5 "best genes" from the GLM 
+using the function `coefficient()`. Compare with log2FoldChange values.
+
+```{r}
+coefficients(dds[best_genes])
+```
+
+4. using the function `count()`, calculate the expression levels (in log2) 
+of these 5 "best genes" in mock cells. Compare with ß coefficients.
+
+```{r}
+# log2 expression levels in mock cells
+log2(rowMeans(counts(dds[best_genes, 1:3], normalize = TRUE)))
+```
+
+5. Calculate the expression levels (in log2) 
+of these 5 "best genes" in KD cells. Compare with ß coefficients.
+
+```{r}
+# log2 expression levels in KD cells
+log2(rowMeans(counts(dds[best_genes, 4:6], normalize = TRUE)))
+```
+
+```{r}
+# log2 expression levels in KD cells evaluated from ß coefficients
+coefficients(dds[best_genes])[,1] + coefficients(dds[best_genes])[,2]
+```
+
+6. How many genes have no padjusted value? Why?
 
 ```{r}
 summary(res$padj)
@@ -935,14 +1004,14 @@ best_genes <- res_tbl %>%
   arrange(padj)  %>%
   head(6)
 
-ordered_samples <- c(rownames(coldata[coldata$Condition == "mock", ]),
-                     rownames(coldata[coldata$Condition == "KD", ]))
+# ordered_samples <- c(rownames(coldata[coldata$Condition == "mock", ]),
+#                      rownames(coldata[coldata$Condition == "KD", ]))
 
 as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = T),
           rownames = 'ENSEMBL') %>%
   gather(sample, counts, -ENSEMBL) %>%
   left_join(as_tibble(coldata, rownames = "sample")) %>%
-  mutate(sample = factor(sample, levels = ordered_samples)) %>%
+#  mutate(sample = factor(sample, levels = ordered_samples)) %>%
   ggplot(aes(x = sample, y = counts, fill = Condition)) +
   geom_bar(stat = 'identity', color = "gray30") +
   facet_wrap( ~ ENSEMBL, scales = "free", ncol = 3) +
@@ -996,7 +1065,7 @@ as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = T),
           rownames = 'ENSEMBL') %>%
   gather(sample, counts, -ENSEMBL) %>%
   left_join(as_tibble(coldata, rownames = "sample")) %>%
-  mutate(sample = factor(sample, levels = ordered_samples)) %>%
+  #mutate(sample = factor(sample, levels = ordered_samples)) %>%
   ggplot(aes(x = sample, y = counts, fill = Condition)) +
   geom_bar(stat = 'identity', color = "gray30") +
   facet_wrap( ~ ENSEMBL, scales = "free", ncol = 3) +
