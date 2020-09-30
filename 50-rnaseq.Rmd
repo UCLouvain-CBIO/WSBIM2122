@@ -752,10 +752,10 @@ the function `count()`. Compare with baseMean values.
 3. Extract the ß coefficient of these 5 "best genes" from the GLM 
 using the function `coefficient()`. Compare with log2FoldChange values.
 
-4. using the function `count()`, calculate the expression levels (in log2) 
+4. Using the function `count()`, evaluate the mean expression levels 
 of these 5 "best genes" in mock cells. Compare with ß coefficients.
 
-5. Calculate the expression levels (in log2) of these 5 "best genes" 
+5. Evaluate the mean expression levels of these 5 "best genes" 
 in KD cells. Compare with ß coefficients.
 
 6. How many genes have no padjusted value? Why?
@@ -791,7 +791,7 @@ using the function `coefficient()`. Compare with log2FoldChange values.
 coefficients(dds[best_genes])
 ```
 
-4. using the function `count()`, calculate the expression levels (in log2) 
+4. Using the function `count()`, evaluate the mean expression levels 
 of these 5 "best genes" in mock cells. Compare with ß coefficients.
 
 ```{r}
@@ -799,8 +799,8 @@ of these 5 "best genes" in mock cells. Compare with ß coefficients.
 log2(rowMeans(counts(dds[best_genes, 1:3], normalize = TRUE)))
 ```
 
-5. Calculate the expression levels (in log2) 
-of these 5 "best genes" in KD cells. Compare with ß coefficients.
+5. Evaluate the mean expression levels of these 5 "best genes" 
+in KD cells. Compare with ß coefficients.
 
 ```{r}
 # log2 expression levels in KD cells
@@ -821,7 +821,6 @@ summary(res$padj)
 Let's filter genes with no padjusted values
 
 ```{r}
-res_tbl <- as_tibble(res, rownames = "ENSEMBL")
 res_tbl %>%
   filter(is.na(padj))
 ```
