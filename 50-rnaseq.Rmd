@@ -537,6 +537,21 @@ It is highly recommended to starts by a PCA to assess overall similarity between
 
 - Are they any sample outliers which may need to be explored further?
 
+`r msmbstyle::question_begin()`
+
+Here are 3 examples of PCAs that correspond to different experimental designs.
+How would you interprete these PCAs and what impact could they 
+have on the analysis?
+
+```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
+knitr::include_graphics("./figs/PCA_paired_design.png")
+knitr::include_graphics("./figs/PCA_batch_effect.png")
+knitr::include_graphics("./figs/PCA_outlier.png")
+```
+
+
+`r msmbstyle::question_end()`
+
 
 Remember that if one performs PCA directly on a matrix of normalised read counts, 
 the result typically depends only on the few most strongly expressed genes because 
@@ -597,18 +612,7 @@ ggplot(pca_data, aes(x = PC1, y = PC2, color = Condition, label = name)) +
   geom_text()
 ```
 
-`r msmbstyle::question_begin()`
 
-How would you interprete these 3 fictive PCAs and what impact could they have on the analysis?
-
-```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
-knitr::include_graphics("./figs/PCA_paired_design.png")
-knitr::include_graphics("./figs/PCA_batch_effect.png")
-knitr::include_graphics("./figs/PCA_outlier.png")
-```
-
-
-`r msmbstyle::question_end()`
 
 
 
