@@ -168,10 +168,17 @@ be in millions, while the counts per gene can vary considerably but
 tend to be in tens, hundreds or thousands. Therefore, the chance of a
 given read to be mapped to any specific gene is extremely small.
 
+
 The Poisson distribution has only one parameter indicating its
-expected mean.  Its variance and all other properties follow from
+expected mean. Its variance and all other properties follow from
 it. In particular, one key assumption of the Poisson distribution is
-that the variance equals the mean. Applying a Poisson distribution to
+that the variance equals the mean. 
+
+$$K_{ij} \sim P(µ_{ij} = \sigma^2_{ij})$$   
+
+   
+
+Applying a Poisson distribution to
 Rnaseq counts holds true when comparing technical replicates from a
 same sample, where the variance only reflects the counting noise. But
 when comparing biological replicates, counting noise is not the only
@@ -194,15 +201,6 @@ in RNA-Seq experiments.
 knitr::include_graphics("./figs/NB.png")
 ```
 
-
-
-$K_{ij}$ represents the raw count for gene i in sample j
-
-$µ_{ij}$ represents the mean of gene i in sample j
-
-$\alpha_i$ represents the dispersion of gene i
-
-
 The dispersion parameter $\alpha_i$ defines the relationship between 
 the variance of the observed count and its mean value[^small_alpha]. 
 
@@ -223,8 +221,8 @@ is to estimate, for each gene, the two parameters of the distribution
 observed normalised counts in both conditions, but the dispersion is
 not that trivial to estimate accurately.
 
-Dispersion is a measure of spread or variability in the data ($α = 
-CV^2$). A gene with a dispersion value of 0.04 means 20% variation
+Dispersion is a measure of variability in the data ($α = CV^2$). 
+A gene with a dispersion value of 0.04 means 20% variation
 around the expected mean. Estimate the dispersion for each gene would
 be quite straightforward if we had for each condition, hundreds of
 replicates. Of course, this is not feasible for economic reasons, and
