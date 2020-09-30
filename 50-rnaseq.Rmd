@@ -498,7 +498,7 @@ plot the counts distributions of each sample.
 `r msmbstyle::solution_begin()`
 
 ```{r}
-as_tibble(assay(dds, 1)) %>%
+as_tibble(assay(dds)) %>%
   gather(sample, value = counts) %>%
   ggplot(aes(x = log2(counts + 1), fill = sample)) +
   geom_histogram(bins = 20) +
