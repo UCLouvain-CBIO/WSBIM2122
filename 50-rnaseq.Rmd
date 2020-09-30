@@ -584,12 +584,14 @@ of the rlog transformation
 
 ```{r}
 # picked a very highly expressed gene
-log2(assay(dds["ENSG00000198804",]))
-assay(rld["ENSG00000198804",])
+assay(dds["ENSG00000198804"])
+log2(assay(dds["ENSG00000198804"]))
+assay(rld["ENSG00000198804"])
 
 # picked a lowly expressed gene
-log2(assay(dds["ENSG00000278267",]))
-assay(rld["ENSG00000278267",])
+assay(dds["ENSG00000278267"])
+log2(assay(dds["ENSG00000278267"]))
+assay(rld["ENSG00000278267"])
 ```
 
 `r msmbstyle::solution_end()`
