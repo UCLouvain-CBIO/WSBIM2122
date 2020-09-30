@@ -848,13 +848,15 @@ This means that genes whith basemean < `r metadata(res)$filterThreshold` have be
 filtered. This represents `r names(metadata(res)$filterThreshold)` of all tested genes!
 
 Remember that the filtering threshold has been fixed in a way that maximizes the number
-of genes which will have a significant padjusted value. We can illustrate this on the
-following plot, which shows the number of rejections over the basemean quantiles.
+of genes which will have a significant padjusted value. 
 
+We can plot the number of rejections over the basemean quantiles.
 The threshold chosen (red vertical line) is the lowest quantile for which the number of
 rejections is within 1 residual standard deviation to the peak of the curve.
 
 ```{r}
+metadata(res)
+metadata(res)$filterNumRej
 as_tibble(metadata(res)$filterNumRej) %>%
   ggplot(aes(x = theta, y = numRej)) +
   geom_point() +
