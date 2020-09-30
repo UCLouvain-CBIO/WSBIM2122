@@ -418,6 +418,8 @@ of samples to the treatment and control group and hence independent.
 The mean expression threshold used by DESeq2 for independentfiltering is defined
 automatically by the software. It is chosen in a way that maximizes the number of
 genes which will have a significant p-adjusted value.
+The threshold chosen (the vertical line) is the lowest quantile for which the number of
+rejections is within 1 residual standard deviation to the peak of the curve.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
 knitr::include_graphics("./figs/IF_threshold.png")
@@ -492,8 +494,6 @@ Access the count data from the dds object and
 
 plot the counts distributions of each sample.
 
-Do they all look similar?
-
 `r msmbstyle::question_end()`
 
 
@@ -524,27 +524,6 @@ function `DESeq()`. This function will automatically run the following other fun
 dds <- DESeq(dds)
 ```
 
-resultsNames() function shows the results available. Note that by default, R will
-choose a reference level for factors based on alphabetical order. Here KD condition
-was hence set arbitrarily as the reference level. This means that the fold changes evaluated
-for every gene will correspond to their expression level in mock cells versus their
-expression level in KD cells.
-
-```{r}
-resultsNames(dds)
-dds$Condition
-```
-
-In this case, it seems more logical to use mock cells as reference.
-Reference levels can be changed using the relevel( ) function. But in this case don't
-forget to re-run DESeq() function after the re-leveling operation.
-
-```{r}
-dds$Condition <- relevel(dds$Condition, ref = "mock")
-dds <- DESeq(dds)
-resultsNames(dds)
-```
-
 ### Data exploration
 
 Before anything else, a good practice is to explore the data
@@ -558,8 +537,6 @@ It is highly recommended to starts by a PCA to assess overall similarity between
 
 - Does this fit to the expectation from the experiment’s design?
 
-- Is the experimental condition the major sources of variation in the dataset?
-
 - Are they any sample outliers which may need to be explored further?
 
 
@@ -571,13 +548,6 @@ a small pseudocount; however, now the genes with low counts tend to dominate the
 results because, due to the strong Poisson noise inherent to small count values, they 
 show the strongest relative differences between samples. As a solution, DESeq2 offers 
 the regularized-logarithm transformation `rlog()`[^rlog]. 
-`plotPCA()` function can then be used on the transformed counts to generate a PCA.
-
-```{r PCA}
-rld <- rlogTransformation(dds)
-plotPCA(rld, intgroup = "Condition")
-```
-
 
 [^rlog]:For genes with high counts, the rlog transformation differs not much from
 an ordinary log2 transformation. However for genes with lower counts, the transformation
@@ -585,11 +555,65 @@ moderates the variance across the mean shrunking the values towards the genes’
 across all samples. See `?rlog` for more details about the function.
 
 
+
+```{r rlog}
+rld <- rlogTransformation(dds)
+```
+
 `r msmbstyle::question_begin()`
 
-How would you interprete this PCA?
+Pick a gene highly expressed and a gene lowly expressed and inspect the effect 
+of the rlog transformation 
 
 `r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+```{r}
+# picked a very highly expressed gene
+log2(assay(dds["ENSG00000198804",]))
+assay(rld["ENSG00000198804",])
+
+# picked a lowly expressed gene
+log2(assay(dds["ENSG00000278267",]))
+assay(rld["ENSG00000278267",])
+```
+
+`r msmbstyle::solution_end()`
+
+The `plotPCA()` function can then be used on the transformed counts to generate a PCA.
+
+```{r}
+plotPCA(rld, intgroup = "Condition")
+```
+
+
+Note that the argument `returnData = TRUE` can be used to obtain a dataframe of PC1 and PC2 
+for custom plotting.
+
+```{r}
+pca_data <- plotPCA(rld, intgroup = "Condition", returnData = TRUE)
+pca_data
+ggplot(pca_data, aes(x = PC1, y = PC2, color = Condition, label = name)) +
+  geom_point() +
+  geom_text()
+```
+
+`r msmbstyle::question_begin()`
+
+How would you interprete these 3 fictive PCAs and what impact could they have on the analysis?
+
+```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
+knitr::include_graphics("./figs/PCA_paired_design.png")
+knitr::include_graphics("./figs/PCA_batch_effect.png")
+knitr::include_graphics("./figs/PCA_outlier.png")
+```
+
+
+`r msmbstyle::question_end()`
+
+
+
 
 #### Inspecting size factors {-}
 
@@ -597,8 +621,6 @@ It is also advisable to investigate any systematic bias in the sequencing data, 
 whether one sample has been sequenced more deeply than others. One can extract size factors
 using the `sizeFactors()` function.
 Usually these size factors should vary around 1, indicating comparable sequencing depth.
-Any large variations between samples should be noticed since it might indicate the presence
-of extreme outliers.
 
 ```{r}
 sizeFactors(dds)
@@ -641,14 +663,37 @@ plotDispEsts(dds)
 
 ### Results
 
+The `resultsNames()` function gives the names of results that can be extracted. 
+Note that by default, R will choose a reference level for factors based on alphabetical 
+order. Here KD condition was hence set arbitrarily as the reference level. This means 
+that the fold changes evaluated for every gene will correspond to their expression level 
+in mock cells versus their expression level in KD cells.
+
+```{r}
+resultsNames(dds)
+dds$Condition
+```
+
+In this case, it seems more logical to use mock cells as reference.
+Reference levels can be changed using the relevel( ) function. But in this case don't
+forget to re-run DESeq() function after the re-leveling operation.
+
+```{r, message = FALSE}
+dds$Condition <- relevel(dds$Condition, ref = "mock")
+dds <- DESeq(dds)
+resultsNames(dds)
+```
+
 Results can then be extracted using the `results()`function.
 
-The `name` parameter must be an element of resultsNames(object): it specifies the
-the samples to compare. Note that the `contrast` argument of `results()` can also be used to 
+The `name` parameter must be an element of resultsNames(object) specifying the
+the samples to compare. 
+
+Note that the `contrast` argument of `results()` can also be used to 
 extract results of interest. In this case, the two following commands will give the same 
 results[^contrast].
 
-[^contrast]: Using the `name` argument is however sometimes necessary to extract specific 
+[^contrast]: Using the `name` argument is however necessary to extract specific 
 coefficients from more complex designs. 
 
 ```{r}
@@ -670,13 +715,11 @@ res_tbl
 
 **baseMean**: The average of the normalised count values taken over all samples.
 
-**log2FoldChange**: This value indicates how much the gene or transcript's
-expression seems to have changed between the comparison and control groups[^log2C].
-It is reported on a logarithmic scale to base 2.
-
-[^log2C]:In this case, as we are testing the "Condition_KD_vs_mock" coefficient,
-positive log2FC indicates a gene up-regulated in the KD condition compared to the
-mock condition, while a negative log2FC indicate a down-regulation.
+**log2FoldChange**: Fold-change between the comparison and control groups, 
+reported on a logarithmic scale to base 2. In this case, as we are testing 
+the "Condition_KD_vs_mock" coefficient, positive log2FC indicates a gene up-regulated 
+in the KD condition compared to the mock condition, while a negative log2FC indicate 
+a down-regulation [^log2C].
 
 **lfcSE**: The standard error estimate for the log2FoldChange estimate
 
@@ -687,7 +730,7 @@ mock condition, while a negative log2FC indicate a down-regulation.
 **padj**: pvalue adjusted for multiple testing
 
 
-Note that DESeq2 offers further options to shrink LFC estimates. This is useful for 
+[^log2C]: DESeq2 offers further options to shrink LFC estimates. This is useful for 
 ranking and visualization (see [DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html) 
 for more information).
 
@@ -809,12 +852,10 @@ The threshold chosen (red vertical line) is the lowest quantile for which the nu
 rejections is within 1 residual standard deviation to the peak of the curve.
 
 ```{r}
-as_tibble(metadata(res)$filterNumRej, rownames = 'percent') %>%
-  dplyr::rename(quantiles = theta) %>%
-  ggplot(aes(x = quantiles, y = numRej)) +
+as_tibble(metadata(res)$filterNumRej) %>%
+  ggplot(aes(x = theta, y = numRej)) +
   geom_point() +
-  geom_vline(xintercept =
-               as.numeric(sub('%', replacement = '', names(metadata(res)$filterThreshold)))/100,
+  geom_vline(xintercept = 0.7169,
              color = 'red')
 ```
 
@@ -961,43 +1002,25 @@ plotMA(res, alpha = 0.05)
 
 #### Volcano-plot {-}
 
-Drawing a volcano-plot is also informative for data interpretation.
-
-```{r}
-res_tbl %>%
-  filter(!is.na(padj)) %>%
-  ggplot(aes(x= log2FoldChange, y = -log10(padj))) +
-   geom_point(size = 0.5, color = "gray40")
-```
-
-
+Drawing a volcano-plot is also informative to have a global view on the results.
 Recall that the most interesting features are those towards the top corners given 
 that they have small pvalues and large fold-changes.
-The volcano-plot can be useful to define padjusted and log2FC thresholds. 
-Based on this plot, we could for example decide (arbitrarily), to consider genes as 
-differentially expressed genes that have a padj_thr <- 1e-5 and an absolute log2FC value > 1.
 
 ```{r}
-padj_thr <- 1e-5
-log2FC_thr <- 1
-
 res_tbl %>%
   filter(!is.na(padj)) %>%
-  ggplot(aes(x= log2FoldChange, y = -log10(padj))) +
-   geom_point(size = 0.5, color = "gray40") +
-   geom_point(data = subset(res_tbl,
-                            padj < padj_thr &
-                            abs(log2FoldChange) > log2FC_thr),
-              size = 0.5, color = "firebrick1") +
-  geom_vline(xintercept = log2FC_thr) +
-  geom_vline(xintercept = -log2FC_thr) +
-  geom_hline(yintercept = -log10(padj_thr))
+  ggplot(aes(x = log2FoldChange, y = -log10(padj))) +
+   geom_point(size = 0.5, color = "gray40") + 
+  geom_hline(yintercept = -log10(0.05)) +
+  geom_vline(xintercept = 1) +
+  geom_vline(xintercept = -1)
 ```
+
 
 #### Plot counts of genes {-}
 
 It may be also useful to check the validity of the analysis by simply assessing the expression
-level of the most highly differentially expressed genes.
+levels of the most highly differentially expressed genes.
 
 ```{r}
 best_genes <- res_tbl %>%
@@ -1021,7 +1044,8 @@ as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = T),
 `r msmbstyle::question_begin()`
 
 1. Identify and inspect counts of the genes plotted in red in the following volcano-plot.
-These genes have a very large log2FC (|log2FC| > 5) but are far from bearing the lowest padjusted value (their padjusted value is between 0.05 and 1e-5).
+These genes have a very large log2FC (|log2FC| > 5) but are far from bearing the lowest 
+padjusted value (their padjusted value is between 0.05 and 1e-5).
 
 ```{r, echo = FALSE}
 res_tbl %>%
@@ -1049,15 +1073,14 @@ what is the most striking?
 `r msmbstyle::solution_begin()`
 
 1. Identify and inspect counts of the genes plotted in red in the following volcano-plot.
-These genes have a very large log2FC (|log2FC| > 5) but are far from bearing the lowest padjusted value (their padjusted value is between 0.05 and 1e-5).
+These genes have a very large log2FC (|log2FC| > 5) but are far from bearing the lowest 
+padjusted value (their padjusted value is between 0.05 and 1e-5).
 
 ```{r}
 selected_genes <- res_tbl %>%
   filter(padj < 0.05 & padj > 1e-5 & abs(log2FoldChange) > 5)
 
-selected_genes
-
-as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = T),
+as_tibble(counts(dds[selected_genes$ENSEMBL, ], normalize = T),
           rownames = 'ENSEMBL') %>%
   gather(sample, counts, -ENSEMBL) %>%
   left_join(as_tibble(coldata, rownames = "sample")) %>%
@@ -1080,12 +1103,8 @@ This will result in higher dispersion values, and larger pvalues.
 3. Using dispersion() function, compare dispersion values for both group of genes
 
 ```{r}
-data.frame(best_genes = dispersions(dds[best_genes$ENSEMBL,]),
-           selected_genes = dispersions(dds[selected_genes$ENSEMBL,])) %>%
-  gather(group, dispersion) %>%
-  ggplot(aes(x = group, y = dispersion)) +
-  geom_point()
-
+dispersions(dds[best_genes$ENSEMBL,])
+dispersions(dds[selected_genes$ENSEMBL,])
 ```
 `r msmbstyle::solution_end()`
 
@@ -1103,9 +1122,10 @@ suppressPackageStartupMessages(library("org.Hs.eg.db"))
 library("biomaRt")
 library("org.Hs.eg.db")
 
-# Add gene name column
+# Load homo sapiens ensembl dataset
 mart <- useDataset("hsapiens_gene_ensembl", useMart("ensembl"))
-#Attributes define the values we are interested in to retrieve.
+
+#Attributes define the values we are interested to retrieve.
 #listAttributes(mart)
 ensembl_to_geneName <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), mart = mart)
 names(ensembl_to_geneName) <- c("ENSEMBL", "gene")
@@ -1117,20 +1137,3 @@ res_tbl <- res_tbl %>%
 
 head(res_tbl)
 ```
-
-## A more complex design
-
-Actually, the experiment was in reality done on 2 different cell
-lines, epithelial and fibroblasts cells.
-
-```{r}
-load("wsbim2122_data/deseq2/coldata_both.rda")
-coldata
-```
-
-`r msmbstyle::question_begin()`
-
-Start the whole analysis again, using all samples, and try to identify
-genes that are differentially expressed in both types of cells.
-
-`r msmbstyle::question_end()`
