@@ -314,7 +314,7 @@ $x_j$ = 1 if sample j is the treated sample
 #### Wald test {-}
 
 
-The logFC are computed from the GLM, and these are associated to standard 
+The logFC are computed from the data using the GLM, and these are associated to standard 
 errors that depend on the variance of the counts.
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
