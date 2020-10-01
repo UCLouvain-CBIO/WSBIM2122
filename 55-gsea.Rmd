@@ -1,2 +1,42 @@
-# Gene set enrichment analysis {#sec:gsea}
+# Enrichment analyses {#sec:gsea}
 
+
+Motivation
+
+- What are the next steps after a DE analysis?
+- Why are enrichment analyses useful?
+- Understanding an over-enrichment analysis.
+- Understanding a gene set enrichment analysis.
+- Application of the XXX package.
+
+## Introduction
+
+1. DE is univariate - each gene is tested on its own. This probably
+   doesn't reflect biology - genes expression work in conjunction, not
+   in isolation. One wouldn't expect that the effect of a drug, or a
+   mutation, ... would lead to the perturbation of a single gene
+   expression.
+
+2. The univariate approach expects (tests for) significant changes
+   (especially concidering adjustment for multiple testing). Moderate
+   effects in many (related) genes wouldn't be identified as
+   statistically significant, even it such an effect my be
+   biologically more plausible that one of a few large ones.
+
+3. The goal of an enrichment analysis is to test for a group of
+   related genes, called gene sets, and test whether the genes within
+   these set are enriched for differential expression.
+
+
+## Gene sets
+
+How do we define gene sets?
+
+## Statistical analyses
+
+How to test for enrichment? (1) over-enrichment analysis (ORA) and (2)
+gene set enrichment analysis (GSEA).
+
+
+## Using the XXX package
+   
