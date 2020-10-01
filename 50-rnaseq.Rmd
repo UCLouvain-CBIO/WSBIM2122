@@ -919,10 +919,18 @@ res_bis <- results(dds_bis,
                    name = "Condition_KD_vs_mock",
                    independentFiltering = FALSE)
 
+# All genes now have a padj value 
+# => logical as we kept only those with at least 5 counts in at least 3 sample
 as_tibble(res_bis, rownames = "ENSEMBL") %>%
   filter(is.na(padj)) %>% nrow()
 
+# Total number of genes kept 
 as_tibble(res_bis, rownames = "ENSEMBL") %>%
+  filter(!is.na(padj)) %>% nrow()
+
+# Compare with previous analysis 
+# (Independant filtering threshold fixed automatically by DESeq2)
+as_tibble(res, rownames = "ENSEMBL") %>%
   filter(!is.na(padj)) %>% nrow()
 ```
 
