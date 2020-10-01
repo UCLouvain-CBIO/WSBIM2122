@@ -1008,7 +1008,7 @@ the MA-plot, we hope to observe some genes located in the upper/lower
 right quadrant of the plots (the most interesting candidates).
 
 ```{r}
-plotMA(res, alpha = 0.05)
+plotMA(res)
 ```
 
 #### Volcano-plot {-}
