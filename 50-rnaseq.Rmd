@@ -1020,8 +1020,10 @@ that they have small pvalues and large fold-changes.
 ```{r}
 res_tbl %>%
   filter(!is.na(padj)) %>%
-  ggplot(aes(x = log2FoldChange, y = -log10(padj))) +
-   geom_point(size = 0.5, color = "gray40") + 
+  ggplot(aes(x = log2FoldChange, y = -log10(padj), 
+             color = padj < 0.05 & abs(log2FoldChange) > 1)) +
+  scale_colour_manual(values = c("gray", "red")) +
+  geom_point(size = 0.5) + 
   geom_hline(yintercept = -log10(0.05)) +
   geom_vline(xintercept = 1) +
   geom_vline(xintercept = -1)
