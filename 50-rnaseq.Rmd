@@ -855,7 +855,6 @@ The threshold chosen (red vertical line) is the lowest quantile for which the nu
 rejections is within 1 residual standard deviation to the peak of the curve.
 
 ```{r}
-metadata(res)
 metadata(res)$filterNumRej
 as_tibble(metadata(res)$filterNumRej) %>%
   ggplot(aes(x = theta, y = numRej)) +
