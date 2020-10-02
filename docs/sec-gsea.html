@@ -201,18 +201,246 @@ sets are enriched for differentially expression.</p></li>
 <h2>
 <span class="header-section-number">6.2</span> Gene sets</h2>
 <p>While nothing would stop a user to create their own gene sets, the
-sets that are generally used</p>
-<p>GO, KEGG, ReactomeDB, MySigDB.</p>
+sets that are generally used stem from community-maintained resources.</p>
+<div id="gene-ontology-go" class="section level3 unnumbered">
+<h3>Gene Ontology (GO)</h3>
+<p>The <a href="http://geneontology.org/">Gene Ontology</a> <span class="citation">(Ashburner et al. <label for="tufte-mn-11" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-11" class="margin-toggle">2000<span class="marginnote">Ashburner, M, C A Ball, J A Blake, D Botstein, H Butler, J M Cherry, A P Davis, et al. 2000. “Gene Ontology: Tool for the Unification of Biology. The Gene Ontology Consortium.” <em>Nat Genet</em> 25 (1): 25–29. <a href="https://doi.org/10.1038/75556" class="uri">https://doi.org/10.1038/75556</a>.</span>)</span>
+defines GO terms. These terms are based on a controlled vocabulary (to
+resuse the same words in a consistent way) and relations<label for="tufte-sn-11" class="margin-toggle sidenote-number">11</label><input type="checkbox" id="tufte-sn-11" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">11</span> Example of relations between terms are, for example, <em>is_a</em>
+(mitosis <em>is_a</em> cell cycle phase) or <em>part_of</em> (mitosis <em>part_of</em>
+M phase of mitotic cell cycle).</span> that
+define the links between terms.</p>
+<p>These terms are classed into three categories, called <em>namespaces</em>:</p>
+<ul>
+<li>Molecular Function (MF): molecular activities of gene products</li>
+<li>Cellular Component (CC): where gene products are active</li>
+<li>Biological Process (BP): pathways and larger processes made up of
+the activities of multiple gene products</li>
+</ul>
+<p>Here’s an example of GO term <code>GO:0007155</code>, that describes cell adhesion.</p>
+<pre><code>A Term from the GO ontology: GO:0007155 
+ Label: cell adhesion
+  The attachment of a cell, either to another cell or to an underlying
+  substrate such as the extracellular matrix, via cell adhesion
+  molecules.</code></pre>
+<p>If you look at the GO term <code>GO:0007155</code> <a href="http://amigo.geneontology.org/amigo/term/GO:0007155">entry on the Gene Ontology
+page</a>, you can
+find more details and, if you scroll down, example genes that are
+annotated with that term.</p>
+<div class="figure" style="text-align: center">
+<span id="fig:unnamed-chunk-108"></span>
+<p class="caption marginnote shownote">
+Figure 6.1: Gene ontology entry for the GO term for cell adhesion.
+</p>
+<img src="figs/go-screenshot.png" alt="Gene ontology entry for the GO term for cell adhesion." width="100%">
+</div>
+<p>The whole Gene Ontology is can be accessed in R with the
+<em><a href="https://bioconductor.org/packages/3.11/GO.db">GO.db</a></em> package.</p>
+<p>In the code chunk below, we query the <code>GO.db</code> package through the
+<code>org.Hs.eg.db</code> interface. This <em>org.db</em> for Homo sapiens enables to
+perform various queries for human genes, such as retrieving all gene
+symbols and ENTREZ identifiers (the <code>columns</code> below) that are
+annotated with a GO term (the <code>keys</code> below) of interest.</p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb256-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"org.Hs.eg.db"</span>)</a>
+<a class="sourceLine" id="cb256-2" data-line-number="2">GO_<span class="dv">0005925</span> &lt;-<span class="st"> </span><span class="kw">select</span>(org.Hs.eg.db,</a>
+<a class="sourceLine" id="cb256-3" data-line-number="3">                     <span class="dt">keys =</span> <span class="st">"GO:0005925"</span>,</a>
+<a class="sourceLine" id="cb256-4" data-line-number="4">                     <span class="dt">columns =</span> <span class="kw">c</span>(<span class="st">"ENTREZID"</span>, <span class="st">"SYMBOL"</span>),</a>
+<a class="sourceLine" id="cb256-5" data-line-number="5">                     <span class="dt">keytype =</span> <span class="st">"GO"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb256-6" data-line-number="6"><span class="st">    </span>as_tibble <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb256-7" data-line-number="7"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">duplicated</span>(ENTREZID))</a></code></pre></div>
+<pre><code>## 'select()' returned 1:many mapping between keys and columns</code></pre>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb258-1" data-line-number="1">GO_<span class="dv">0005925</span></a></code></pre></div>
+<pre><code>## # A tibble: 405 x 5
+##    GO         EVIDENCE ONTOLOGY ENTREZID SYMBOL
+##    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt; 
+##  1 GO:0005925 HDA      CC       60       ACTB  
+##  2 GO:0005925 HDA      CC       70       ACTC1 
+##  3 GO:0005925 ISS      CC       71       ACTG1 
+##  4 GO:0005925 HDA      CC       81       ACTN4 
+##  5 GO:0005925 HDA      CC       87       ACTN1 
+##  6 GO:0005925 IMP      CC       88       ACTN2 
+##  7 GO:0005925 IMP      CC       89       ACTN3 
+##  8 GO:0005925 HDA      CC       102      ADAM10
+##  9 GO:0005925 HDA      CC       118      ADD1  
+## 10 GO:0005925 HDA      CC       214      ALCAM 
+## # … with 395 more rows</code></pre>
+<div class="question">
+<p class="question-begin">
+► Question
+</p>
+<div class="question-body">
+<p>Repeat the code above to extract the genes annotated with the
+<code>GO:0005813</code> term.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-16" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-16', 'sol-start-16')"></span>
+</p>
+<div id="sol-body-16" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb260-1" data-line-number="1">GO_<span class="dv">0005813</span> &lt;-<span class="st"> </span><span class="kw">select</span>(org.Hs.eg.db,</a>
+<a class="sourceLine" id="cb260-2" data-line-number="2">                     <span class="dt">keys =</span> <span class="st">"GO:0005813"</span>,</a>
+<a class="sourceLine" id="cb260-3" data-line-number="3">                     <span class="dt">columns =</span> <span class="kw">c</span>(<span class="st">"ENTREZID"</span>, <span class="st">"SYMBOL"</span>),</a>
+<a class="sourceLine" id="cb260-4" data-line-number="4">                     <span class="dt">keytype =</span> <span class="st">"GO"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb260-5" data-line-number="5"><span class="st">    </span>as_tibble <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb260-6" data-line-number="6"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">duplicated</span>(ENTREZID))</a></code></pre></div>
+<pre><code>## 'select()' returned 1:many mapping between keys and columns</code></pre>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb262-1" data-line-number="1">GO_<span class="dv">0005813</span></a></code></pre></div>
+<pre><code>## # A tibble: 483 x 5
+##    GO         EVIDENCE ONTOLOGY ENTREZID SYMBOL
+##    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt; 
+##  1 GO:0005813 IDA      CC       324      APC   
+##  2 GO:0005813 IDA      CC       328      APEX1 
+##  3 GO:0005813 IDA      CC       402      ARL2  
+##  4 GO:0005813 IDA      CC       403      ARL3  
+##  5 GO:0005813 IDA      CC       468      ATF4  
+##  6 GO:0005813 IDA      CC       576      ADGRB2
+##  7 GO:0005813 IBA      CC       582      BBS1  
+##  8 GO:0005813 IDA      CC       585      BBS4  
+##  9 GO:0005813 IDA      CC       598      BCL2L1
+## 10 GO:0005813 IMP      CC       636      BICD1 
+## # … with 473 more rows</code></pre>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="kyoto-encyclopedia-of-genes-and-genomes-kegg" class="section level3 unnumbered">
+<h3>Kyoto Encyclopedia of Genes and Genomes (KEGG)</h3>
+<p><a href="https://www.genome.jp/kegg/pathway.html">KEGG</a> pathway is a
+collection of manually drawn and curated pathway maps representing
+current knowledge of the molecular interaction, reaction and relation
+networks.</p>
+<p>The figure below shows the <a href="https://www.genome.jp/kegg-bin/show_pathway?hsa04110">pathways for the cell
+cycle</a> in
+humans.</p>
+<div class="figure" style="text-align: center">
+<span id="fig:unnamed-chunk-111"></span>
+<p class="caption marginnote shownote">
+Figure 6.2: KEGG pathway for cell cycle.
+</p>
+<img src="figs/hsa04110.png" alt="KEGG pathway for cell cycle." width="100%">
+</div>
+<p>The <em><a href="https://bioconductor.org/packages/3.11/KEGGREST">KEGGREST</a></em> package provides a client interface to the KEGG server.</p>
+</div>
+<div id="reactome" class="section level3 unnumbered">
+<h3>Reactome</h3>
+<p>Alike KEGG patway, <a href="https://reactome.org/">Reactome</a> is a free,
+open-source, curated and peer-reviewed pathway database. The
+Bioconductor <em><a href="https://bioconductor.org/packages/3.11/reactome.db">reactome.db</a></em> package provides
+access to reactome maps and annotations within R.</p>
+</div>
+<div id="molecular-signatures-database-mysigdb" class="section level3 unnumbered">
+<h3>Molecular Signatures Database (MySigDB)</h3>
+<p>MSigDB is a collection of annotated gene sets for use with GSEA
+software. The MSigDB gene sets are divided into 9 collections:</p>
+<ul>
+<li>Hallmark gene sets (H) are coherently expressed signatures derived
+by aggregating many MSigDB gene sets to represent well-defined
+biological states or processes.</li>
+<li>Positional gene sets (C1) for each human chromosome and cytogenetic band.</li>
+<li>Curated gene sets (C2) from online pathway databases, publications
+in PubMed, and knowledge of domain experts.</li>
+<li>Regulatory target gene sets (C3) based on gene target predictions
+for microRNA seed sequences and predicted transcription factor
+binding sites.</li>
+<li>Computational gene sets (C4) defined by mining large collections of
+cancer-oriented microarray data.</li>
+<li>Ontology gene sets (C5) consist of genes annotated by the same
+ontology term.</li>
+<li>Oncogenic signature gene (C6) sets defined directly from microarray
+gene expression data from cancer gene perturbations.</li>
+<li>Immunologic signature gene sets (C7) defined directly from
+microarray gene expression data from immunologic studies.</li>
+<li>Cell type signature gene sets (C8) curated from cluster markers
+identified in single-cell sequencing studies of human tissue.</li>
+</ul>
+</div>
 </div>
 <div id="statistical-analyses" class="section level2">
 <h2>
 <span class="header-section-number">6.3</span> Statistical analyses</h2>
-<p>How to test for enrichment? (1) over-enrichment analysis (ORA) and (2)
-gene set enrichment analysis (GSEA).</p>
+<p>To illustrate enrichment analyses, we will use the DESeq2 results
+stored in the the <code>res_tbl</code> variable, computed in the previous
+chapter.</p>
+<p>We will focus on the genes that have an adjusted p-value (those that
+have been tested) and that have unique ENTREZ gene identifiers.</p>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb264-1" data-line-number="1">res_tbl &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb264-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ENTREZID),</a>
+<a class="sourceLine" id="cb264-3" data-line-number="3">           <span class="op">!</span><span class="kw">is.na</span>(padj),</a>
+<a class="sourceLine" id="cb264-4" data-line-number="4">           <span class="op">!</span><span class="kw">duplicated</span>(res_tbl<span class="op">$</span>ENTREZID))</a>
+<a class="sourceLine" id="cb264-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb264-6" data-line-number="6">res_tbl<span class="op">$</span>ENTREZID &lt;-<span class="st"> </span><span class="kw">as.character</span>(res_tbl<span class="op">$</span>ENTREZID)</a>
+<a class="sourceLine" id="cb264-7" data-line-number="7">res_tbl</a></code></pre></div>
+<pre><code>## # A tibble: 13,719 x 9
+##    ENSEMBL baseMean log2FoldChange lfcSE  stat    pvalue      padj gene 
+##    &lt;chr&gt;      &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;
+##  1 ENSG00…    1209.          -4.67 0.178 -26.2 8.24e-152 1.37e-147 PGRM…
+##  2 ENSG00…     277.           6.25 0.351  17.8 6.25e- 71 5.20e- 67 ZBED2
+##  3 ENSG00…     630.           2.24 0.154  14.6 3.32e- 48 1.84e- 44 NUDT…
+##  4 ENSG00…     220.           4.29 0.300  14.3 2.20e- 46 9.16e- 43 CST6 
+##  5 ENSG00…    2692.           2.05 0.144  14.2 5.64e- 46 1.88e- 42 YWHAH
+##  6 ENSG00…     381.           2.33 0.171  13.6 3.45e- 42 9.55e- 39 THG1L
+##  7 ENSG00…     506.           2.53 0.191  13.2 8.45e- 40 2.01e- 36 EMP2 
+##  8 ENSG00…     193.           3.44 0.271  12.7 7.18e- 37 1.49e- 33 STEA…
+##  9 ENSG00…    1419.           3.00 0.240  12.5 6.39e- 36 1.18e- 32 ST3G…
+## 10 ENSG00…    6134.           2.18 0.178  12.2 2.26e- 34 3.76e- 31 ITGB8
+## # … with 13,709 more rows, and 1 more variable: ENTREZID &lt;chr&gt;</code></pre>
+<div id="over-enrichment-analysis-ora" class="section level3 unnumbered">
+<h3>Over-enrichment analysis (ORA)</h3>
+<p>To perform an over-enrichment analysis, we need to define:</p>
+<ul>
+<li>among all the genes, which ones are differentially expressed (DE);</li>
+<li>among all the genes, which ones are part of the gene set of
+interest.</li>
+</ul>
+<p>And fill out the following table and count the number of DE genes that
+are in the set of interest, the non-DE that are in the set, and the DE
+and non-DE genes that are not in the set:</p>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb266-1" data-line-number="1">            in_set</a>
+<a class="sourceLine" id="cb266-2" data-line-number="2">is_DE  <span class="op">|</span><span class="st"> </span><span class="ot">FALSE</span> <span class="op">|</span><span class="st"> </span><span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb266-3" data-line-number="3"><span class="op">-------+-------+------</span></a>
+<a class="sourceLine" id="cb266-4" data-line-number="4"><span class="st"> </span><span class="ot">FALSE</span> <span class="op">|</span><span class="st">   </span>n   <span class="op">|</span><span class="st">   </span>p</a>
+<a class="sourceLine" id="cb266-5" data-line-number="5"> <span class="ot">TRUE</span>  <span class="op">|</span><span class="st">   </span>m   <span class="op">|</span><span class="st">   </span>q</a></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb267-1" data-line-number="1"><span class="co">## DE and in SET</span></a>
+<a class="sourceLine" id="cb267-2" data-line-number="2">q &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">intersect</span>(res_tbl<span class="op">$</span>ENTREZID[res_tbl<span class="op">$</span>padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>],</a>
+<a class="sourceLine" id="cb267-3" data-line-number="3">                      GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID))</a>
+<a class="sourceLine" id="cb267-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb267-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb267-6" data-line-number="6"><span class="co">## not DE and in SET</span></a>
+<a class="sourceLine" id="cb267-7" data-line-number="7">p &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">intersect</span>(res_tbl<span class="op">$</span>ENTREZID[res_tbl<span class="op">$</span>padj <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.05</span>],</a>
+<a class="sourceLine" id="cb267-8" data-line-number="8">                      GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID))</a>
+<a class="sourceLine" id="cb267-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb267-10" data-line-number="10"><span class="co">## DE not in SET</span></a>
+<a class="sourceLine" id="cb267-11" data-line-number="11">m &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">setdiff</span>(res_tbl<span class="op">$</span>ENTREZID[res_tbl<span class="op">$</span>padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>],</a>
+<a class="sourceLine" id="cb267-12" data-line-number="12">                    GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID))</a>
+<a class="sourceLine" id="cb267-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb267-14" data-line-number="14"><span class="co">## not DE not in SET</span></a>
+<a class="sourceLine" id="cb267-15" data-line-number="15">n &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">setdiff</span>(res_tbl<span class="op">$</span>ENTREZID[res_tbl<span class="op">$</span>padj <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.05</span>],</a>
+<a class="sourceLine" id="cb267-16" data-line-number="16">                    GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID))</a></code></pre></div>
+</div>
+<div id="gene-set-enrichment-analysis-gsea" class="section level3 unnumbered">
+<h3>Gene set enrichment analysis (GSEA)</h3>
+</div>
 </div>
 <div id="using-the-clusterprofiler-package" class="section level2">
 <h2>
 <span class="header-section-number">6.4</span> Using the <code>clusterProfiler</code> package</h2>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb268-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"clusterProfiler"</span>)</a>
+<a class="sourceLine" id="cb268-2" data-line-number="2">ego &lt;-<span class="st"> </span><span class="kw">enrichGO</span>(<span class="dt">gene =</span> <span class="kw">as.character</span>(res_tbl<span class="op">$</span>ENTREZ[res_tbl<span class="op">$</span>padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>]),</a>
+<a class="sourceLine" id="cb268-3" data-line-number="3">                <span class="dt">universe =</span> <span class="kw">as.character</span>(res_tbl<span class="op">$</span>ENTREZ),</a>
+<a class="sourceLine" id="cb268-4" data-line-number="4">                <span class="dt">OrgDb =</span> org.Hs.eg.db,</a>
+<a class="sourceLine" id="cb268-5" data-line-number="5">                <span class="dt">ont =</span> <span class="st">"CC"</span>,</a>
+<a class="sourceLine" id="cb268-6" data-line-number="6">                <span class="dt">pAdjustMethod =</span> <span class="st">"BH"</span>,</a>
+<a class="sourceLine" id="cb268-7" data-line-number="7">                <span class="dt">pvalueCutoff =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb268-8" data-line-number="8">                <span class="dt">qvalueCutoff =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb268-9" data-line-number="9">                <span class="dt">readable =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb268-10" data-line-number="10"><span class="st">    </span>as_tibble</a>
+<a class="sourceLine" id="cb268-11" data-line-number="11">ego</a></code></pre></div>
 
 </div>
 </div></body></html>

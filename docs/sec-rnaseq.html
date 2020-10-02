@@ -832,10 +832,10 @@ for more information).</span></p>
 <li><p>Inspect the results table and identify the 5 “best genes” showing
 the lowest padjusted value.</p></li>
 <li><p>Calculate the mean expression level of these 5 “best genes” using
-the function <code>count()</code>. Compare with baseMean values.</p></li>
+the function <code>counts()</code>. Compare with baseMean values.</p></li>
 <li><p>Extract the ß coefficient of these 5 “best genes” from the GLM
 using the function <code>coefficient()</code>. Compare with log2FoldChange values.</p></li>
-<li><p>Using the function <code>count()</code>, evaluate the mean expression levels
+<li><p>Using the function <code>counts()</code>, evaluate the mean expression levels
 of these 5 “best genes” in mock cells. Compare with ß coefficients.</p></li>
 <li><p>Evaluate the mean expression levels of these 5 “best genes”
 in KD cells. Compare with ß coefficients.</p></li>
@@ -868,7 +868,7 @@ the lowest padjusted value.</li>
 ## 5 ENSG00000128245    2692.           2.05 0.144  14.2 5.64e- 46 1.88e- 42</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Calculate the mean expression level of these 5 “best genes” using
-the function <code>count()</code>. Compare with baseMean values.</li>
+the function <code>counts()</code>. Compare with baseMean values.</li>
 </ol>
 <div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb195-1" data-line-number="1">best_genes &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb195-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(padj) <span class="op">%&gt;%</span></a>
@@ -889,7 +889,7 @@ using the function <code>coefficient()</code>. Compare with log2FoldChange value
 ## ENSG00000175315  4.413188             4.290890
 ## ENSG00000128245 10.032905             2.049342</code></pre>
 <ol start="4" style="list-style-type: decimal">
-<li>Using the function <code>count()</code>, evaluate the mean expression levels
+<li>Using the function <code>counts()</code>, evaluate the mean expression levels
 of these 5 “best genes” in mock cells. Compare with ß coefficients.</li>
 </ol>
 <div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb199-1" data-line-number="1"><span class="co"># log2 expression levels in mock cells</span></a>
@@ -1247,36 +1247,56 @@ This will result in higher dispersion values, and larger pvalues.</p>
 </div>
 </div>
 </div>
-<div id="adding-gene-name-to-result-table" class="section level4 unnumbered">
-<h4>Adding gene name to result table</h4>
-<p>The result table only uses Ensembl gene IDs, but gene names may be more informative.
-Bioconductor’s biomaRt package can help with mapping various ID schemes to each other.</p>
+<div id="adding-variables-to-result-table" class="section level4 unnumbered">
+<h4>Adding variables to result table</h4>
+<p>The result table only uses Ensembl gene IDs, but gene names may be
+more informative. Bioconductor’s <em><a href="https://bioconductor.org/packages/3.11/biomaRt">biomaRt</a></em>
+package can help with mapping various ID schemes to each other.</p>
+<p>Below, we query the Biomart service to extract the gene names
+(<code>enternal_gene_name</code>) and ENTREZ gene identifiers (<code>entrezgene_id</code>)
+(that we will need in the next chapter) and join these to our result
+data.</p>
 <div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb248-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"biomaRt"</span>)</a>
 <a class="sourceLine" id="cb248-2" data-line-number="2"><span class="kw">library</span>(<span class="st">"org.Hs.eg.db"</span>)</a>
 <a class="sourceLine" id="cb248-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb248-4" data-line-number="4"><span class="co"># Load homo sapiens ensembl dataset</span></a>
+<a class="sourceLine" id="cb248-4" data-line-number="4"><span class="co">## Load homo sapiens ensembl dataset</span></a>
 <a class="sourceLine" id="cb248-5" data-line-number="5">mart &lt;-<span class="st"> </span><span class="kw">useDataset</span>(<span class="st">"hsapiens_gene_ensembl"</span>, <span class="kw">useMart</span>(<span class="st">"ensembl"</span>))</a>
 <a class="sourceLine" id="cb248-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb248-7" data-line-number="7"><span class="co">#Attributes define the values we are interested to retrieve.</span></a>
-<a class="sourceLine" id="cb248-8" data-line-number="8"><span class="co">#listAttributes(mart)</span></a>
-<a class="sourceLine" id="cb248-9" data-line-number="9">ensembl_to_geneName &lt;-<span class="st"> </span><span class="kw">getBM</span>(<span class="dt">attributes =</span> <span class="kw">c</span>(<span class="st">"ensembl_gene_id"</span>, <span class="st">"external_gene_name"</span>), <span class="dt">mart =</span> mart)</a>
-<a class="sourceLine" id="cb248-10" data-line-number="10"><span class="kw">names</span>(ensembl_to_geneName) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"ENSEMBL"</span>, <span class="st">"gene"</span>)</a>
-<a class="sourceLine" id="cb248-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb248-12" data-line-number="12">res_tbl &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb248-13" data-line-number="13"><span class="st">  </span><span class="kw">left_join</span>(ensembl_to_geneName) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb248-14" data-line-number="14"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(ENSEMBL, gene, <span class="kw">everything</span>()) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb248-15" data-line-number="15"><span class="st">  </span><span class="kw">arrange</span>(padj)</a></code></pre></div>
+<a class="sourceLine" id="cb248-7" data-line-number="7"><span class="co">## Attributes define the values we are interested to retrieve.</span></a>
+<a class="sourceLine" id="cb248-8" data-line-number="8"><span class="co">## listAttributes(mart)</span></a>
+<a class="sourceLine" id="cb248-9" data-line-number="9">ensembl_to_geneName &lt;-<span class="st"> </span><span class="kw">getBM</span>(<span class="dt">attributes =</span> <span class="kw">c</span>(<span class="st">"ensembl_gene_id"</span>, <span class="st">"external_gene_name"</span>,</a>
+<a class="sourceLine" id="cb248-10" data-line-number="10">                                            <span class="st">"entrezgene_id"</span>),</a>
+<a class="sourceLine" id="cb248-11" data-line-number="11">                             <span class="dt">mart =</span> mart)</a>
+<a class="sourceLine" id="cb248-12" data-line-number="12"><span class="kw">names</span>(ensembl_to_geneName) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"ENSEMBL"</span>, <span class="st">"gene"</span>, <span class="st">"ENTREZID"</span>)</a>
+<a class="sourceLine" id="cb248-13" data-line-number="13"><span class="kw">head</span>(ensembl_to_geneName)</a></code></pre></div>
+<pre><code>##           ENSEMBL    gene ENTREZID
+## 1 ENSG00000210049   MT-TF       NA
+## 2 ENSG00000211459 MT-RNR1       NA
+## 3 ENSG00000210077   MT-TV       NA
+## 4 ENSG00000210082 MT-RNR2       NA
+## 5 ENSG00000209082  MT-TL1       NA
+## 6 ENSG00000198888  MT-ND1     4535</code></pre>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb250-1" data-line-number="1">res_tbl &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb250-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(ensembl_to_geneName) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb250-3" data-line-number="3"><span class="st">  </span><span class="kw">arrange</span>(padj)</a></code></pre></div>
 <pre><code>## Joining, by = "ENSEMBL"</code></pre>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb250-1" data-line-number="1"><span class="kw">head</span>(res_tbl)</a></code></pre></div>
-<pre><code>## # A tibble: 6 x 8
-##   ENSEMBL         gene   baseMean log2FoldChange lfcSE  stat    pvalue      padj
-##   &lt;chr&gt;           &lt;chr&gt;     &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1 ENSG00000101856 PGRMC1    1209.          -4.67 0.178 -26.2 8.24e-152 1.37e-147
-## 2 ENSG00000177494 ZBED2      277.           6.25 0.351  17.8 6.25e- 71 5.20e- 67
-## 3 ENSG00000136159 NUDT15     630.           2.24 0.154  14.6 3.32e- 48 1.84e- 44
-## 4 ENSG00000175315 CST6       220.           4.29 0.300  14.3 2.20e- 46 9.16e- 43
-## 5 ENSG00000128245 YWHAH     2692.           2.05 0.144  14.2 5.64e- 46 1.88e- 42
-## 6 ENSG00000113272 THG1L      381.           2.33 0.171  13.6 3.45e- 42 9.55e- 39</code></pre>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb252-1" data-line-number="1">res_tbl</a></code></pre></div>
+<pre><code>## # A tibble: 58,935 x 9
+##    ENSEMBL baseMean log2FoldChange lfcSE  stat    pvalue      padj gene 
+##    &lt;chr&gt;      &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;
+##  1 ENSG00…    1209.          -4.67 0.178 -26.2 8.24e-152 1.37e-147 PGRM…
+##  2 ENSG00…     277.           6.25 0.351  17.8 6.25e- 71 5.20e- 67 ZBED2
+##  3 ENSG00…     630.           2.24 0.154  14.6 3.32e- 48 1.84e- 44 NUDT…
+##  4 ENSG00…     220.           4.29 0.300  14.3 2.20e- 46 9.16e- 43 CST6 
+##  5 ENSG00…    2692.           2.05 0.144  14.2 5.64e- 46 1.88e- 42 YWHAH
+##  6 ENSG00…     381.           2.33 0.171  13.6 3.45e- 42 9.55e- 39 THG1L
+##  7 ENSG00…     506.           2.53 0.191  13.2 8.45e- 40 2.01e- 36 EMP2 
+##  8 ENSG00…     193.           3.44 0.271  12.7 7.18e- 37 1.49e- 33 STEA…
+##  9 ENSG00…    1419.           3.00 0.240  12.5 6.39e- 36 1.18e- 32 ST3G…
+## 10 ENSG00…    6134.           2.18 0.178  12.2 2.26e- 34 3.76e- 31 ITGB8
+## # … with 58,925 more rows, and 1 more variable: ENTREZID &lt;int&gt;</code></pre>
+<p>Below, we store these results to use them in the next chapter.</p>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb254-1" data-line-number="1"><span class="kw">saveRDS</span>(res_tbl, <span class="dt">file =</span> <span class="st">"res_tbl.rds"</span>)</a></code></pre></div>
 
 </div>
 </div>

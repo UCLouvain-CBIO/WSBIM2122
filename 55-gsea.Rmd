@@ -33,20 +33,217 @@ to address the following points:
 While nothing would stop a user to create their own gene sets, the
 sets that are generally used stem from community-maintained resources. 
 
-### Gene ontology (GO) {-}
+### Gene Ontology (GO) {-}
+
+The [Gene Ontology](http://geneontology.org/) [@Ashburner:2000]
+defines GO terms. These terms are based on a controlled vocabulary (to
+resuse the same words in a consistent way) and relations[^gorel] that
+define the links between terms.
+
+[^gorel]: Example of relations between terms are, for example, *is_a*
+     (mitosis *is_a* cell cycle phase) or *part_of* (mitosis *part_of*
+     M phase of mitotic cell cycle).
+
+These terms are classed into three categories, called *namespaces*:
+
+- Molecular Function (MF): molecular activities of gene products
+- Cellular Component (CC): where gene products are active
+- Biological Process (BP): pathways and larger processes made up of
+  the activities of multiple gene products
+
+Here's an example of GO term `GO:0007155`, that describes cell adhesion.
+
+```
+A Term from the GO ontology: GO:0007155 
+ Label: cell adhesion
+  The attachment of a cell, either to another cell or to an underlying
+  substrate such as the extracellular matrix, via cell adhesion
+  molecules.
+```
+
+If you look at the GO term `GO:0007155` [entry on the Gene Ontology
+page](http://amigo.geneontology.org/amigo/term/GO:0007155), you can
+find more details and, if you scroll down, example genes that are
+annotated with that term.
+
+```{r, echo=FALSE, fig.align='center', out.width='100%', fig.cap="Gene ontology entry for the GO term for cell adhesion."}
+knitr::include_graphics("figs/go-screenshot.png")
+```
+
+The whole Gene Ontology is can be accessed in R with the 
+`r BiocStyle::Biocpkg("GO.db")` package.
 
 
+In the code chunk below, we query the `GO.db` package through the
+`org.Hs.eg.db` interface. This *org.db* for Homo sapiens enables to
+perform various queries for human genes, such as retrieving all gene
+symbols and ENTREZ identifiers (the `columns` below) that are
+annotated with a GO term (the `keys` below) of interest.
 
 
+```{r}
+library("org.Hs.eg.db")
+GO_0005925 <- select(org.Hs.eg.db,
+                     keys = "GO:0005925",
+                     columns = c("ENTREZID", "SYMBOL"),
+                     keytype = "GO") %>%
+    as_tibble %>%
+    filter(!duplicated(ENTREZID))
+GO_0005925
+```
 
-GO, KEGG, ReactomeDB, MySigDB.
+
+`r msmbstyle::question_begin()`
+
+Repeat the code above to extract the genes annotated with the
+`GO:0005813` term.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+```{r}
+GO_0005813 <- select(org.Hs.eg.db,
+                     keys = "GO:0005813",
+                     columns = c("ENTREZID", "SYMBOL"),
+                     keytype = "GO") %>%
+    as_tibble %>%
+    filter(!duplicated(ENTREZID))
+GO_0005813
+```
+
+`r msmbstyle::solution_end()`
+
+### Kyoto Encyclopedia of Genes and Genomes (KEGG) {-}
+
+[KEGG](https://www.genome.jp/kegg/pathway.html) pathway is a
+collection of manually drawn and curated pathway maps representing
+current knowledge of the molecular interaction, reaction and relation
+networks. 
+
+The figure below shows the [pathways for the cell
+cycle](https://www.genome.jp/kegg-bin/show_pathway?hsa04110) in
+humans.
+
+```{r, echo=FALSE, fig.align='center', out.width='100%', fig.cap="KEGG pathway for cell cycle."}
+knitr::include_graphics("figs/hsa04110.png")
+```
+The `r BiocStyle::Biocpkg("KEGGREST")` package provides a client interface to the KEGG server. 
+
+### Reactome {-}
+
+Alike KEGG patway, [Reactome](https://reactome.org/) is a free,
+open-source, curated and peer-reviewed pathway database. The
+Bioconductor `r BiocStyle::Biocpkg("reactome.db")` package provides
+access to reactome maps and annotations within R.
+
+
+### Molecular Signatures Database (MySigDB) {-}
+
+MSigDB is a collection of annotated gene sets for use with GSEA
+software. The MSigDB gene sets are divided into 9 collections:
+
+- Hallmark gene sets (H) are coherently expressed signatures derived
+  by aggregating many MSigDB gene sets to represent well-defined
+  biological states or processes.
+- Positional gene sets (C1) for each human chromosome and cytogenetic band.
+- Curated gene sets (C2) from online pathway databases, publications
+  in PubMed, and knowledge of domain experts.
+- Regulatory target gene sets (C3) based on gene target predictions
+  for microRNA seed sequences and predicted transcription factor
+  binding sites.
+- Computational gene sets (C4) defined by mining large collections of
+  cancer-oriented microarray data.
+- Ontology gene sets (C5) consist of genes annotated by the same
+  ontology term.
+- Oncogenic signature gene (C6) sets defined directly from microarray
+  gene expression data from cancer gene perturbations.
+- Immunologic signature gene sets (C7) defined directly from
+  microarray gene expression data from immunologic studies.
+- Cell type signature gene sets (C8) curated from cluster markers
+  identified in single-cell sequencing studies of human tissue.
 
 ## Statistical analyses
 
-How to test for enrichment? (1) over-enrichment analysis (ORA) and (2)
-gene set enrichment analysis (GSEA).
+To illustrate enrichment analyses, we will use the DESeq2 results
+stored in the the `res_tbl` variable, computed in the previous
+chapter.
+
+```{r, echo = FALSE}
+res_tbl <- readRDS("res_tbl.rds")
+```
+
+We will focus on the genes that have an adjusted p-value (those that
+have been tested) and that have unique ENTREZ gene identifiers.
+
+```{r}
+res_tbl <- res_tbl %>%
+    filter(!is.na(ENTREZID),
+           !is.na(padj),
+           !duplicated(res_tbl$ENTREZID))
+
+res_tbl$ENTREZID <- as.character(res_tbl$ENTREZID)
+res_tbl
+```
+
+### Over-enrichment analysis (ORA) {-}
+
+To perform an over-enrichment analysis, we need to define:
+
+- among all the genes, which ones are differentially expressed (DE);
+- among all the genes, which ones are part of the gene set of
+  interest.
+
+And fill out the following table and count the number of DE genes that
+are in the set of interest, the non-DE that are in the set, and the DE
+and non-DE genes that are not in the set:
+
+```{r, eval = FALSE}
+            in_set
+is_DE  | FALSE | TRUE
+-------+-------+------
+ FALSE |   n   |   p
+ TRUE  |   m   |   q
+
+```
+
+```{r}
+## DE and in SET
+q <- length(intersect(res_tbl$ENTREZID[res_tbl$padj < 0.05],
+                      GO_0005925$ENTREZID))
+
+
+## not DE and in SET
+p <- length(intersect(res_tbl$ENTREZID[res_tbl$padj >= 0.05],
+                      GO_0005925$ENTREZID))
+
+## DE not in SET
+m <- length(setdiff(res_tbl$ENTREZID[res_tbl$padj < 0.05],
+                    GO_0005925$ENTREZID))
+
+## not DE not in SET
+n <- length(setdiff(res_tbl$ENTREZID[res_tbl$padj >= 0.05],
+                    GO_0005925$ENTREZID))
+```
+
+
+
+### Gene set enrichment analysis (GSEA) {-}
 
 
 ## Using the `clusterProfiler` package
-   
 
+```{r, eval = FALSE}
+library("clusterProfiler")
+ego <- enrichGO(gene = as.character(res_tbl$ENTREZ[res_tbl$padj < 0.05]),
+                universe = as.character(res_tbl$ENTREZ),
+                OrgDb = org.Hs.eg.db,
+                ont = "CC",
+                pAdjustMethod = "BH",
+                pvalueCutoff = 1,
+                qvalueCutoff = 1,
+                readable = TRUE) %>%
+    as_tibble
+ego
+```

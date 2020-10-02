@@ -747,12 +747,12 @@ for more information).
 the lowest padjusted value.
 
 2. Calculate the mean expression level of these 5 "best genes" using 
-the function `count()`. Compare with baseMean values.
+the function `counts()`. Compare with baseMean values.
 
 3. Extract the ß coefficient of these 5 "best genes" from the GLM 
 using the function `coefficient()`. Compare with log2FoldChange values.
 
-4. Using the function `count()`, evaluate the mean expression levels 
+4. Using the function `counts()`, evaluate the mean expression levels 
 of these 5 "best genes" in mock cells. Compare with ß coefficients.
 
 5. Evaluate the mean expression levels of these 5 "best genes" 
@@ -774,7 +774,7 @@ res_tbl %>%
 ```
 
 2. Calculate the mean expression level of these 5 "best genes" using 
-the function `count()`. Compare with baseMean values.
+the function `counts()`. Compare with baseMean values.
 
 ```{r}
 best_genes <- res_tbl %>%
@@ -791,7 +791,7 @@ using the function `coefficient()`. Compare with log2FoldChange values.
 coefficients(dds[best_genes])
 ```
 
-4. Using the function `count()`, evaluate the mean expression levels 
+4. Using the function `counts()`, evaluate the mean expression levels 
 of these 5 "best genes" in mock cells. Compare with ß coefficients.
 
 ```{r}
@@ -1121,32 +1121,50 @@ dispersions(dds[selected_genes$ENSEMBL,])
 ```
 `r msmbstyle::solution_end()`
 
-#### Adding gene name to result table {-}
+#### Adding variables to result table {-}
 
-The result table only uses Ensembl gene IDs, but gene names may be more informative.
-Bioconductor’s biomaRt package can help with mapping various ID schemes to each other.
+The result table only uses Ensembl gene IDs, but gene names may be
+more informative.  Bioconductor's `r BiocStyle::Biocpkg("biomaRt")`
+package can help with mapping various ID schemes to each other.
 
-```{r, echo = F}
+```{r, echo = FALSE}
 suppressPackageStartupMessages(library("biomaRt"))
 suppressPackageStartupMessages(library("org.Hs.eg.db"))
 ```
+
+Below, we query the Biomart service to extract the gene names
+(`enternal_gene_name`) and ENTREZ gene identifiers (`entrezgene_id`)
+(that we will need in the next chapter) and join these to our result
+data.
 
 ```{r}
 library("biomaRt")
 library("org.Hs.eg.db")
 
-# Load homo sapiens ensembl dataset
+## Load homo sapiens ensembl dataset
 mart <- useDataset("hsapiens_gene_ensembl", useMart("ensembl"))
 
-#Attributes define the values we are interested to retrieve.
-#listAttributes(mart)
-ensembl_to_geneName <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"), mart = mart)
-names(ensembl_to_geneName) <- c("ENSEMBL", "gene")
+## Attributes define the values we are interested to retrieve.
+## listAttributes(mart)
+ensembl_to_geneName <- getBM(attributes = c("ensembl_gene_id", "external_gene_name",
+                                            "entrezgene_id"),
+                             mart = mart)
+names(ensembl_to_geneName) <- c("ENSEMBL", "gene", "ENTREZID")
+head(ensembl_to_geneName)
+```
 
+```{r}
 res_tbl <- res_tbl %>%
   left_join(ensembl_to_geneName) %>%
-  dplyr::select(ENSEMBL, gene, everything()) %>%
   arrange(padj)
 
-head(res_tbl)
+res_tbl
 ```
+
+Below, we store these results to use them in the next chapter.
+
+```{r}
+saveRDS(res_tbl, file = "res_tbl.rds")
+```
+
+
