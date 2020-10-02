@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 6 Gene set enrichment analysis | Omics Data Analysis" />
+<meta property="og:title" content="Chapter 6 Enrichment analyses | Omics Data Analysis" />
 <meta property="og:type" content="book" />
 
 
@@ -14,20 +14,19 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-09-25" />
+<meta name="date" content="2020-10-01" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   TeX: { equationNumbers: { autoNumber: "AMS" } }
 });
 </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
-<title>Chapter 6 Gene set enrichment analysis | Omics Data Analysis</title>
+<title>Chapter 6 Enrichment analyses | Omics Data Analysis</title>
 
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
@@ -61,27 +60,26 @@ if(f.classList.contains('fa-plus-square')) {
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+
+code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -90,9 +88,9 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  {  }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -148,7 +146,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a href="sec-linmod.html"><span class="toc-section-number">3</span> Linear models</a>
 <a href="sec-hts.html"><span class="toc-section-number">4</span> High throughput sequencing</a>
 <a href="sec-rnaseq.html"><span class="toc-section-number">5</span> Differential expression analysis</a>
-<a id="active-page" href="sec-gsea.html"><span class="toc-section-number">6</span> Gene set enrichment analysis</a>
+<a id="active-page" href="sec-gsea.html"><span class="toc-section-number">6</span> Enrichment analyses</a><ul class="toc-sections">
+<li class="toc"><a href="#introduction"> Introduction</a></li>
+<li class="toc"><a href="#gene-sets"> Gene sets</a></li>
+<li class="toc"><a href="#statistical-analyses"> Statistical analyses</a></li>
+<li class="toc"><a href="#using-the-clusterprofiler-package"> Using the <code>clusterProfiler</code> package</a></li>
+</ul>
 <a href="sec-ms.html"><span class="toc-section-number">7</span> Mass spectrometry</a>
 <a href="sec-prot.html"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
 <a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
@@ -163,10 +166,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec:gsea" class="section level1" number="6">
+<html><body><div id="sec:gsea" class="section level1">
 <h1>
-<span class="header-section-number">Chapter 6</span> Gene set enrichment analysis</h1>
+<span class="header-section-number">Chapter 6</span> Enrichment analyses</h1>
+<p>Motivation</p>
+<ul>
+<li>What are the next steps after a DE analysis?</li>
+<li>Why are enrichment analyses useful?</li>
+<li>Understanding an over-enrichment analysis.</li>
+<li>Understanding a gene set enrichment analysis.</li>
+<li>Application of the <em><a href="https://bioconductor.org/packages/3.11/clusterProfiler">clusterProfiler</a></em> package.</li>
+</ul>
+<div id="introduction" class="section level2">
+<h2>
+<span class="header-section-number">6.1</span> Introduction</h2>
+<ol style="list-style-type: decimal">
+<li><p>DE is univariate - each gene is tested on its own. This probably
+doesn’t reflect biology - genes expression work in conjunction, not
+in isolation. One wouldn’t expect that the effect of a drug, or a
+mutation, … would lead to the perturbation of a single gene
+expression.</p></li>
+<li><p>The univariate approach expects (tests for) significant changes
+(especially concidering adjustment for multiple testing). Moderate
+effects in many (related) genes wouldn’t be identified as
+statistically significant, even it such an effect my be
+biologically more plausible that one of a few large ones.</p></li>
+<li><p>The goal of an enrichment analysis is to test for a group of
+related genes, called gene sets, and test whether the genes within
+these set are enriched for differential expression.</p></li>
+</ol>
+</div>
+<div id="gene-sets" class="section level2">
+<h2>
+<span class="header-section-number">6.2</span> Gene sets</h2>
+<p>How do we define gene sets?</p>
+<p>GO, KEGG, ReactomeDB, MySigDB.</p>
+</div>
+<div id="statistical-analyses" class="section level2">
+<h2>
+<span class="header-section-number">6.3</span> Statistical analyses</h2>
+<p>How to test for enrichment? (1) over-enrichment analysis (ORA) and (2)
+gene set enrichment analysis (GSEA).</p>
+</div>
+<div id="using-the-clusterprofiler-package" class="section level2">
+<h2>
+<span class="header-section-number">6.4</span> Using the <code>clusterProfiler</code> package</h2>
 
+</div>
 </div></body></html>
 
 <p style="text-align: center;">
@@ -174,7 +220,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a href="sec-ms.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-09-25
+2020-10-01
 </p>
 </div>
 </div>

@@ -14,20 +14,19 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-09-25" />
+<meta name="date" content="2020-10-01" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   TeX: { equationNumbers: { autoNumber: "AMS" } }
 });
 </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
 <title>Chapter 5 Differential expression analysis | Omics Data Analysis</title>
 
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
@@ -61,27 +60,26 @@ if(f.classList.contains('fa-plus-square')) {
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+
+code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -90,9 +88,9 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  {  }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -150,9 +148,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a id="active-page" href="sec-rnaseq.html"><span class="toc-section-number">5</span> Differential expression analysis</a><ul class="toc-sections">
 <li class="toc"><a href="#theory-behind-deseq2"> Theory behind DESeq2</a></li>
 <li class="toc"><a href="#running-deseq2"> Running DESeq2</a></li>
-<li class="toc"><a href="#a-more-complex-design"> A more complex design</a></li>
 </ul>
-<a href="sec-gsea.html"><span class="toc-section-number">6</span> Gene set enrichment analysis</a>
+<a href="sec-gsea.html"><span class="toc-section-number">6</span> Enrichment analyses</a>
 <a href="sec-ms.html"><span class="toc-section-number">7</span> Mass spectrometry</a>
 <a href="sec-prot.html"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
 <a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
@@ -167,31 +164,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec:rnaseq" class="section level1" number="5">
+<html><body><div id="sec:rnaseq" class="section level1">
 <h1>
 <span class="header-section-number">Chapter 5</span> Differential expression analysis</h1>
 <p><strong>Learning Objectives</strong></p>
 <p>The goal of this chapter is</p>
 <ul>
-<li><p>to understand the different theorical concepts behind a differential expression analysis</p></li>
-<li><p>to provide a real-life example of DE analysis analysis running DESeq2 step-by-step</p></li>
+<li>to understand the different theorical concepts behind a differential expression analysis</li>
+<li>to provide a real-life example of DE analysis analysis running DESeq2 step-by-step</li>
 </ul>
-<div id="theory-behind-deseq2" class="section level2" number="5.1">
+<div id="theory-behind-deseq2" class="section level2">
 <h2>
 <span class="header-section-number">5.1</span> Theory behind DESeq2</h2>
 <p>A large number of computational methods have been developed for differential expression analysis
-<span class="citation">(Seyednasrollah, Laiho, and Elo <label for="tufte-mn-8" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-8" class="margin-toggle">2015<span class="marginnote">Seyednasrollah, F, A Laiho, and LA Elo. 2015. “Comparison of Software Packages for Detecting Differential Expression in Rna-Seq Studies.” <em>Brief Bioinform</em> 1 (16): 59. <a href="https://doi.org/10.1093/bib/bbt086">https://doi.org/10.1093/bib/bbt086</a>.</span>)</span>, differing slightly in their methodology. Here we will present DESeq2,
-a bioconductor package dedicated to this type of analysis which is very frequently used. For more
-information read the original paper <span class="citation">(Love, Huber, and Anders <label for="tufte-mn-9" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-9" class="margin-toggle">2014<span class="marginnote">Love, M, W Huber, and S Anders. 2014. “Moderated Estimation of Fold Change and Dispersion for Rna-Seq Data with Deseq2.” <em>Genome Biology</em> 15 (5): 550–8. <a href="https://doi.org/10.1186/s13059-014-0550-8">https://doi.org/10.1186/s13059-014-0550-8</a>.</span>)</span> and the <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2 vignette</a>.</p>
+<span class="citation">(Seyednasrollah, Laiho, and Elo <label for="tufte-mn-8" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-8" class="margin-toggle">2015<span class="marginnote">Seyednasrollah, F, A Laiho, and LA Elo. 2015. “Comparison of Software Packages for Detecting Differential Expression in Rna-Seq Studies.” <em>Brief Bioinform</em> 1 (16): 59. <a href="https://doi.org/10.1093/bib/bbt086" class="uri">https://doi.org/10.1093/bib/bbt086</a>.</span>)</span>, differing slightly in their methodology. Here we will present DESeq2,
+a widely used bioconductor package dedicated to this type of analysis. For more information read
+the original paper <span class="citation">(Love, Huber, and Anders <label for="tufte-mn-9" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-9" class="margin-toggle">2014<span class="marginnote">Love, M, W Huber, and S Anders. 2014. “Moderated Estimation of Fold Change and Dispersion for Rna-Seq Data with Deseq2.” <em>Genome Biology</em> 15 (5): 550–8. <a href="https://doi.org/10.1186/s13059-014-0550-8" class="uri">https://doi.org/10.1186/s13059-014-0550-8</a>.</span>)</span> and the
+<a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2 vignette</a>.</p>
 <p>The starting point of the analysis is a count matrix, and the goal is to identify
 genes that are differentially expressed between samples.</p>
 <p>The different steps of the analysis are illustrated in the figure below. Briefly,
 DESeq2 starts by normalising the raw counts. Then, it estimates the gene-wise
 dispersions and shrinks these estimates to generate more accurate estimates of dispersion
-to model the counts. Finally, DESeq2 fits a negative binomial model and performs
-hypothesis testing using the Wald test.</p>
+to model the counts. Finally, DESeq2 fits a generalized linear model, performs hypothesis
+testing and generates a list of differentially expressed genes.</p>
 <p><img src="figs/deseq2_steps.png" width="60%" style="display: block; margin: auto;"></p>
-<div id="normalisation" class="section level3" number="5.1.1">
+<div id="normalisation" class="section level3">
 <h3>
 <span class="header-section-number">5.1.1</span> Normalisation</h3>
 <ul>
@@ -233,52 +231,50 @@ compared with each other.</p>
 <ul>
 <li><strong>Library composition</strong></li>
 </ul>
-<p>The library composition might also be different in samples. To
+<p>The library composition might also be different accross samples. To
 illustrate this, let’s imagine a basic cell expressing only 2 genes
-(genes A and B) and assume that a drug treatment induces a strong
-expression of gene C. If the normalisation was done using total number
-of reads only, then the counts of gene A would be divided by 4 in
-control cells, while it would be divided by 12 in treated cells. This
+(genes 1 and 2) and assume that a drug treatment induces a strong
+expression of gene 3. If the normalisation was done using total number
+of reads only, then the counts of gene 1 would be divided by 15 in
+control cells, while it would be divided by 165 in treated cells. This
 would lead to the misleading conclusion that the treatment has reduced
-3 times the expression of gene A. In this case, the library
-composition has changed but not the expression level of gene A.</p>
+11 times the expression of gene 1. In this case, the library
+composition has changed but not the expression level of gene 1.</p>
 <p><img src="figs/library_composition.png" width="100%" style="display: block; margin: auto;"></p>
 <p>In a real dataset, a few highly differentially expressed genes,
 differences in the number of genes expressed between samples, or
 presence of contaminations can skew library composition. Accounting
 for it is highly recommended for accurate comparison of expression
-between samples <span class="citation">(Anders and Huber <label for="tufte-mn-10" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-10" class="margin-toggle">2010<span class="marginnote">Anders, S, and W Huber. 2010. “Differential Expression Analysis for Sequence Count Data.” <em>Genome Biology</em> 11 (27): 10. <a href="https://doi.org/10.1186/gb-2010-11-10-r106">https://doi.org/10.1186/gb-2010-11-10-r106</a>.</span>)</span>.</p>
+between samples <span class="citation">(Anders and Huber <label for="tufte-mn-10" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-10" class="margin-toggle">2010<span class="marginnote">Anders, S, and W Huber. 2010. “Differential Expression Analysis for Sequence Count Data.” <em>Genome Biology</em> 11 (27): 10. <a href="https://doi.org/10.1186/gb-2010-11-10-r106" class="uri">https://doi.org/10.1186/gb-2010-11-10-r106</a>.</span>)</span>.</p>
 <ul>
 <li><strong>DESeq2 normalisation method</strong></li>
 </ul>
 <p>DESeq2 will use a normalisation method that takes into account both
 library size and library composition. To normalise for sequencing
-depth and RNA composition, DESeq2 uses the median of ratios method.</p>
-<p><strong>Step 1</strong>: DESeq2 creates a pseudo-reference sample (row-wise
-geometric mean). It calculates the geometric mean of each
-gene. Geometric mean is used instead of classical mean because it uses
-log values. It is hence more robust as it is less influenced by
-extreme values. The geometric means constitute a pseudo-reference
-sample.</p>
-<p><strong>Step 2</strong>: For every gene in a sample, the ratios
-(sample/pseudo-reference sample) are calculated. Since the majority
-of genes are not differentially expressed, the majority of genes in
-each sample should have similar ratios within the sample.</p>
+depth and RNA composition, DESeq2 uses the median of ratios method:</p>
+<p><img src="figs/SF_formula.png" width="80%" style="display: block; margin: auto;"></p>
+<p>Let’s try to understand what is behind this formula.</p>
+<p><strong>Step 1</strong>: DESeq2 creates a pseudo-reference sample by calculating a
+row-wise geometric mean (for each gene). Geometric mean is used instead
+of classical mean because it uses log values. It is hence more robust
+as it is less influenced by extreme values.</p>
+<p><strong>Step 2</strong>: For every gene in every sample, ratios of
+counts/pseudo-reference sample are calculated.</p>
 <p><strong>Step 3</strong>: The median value of all ratios for a given sample is taken as
 the size factor for that sample. Importantly, the method is based on
 the assumption that the majority of genes are not differentially
 expressed, which implies that rare genes that are really up-regulated
-/ down-regulated should not influence the median. Furthermore, the
+or down-regulated should not influence the median. Furthermore, the
 median is calculated skipping genes with a geometric mean of
 zero. This will hence automatically eliminate genes expressed in some
 samples but not in others and will help to focus the scaling factor on
 housekeeping genes.</p>
 <p><strong>Step 4</strong>: DESeq2 calculates the normalised counts using the scaling
-factor This is performed by dividing each raw count values in a given
+factor. This is performed by dividing each raw count values in a given
 sample by that sample’s scaling factor.</p>
 <p><img src="figs/SF_steps.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
-<div id="count-modeling" class="section level3" number="5.1.2">
+<div id="count-modeling" class="section level3">
 <h3>
 <span class="header-section-number">5.1.2</span> Count modeling</h3>
 <p>Let’s first have a look at the counts distribution for a typical
@@ -305,7 +301,9 @@ given read to be mapped to any specific gene is extremely small.</p>
 <p>The Poisson distribution has only one parameter indicating its
 expected mean. Its variance and all other properties follow from
 it. In particular, one key assumption of the Poisson distribution is
-that the variance equals the mean. Applying a Poisson distribution to
+that the variance equals the mean.</p>
+<p><span class="math display">\[K_{ij} \sim P(µ_{ij} = \sigma^2_{ij})\]</span></p>
+<p>Applying a Poisson distribution to
 Rnaseq counts holds true when comparing technical replicates from a
 same sample, where the variance only reflects the counting noise. But
 when comparing biological replicates, counting noise is not the only
@@ -321,21 +319,27 @@ distribution but the negative-binomial distribution has, in addition
 to the mean parameter, an extra parameter <span class="math inline">\(α\)</span> called the “dispersion”
 parameter to model this “extra” variance that is empirically observed
 in RNA-Seq experiments.</p>
-<p><img src="figs/NB.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figs/NB.png" width="80%" style="display: block; margin: auto;"></p>
+<p>The dispersion parameter <span class="math inline">\(\alpha_i\)</span> defines the relationship between
+the variance of the observed count and its mean value<label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> Note that as dispersion parameter gets lower and lower,
+the variance converges to the same value as the mean, and the negative
+binomial turns into a Poisson distribution.</span>.</p>
+<p><img src="figs/VAR.png" width="60%" style="display: block; margin: auto;"></p>
 </div>
-<div id="dispersion-estimation" class="section level3" number="5.1.3">
+<div id="dispersion-estimation" class="section level3">
 <h3>
 <span class="header-section-number">5.1.3</span> Dispersion estimation</h3>
 <p>Having modelised counts by a negative-binomial distribution, next step
 is to estimate, for each gene, the two parameters of the distribution
 (mean and dispersion). The mean will be estimated easily from the
 observed normalised counts in both conditions, but the dispersion is
-not that trivial to estimate.</p>
-<p>Dispersion is a measure of spread or variability in the data (<span class="math inline">\(α= CV^2\)</span>). A gene with a dispersion value of 0.04 means 20% variation
+not that trivial to estimate accurately.</p>
+<p>Dispersion is a measure of variability in the data (<span class="math inline">\(α = CV^2\)</span>).
+A gene with a dispersion value of 0.04 means 20% variation
 around the expected mean. Estimate the dispersion for each gene would
 be quite straightforward if we had for each condition, hundreds of
 replicates. Of course, this is not feasible for economic reasons, and
-experiments are usually done on only 3-5 replicates. But how to
+experiments are often done on only 3 replicates. But how to
 estimate dispersion reliably based on such a little number of samples?
 To overcome this problem, DESeq2 makes the assumption that genes of
 similar expression levels have similar dispersions and it will use
@@ -369,39 +373,46 @@ dispersion will be significantly increased and this will limit the
 number of false-positive that could arise from an underestimated
 dispersion. Dispersion estimates that are slightly above the curve are
 also shrunk toward the curve. However, genes with extremely high
-dispersion<label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> genes with extremely high dispersion are those for which the adjusted
+dispersion<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> genes with extremely high dispersion are those for which the adjusted
 dispersion is more than 2 residual standard deviations above the curve.</span> values are not. In fact DESeq2 assumes that
 these genes might not follow the modeling assumptions and could have
 higher variability than others for biological or technical
 reasons. For these genes, shrinking the values toward the curve could
 result in false positives. These genes are shown surrounded by blue
 circles in the dispersion plot.</p>
-<p>This shrinkage method is particularly important to reduce false positives in the
-differential expression analysis. The shrunken dispersion values will be used for
-fitting of the model and differential expression testing.</p>
+<p>Dispersion shrinkage is particularly important to reduce false positives in the
+differential expression analysis.</p>
 <p><img src="figs/disp_shrinkage.png" width="80%" style="display: block; margin: auto;"></p>
 </div>
-<div id="glm" class="section level3" number="5.1.4">
+<div id="generalized-linear-model" class="section level3">
 <h3>
-<span class="header-section-number">5.1.4</span> GLM</h3>
-<p>Adapt this paragraph in function of Laurent’s chapter on linear models.</p>
-<p>DESeq2 fits a generalized linear model of the form: <span class="math inline">\(log2(qij)=xj.βi\)</span>, and <span class="math inline">\(βi\)</span>
-coefficients are computed. They give estimates of the log fold changes for gene i
-for each column of the model matrix. Standard errors for the log2 fold changes are
-also estimated.</p>
+<span class="header-section-number">5.1.4</span> Generalized linear model</h3>
+<p>DESeq2 fits a generalized linear model of the form: <span class="math display">\[log2(q_{ij}) = \Sigma x_j.β_i\]</span></p>
+<p>where <span class="math inline">\(q_{ij}\)</span> represents the normalised counts for gene i in sample j and <span class="math inline">\(β_i\)</span> represents
+the log2FC between conditions. <span class="math inline">\(β_i\)</span> coefficients are computed from the data.</p>
+<p>In the case of a simple design with one condition (a treatment effect for example), the model
+can be written</p>
+<p><span class="math display">\[log2(q_{ij}) = \beta_0 + \beta_1\times x_j + \epsilon\]</span>
+<span class="math inline">\(\beta_0\)</span> is the log2 expression level in the reference (control samples)</p>
+<p><span class="math inline">\(\beta_1\)</span> is the log2FC between treated and control cells</p>
+<p><span class="math inline">\(x_j\)</span> = 0 if sample j is the control sample</p>
+<p><span class="math inline">\(x_j\)</span> = 1 if sample j is the treated sample</p>
 </div>
-<div id="statistical-test" class="section level3" number="5.1.5">
+<div id="statistical-test" class="section level3">
 <h3>
 <span class="header-section-number">5.1.5</span> Statistical test</h3>
 <div id="wald-test" class="section level4 unnumbered">
 <h4>Wald test</h4>
+<p>The logFC are computed from the data using the GLM, and these are associated to standard
+errors that depend on the variance of the counts.</p>
+<p><img src="figs/z_stat.png" width="80%" style="display: block; margin: auto;"></p>
 <p>The ultimate goal of a test for differential expression is to decide
 whether, for a given gene, an observed difference in read counts is
 significant, that is, whether it is greater than what would be
-expected just due to natural random variation. The null hypothesis
-<span class="math inline">\(H_0\)</span> is that there is no differential expression across two sample
-groups, which is the same as saying that the log2 fold-change = 0. A
-statistical test, the Wald test, will determine whether the data
+expected just due to natural random variation.</p>
+<p>The null hypothesis <span class="math inline">\(H_0\)</span> is that there is no differential expression across
+the sample groups, which is the same as saying that the log2FC = 0.
+A statistical test, the Wald test, will determine whether the data
 provides sufficient evidence to conclude that this value is really
 different from zero.</p>
 <p>For the Wald test, the log2 fold-change is divided by its standard
@@ -448,12 +459,13 @@ which <span class="math inline">\(H_0\)</span> is false. The correction approach
 many of the significant values are actually false positives. It tries
 to find the height where the p-value distribution flattens out
 (corresponding to the red line) and incorporates this height value
-into the calculation of FDR adjusted p-values. Choosing a cut off of
-0.05 for padjusted values now implies that 5% of significant tests
-(but not 5% of all tests as before) will result in false positives.</p>
+into the calculation of FDR adjusted p-values.</p>
+<p>Choosing a cut off of 0.05 for padjusted values now implies that 5% of
+significant tests (but not 5% of all tests as before) will result in false
+positives.</p>
 <p><img src="figs/pval_histograms.png" width="100%" style="display: block; margin: auto;"></p>
 <ul>
-<li><strong>Independentfiltering</strong></li>
+<li><strong>Independent filtering</strong></li>
 </ul>
 <p>Multiple testing adjustment tends to be associated with a loss of power.
 To counteract this effect, one possibility is to filter out those tests from
@@ -474,29 +486,32 @@ all samples, irrespective of biological condition: this filter is blind to the a
 of samples to the treatment and control group and hence independent.</p>
 <p>The mean expression threshold used by DESeq2 for independentfiltering is defined
 automatically by the software. It is chosen in a way that maximizes the number of
-genes which will have a significant padjusted value.</p>
+genes which will have a significant p-adjusted value.
+The threshold chosen (the vertical line) is the lowest quantile for which the number of
+rejections is within 1 residual standard deviation to the peak of the curve.</p>
+<p><img src="figs/IF_threshold.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>
-<div id="running-deseq2" class="section level2" number="5.2">
+<div id="running-deseq2" class="section level2">
 <h2>
 <span class="header-section-number">5.2</span> Running DESeq2</h2>
 <p>Let’s start by installing the
 <a href="https://bioconductor.org/packages/release/bioc/html/DESeq2.html">DESeq2</a> package.</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="sec-rnaseq.html#cb151-1" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"DESeq2"</span>))</span>
-<span id="cb151-2"><a href="sec-rnaseq.html#cb151-2" aria-hidden="true"></a>    BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"DESeq2"</span>)</span>
-<span id="cb151-3"><a href="sec-rnaseq.html#cb151-3" aria-hidden="true"></a><span class="kw">library</span>(DESeq2)</span>
-<span id="cb151-4"><a href="sec-rnaseq.html#cb151-4" aria-hidden="true"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" data-line-number="1"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"DESeq2"</span>))</a>
+<a class="sourceLine" id="cb142-2" data-line-number="2">    BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"DESeq2"</span>)</a>
+<a class="sourceLine" id="cb142-3" data-line-number="3"><span class="kw">library</span>(DESeq2)</a>
+<a class="sourceLine" id="cb142-4" data-line-number="4"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
 <p>We will run a DESeq2 analysis using real data.</p>
-<div id="construct-deseqdataset-object" class="section level3" number="5.2.1">
+<div id="construct-deseqdataset-object" class="section level3">
 <h3>
 <span class="header-section-number">5.2.1</span> Construct DESeqDataSet object</h3>
 <p>Let’s first load the count matrix and the sample metadata.
-This dataset corresponds to RNAseq data done on a cell line
-treated a not by a siRNA.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="sec-rnaseq.html#cb152-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">"wsbim2122_data/deseq2/counts.rda"</span>)</span>
-<span id="cb152-2"><a href="sec-rnaseq.html#cb152-2" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">"wsbim2122_data/deseq2/coldata.rda"</span>)</span>
-<span id="cb152-3"><a href="sec-rnaseq.html#cb152-3" aria-hidden="true"></a>coldata</span></code></pre></div>
+This dataset corresponds to RNAseq data from a cell line
+treated or not by a siRNA.</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1"><span class="kw">load</span>(<span class="st">"wsbim2122_data/deseq2/counts.rda"</span>)</a>
+<a class="sourceLine" id="cb143-2" data-line-number="2"><span class="kw">load</span>(<span class="st">"wsbim2122_data/deseq2/coldata.rda"</span>)</a>
+<a class="sourceLine" id="cb143-3" data-line-number="3">coldata</a></code></pre></div>
 <pre><code>##          Cell       Type Condition
 ## sample1 Cell1 Epithelial      mock
 ## sample2 Cell1 Epithelial      mock
@@ -504,7 +519,7 @@ treated a not by a siRNA.</p>
 ## sample4 Cell1 Epithelial        KD
 ## sample5 Cell1 Epithelial        KD
 ## sample6 Cell1 Epithelial        KD</code></pre>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="sec-rnaseq.html#cb154-1" aria-hidden="true"></a><span class="kw">head</span>(counts)</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="kw">head</span>(counts)</a></code></pre></div>
 <pre><code>##                 sample1 sample2 sample3 sample4 sample5 sample6
 ## ENSG00000223972       0       0       0       0       0       1
 ## ENSG00000227232      14      28      17      40      16      13
@@ -512,7 +527,7 @@ treated a not by a siRNA.</p>
 ## ENSG00000243485       0       0       0       0       0       0
 ## ENSG00000284332       0       0       0       0       0       0
 ## ENSG00000237613       0       0       0       0       0       0</code></pre>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="sec-rnaseq.html#cb156-1" aria-hidden="true"></a><span class="kw">dim</span>(counts)</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1"><span class="kw">dim</span>(counts)</a></code></pre></div>
 <pre><code>## [1] 58735     6</code></pre>
 <p>Using these data, we will start by creating a
 <a href="https://www.rdocumentation.org/packages/DESeq2/versions/1.12.3/topics/DESeqDataSet-class">DESeqDataSet</a>,
@@ -524,13 +539,13 @@ DESeqDataSet class enforces non-negative integer values in the count
 matrix stored as the first element in the assay list. In addition, a
 formula which specifies the design of the experiment (the variables
 that will be used in modeling) must be provided.</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="sec-rnaseq.html#cb158-1" aria-hidden="true"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeqDataSetFromMatrix</span>(<span class="dt">countData =</span> counts,</span>
-<span id="cb158-2"><a href="sec-rnaseq.html#cb158-2" aria-hidden="true"></a>                              <span class="dt">colData =</span> coldata,</span>
-<span id="cb158-3"><a href="sec-rnaseq.html#cb158-3" aria-hidden="true"></a>                              <span class="dt">design =</span> <span class="op">~</span><span class="st"> </span>Condition)</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1">dds &lt;-<span class="st"> </span><span class="kw">DESeqDataSetFromMatrix</span>(<span class="dt">countData =</span> counts,</a>
+<a class="sourceLine" id="cb149-2" data-line-number="2">                              <span class="dt">colData =</span> coldata,</a>
+<a class="sourceLine" id="cb149-3" data-line-number="3">                              <span class="dt">design =</span> <span class="op">~</span><span class="st"> </span>Condition)</a></code></pre></div>
 <pre><code>## converting counts to integer mode</code></pre>
 <pre><code>## Warning in DESeqDataSet(se, design = design, ignoreRank): some variables in
 ## design formula are characters, converting to factors</code></pre>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="sec-rnaseq.html#cb161-1" aria-hidden="true"></a>dds</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1">dds</a></code></pre></div>
 <pre><code>## class: DESeqDataSet 
 ## dim: 58735 6 
 ## metadata(1): version
@@ -557,7 +572,6 @@ accessed with <code>metadata()</code>.</li>
 <div class="question-body">
 <p>Access the count data from the dds object and</p>
 <p>plot the counts distributions of each sample.</p>
-<p>Do they all look similar?</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -568,19 +582,19 @@ accessed with <code>metadata()</code>.</li>
 ► Solution<span id="sol-start-9" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-9', 'sol-start-9')"></span>
 </p>
 <div id="sol-body-9" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="sec-rnaseq.html#cb163-1" aria-hidden="true"></a><span class="kw">as_tibble</span>(<span class="kw">assay</span>(dds, <span class="dv">1</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb163-2"><a href="sec-rnaseq.html#cb163-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">gather</span>(sample, <span class="dt">value =</span> counts) <span class="op">%&gt;%</span></span>
-<span id="cb163-3"><a href="sec-rnaseq.html#cb163-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">log2</span>(counts <span class="op">+</span><span class="st"> </span><span class="dv">1</span>), <span class="dt">fill =</span> sample)) <span class="op">+</span></span>
-<span id="cb163-4"><a href="sec-rnaseq.html#cb163-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>) <span class="op">+</span></span>
-<span id="cb163-5"><a href="sec-rnaseq.html#cb163-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sample)</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-65-1.png" width="672"></p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1"><span class="kw">as_tibble</span>(<span class="kw">assay</span>(dds)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb154-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(sample, <span class="dt">value =</span> counts) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb154-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">log2</span>(counts <span class="op">+</span><span class="st"> </span><span class="dv">1</span>), <span class="dt">fill =</span> sample)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb154-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">20</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb154-5" data-line-number="5"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sample)</a></code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-70-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
 </div>
-<div id="run-deseq2" class="section level3" number="5.2.2">
+<div id="run-deseq2" class="section level3">
 <h3>
 <span class="header-section-number">5.2.2</span> Run DESeq2</h3>
 <p>The standard differential expression analysis steps are wrapped into a single
@@ -590,39 +604,15 @@ function <code>DESeq()</code>. This function will automatically run the followin
 <li><p><code>estimateDispersions()</code> (estimation of dispersion)</p></li>
 <li><p><code>nbinomWaldTest()</code> (Negative Binomial GLM fitting and Wald statistics)</p></li>
 </ul>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="sec-rnaseq.html#cb164-1" aria-hidden="true"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds)</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1">dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds)</a></code></pre></div>
 <pre><code>## estimating size factors</code></pre>
 <pre><code>## estimating dispersions</code></pre>
 <pre><code>## gene-wise dispersion estimates</code></pre>
 <pre><code>## mean-dispersion relationship</code></pre>
 <pre><code>## final dispersion estimates</code></pre>
 <pre><code>## fitting model and testing</code></pre>
-<p>resultsNames() function shows the results available. Note that by default, R will
-choose a reference level for factors based on alphabetical order. Here KD condition
-was hence set arbitrarily as the reference level. This means that the fold changes evaluated
-for every gene will correspond to their expression level in mock cells versus their
-expression level in KD cells.</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="sec-rnaseq.html#cb171-1" aria-hidden="true"></a><span class="kw">resultsNames</span>(dds)</span></code></pre></div>
-<pre><code>## [1] "Intercept"            "Condition_mock_vs_KD"</code></pre>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="sec-rnaseq.html#cb173-1" aria-hidden="true"></a>dds<span class="op">$</span>Condition</span></code></pre></div>
-<pre><code>## [1] mock mock mock KD   KD   KD  
-## Levels: KD mock</code></pre>
-<p>In this case, it seems more logical to use mock cells as reference.
-Reference levels can be changed using the relevel( ) function. But in this case don’t
-forget to re-run DESeq() function after the re-leveling operation.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="sec-rnaseq.html#cb175-1" aria-hidden="true"></a>dds<span class="op">$</span>Condition &lt;-<span class="st"> </span><span class="kw">relevel</span>(dds<span class="op">$</span>Condition, <span class="dt">ref =</span> <span class="st">"mock"</span>)</span>
-<span id="cb175-2"><a href="sec-rnaseq.html#cb175-2" aria-hidden="true"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds)</span></code></pre></div>
-<pre><code>## using pre-existing size factors</code></pre>
-<pre><code>## estimating dispersions</code></pre>
-<pre><code>## found already estimated dispersions, replacing these</code></pre>
-<pre><code>## gene-wise dispersion estimates</code></pre>
-<pre><code>## mean-dispersion relationship</code></pre>
-<pre><code>## final dispersion estimates</code></pre>
-<pre><code>## fitting model and testing</code></pre>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="sec-rnaseq.html#cb183-1" aria-hidden="true"></a><span class="kw">resultsNames</span>(dds)</span></code></pre></div>
-<pre><code>## [1] "Intercept"            "Condition_KD_vs_mock"</code></pre>
 </div>
-<div id="data-exploration" class="section level3" number="5.2.3">
+<div id="data-exploration" class="section level3">
 <h3>
 <span class="header-section-number">5.2.3</span> Data exploration</h3>
 <p>Before anything else, a good practice is to explore the data
@@ -633,9 +623,22 @@ and perform quality controls checks.</p>
 <ul>
 <li><p>Which samples are similar/different to each other?</p></li>
 <li><p>Does this fit to the expectation from the experiment’s design?</p></li>
-<li><p>Is the experimental condition the major sources of variation in the dataset?</p></li>
 <li><p>Are they any sample outliers which may need to be explored further?</p></li>
 </ul>
+<div class="question">
+<p class="question-begin">
+► Question
+</p>
+<div class="question-body">
+<p>Here are 3 examples of PCAs that correspond to different experimental designs.
+How would you interprete these PCAs and what impact could they
+have on the analysis?</p>
+<p><img src="figs/PCA_paired_design.png" width="80%" style="display: block; margin: auto;"><img src="figs/PCA_batch_effect.png" width="80%" style="display: block; margin: auto;"><img src="figs/PCA_outlier.png" width="80%" style="display: block; margin: auto;"></p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
 <p>Remember that if one performs PCA directly on a matrix of normalised read counts,
 the result typically depends only on the few most strongly expressed genes because
 they show the largest absolute differences between samples. A simple and often used
@@ -643,35 +646,79 @@ strategy to avoid this is to take the logarithm of the normalised count values p
 a small pseudocount; however, now the genes with low counts tend to dominate the
 results because, due to the strong Poisson noise inherent to small count values, they
 show the strongest relative differences between samples. As a solution, DESeq2 offers
-the regularized-logarithm transformation <code>rlog()</code><label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> For genes with high counts, the rlog transformation differs not much from
+the regularized-logarithm transformation <code>rlog()</code><label for="tufte-sn-8" class="margin-toggle sidenote-number">8</label><input type="checkbox" id="tufte-sn-8" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">8</span> For genes with high counts, the rlog transformation differs not much from
 an ordinary log2 transformation. However for genes with lower counts, the transformation
 moderates the variance across the mean shrunking the values towards the genes’ averages
-across all samples. See <code>?rlog</code> for more details about the function.</span>.
-<code>plotPCA()</code> function can then be used on the transformed counts to generate a PCA.</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="sec-rnaseq.html#cb185-1" aria-hidden="true"></a>rld &lt;-<span class="st"> </span><span class="kw">rlogTransformation</span>(dds)</span>
-<span id="cb185-2"><a href="sec-rnaseq.html#cb185-2" aria-hidden="true"></a><span class="kw">plotPCA</span>(rld, <span class="dt">intgroup =</span> <span class="st">"Condition"</span>)</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/PCA-1.png" width="672"></p>
+across all samples. See <code>?rlog</code> for more details about the function.</span>.</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" data-line-number="1">rld &lt;-<span class="st"> </span><span class="kw">rlogTransformation</span>(dds)</a></code></pre></div>
 <div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
-<p>How would you interprete this PCA?</p>
+<p>Pick a gene highly expressed and a gene lowly expressed and inspect the effect
+of the rlog transformation</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
+<div class="solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-10" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-10', 'sol-start-10')"></span>
+</p>
+<div id="sol-body-10" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1"><span class="co"># picked a very highly expressed gene</span></a>
+<a class="sourceLine" id="cb163-2" data-line-number="2"><span class="kw">assay</span>(dds[<span class="st">"ENSG00000198804"</span>])</a></code></pre></div>
+<pre><code>##                 sample1 sample2 sample3 sample4 sample5 sample6
+## ENSG00000198804  143371  183617  178564  187194  151128  160159</code></pre>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1"><span class="kw">log2</span>(<span class="kw">assay</span>(dds[<span class="st">"ENSG00000198804"</span>]))</a></code></pre></div>
+<pre><code>##                  sample1  sample2  sample3  sample4  sample5  sample6
+## ENSG00000198804 17.12939 17.48634 17.44608 17.51417 17.20541 17.28915</code></pre>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1"><span class="kw">assay</span>(rld[<span class="st">"ENSG00000198804"</span>])</a></code></pre></div>
+<pre><code>##                 sample1 sample2  sample3  sample4  sample5 sample6
+## ENSG00000198804 17.4965 17.1893 17.33771 17.48025 17.21832 17.2955</code></pre>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1"><span class="co"># picked a lowly expressed gene</span></a>
+<a class="sourceLine" id="cb169-2" data-line-number="2"><span class="kw">assay</span>(dds[<span class="st">"ENSG00000248671"</span>])</a></code></pre></div>
+<pre><code>##                 sample1 sample2 sample3 sample4 sample5 sample6
+## ENSG00000248671       1      16       1       5       3       8</code></pre>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1"><span class="kw">log2</span>(<span class="kw">assay</span>(dds[<span class="st">"ENSG00000248671"</span>]))</a></code></pre></div>
+<pre><code>##                 sample1 sample2 sample3  sample4  sample5 sample6
+## ENSG00000248671       0       4       0 2.321928 1.584963       3</code></pre>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1"><span class="kw">assay</span>(rld[<span class="st">"ENSG00000248671"</span>])</a></code></pre></div>
+<pre><code>##                  sample1  sample2  sample3  sample4  sample5 sample6
+## ENSG00000248671 2.214236 2.511533 2.187179 2.318412 2.250167 2.39352</code></pre>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>The <code>plotPCA()</code> function can then be used on the transformed counts to generate a PCA.</p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1"><span class="kw">plotPCA</span>(rld, <span class="dt">intgroup =</span> <span class="st">"Condition"</span>)</a></code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-74-1.png" width="672"></p>
+<p>Note that the argument <code>returnData = TRUE</code> can be used to obtain a dataframe of PC1 and PC2
+for custom plotting.</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1">pca_data &lt;-<span class="st"> </span><span class="kw">plotPCA</span>(rld, <span class="dt">intgroup =</span> <span class="st">"Condition"</span>, <span class="dt">returnData =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb176-2" data-line-number="2">pca_data</a></code></pre></div>
+<pre><code>##                PC1       PC2 group Condition    name
+## sample1  -9.255547  2.574003  mock      mock sample1
+## sample2 -14.268017 -1.047978  mock      mock sample2
+## sample3  -8.216937 -1.328574  mock      mock sample3
+## sample4  10.591838  4.149401    KD        KD sample4
+## sample5  10.398083 -2.087520    KD        KD sample5
+## sample6  10.750579 -2.259333    KD        KD sample6</code></pre>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1"><span class="kw">ggplot</span>(pca_data, <span class="kw">aes</span>(<span class="dt">x =</span> PC1, <span class="dt">y =</span> PC2, <span class="dt">color =</span> Condition, <span class="dt">label =</span> name)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb178-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb178-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_text</span>()</a></code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-75-1.png" width="672"></p>
 </div>
 <div id="inspecting-size-factors" class="section level4 unnumbered">
 <h4>Inspecting size factors</h4>
 <p>It is also advisable to investigate any systematic bias in the sequencing data, such as
 whether one sample has been sequenced more deeply than others. One can extract size factors
 using the <code>sizeFactors()</code> function.
-Usually these size factors should vary around 1, indicating comparable sequencing depth.
-Any large variations between samples should be noticed since it might indicate the presence
-of extreme outliers.</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="sec-rnaseq.html#cb186-1" aria-hidden="true"></a><span class="kw">sizeFactors</span>(dds)</span></code></pre></div>
+Usually these size factors should vary around 1, indicating comparable sequencing depth.</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1"><span class="kw">sizeFactors</span>(dds)</a></code></pre></div>
 <pre><code>##   sample1   sample2   sample3   sample4   sample5   sample6 
 ## 0.7268826 1.3086639 1.0773676 0.9660247 1.0421106 1.0126638</code></pre>
 <div class="question">
@@ -687,19 +734,19 @@ of extreme outliers.</p>
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-10" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-10', 'sol-start-10')"></span>
+► Solution<span id="sol-start-11" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-11', 'sol-start-11')"></span>
 </p>
-<div id="sol-body-10" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="sec-rnaseq.html#cb188-1" aria-hidden="true"></a>SF &lt;-<span class="st"> </span><span class="kw">enframe</span>(<span class="kw">sizeFactors</span>(dds), <span class="dt">name =</span> <span class="st">"sample"</span>, <span class="dt">value =</span> <span class="st">"Size_Factor"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb188-2"><a href="sec-rnaseq.html#cb188-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> Size_Factor)) <span class="op">+</span></span>
-<span id="cb188-3"><a href="sec-rnaseq.html#cb188-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>)</span>
-<span id="cb188-4"><a href="sec-rnaseq.html#cb188-4" aria-hidden="true"></a></span>
-<span id="cb188-5"><a href="sec-rnaseq.html#cb188-5" aria-hidden="true"></a>SD &lt;-<span class="st"> </span><span class="kw">enframe</span>(<span class="kw">colSums</span>(<span class="kw">assay</span>(dds, <span class="st">"counts"</span>)), <span class="dt">name =</span> <span class="st">"sample"</span>, <span class="dt">value =</span> <span class="st">"n_reads"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb188-6"><a href="sec-rnaseq.html#cb188-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> n_reads)) <span class="op">+</span></span>
-<span id="cb188-7"><a href="sec-rnaseq.html#cb188-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>)</span>
-<span id="cb188-8"><a href="sec-rnaseq.html#cb188-8" aria-hidden="true"></a></span>
-<span id="cb188-9"><a href="sec-rnaseq.html#cb188-9" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"patchwork"</span>)</span>
-<span id="cb188-10"><a href="sec-rnaseq.html#cb188-10" aria-hidden="true"></a>SF <span class="op">/</span><span class="st"> </span>SD</span></code></pre></div>
+<div id="sol-body-11" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1">SF &lt;-<span class="st"> </span><span class="kw">enframe</span>(<span class="kw">sizeFactors</span>(dds), <span class="dt">name =</span> <span class="st">"sample"</span>, <span class="dt">value =</span> <span class="st">"Size_Factor"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb181-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> Size_Factor)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb181-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>)</a>
+<a class="sourceLine" id="cb181-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb181-5" data-line-number="5">SD &lt;-<span class="st"> </span><span class="kw">enframe</span>(<span class="kw">colSums</span>(<span class="kw">assay</span>(dds, <span class="st">"counts"</span>)), <span class="dt">name =</span> <span class="st">"sample"</span>, <span class="dt">value =</span> <span class="st">"n_reads"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb181-6" data-line-number="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> n_reads)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb181-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>)</a>
+<a class="sourceLine" id="cb181-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb181-9" data-line-number="9"><span class="kw">library</span>(<span class="st">"patchwork"</span>)</a>
+<a class="sourceLine" id="cb181-10" data-line-number="10">SF <span class="op">/</span><span class="st"> </span>SD</a></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/size_factor-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -712,26 +759,44 @@ of extreme outliers.</p>
 <p>Plotting the dispersion estimates is a useful diagnostic.
 This dispersion plot is typical, with the final dispersion, estimates shrunk from the
 gene-wise estimates towards the fitted estimates.</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="sec-rnaseq.html#cb189-1" aria-hidden="true"></a><span class="kw">plotDispEsts</span>(dds)</span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1"><span class="kw">plotDispEsts</span>(dds)</a></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/dispersion_plot-1.png" width="672"></p>
 </div>
 </div>
-<div id="results" class="section level3" number="5.2.4">
+<div id="results" class="section level3">
 <h3>
 <span class="header-section-number">5.2.4</span> Results</h3>
+<p>The <code>resultsNames()</code> function gives the names of results that can be extracted.
+Note that by default, R will choose a reference level for factors based on alphabetical
+order. Here KD condition was hence set arbitrarily as the reference level. This means
+that the fold changes evaluated for every gene will correspond to their expression level
+in mock cells versus their expression level in KD cells.</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" data-line-number="1"><span class="kw">resultsNames</span>(dds)</a></code></pre></div>
+<pre><code>## [1] "Intercept"            "Condition_mock_vs_KD"</code></pre>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" data-line-number="1">dds<span class="op">$</span>Condition</a></code></pre></div>
+<pre><code>## [1] mock mock mock KD   KD   KD  
+## Levels: KD mock</code></pre>
+<p>In this case, it seems more logical to use mock cells as reference.
+Reference levels can be changed using the relevel( ) function. But in this case don’t
+forget to re-run DESeq() function after the re-leveling operation.</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" data-line-number="1">dds<span class="op">$</span>Condition &lt;-<span class="st"> </span><span class="kw">relevel</span>(dds<span class="op">$</span>Condition, <span class="dt">ref =</span> <span class="st">"mock"</span>)</a>
+<a class="sourceLine" id="cb187-2" data-line-number="2">dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds)</a>
+<a class="sourceLine" id="cb187-3" data-line-number="3"><span class="kw">resultsNames</span>(dds)</a></code></pre></div>
+<pre><code>## [1] "Intercept"            "Condition_KD_vs_mock"</code></pre>
 <p>Results can then be extracted using the <code>results()</code>function.</p>
-<p>The <code>name</code> parameter must be an element of resultsNames(object): it specifies the
-the samples to compare. Note that the <code>contrast</code> argument of <code>results()</code> can also be used to
+<p>The <code>name</code> parameter must be an element of resultsNames(object) specifying the
+the samples to compare.</p>
+<p>Note that the <code>contrast</code> argument of <code>results()</code> can also be used to
 extract results of interest. In this case, the two following commands will give the same
-results<label for="tufte-sn-8" class="margin-toggle sidenote-number">8</label><input type="checkbox" id="tufte-sn-8" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">8</span> Using the <code>name</code> argument is however sometimes necessary to extract specific
+results<label for="tufte-sn-9" class="margin-toggle sidenote-number">9</label><input type="checkbox" id="tufte-sn-9" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">9</span> Using the <code>name</code> argument is however necessary to extract specific
 coefficients from more complex designs.</span>.</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="sec-rnaseq.html#cb190-1" aria-hidden="true"></a>res &lt;-<span class="st"> </span><span class="kw">results</span>(dds,</span>
-<span id="cb190-2"><a href="sec-rnaseq.html#cb190-2" aria-hidden="true"></a>               <span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="sec-rnaseq.html#cb191-1" aria-hidden="true"></a>res &lt;-<span class="st"> </span><span class="kw">results</span>(dds,</span>
-<span id="cb191-2"><a href="sec-rnaseq.html#cb191-2" aria-hidden="true"></a>               <span class="dt">contrast =</span> <span class="kw">c</span>(<span class="st">"Condition"</span>, <span class="st">"KD"</span>, <span class="st">"mock"</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" data-line-number="1">res &lt;-<span class="st"> </span><span class="kw">results</span>(dds,</a>
+<a class="sourceLine" id="cb189-2" data-line-number="2">               <span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1">res &lt;-<span class="st"> </span><span class="kw">results</span>(dds,</a>
+<a class="sourceLine" id="cb190-2" data-line-number="2">               <span class="dt">contrast =</span> <span class="kw">c</span>(<span class="st">"Condition"</span>, <span class="st">"KD"</span>, <span class="st">"mock"</span>))</a></code></pre></div>
 <p>Let’s inspect the results and their signification.</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="sec-rnaseq.html#cb192-1" aria-hidden="true"></a>res_tbl &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(res, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>)</span>
-<span id="cb192-2"><a href="sec-rnaseq.html#cb192-2" aria-hidden="true"></a>res_tbl</span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb191-1" data-line-number="1">res_tbl &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(res, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>)</a>
+<a class="sourceLine" id="cb191-2" data-line-number="2">res_tbl</a></code></pre></div>
 <pre><code>## # A tibble: 58,735 x 7
 ##    ENSEMBL         baseMean log2FoldChange  lfcSE   stat pvalue   padj
 ##    &lt;chr&gt;              &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
@@ -747,26 +812,33 @@ coefficients from more complex designs.</span>.</p>
 ## 10 ENSG00000238009    3.49          -1.69   1.22  -1.39   0.165 NA    
 ## # … with 58,725 more rows</code></pre>
 <p><strong>baseMean</strong>: The average of the normalised count values taken over all samples.</p>
-<p><strong>log2FoldChange</strong>: This value indicates how much the gene or transcript’s
-expression seems to have changed between the comparison and control groups<label for="tufte-sn-9" class="margin-toggle sidenote-number">9</label><input type="checkbox" id="tufte-sn-9" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">9</span> In this case, as we are testing the “Condition_KD_vs_mock” coefficient,
-positive log2FC indicates a gene up-regulated in the KD condition compared to the
-mock condition, while a negative log2FC indicate a down-regulation.</span>.
-It is reported on a logarithmic scale to base 2.</p>
+<p><strong>log2FoldChange</strong>: Fold-change between the comparison and control groups,
+reported on a logarithmic scale to base 2. In this case, as we are testing
+the “Condition_KD_vs_mock” coefficient, positive log2FC indicates a gene up-regulated
+in the KD condition compared to the mock condition, while a negative log2FC indicate
+a down-regulation.<label for="tufte-sn-10" class="margin-toggle sidenote-number">10</label><input type="checkbox" id="tufte-sn-10" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">10</span> DESeq2 offers further options to shrink LFC estimates. This is useful for
+ranking and visualization (see <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2 vignette</a>
+for more information).</span></p>
 <p><strong>lfcSE</strong>: The standard error estimate for the log2FoldChange estimate</p>
 <p><strong>stat</strong>: The value of the test statistic for the gene</p>
 <p><strong>pvalue</strong>: The pvalue of the test for the gene</p>
 <p><strong>padj</strong>: pvalue adjusted for multiple testing</p>
-<p>Note that DESeq2 offers further options to shrink LFC estimates. This is useful for
-ranking and visualization (see <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2 vignette</a>
-for more information).</p>
 <div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
-<p>Inspect the results table.</p>
 <ol style="list-style-type: decimal">
-<li><p>Identify the 5 genes with the lowest padjusted value?</p></li>
+<li><p>Inspect the results table and identify the 5 “best genes” showing
+the lowest padjusted value.</p></li>
+<li><p>Calculate the mean expression level of these 5 “best genes” using
+the function <code>count()</code>. Compare with baseMean values.</p></li>
+<li><p>Extract the ß coefficient of these 5 “best genes” from the GLM
+using the function <code>coefficient()</code>. Compare with log2FoldChange values.</p></li>
+<li><p>Using the function <code>count()</code>, evaluate the mean expression levels
+of these 5 “best genes” in mock cells. Compare with ß coefficients.</p></li>
+<li><p>Evaluate the mean expression levels of these 5 “best genes”
+in KD cells. Compare with ß coefficients.</p></li>
 <li><p>How many genes have no padjusted value? Why?</p></li>
 </ol>
 <p class="question-end">
@@ -776,15 +848,16 @@ for more information).</p>
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-11" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-11', 'sol-start-11')"></span>
+► Solution<span id="sol-start-12" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-12', 'sol-start-12')"></span>
 </p>
-<div id="sol-body-11" class="solution-body" style="display: none;">
+<div id="sol-body-12" class="solution-body" style="display: none;">
 <ol style="list-style-type: decimal">
-<li>Identify the 5 genes with the lowest padjusted value?</li>
+<li>Inspect the results table and identify the 5 “best genes” showing
+the lowest padjusted value.</li>
 </ol>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="sec-rnaseq.html#cb194-1" aria-hidden="true"></a>res_tbl <span class="op">%&gt;%</span></span>
-<span id="cb194-2"><a href="sec-rnaseq.html#cb194-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">arrange</span>(padj) <span class="op">%&gt;%</span></span>
-<span id="cb194-3"><a href="sec-rnaseq.html#cb194-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb193-1" data-line-number="1">res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb193-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(padj) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb193-3" data-line-number="3"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 7
 ##   ENSEMBL         baseMean log2FoldChange lfcSE  stat    pvalue      padj
 ##   &lt;chr&gt;              &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
@@ -794,15 +867,56 @@ for more information).</p>
 ## 4 ENSG00000175315     220.           4.29 0.300  14.3 2.20e- 46 9.16e- 43
 ## 5 ENSG00000128245    2692.           2.05 0.144  14.2 5.64e- 46 1.88e- 42</code></pre>
 <ol start="2" style="list-style-type: decimal">
+<li>Calculate the mean expression level of these 5 “best genes” using
+the function <code>count()</code>. Compare with baseMean values.</li>
+</ol>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb195-1" data-line-number="1">best_genes &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb195-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(padj) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb195-3" data-line-number="3"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(ENSEMBL)</a>
+<a class="sourceLine" id="cb195-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb195-5" data-line-number="5"><span class="kw">rowMeans</span>(<span class="kw">counts</span>(dds[best_genes], <span class="dt">normalize =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<pre><code>## ENSG00000101856 ENSG00000177494 ENSG00000136159 ENSG00000175315 ENSG00000128245 
+##       1209.2283        277.1334        630.0444        219.6860       2692.2250</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Extract the ß coefficient of these 5 “best genes” from the GLM
+using the function <code>coefficient()</code>. Compare with log2FoldChange values.</li>
+</ol>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb197-1" data-line-number="1"><span class="kw">coefficients</span>(dds[best_genes])</a></code></pre></div>
+<pre><code>##                 Intercept Condition_KD_vs_mock
+## ENSG00000101856 11.183974            -4.673040
+## ENSG00000177494  2.843588             6.249730
+## ENSG00000136159  7.780272             2.243621
+## ENSG00000175315  4.413188             4.290890
+## ENSG00000128245 10.032905             2.049342</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Using the function <code>count()</code>, evaluate the mean expression levels
+of these 5 “best genes” in mock cells. Compare with ß coefficients.</li>
+</ol>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb199-1" data-line-number="1"><span class="co"># log2 expression levels in mock cells</span></a>
+<a class="sourceLine" id="cb199-2" data-line-number="2"><span class="kw">log2</span>(<span class="kw">rowMeans</span>(<span class="kw">counts</span>(dds[best_genes, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="dt">normalize =</span> <span class="ot">TRUE</span>)))</a></code></pre></div>
+<pre><code>## ENSG00000101856 ENSG00000177494 ENSG00000136159 ENSG00000175315 ENSG00000128245 
+##       11.184348        3.004525        7.773839        4.473037       10.033523</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Evaluate the mean expression levels of these 5 “best genes”
+in KD cells. Compare with ß coefficients.</li>
+</ol>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" data-line-number="1"><span class="co"># log2 expression levels in KD cells</span></a>
+<a class="sourceLine" id="cb201-2" data-line-number="2"><span class="kw">log2</span>(<span class="kw">rowMeans</span>(<span class="kw">counts</span>(dds[best_genes, <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>], <span class="dt">normalize =</span> <span class="ot">TRUE</span>)))</a></code></pre></div>
+<pre><code>## ENSG00000101856 ENSG00000177494 ENSG00000136159 ENSG00000175315 ENSG00000128245 
+##        6.512646        9.093396       10.024077        8.704469       12.082275</code></pre>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb203-1" data-line-number="1"><span class="co"># log2 expression levels in KD cells evaluated from ß coefficients</span></a>
+<a class="sourceLine" id="cb203-2" data-line-number="2"><span class="kw">coefficients</span>(dds[best_genes])[,<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="kw">coefficients</span>(dds[best_genes])[,<span class="dv">2</span>]</a></code></pre></div>
+<pre><code>## ENSG00000101856 ENSG00000177494 ENSG00000136159 ENSG00000175315 ENSG00000128245 
+##        6.510934        9.093318       10.023893        8.704078       12.082248</code></pre>
+<ol start="6" style="list-style-type: decimal">
 <li>How many genes have no padjusted value? Why?</li>
 </ol>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="sec-rnaseq.html#cb196-1" aria-hidden="true"></a><span class="kw">summary</span>(res<span class="op">$</span>padj)</span></code></pre></div>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb205-1" data-line-number="1"><span class="kw">summary</span>(res<span class="op">$</span>padj)</a></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 ##    0.00    0.04    0.32    0.38    0.69    1.00   42108</code></pre>
 <p>Let’s filter genes with no padjusted values</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="sec-rnaseq.html#cb198-1" aria-hidden="true"></a>res_tbl &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(res, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>)</span>
-<span id="cb198-2"><a href="sec-rnaseq.html#cb198-2" aria-hidden="true"></a>res_tbl <span class="op">%&gt;%</span></span>
-<span id="cb198-3"><a href="sec-rnaseq.html#cb198-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(padj))</span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb207-1" data-line-number="1">res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb207-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(padj))</a></code></pre></div>
 <pre><code>## # A tibble: 42,108 x 7
 ##    ENSEMBL         baseMean log2FoldChange lfcSE   stat pvalue  padj
 ##    &lt;chr&gt;              &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
@@ -832,24 +946,22 @@ that have been filtered out by the independent filtering procedure.</p>
 <h4>Independent filtering exploration</h4>
 <p>The filtering threshold that has been used to filter low count genes can be extracted
 from the results metadata.</p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="sec-rnaseq.html#cb200-1" aria-hidden="true"></a><span class="kw">metadata</span>(res)<span class="op">$</span>filterThreshold</span></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb209-1" data-line-number="1"><span class="kw">metadata</span>(res)<span class="op">$</span>filterThreshold</a></code></pre></div>
 <pre><code>## 71.69224% 
 ##  4.103008</code></pre>
 <p>This means that genes whith basemean &lt; 4.1030081 have been
 filtered. This represents 71.69224% of all tested genes!</p>
 <p>Remember that the filtering threshold has been fixed in a way that maximizes the number
-of genes which will have a significant padjusted value. We can illustrate this on the
-following plot, which shows the number of rejections over the basemean quantiles.</p>
-<p>The threshold chosen (red vertical line) is the lowest quantile for which the number of
+of genes which will have a significant padjusted value.</p>
+<p>We can plot the number of rejections over the basemean quantiles.
+The threshold chosen (red vertical line) is the lowest quantile for which the number of
 rejections is within 1 residual standard deviation to the peak of the curve.</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="sec-rnaseq.html#cb202-1" aria-hidden="true"></a><span class="kw">as_tibble</span>(<span class="kw">metadata</span>(res)<span class="op">$</span>filterNumRej, <span class="dt">rownames =</span> <span class="st">'percent'</span>) <span class="op">%&gt;%</span></span>
-<span id="cb202-2"><a href="sec-rnaseq.html#cb202-2" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="dt">quantiles =</span> theta) <span class="op">%&gt;%</span></span>
-<span id="cb202-3"><a href="sec-rnaseq.html#cb202-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> quantiles, <span class="dt">y =</span> numRej)) <span class="op">+</span></span>
-<span id="cb202-4"><a href="sec-rnaseq.html#cb202-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb202-5"><a href="sec-rnaseq.html#cb202-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span></span>
-<span id="cb202-6"><a href="sec-rnaseq.html#cb202-6" aria-hidden="true"></a>               <span class="kw">as.numeric</span>(<span class="kw">sub</span>(<span class="st">'%'</span>, <span class="dt">replacement =</span> <span class="st">''</span>, <span class="kw">names</span>(<span class="kw">metadata</span>(res)<span class="op">$</span>filterThreshold)))<span class="op">/</span><span class="dv">100</span>,</span>
-<span id="cb202-7"><a href="sec-rnaseq.html#cb202-7" aria-hidden="true"></a>             <span class="dt">color =</span> <span class="st">'red'</span>)</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-77-1.png" width="672"></p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb211-1" data-line-number="1"><span class="kw">as_tibble</span>(<span class="kw">metadata</span>(res)<span class="op">$</span>filterNumRej) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb211-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> theta, <span class="dt">y =</span> numRej)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb211-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb211-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="fl">0.7169</span>,</a>
+<a class="sourceLine" id="cb211-5" data-line-number="5">             <span class="dt">color =</span> <span class="st">'red'</span>)</a></code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-91-1.png" width="672"></p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -871,43 +983,43 @@ Check how many genes have no padj?</p></li>
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-12" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-12', 'sol-start-12')"></span>
+► Solution<span id="sol-start-13" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-13', 'sol-start-13')"></span>
 </p>
-<div id="sol-body-12" class="solution-body" style="display: none;">
+<div id="sol-body-13" class="solution-body" style="display: none;">
 <ol style="list-style-type: decimal">
 <li>Actually many of these genes would have been filtered anyway because
 their <code>basemean == 0</code>. Evaluate how many genes were really filtered by the independent
 filtering procedure.</li>
 </ol>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="sec-rnaseq.html#cb203-1" aria-hidden="true"></a><span class="co"># Number of genes with basemean == 0</span></span>
-<span id="cb203-2"><a href="sec-rnaseq.html#cb203-2" aria-hidden="true"></a>res_tbl <span class="op">%&gt;%</span></span>
-<span id="cb203-3"><a href="sec-rnaseq.html#cb203-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(baseMean <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span></span>
-<span id="cb203-4"><a href="sec-rnaseq.html#cb203-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">nrow</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" data-line-number="1"><span class="co"># Number of genes with basemean == 0</span></a>
+<a class="sourceLine" id="cb212-2" data-line-number="2">res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb212-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(baseMean <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb212-4" data-line-number="4"><span class="st">  </span><span class="kw">nrow</span>()</a></code></pre></div>
 <pre><code>## [1] 26633</code></pre>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="sec-rnaseq.html#cb205-1" aria-hidden="true"></a><span class="co"># Number of genes filtered by the independent filtering procedure</span></span>
-<span id="cb205-2"><a href="sec-rnaseq.html#cb205-2" aria-hidden="true"></a>res_tbl <span class="op">%&gt;%</span></span>
-<span id="cb205-3"><a href="sec-rnaseq.html#cb205-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(baseMean <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>baseMean <span class="op">&lt;</span><span class="st"> </span><span class="kw">metadata</span>(res)<span class="op">$</span>filterThreshold) <span class="op">%&gt;%</span></span>
-<span id="cb205-4"><a href="sec-rnaseq.html#cb205-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">nrow</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" data-line-number="1"><span class="co"># Number of genes filtered by the independent filtering procedure</span></a>
+<a class="sourceLine" id="cb214-2" data-line-number="2">res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb214-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(baseMean <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>baseMean <span class="op">&lt;</span><span class="st"> </span><span class="kw">metadata</span>(res)<span class="op">$</span>filterThreshold) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb214-4" data-line-number="4"><span class="st">  </span><span class="kw">nrow</span>()</a></code></pre></div>
 <pre><code>## [1] 15475</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Re-run the results() function on the same dds object,
 but set the independent filtering parameter to FALSE.
 Check how many genes have no padj?</li>
 </ol>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="sec-rnaseq.html#cb207-1" aria-hidden="true"></a>res_no_IF &lt;-<span class="st"> </span><span class="kw">results</span>(dds,</span>
-<span id="cb207-2"><a href="sec-rnaseq.html#cb207-2" aria-hidden="true"></a>                     <span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>,</span>
-<span id="cb207-3"><a href="sec-rnaseq.html#cb207-3" aria-hidden="true"></a>                     <span class="dt">independentFiltering =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb207-4"><a href="sec-rnaseq.html#cb207-4" aria-hidden="true"></a><span class="kw">as_tibble</span>(res_no_IF, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb207-5"><a href="sec-rnaseq.html#cb207-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(padj)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb216-1" data-line-number="1">res_no_IF &lt;-<span class="st"> </span><span class="kw">results</span>(dds,</a>
+<a class="sourceLine" id="cb216-2" data-line-number="2">                     <span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>,</a>
+<a class="sourceLine" id="cb216-3" data-line-number="3">                     <span class="dt">independentFiltering =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb216-4" data-line-number="4"><span class="kw">as_tibble</span>(res_no_IF, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb216-5" data-line-number="5"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(padj)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>()</a></code></pre></div>
 <pre><code>## [1] 26633</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Imagine another way of filtering genes with very low counts</li>
 </ol>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="sec-rnaseq.html#cb209-1" aria-hidden="true"></a><span class="co"># filter the data to remove genes with few counts</span></span>
-<span id="cb209-2"><a href="sec-rnaseq.html#cb209-2" aria-hidden="true"></a>filtering_thr &lt;-<span class="st"> </span><span class="dv">5</span></span>
-<span id="cb209-3"><a href="sec-rnaseq.html#cb209-3" aria-hidden="true"></a><span class="co"># keep genes with counts &gt; 5 in 3 or more samples</span></span>
-<span id="cb209-4"><a href="sec-rnaseq.html#cb209-4" aria-hidden="true"></a>keep &lt;-<span class="st"> </span><span class="kw">rowSums</span>(<span class="kw">counts</span>(dds, <span class="dt">normalized =</span> <span class="ot">TRUE</span>) <span class="op">&gt;=</span><span class="st"> </span>filtering_thr) <span class="op">&gt;=</span><span class="dv">3</span></span>
-<span id="cb209-5"><a href="sec-rnaseq.html#cb209-5" aria-hidden="true"></a>dds_bis &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds[keep, ])</span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb218-1" data-line-number="1"><span class="co"># filter the data to remove genes with few counts</span></a>
+<a class="sourceLine" id="cb218-2" data-line-number="2">filtering_thr &lt;-<span class="st"> </span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb218-3" data-line-number="3"><span class="co"># keep genes with counts &gt; 5 in 3 or more samples</span></a>
+<a class="sourceLine" id="cb218-4" data-line-number="4">keep &lt;-<span class="st"> </span><span class="kw">rowSums</span>(<span class="kw">counts</span>(dds, <span class="dt">normalized =</span> <span class="ot">TRUE</span>) <span class="op">&gt;=</span><span class="st"> </span>filtering_thr) <span class="op">&gt;=</span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb218-5" data-line-number="5">dds_bis &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds[keep, ])</a></code></pre></div>
 <pre><code>## using pre-existing size factors</code></pre>
 <pre><code>## estimating dispersions</code></pre>
 <pre><code>## found already estimated dispersions, replacing these</code></pre>
@@ -915,16 +1027,24 @@ Check how many genes have no padj?</li>
 <pre><code>## mean-dispersion relationship</code></pre>
 <pre><code>## final dispersion estimates</code></pre>
 <pre><code>## fitting model and testing</code></pre>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="sec-rnaseq.html#cb217-1" aria-hidden="true"></a>res_bis &lt;-<span class="st"> </span><span class="kw">results</span>(dds_bis,</span>
-<span id="cb217-2"><a href="sec-rnaseq.html#cb217-2" aria-hidden="true"></a>                   <span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>,</span>
-<span id="cb217-3"><a href="sec-rnaseq.html#cb217-3" aria-hidden="true"></a>                   <span class="dt">independentFiltering =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb217-4"><a href="sec-rnaseq.html#cb217-4" aria-hidden="true"></a></span>
-<span id="cb217-5"><a href="sec-rnaseq.html#cb217-5" aria-hidden="true"></a><span class="kw">as_tibble</span>(res_bis, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb217-6"><a href="sec-rnaseq.html#cb217-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(padj)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb226-1" data-line-number="1">res_bis &lt;-<span class="st"> </span><span class="kw">results</span>(dds_bis,</a>
+<a class="sourceLine" id="cb226-2" data-line-number="2">                   <span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>,</a>
+<a class="sourceLine" id="cb226-3" data-line-number="3">                   <span class="dt">independentFiltering =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb226-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb226-5" data-line-number="5"><span class="co"># All genes now have a padj value </span></a>
+<a class="sourceLine" id="cb226-6" data-line-number="6"><span class="co"># =&gt; logical as we kept only those with at least 5 counts in at least 3 sample</span></a>
+<a class="sourceLine" id="cb226-7" data-line-number="7"><span class="kw">as_tibble</span>(res_bis, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb226-8" data-line-number="8"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(padj)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>()</a></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="sec-rnaseq.html#cb219-1" aria-hidden="true"></a><span class="kw">as_tibble</span>(res_bis, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb219-2"><a href="sec-rnaseq.html#cb219-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(padj)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb228-1" data-line-number="1"><span class="co"># Total number of genes kept </span></a>
+<a class="sourceLine" id="cb228-2" data-line-number="2"><span class="kw">as_tibble</span>(res_bis, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb228-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(padj)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>()</a></code></pre></div>
 <pre><code>## [1] 16152</code></pre>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb230-1" data-line-number="1"><span class="co"># Compare with previous analysis </span></a>
+<a class="sourceLine" id="cb230-2" data-line-number="2"><span class="co"># (Independant filtering threshold fixed automatically by DESeq2)</span></a>
+<a class="sourceLine" id="cb230-3" data-line-number="3"><span class="kw">as_tibble</span>(res, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb230-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(padj)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>()</a></code></pre></div>
+<pre><code>## [1] 16627</code></pre>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -938,8 +1058,8 @@ It can give you an immediate idea of the proportion of genes differentially expr
 (the taller the is the left peak, the more p-values are close to 0 and therefore
 significant). Furthermore, it gives an idea of how the test behaved across all your
 hypotheses, and immediately diagnoses some potential problems.</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="sec-rnaseq.html#cb221-1" aria-hidden="true"></a><span class="kw">hist</span>(res_tbl<span class="op">$</span>pvalue)</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-81-1.png" width="672"></p>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb232-1" data-line-number="1"><span class="kw">hist</span>(res_tbl<span class="op">$</span>pvalue)</a></code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-95-1.png" width="672"></p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -953,17 +1073,17 @@ hypotheses, and immediately diagnoses some potential problems.</p>
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-13" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-13', 'sol-start-13')"></span>
+► Solution<span id="sol-start-14" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-14', 'sol-start-14')"></span>
 </p>
-<div id="sol-body-13" class="solution-body" style="display: none;">
+<div id="sol-body-14" class="solution-body" style="display: none;">
 <p>There is a peak at 0, but there is also a peak close to 0.8.
 Assumption that the p-values near 1 are uniform doesn’t seem to be completely valid.
 This implies that in principle, a false discovery rate shouldn’t be applied to control
 these p-values.
 Let’s try to figure out why the p-values show this behavior.</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="sec-rnaseq.html#cb222-1" aria-hidden="true"></a>res_tbl <span class="op">%&gt;%</span></span>
-<span id="cb222-2"><a href="sec-rnaseq.html#cb222-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(pvalue <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.8</span> <span class="op">&amp;</span><span class="st"> </span>pvalue <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.85</span>) <span class="op">%&gt;%</span></span>
-<span id="cb222-3"><a href="sec-rnaseq.html#cb222-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb233-1" data-line-number="1">res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb233-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(pvalue <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.8</span> <span class="op">&amp;</span><span class="st"> </span>pvalue <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.85</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb233-3" data-line-number="3"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 10 x 7
 ##    ENSEMBL         baseMean log2FoldChange lfcSE   stat pvalue   padj
 ##    &lt;chr&gt;              &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
@@ -977,10 +1097,10 @@ Let’s try to figure out why the p-values show this behavior.</p>
 ##  8 ENSG00000283040    0.155         -0.959 4.08  -0.235  0.814 NA    
 ##  9 ENSG00000272438    0.160          0.964 4.08   0.236  0.813 NA    
 ## 10 ENSG00000260179    3.67          -0.230 1.12  -0.206  0.837 NA</code></pre>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="sec-rnaseq.html#cb224-1" aria-hidden="true"></a>res_tbl <span class="op">%&gt;%</span></span>
-<span id="cb224-2"><a href="sec-rnaseq.html#cb224-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(pvalue <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.8</span> <span class="op">&amp;</span><span class="st"> </span>pvalue <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.85</span>) <span class="op">%&gt;%</span></span>
-<span id="cb224-3"><a href="sec-rnaseq.html#cb224-3" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(padj) <span class="op">%&gt;%</span></span>
-<span id="cb224-4"><a href="sec-rnaseq.html#cb224-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">summary</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb235-1" data-line-number="1">res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb235-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(pvalue <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.8</span> <span class="op">&amp;</span><span class="st"> </span>pvalue <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.85</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb235-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(padj) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb235-4" data-line-number="4"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
 <pre><code>##       padj      
 ##  Min.   :0.889  
 ##  1st Qu.:0.894  
@@ -998,11 +1118,11 @@ basemean = 0), but the pvalue adjustement is computed later only on
 genes that pass the independent filtering threshold. If we plot again
 the pvalues histogram using filtered genes only, then we observe that
 the pvalues behaviour is now much nicer!</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="sec-rnaseq.html#cb226-1" aria-hidden="true"></a>res_tbl <span class="op">%&gt;%</span></span>
-<span id="cb226-2"><a href="sec-rnaseq.html#cb226-2" aria-hidden="true"></a><span class="st">    </span><span class="kw">filter</span>(baseMean <span class="op">&gt;</span><span class="st"> </span><span class="kw">metadata</span>(res)<span class="op">$</span>filterThreshold) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb226-3"><a href="sec-rnaseq.html#cb226-3" aria-hidden="true"></a><span class="st">    </span><span class="kw">pull</span>(pvalue) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb226-4"><a href="sec-rnaseq.html#cb226-4" aria-hidden="true"></a><span class="st">    </span><span class="kw">hist</span>()</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-83-1.png" width="672"></p>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb237-1" data-line-number="1">res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb237-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(baseMean <span class="op">&gt;</span><span class="st"> </span><span class="kw">metadata</span>(res)<span class="op">$</span>filterThreshold) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb237-3" data-line-number="3"><span class="st">    </span><span class="kw">pull</span>(pvalue) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb237-4" data-line-number="4"><span class="st">    </span><span class="kw">hist</span>()</a></code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-97-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -1013,70 +1133,53 @@ the pvalues behaviour is now much nicer!</p>
 <h4>MA-plot</h4>
 <p>Another interesting plot is the MA-plot (“Mean-Average” plot), a
 scatter plot of log2FC versus the mean of normalised counts. Genes
-with a padjusted value lower than 0.05 are plotted in red. The plot
+with a padjusted value lower than 0.05 are colored. The plot
 highlights the fact that genes with low read counts show substantially
 higher variability than highly expressed genes, resulting in a strong
 log2FC even though are likely not really differentially expressed. In
 the MA-plot, we hope to observe some genes located in the upper/lower
 right quadrant of the plots (the most interesting candidates).</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="sec-rnaseq.html#cb227-1" aria-hidden="true"></a><span class="kw">plotMA</span>(res, <span class="dt">alpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-84-1.png" width="672"></p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb238-1" data-line-number="1"><span class="kw">plotMA</span>(res)</a></code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-98-1.png" width="672"></p>
 </div>
 <div id="volcano-plot" class="section level4 unnumbered">
 <h4>Volcano-plot</h4>
-<p>Drawing a volcano-plot is also informative for data interpretation.</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="sec-rnaseq.html#cb228-1" aria-hidden="true"></a>res_tbl <span class="op">%&gt;%</span></span>
-<span id="cb228-2"><a href="sec-rnaseq.html#cb228-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(padj)) <span class="op">%&gt;%</span></span>
-<span id="cb228-3"><a href="sec-rnaseq.html#cb228-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span> log2FoldChange, <span class="dt">y =</span> <span class="op">-</span><span class="kw">log10</span>(padj))) <span class="op">+</span></span>
-<span id="cb228-4"><a href="sec-rnaseq.html#cb228-4" aria-hidden="true"></a><span class="st">   </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">"gray40"</span>)</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-85-1.png" width="672"></p>
-<p>Recall that the most interesting features are those towards the top corners given
-that they have small pvalues and large fold-changes.
-The volcano-plot can be useful to define padjusted and log2FC thresholds.
-Based on this plot, we could for example decide (arbitrarily), to consider genes as
-differentially expressed genes that have a padj_thr &lt;- 1e-5 and an absolute log2FC value &gt; 1.</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="sec-rnaseq.html#cb229-1" aria-hidden="true"></a>padj_thr &lt;-<span class="st"> </span><span class="fl">1e-5</span></span>
-<span id="cb229-2"><a href="sec-rnaseq.html#cb229-2" aria-hidden="true"></a>log2FC_thr &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb229-3"><a href="sec-rnaseq.html#cb229-3" aria-hidden="true"></a></span>
-<span id="cb229-4"><a href="sec-rnaseq.html#cb229-4" aria-hidden="true"></a>res_tbl <span class="op">%&gt;%</span></span>
-<span id="cb229-5"><a href="sec-rnaseq.html#cb229-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(padj)) <span class="op">%&gt;%</span></span>
-<span id="cb229-6"><a href="sec-rnaseq.html#cb229-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span> log2FoldChange, <span class="dt">y =</span> <span class="op">-</span><span class="kw">log10</span>(padj))) <span class="op">+</span></span>
-<span id="cb229-7"><a href="sec-rnaseq.html#cb229-7" aria-hidden="true"></a><span class="st">   </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">"gray40"</span>) <span class="op">+</span></span>
-<span id="cb229-8"><a href="sec-rnaseq.html#cb229-8" aria-hidden="true"></a><span class="st">   </span><span class="kw">geom_point</span>(<span class="dt">data =</span> <span class="kw">subset</span>(res_tbl,</span>
-<span id="cb229-9"><a href="sec-rnaseq.html#cb229-9" aria-hidden="true"></a>                            padj <span class="op">&lt;</span><span class="st"> </span>padj_thr <span class="op">&amp;</span></span>
-<span id="cb229-10"><a href="sec-rnaseq.html#cb229-10" aria-hidden="true"></a><span class="st">                            </span><span class="kw">abs</span>(log2FoldChange) <span class="op">&gt;</span><span class="st"> </span>log2FC_thr),</span>
-<span id="cb229-11"><a href="sec-rnaseq.html#cb229-11" aria-hidden="true"></a>              <span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">"firebrick1"</span>) <span class="op">+</span></span>
-<span id="cb229-12"><a href="sec-rnaseq.html#cb229-12" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> log2FC_thr) <span class="op">+</span></span>
-<span id="cb229-13"><a href="sec-rnaseq.html#cb229-13" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="op">-</span>log2FC_thr) <span class="op">+</span></span>
-<span id="cb229-14"><a href="sec-rnaseq.html#cb229-14" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="op">-</span><span class="kw">log10</span>(padj_thr))</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-86-1.png" width="672"></p>
+<p>Drawing a volcano-plot is also informative to have a global view on the results.
+Recall that the most interesting features are those towards the top corners given
+that they have small pvalues and large fold-changes.</p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb239-1" data-line-number="1">res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb239-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(padj)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb239-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> log2FoldChange, <span class="dt">y =</span> <span class="op">-</span><span class="kw">log10</span>(padj), </a>
+<a class="sourceLine" id="cb239-4" data-line-number="4">             <span class="dt">color =</span> padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(log2FoldChange) <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb239-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">"gray"</span>, <span class="st">"red"</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb239-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb239-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="op">-</span><span class="kw">log10</span>(<span class="fl">0.05</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb239-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb239-9" data-line-number="9"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">-1</span>)</a></code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-99-1.png" width="672"></p>
 </div>
 <div id="plot-counts-of-genes" class="section level4 unnumbered">
 <h4>Plot counts of genes</h4>
 <p>It may be also useful to check the validity of the analysis by simply assessing the expression
-level of the most highly differentially expressed genes.</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="sec-rnaseq.html#cb230-1" aria-hidden="true"></a>best_genes &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></span>
-<span id="cb230-2"><a href="sec-rnaseq.html#cb230-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">arrange</span>(padj)  <span class="op">%&gt;%</span></span>
-<span id="cb230-3"><a href="sec-rnaseq.html#cb230-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">6</span>)</span>
-<span id="cb230-4"><a href="sec-rnaseq.html#cb230-4" aria-hidden="true"></a></span>
-<span id="cb230-5"><a href="sec-rnaseq.html#cb230-5" aria-hidden="true"></a>ordered_samples &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rownames</span>(coldata[coldata<span class="op">$</span>Condition <span class="op">==</span><span class="st"> "mock"</span>, ]),</span>
-<span id="cb230-6"><a href="sec-rnaseq.html#cb230-6" aria-hidden="true"></a>                     <span class="kw">rownames</span>(coldata[coldata<span class="op">$</span>Condition <span class="op">==</span><span class="st"> "KD"</span>, ]))</span>
-<span id="cb230-7"><a href="sec-rnaseq.html#cb230-7" aria-hidden="true"></a></span>
-<span id="cb230-8"><a href="sec-rnaseq.html#cb230-8" aria-hidden="true"></a><span class="kw">as_tibble</span>(<span class="kw">counts</span>(dds[best_genes<span class="op">$</span>ENSEMBL, ], <span class="dt">normalize =</span> T),</span>
-<span id="cb230-9"><a href="sec-rnaseq.html#cb230-9" aria-hidden="true"></a>          <span class="dt">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="op">%&gt;%</span></span>
-<span id="cb230-10"><a href="sec-rnaseq.html#cb230-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">gather</span>(sample, counts, <span class="op">-</span>ENSEMBL) <span class="op">%&gt;%</span></span>
-<span id="cb230-11"><a href="sec-rnaseq.html#cb230-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">left_join</span>(<span class="kw">as_tibble</span>(coldata, <span class="dt">rownames =</span> <span class="st">"sample"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb230-12"><a href="sec-rnaseq.html#cb230-12" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sample =</span> <span class="kw">factor</span>(sample, <span class="dt">levels =</span> ordered_samples)) <span class="op">%&gt;%</span></span>
-<span id="cb230-13"><a href="sec-rnaseq.html#cb230-13" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> counts, <span class="dt">fill =</span> Condition)) <span class="op">+</span></span>
-<span id="cb230-14"><a href="sec-rnaseq.html#cb230-14" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">'identity'</span>, <span class="dt">color =</span> <span class="st">"gray30"</span>) <span class="op">+</span></span>
-<span id="cb230-15"><a href="sec-rnaseq.html#cb230-15" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>ENSEMBL, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">ncol =</span> <span class="dv">3</span>) <span class="op">+</span></span>
-<span id="cb230-16"><a href="sec-rnaseq.html#cb230-16" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>, <span class="dt">angle =</span> <span class="dv">90</span>),</span>
-<span id="cb230-17"><a href="sec-rnaseq.html#cb230-17" aria-hidden="true"></a>        <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb230-18"><a href="sec-rnaseq.html#cb230-18" aria-hidden="true"></a>        <span class="dt">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb230-19"><a href="sec-rnaseq.html#cb230-19" aria-hidden="true"></a>        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),</span>
-<span id="cb230-20"><a href="sec-rnaseq.html#cb230-20" aria-hidden="true"></a>        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>))</span></code></pre></div>
+levels of the most highly differentially expressed genes.</p>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb240-1" data-line-number="1">best_genes &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb240-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(padj)  <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb240-3" data-line-number="3"><span class="st">  </span><span class="kw">head</span>(<span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb240-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb240-5" data-line-number="5"><span class="kw">as_tibble</span>(<span class="kw">counts</span>(dds[best_genes<span class="op">$</span>ENSEMBL, ], <span class="dt">normalize =</span> T),</a>
+<a class="sourceLine" id="cb240-6" data-line-number="6">          <span class="dt">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb240-7" data-line-number="7"><span class="st">  </span><span class="kw">gather</span>(sample, counts, <span class="op">-</span>ENSEMBL) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb240-8" data-line-number="8"><span class="st">  </span><span class="kw">left_join</span>(<span class="kw">as_tibble</span>(coldata, <span class="dt">rownames =</span> <span class="st">"sample"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb240-9" data-line-number="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> counts, <span class="dt">fill =</span> Condition)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb240-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">'identity'</span>, <span class="dt">color =</span> <span class="st">"gray30"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb240-11" data-line-number="11"><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>ENSEMBL, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">ncol =</span> <span class="dv">3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb240-12" data-line-number="12"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>, <span class="dt">angle =</span> <span class="dv">90</span>),</a>
+<a class="sourceLine" id="cb240-13" data-line-number="13">        <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb240-14" data-line-number="14">        <span class="dt">legend.position =</span> <span class="st">"right"</span>,</a>
+<a class="sourceLine" id="cb240-15" data-line-number="15">        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),</a>
+<a class="sourceLine" id="cb240-16" data-line-number="16">        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>))</a></code></pre></div>
 <pre><code>## Joining, by = "sample"</code></pre>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-87-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-100-1.png" width="672"></p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -1084,9 +1187,10 @@ level of the most highly differentially expressed genes.</p>
 <div class="question-body">
 <ol style="list-style-type: decimal">
 <li>Identify and inspect counts of the genes plotted in red in the following volcano-plot.
-These genes have a very large log2FC (|log2FC| &gt; 5) but are far from bearing the lowest padjusted value (their padjusted value is between 0.05 and 1e-5).</li>
+These genes have a very large log2FC (|log2FC| &gt; 5) but are far from bearing the lowest
+padjusted value (their padjusted value is between 0.05 and 1e-5).</li>
 </ol>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-88-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-101-1.png" width="672"></p>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Compare counts with previous counts plots (counts of genes with lowest pvalues).
 what is the most striking?</p></li>
@@ -1099,41 +1203,31 @@ what is the most striking?</p></li>
 </div>
 <div class="solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-14" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-14', 'sol-start-14')"></span>
+► Solution<span id="sol-start-15" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-15', 'sol-start-15')"></span>
 </p>
-<div id="sol-body-14" class="solution-body" style="display: none;">
+<div id="sol-body-15" class="solution-body" style="display: none;">
 <ol style="list-style-type: decimal">
 <li>Identify and inspect counts of the genes plotted in red in the following volcano-plot.
-These genes have a very large log2FC (|log2FC| &gt; 5) but are far from bearing the lowest padjusted value (their padjusted value is between 0.05 and 1e-5).</li>
+These genes have a very large log2FC (|log2FC| &gt; 5) but are far from bearing the lowest
+padjusted value (their padjusted value is between 0.05 and 1e-5).</li>
 </ol>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="sec-rnaseq.html#cb232-1" aria-hidden="true"></a>selected_genes &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></span>
-<span id="cb232-2"><a href="sec-rnaseq.html#cb232-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">&amp;</span><span class="st"> </span>padj <span class="op">&gt;</span><span class="st"> </span><span class="fl">1e-5</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(log2FoldChange) <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>)</span>
-<span id="cb232-3"><a href="sec-rnaseq.html#cb232-3" aria-hidden="true"></a></span>
-<span id="cb232-4"><a href="sec-rnaseq.html#cb232-4" aria-hidden="true"></a>selected_genes</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 7
-##   ENSEMBL         baseMean log2FoldChange lfcSE  stat    pvalue     padj
-##   &lt;chr&gt;              &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 ENSG00000127129     5.59           5.94  1.44  4.14 0.0000352 0.000364
-## 2 ENSG00000112499     6.36           5.11  1.39  3.68 0.000236  0.00181 
-## 3 ENSG00000171004     8.16           5.49  1.36  4.03 0.0000551 0.000538
-## 4 ENSG00000257859     7.55          -5.37  1.38 -3.88 0.000107  0.000932
-## 5 ENSG00000157368     6.45           5.15  1.44  3.57 0.000355  0.00254 
-## 6 ENSG00000265641     4.17           5.51  1.51  3.66 0.000255  0.00194</code></pre>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="sec-rnaseq.html#cb234-1" aria-hidden="true"></a><span class="kw">as_tibble</span>(<span class="kw">counts</span>(dds[best_genes<span class="op">$</span>ENSEMBL, ], <span class="dt">normalize =</span> T),</span>
-<span id="cb234-2"><a href="sec-rnaseq.html#cb234-2" aria-hidden="true"></a>          <span class="dt">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="op">%&gt;%</span></span>
-<span id="cb234-3"><a href="sec-rnaseq.html#cb234-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">gather</span>(sample, counts, <span class="op">-</span>ENSEMBL) <span class="op">%&gt;%</span></span>
-<span id="cb234-4"><a href="sec-rnaseq.html#cb234-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">left_join</span>(<span class="kw">as_tibble</span>(coldata, <span class="dt">rownames =</span> <span class="st">"sample"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb234-5"><a href="sec-rnaseq.html#cb234-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sample =</span> <span class="kw">factor</span>(sample, <span class="dt">levels =</span> ordered_samples)) <span class="op">%&gt;%</span></span>
-<span id="cb234-6"><a href="sec-rnaseq.html#cb234-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> counts, <span class="dt">fill =</span> Condition)) <span class="op">+</span></span>
-<span id="cb234-7"><a href="sec-rnaseq.html#cb234-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">'identity'</span>, <span class="dt">color =</span> <span class="st">"gray30"</span>) <span class="op">+</span></span>
-<span id="cb234-8"><a href="sec-rnaseq.html#cb234-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>ENSEMBL, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">ncol =</span> <span class="dv">3</span>) <span class="op">+</span></span>
-<span id="cb234-9"><a href="sec-rnaseq.html#cb234-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>, <span class="dt">angle =</span> <span class="dv">90</span>),</span>
-<span id="cb234-10"><a href="sec-rnaseq.html#cb234-10" aria-hidden="true"></a>        <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb234-11"><a href="sec-rnaseq.html#cb234-11" aria-hidden="true"></a>        <span class="dt">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb234-12"><a href="sec-rnaseq.html#cb234-12" aria-hidden="true"></a>        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),</span>
-<span id="cb234-13"><a href="sec-rnaseq.html#cb234-13" aria-hidden="true"></a>        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb242-1" data-line-number="1">selected_genes &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb242-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">&amp;</span><span class="st"> </span>padj <span class="op">&gt;</span><span class="st"> </span><span class="fl">1e-5</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(log2FoldChange) <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb242-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb242-4" data-line-number="4"><span class="kw">as_tibble</span>(<span class="kw">counts</span>(dds[selected_genes<span class="op">$</span>ENSEMBL, ], <span class="dt">normalize =</span> T),</a>
+<a class="sourceLine" id="cb242-5" data-line-number="5">          <span class="dt">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb242-6" data-line-number="6"><span class="st">  </span><span class="kw">gather</span>(sample, counts, <span class="op">-</span>ENSEMBL) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb242-7" data-line-number="7"><span class="st">  </span><span class="kw">left_join</span>(<span class="kw">as_tibble</span>(coldata, <span class="dt">rownames =</span> <span class="st">"sample"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb242-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> counts, <span class="dt">fill =</span> Condition)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb242-9" data-line-number="9"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">'identity'</span>, <span class="dt">color =</span> <span class="st">"gray30"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb242-10" data-line-number="10"><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>ENSEMBL, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">ncol =</span> <span class="dv">3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb242-11" data-line-number="11"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>, <span class="dt">angle =</span> <span class="dv">90</span>),</a>
+<a class="sourceLine" id="cb242-12" data-line-number="12">        <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb242-13" data-line-number="13">        <span class="dt">legend.position =</span> <span class="st">"right"</span>,</a>
+<a class="sourceLine" id="cb242-14" data-line-number="14">        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),</a>
+<a class="sourceLine" id="cb242-15" data-line-number="15">        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>))</a></code></pre></div>
 <pre><code>## Joining, by = "sample"</code></pre>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-89-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-102-1.png" width="672"></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Compare counts with previous counts plots (counts of genes with lowest pvalues).
 what is the most striking?</li>
@@ -1143,12 +1237,10 @@ This will result in higher dispersion values, and larger pvalues.</p>
 <ol start="3" style="list-style-type: decimal">
 <li>Using dispersion() function, compare dispersion values for both group of genes</li>
 </ol>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="sec-rnaseq.html#cb236-1" aria-hidden="true"></a><span class="kw">data.frame</span>(<span class="dt">best_genes =</span> <span class="kw">dispersions</span>(dds[best_genes<span class="op">$</span>ENSEMBL,]),</span>
-<span id="cb236-2"><a href="sec-rnaseq.html#cb236-2" aria-hidden="true"></a>           <span class="dt">selected_genes =</span> <span class="kw">dispersions</span>(dds[selected_genes<span class="op">$</span>ENSEMBL,])) <span class="op">%&gt;%</span></span>
-<span id="cb236-3"><a href="sec-rnaseq.html#cb236-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">gather</span>(group, dispersion) <span class="op">%&gt;%</span></span>
-<span id="cb236-4"><a href="sec-rnaseq.html#cb236-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> dispersion)) <span class="op">+</span></span>
-<span id="cb236-5"><a href="sec-rnaseq.html#cb236-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-90-1.png" width="672"></p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb244-1" data-line-number="1"><span class="kw">dispersions</span>(dds[best_genes<span class="op">$</span>ENSEMBL,])</a></code></pre></div>
+<pre><code>## [1] 0.01718122 0.02025994 0.01427782 0.04048283 0.01433817 0.01637945</code></pre>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb246-1" data-line-number="1"><span class="kw">dispersions</span>(dds[selected_genes<span class="op">$</span>ENSEMBL,])</a></code></pre></div>
+<pre><code>## [1] 0.4404912 0.3507403 0.3052325 0.3471712 0.4573378 0.5770159</code></pre>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -1159,20 +1251,23 @@ This will result in higher dispersion values, and larger pvalues.</p>
 <h4>Adding gene name to result table</h4>
 <p>The result table only uses Ensembl gene IDs, but gene names may be more informative.
 Bioconductor’s biomaRt package can help with mapping various ID schemes to each other.</p>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="sec-rnaseq.html#cb237-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"biomaRt"</span>)</span>
-<span id="cb237-2"><a href="sec-rnaseq.html#cb237-2" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"org.Hs.eg.db"</span>)</span>
-<span id="cb237-3"><a href="sec-rnaseq.html#cb237-3" aria-hidden="true"></a></span>
-<span id="cb237-4"><a href="sec-rnaseq.html#cb237-4" aria-hidden="true"></a><span class="co"># Add gene name column</span></span>
-<span id="cb237-5"><a href="sec-rnaseq.html#cb237-5" aria-hidden="true"></a>mart &lt;-<span class="st"> </span><span class="kw">useDataset</span>(<span class="st">"hsapiens_gene_ensembl"</span>, <span class="kw">useMart</span>(<span class="st">"ensembl"</span>))</span>
-<span id="cb237-6"><a href="sec-rnaseq.html#cb237-6" aria-hidden="true"></a>ensembl_to_geneName &lt;-<span class="st"> </span><span class="kw">getBM</span>(<span class="dt">attributes =</span> <span class="kw">c</span>(<span class="st">"ensembl_gene_id"</span>, <span class="st">"external_gene_name"</span>), <span class="dt">mart =</span> mart)</span>
-<span id="cb237-7"><a href="sec-rnaseq.html#cb237-7" aria-hidden="true"></a><span class="kw">names</span>(ensembl_to_geneName) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"ENSEMBL"</span>, <span class="st">"gene"</span>)</span>
-<span id="cb237-8"><a href="sec-rnaseq.html#cb237-8" aria-hidden="true"></a></span>
-<span id="cb237-9"><a href="sec-rnaseq.html#cb237-9" aria-hidden="true"></a>res_tbl &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></span>
-<span id="cb237-10"><a href="sec-rnaseq.html#cb237-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">left_join</span>(ensembl_to_geneName) <span class="op">%&gt;%</span></span>
-<span id="cb237-11"><a href="sec-rnaseq.html#cb237-11" aria-hidden="true"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(ENSEMBL, gene, <span class="kw">everything</span>()) <span class="op">%&gt;%</span></span>
-<span id="cb237-12"><a href="sec-rnaseq.html#cb237-12" aria-hidden="true"></a><span class="st">  </span><span class="kw">arrange</span>(padj)</span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb248-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"biomaRt"</span>)</a>
+<a class="sourceLine" id="cb248-2" data-line-number="2"><span class="kw">library</span>(<span class="st">"org.Hs.eg.db"</span>)</a>
+<a class="sourceLine" id="cb248-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb248-4" data-line-number="4"><span class="co"># Load homo sapiens ensembl dataset</span></a>
+<a class="sourceLine" id="cb248-5" data-line-number="5">mart &lt;-<span class="st"> </span><span class="kw">useDataset</span>(<span class="st">"hsapiens_gene_ensembl"</span>, <span class="kw">useMart</span>(<span class="st">"ensembl"</span>))</a>
+<a class="sourceLine" id="cb248-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb248-7" data-line-number="7"><span class="co">#Attributes define the values we are interested to retrieve.</span></a>
+<a class="sourceLine" id="cb248-8" data-line-number="8"><span class="co">#listAttributes(mart)</span></a>
+<a class="sourceLine" id="cb248-9" data-line-number="9">ensembl_to_geneName &lt;-<span class="st"> </span><span class="kw">getBM</span>(<span class="dt">attributes =</span> <span class="kw">c</span>(<span class="st">"ensembl_gene_id"</span>, <span class="st">"external_gene_name"</span>), <span class="dt">mart =</span> mart)</a>
+<a class="sourceLine" id="cb248-10" data-line-number="10"><span class="kw">names</span>(ensembl_to_geneName) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"ENSEMBL"</span>, <span class="st">"gene"</span>)</a>
+<a class="sourceLine" id="cb248-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb248-12" data-line-number="12">res_tbl &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb248-13" data-line-number="13"><span class="st">  </span><span class="kw">left_join</span>(ensembl_to_geneName) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb248-14" data-line-number="14"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(ENSEMBL, gene, <span class="kw">everything</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb248-15" data-line-number="15"><span class="st">  </span><span class="kw">arrange</span>(padj)</a></code></pre></div>
 <pre><code>## Joining, by = "ENSEMBL"</code></pre>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="sec-rnaseq.html#cb239-1" aria-hidden="true"></a><span class="kw">head</span>(res_tbl)</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb250-1" data-line-number="1"><span class="kw">head</span>(res_tbl)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 8
 ##   ENSEMBL         gene   baseMean log2FoldChange lfcSE  stat    pvalue      padj
 ##   &lt;chr&gt;           &lt;chr&gt;     &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
@@ -1182,42 +1277,9 @@ Bioconductor’s biomaRt package can help with mapping various ID schemes to eac
 ## 4 ENSG00000175315 CST6       220.           4.29 0.300  14.3 2.20e- 46 9.16e- 43
 ## 5 ENSG00000128245 YWHAH     2692.           2.05 0.144  14.2 5.64e- 46 1.88e- 42
 ## 6 ENSG00000113272 THG1L      381.           2.33 0.171  13.6 3.45e- 42 9.55e- 39</code></pre>
-</div>
-</div>
-</div>
-<div id="a-more-complex-design" class="section level2" number="5.3">
-<h2>
-<span class="header-section-number">5.3</span> A more complex design</h2>
-<p>Actually, the experiment was in reality done on 2 different cell
-lines, epithelial and fibroblasts cells.</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="sec-rnaseq.html#cb241-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">"wsbim2122_data/deseq2/coldata_both.rda"</span>)</span>
-<span id="cb241-2"><a href="sec-rnaseq.html#cb241-2" aria-hidden="true"></a>coldata</span></code></pre></div>
-<pre><code>##           Cell       Type Condition
-## sample1  Cell1 Epithelial      mock
-## sample2  Cell1 Epithelial      mock
-## sample   Cell1 Epithelial      mock
-## sample4  Cell1 Epithelial        KD
-## sample5  Cell1 Epithelial        KD
-## sample6  Cell1 Epithelial        KD
-## sample7  Cell2 Fibroblast      mock
-## sample8  Cell2 Fibroblast      mock
-## sample9  Cell2 Fibroblast      mock
-## sample10 Cell2 Fibroblast        KD
-## sample11 Cell2 Fibroblast        KD
-## sample12 Cell2 Fibroblast        KD</code></pre>
-<div class="question">
-<p class="question-begin">
-► Question
-</p>
-<div class="question-body">
-<p>Start the whole analysis again, using all samples, and try to identify
-genes that are differentially expressed in both types of cells.</p>
-<p class="question-end">
-<span class="fa fa-square-o solution-icon"></span>
-</p>
-</div>
-</div>
 
+</div>
+</div>
 </div>
 </div></body></html>
 
@@ -1226,7 +1288,7 @@ genes that are differentially expressed in both types of cells.</p>
 <a href="sec-gsea.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-09-25
+2020-10-01
 </p>
 </div>
 </div>

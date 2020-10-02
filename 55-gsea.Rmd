@@ -7,7 +7,7 @@ Motivation
 - Why are enrichment analyses useful?
 - Understanding an over-enrichment analysis.
 - Understanding a gene set enrichment analysis.
-- Application of the XXX package.
+- Application of the `r BiocStyle::Biocpkg("clusterProfiler")` package.
 
 ## Introduction
 
@@ -32,11 +32,13 @@ Motivation
 
 How do we define gene sets?
 
+GO, KEGG, ReactomeDB, MySigDB.
+
 ## Statistical analyses
 
 How to test for enrichment? (1) over-enrichment analysis (ORA) and (2)
 gene set enrichment analysis (GSEA).
 
 
-## Using the XXX package
+## Using the `clusterProfiler` package
    
