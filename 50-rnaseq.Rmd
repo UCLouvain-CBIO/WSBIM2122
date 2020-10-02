@@ -138,7 +138,6 @@ sample by that sample’s scaling factor.
 knitr::include_graphics("./figs/SF_steps.png")
 ```
 
-
 ### Count modeling
 
 Let's first have a look at the counts distribution for a typical
@@ -174,8 +173,7 @@ expected mean. Its variance and all other properties follow from
 it. In particular, one key assumption of the Poisson distribution is
 that the variance equals the mean. 
 
-$$K_{ij} \sim P(µ_{ij} = \sigma^2_{ij})$$   
-
+$$K_{ij} \sim P(µ_{ij} = \sigma^2_{ij})$$ 
    
 
 Applying a Poisson distribution to
@@ -284,10 +282,6 @@ differential expression analysis.
 knitr::include_graphics("./figs/disp_shrinkage.png")
 ```
 
-
-
-
-
 ### Generalized linear model
 
 
@@ -309,13 +303,11 @@ $x_j$ = 0 if sample j is the control sample
 $x_j$ = 1 if sample j is the treated sample 
 
 
-### Statistical test
+### Hypothesis testing
 
-#### Wald test {-}
-
-
-The logFC are computed from the data using the GLM, and these are associated to standard 
-errors that depend on the variance of the counts.
+The logFC are computed from the data using the GLM, and these are
+associated to standard errors that depend on the variance of the
+counts.
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
 knitr::include_graphics("./figs/z_stat.png")
@@ -328,7 +320,7 @@ expected just due to natural random variation.
 
 The null hypothesis $H_0$ is that there is no differential expression across 
 the sample groups, which is the same as saying that the log2FC = 0. 
-A statistical test, the Wald test, will determine whether the data
+A statistical test, the **Wald test**, will determine whether the data
 provides sufficient evidence to conclude that this value is really
 different from zero.
 
@@ -339,11 +331,7 @@ probability that a z-statistic at least as extreme as the observed
 value would be selected at random. In principle, if this p-value is
 small (below a certain cutoff) the null hypothesis is rejected.
 
-#### Multiple testing correction {-}
-
-
-- **False discovery rate (FDR)**
-
+### Multiple testing correction
 
 Recall that a pvalue of 0.05 means that there is only 5% chance of
 getting this data if no real difference existed (if $H_0$ was really
@@ -369,17 +357,17 @@ false positive genes! Hence, pvalues obtained from the Wald test must
 be corrected for multiple testing to avoid excess false positives.
 
 By default DESeq2 uses Benjamini-Hochberg method to adjust pvalues.
-The third histogram bellow illustrates the principle behind this False
-discovery rate (FDR) adjustment. As differential expression analysis
-is done on the whole set of genes, the resulting pvalues will have a
-distribution corresponding to the combination of both histograms.
-Most of the p-values are uniformly distributed between 0 and 1 but
-there is a spike to the left close to zero, due to those p-values for
-which $H_0$ is false. The correction approach helps to estimate how
-many of the significant values are actually false positives. It tries
-to find the height where the p-value distribution flattens out
-(corresponding to the red line) and incorporates this height value
-into the calculation of FDR adjusted p-values.
+The third histogram bellow illustrates the principle behind this
+**False discovery rate (FDR)** adjustment. As differential expression
+analysis is done on the whole set of genes, the resulting pvalues will
+have a distribution corresponding to the combination of both
+histograms.  Most of the p-values are uniformly distributed between 0
+and 1 but there is a spike to the left close to zero, due to those
+p-values for which $H_0$ is false. The correction approach helps to
+estimate how many of the significant values are actually false
+positives. It tries to find the height where the p-value distribution
+flattens out (corresponding to the red line) and incorporates this
+height value into the calculation of FDR adjusted p-values.
 
 Choosing a cut off of 0.05 for padjusted values now implies that 5% of 
 significant tests (but not 5% of all tests as before) will result in false 
@@ -389,10 +377,7 @@ positives.
 knitr::include_graphics("./figs/pval_histograms.png")
 ```
 
-
-
-
-- **Independent filtering**
+### Independent filtering
 
 Multiple testing adjustment tends to be associated with a loss of power.
 To counteract this effect, one possibility is to filter out those tests from
@@ -522,12 +507,11 @@ function `DESeq()`. This function will automatically run the following other fun
 dds <- DESeq(dds)
 ```
 
-### Data exploration
+### PCA
 
 Before anything else, a good practice is to explore the data
 and perform quality controls checks.
 
-#### PCA {-}
 
 It is highly recommended to starts by a PCA to assess overall similarity between the samples:
 
@@ -549,9 +533,7 @@ knitr::include_graphics("./figs/PCA_batch_effect.png")
 knitr::include_graphics("./figs/PCA_outlier.png")
 ```
 
-
 `r msmbstyle::question_end()`
-
 
 Remember that if one performs PCA directly on a matrix of normalised read counts, 
 the result typically depends only on the few most strongly expressed genes because 
@@ -614,12 +596,7 @@ ggplot(pca_data, aes(x = PC1, y = PC2, color = Condition, label = name)) +
   geom_text()
 ```
 
-
-
-
-
-
-#### Inspecting size factors {-}
+### Inspecting size factors
 
 It is also advisable to investigate any systematic bias in the sequencing data, such as
 whether one sample has been sequenced more deeply than others. One can extract size factors
@@ -655,7 +632,7 @@ SF / SD
 
 `r msmbstyle::solution_end()`
 
-#### Dispersion plot {-}
+### Dispersion plot
 
 Plotting the dispersion estimates is a useful diagnostic.
 This dispersion plot is typical, with the final dispersion, estimates shrunk from the
@@ -665,7 +642,7 @@ gene-wise estimates towards the fitted estimates.
 plotDispEsts(dds)
 ```
 
-### Results
+### DESeq2 results
 
 The `resultsNames()` function gives the names of results that can be extracted. 
 Note that by default, R will choose a reference level for factors based on alphabetical 
@@ -835,7 +812,7 @@ that have been filtered out by the independent filtering procedure.
 
 `r msmbstyle::solution_end()`
 
-#### Independent filtering exploration {-}
+### Independent filtering exploration
 
 The filtering threshold that has been used to filter low count genes can be extracted
 from the results metadata.
@@ -938,7 +915,7 @@ as_tibble(res, rownames = "ENSEMBL") %>%
 `r msmbstyle::solution_end()`
 
 
-#### p-values distribution {-}
+### p-values distribution
 
 Another useful diagnostic plot is the histogram of pvalues.
 It can give you an immediate idea of the proportion of genes differentially expressed,
@@ -996,7 +973,7 @@ res_tbl %>%
 `r msmbstyle::solution_end()`
 
 
-#### MA-plot {-}
+### MA plot
 
 Another interesting plot is the MA-plot ("Mean-Average" plot), a
 scatter plot of log2FC versus the mean of normalised counts. Genes
@@ -1011,7 +988,7 @@ right quadrant of the plots (the most interesting candidates).
 plotMA(res)
 ```
 
-#### Volcano-plot {-}
+### Volcano plot
 
 Drawing a volcano-plot is also informative to have a global view on the results.
 Recall that the most interesting features are those towards the top corners given 
@@ -1030,7 +1007,7 @@ res_tbl %>%
 ```
 
 
-#### Plot counts of genes {-}
+### Raw counts plots
 
 It may be also useful to check the validity of the analysis by simply assessing the expression
 levels of the most highly differentially expressed genes.
@@ -1121,7 +1098,7 @@ dispersions(dds[selected_genes$ENSEMBL,])
 ```
 `r msmbstyle::solution_end()`
 
-#### Adding variables to result table {-}
+### Querying the Biomart service
 
 The result table only uses Ensembl gene IDs, but gene names may be
 more informative.  Bioconductor's `r BiocStyle::Biocpkg("biomaRt")`

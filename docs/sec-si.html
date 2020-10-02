@@ -167,7 +167,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>
 <span class="header-section-number">Chapter 11</span> Session information</h1>
 <p>The following packages have been used to generate this document.</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb269-1" data-line-number="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb281-1" data-line-number="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
 <pre><code>## R version 4.0.0 (2020-04-24)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 18.04.5 LTS
@@ -189,19 +189,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [8] methods   base     
 ## 
 ## other attached packages:
-##  [1] org.Hs.eg.db_3.11.4         AnnotationDbi_1.50.3       
-##  [3] biomaRt_2.44.1              patchwork_1.0.1            
-##  [5] DESeq2_1.28.1               SummarizedExperiment_1.18.2
-##  [7] DelayedArray_0.14.1         matrixStats_0.56.0         
-##  [9] Biobase_2.48.0              GenomicRanges_1.40.0       
-## [11] GenomeInfoDb_1.24.2         IRanges_2.22.2             
-## [13] S4Vectors_0.26.1            BiocGenerics_0.34.0        
-## [15] DT_0.15                     forcats_0.5.0              
-## [17] stringr_1.4.0               dplyr_1.0.2                
-## [19] purrr_0.3.4                 readr_1.3.1                
-## [21] tidyr_1.1.2                 tibble_3.0.3               
-## [23] tidyverse_1.3.0             ggplot2_3.3.2              
-## [25] rWSBIM2122_0.3.0           
+##  [1] GO.db_3.11.4                org.Hs.eg.db_3.11.4        
+##  [3] AnnotationDbi_1.50.3        biomaRt_2.44.1             
+##  [5] patchwork_1.0.1             DESeq2_1.28.1              
+##  [7] SummarizedExperiment_1.18.2 DelayedArray_0.14.1        
+##  [9] matrixStats_0.56.0          Biobase_2.48.0             
+## [11] GenomicRanges_1.40.0        GenomeInfoDb_1.24.2        
+## [13] IRanges_2.22.2              S4Vectors_0.26.1           
+## [15] BiocGenerics_0.34.0         DT_0.15                    
+## [17] forcats_0.5.0               stringr_1.4.0              
+## [19] dplyr_1.0.2                 purrr_0.3.4                
+## [21] readr_1.3.1                 tidyr_1.1.2                
+## [23] tibble_3.0.3                tidyverse_1.3.0            
+## [25] ggplot2_3.3.2               rWSBIM2122_0.3.0           
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] colorspace_1.4-1       ellipsis_0.3.1         XVector_0.28.0        
@@ -241,14 +241,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 the following code:</p>
 <pre><code>pkgs &lt;- c("AnnotationDbi", "base", "Biobase", "BiocGenerics",
           "biomaRt", "datasets", "DelayedArray", "DESeq2", "dplyr", "DT",
-          "forcats", "GenomeInfoDb", "GenomicRanges", "ggplot2", "graphics",
-          "grDevices", "IRanges", "matrixStats", "methods", "org.Hs.eg.db",
-          "parallel", "patchwork", "purrr", "readr", "rWSBIM2122", "S4Vectors",
-          "stats", "stats4", "stringr", "SummarizedExperiment", "tibble",
-          "tidyr", "tidyverse", "utils")</code></pre>
-<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb272-1" data-line-number="1"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"BiocManager"</span>))</a>
-<a class="sourceLine" id="cb272-2" data-line-number="2">   <span class="kw">install.packages</span>(<span class="st">"BiocManager"</span>)</a>
-<a class="sourceLine" id="cb272-3" data-line-number="3">BiocManager<span class="op">::</span><span class="kw">install</span>(pkgs)</a></code></pre></div>
+          "forcats", "GenomeInfoDb", "GenomicRanges", "ggplot2", "GO.db",
+          "graphics", "grDevices", "IRanges", "matrixStats", "methods",
+          "org.Hs.eg.db", "parallel", "patchwork", "purrr", "readr",
+          "rWSBIM2122", "S4Vectors", "stats", "stats4", "stringr",
+          "SummarizedExperiment", "tibble", "tidyr", "tidyverse", "utils")</code></pre>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb284-1" data-line-number="1"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"BiocManager"</span>))</a>
+<a class="sourceLine" id="cb284-2" data-line-number="2">   <span class="kw">install.packages</span>(<span class="st">"BiocManager"</span>)</a>
+<a class="sourceLine" id="cb284-3" data-line-number="3">BiocManager<span class="op">::</span><span class="kw">install</span>(pkgs)</a></code></pre></div>
 
 </div>
 </div></body></html>
@@ -257,7 +257,7 @@ the following code:</p>
 <a href="sec-anx.html"><button class="btn btn-default">Previous</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-10-02
+2020-10-03
 </p>
 </div>
 </div>

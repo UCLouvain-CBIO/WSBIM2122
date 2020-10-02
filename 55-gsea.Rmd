@@ -1,5 +1,9 @@
 # Enrichment analyses {#sec:gsea}
 
+```{r, message = FALSE, echo = FALSE}
+library("GO.db")
+library("org.Hs.eg.db")
+```
 
 **Motivation**: at the end of this chapter, the students will be able
 to address the following points:
@@ -33,7 +37,7 @@ to address the following points:
 While nothing would stop a user to create their own gene sets, the
 sets that are generally used stem from community-maintained resources. 
 
-### Gene Ontology (GO) {-}
+### Gene Ontology (GO)
 
 The [Gene Ontology](http://geneontology.org/) [@Ashburner:2000]
 defines GO terms. These terms are based on a controlled vocabulary (to
@@ -80,8 +84,16 @@ perform various queries for human genes, such as retrieving all gene
 symbols and ENTREZ identifiers (the `columns` below) that are
 annotated with a GO term (the `keys` below) of interest.
 
+The GO term of interest here is focal adhesion:
+```
+A cell-substrate junction that anchors the cell to the extracellular
+matrix and that forms a point of termination of actin filaments. In
+insects focal adhesion has also been referred to as hemi-adherens
+junction (HAJ).
+```
 
 ```{r}
+library("GO.db")
 library("org.Hs.eg.db")
 GO_0005925 <- select(org.Hs.eg.db,
                      keys = "GO:0005925",
@@ -92,11 +104,22 @@ GO_0005925 <- select(org.Hs.eg.db,
 GO_0005925
 ```
 
+We have `r nrow(GO_0005925)` genes matching this GO term. There are
+thus `r nrow(GO_0005925)` genes in the GO_0005925 GO set.
 
 `r msmbstyle::question_begin()`
 
 Repeat the code above to extract the genes annotated with the
-`GO:0005813` term.
+`GO:0005813` term for the centrosome:
+
+```
+A structure comprised of a core structure (in most organisms, a pair
+of centrioles) and peripheral material from which a
+microtubule-based structure, such as a spindle apparatus, is
+organized. Centrosomes occur close to the nucleus during interphase
+in many eukaryotic cells, though in animal cells it changes
+continually during the cell-division cycle.
+```
 
 `r msmbstyle::question_end()`
 
@@ -115,7 +138,7 @@ GO_0005813
 
 `r msmbstyle::solution_end()`
 
-### Kyoto Encyclopedia of Genes and Genomes (KEGG) {-}
+### Kyoto Encyclopedia of Genes and Genomes (KEGG)
 
 [KEGG](https://www.genome.jp/kegg/pathway.html) pathway is a
 collection of manually drawn and curated pathway maps representing
@@ -131,7 +154,7 @@ knitr::include_graphics("figs/hsa04110.png")
 ```
 The `r BiocStyle::Biocpkg("KEGGREST")` package provides a client interface to the KEGG server. 
 
-### Reactome {-}
+### Reactome
 
 Alike KEGG patway, [Reactome](https://reactome.org/) is a free,
 open-source, curated and peer-reviewed pathway database. The
@@ -139,7 +162,7 @@ Bioconductor `r BiocStyle::Biocpkg("reactome.db")` package provides
 access to reactome maps and annotations within R.
 
 
-### Molecular Signatures Database (MySigDB) {-}
+### Molecular Signatures Database (MySigDB)
 
 MSigDB is a collection of annotated gene sets for use with GSEA
 software. The MSigDB gene sets are divided into 9 collections:
@@ -187,7 +210,7 @@ res_tbl$ENTREZID <- as.character(res_tbl$ENTREZID)
 res_tbl
 ```
 
-### Over-enrichment analysis (ORA) {-}
+### Over-enrichment analysis (ORA)
 
 To perform an over-enrichment analysis, we need to define:
 
@@ -200,37 +223,225 @@ are in the set of interest, the non-DE that are in the set, and the DE
 and non-DE genes that are not in the set:
 
 ```{r, eval = FALSE}
-            in_set
-is_DE  | FALSE | TRUE
--------+-------+------
- FALSE |   n   |   p
- TRUE  |   m   |   q
+            
+     | GO | !GO
+-----+----+------
+  DE | n  |  p
+ !DE | m  |  q
 
 ```
 
 ```{r}
-## DE and in SET
-q <- length(intersect(res_tbl$ENTREZID[res_tbl$padj < 0.05],
+## DE and GO
+n <- length(intersect(res_tbl$ENTREZID[res_tbl$padj < 0.05],
                       GO_0005925$ENTREZID))
 
 
-## not DE and in SET
-p <- length(intersect(res_tbl$ENTREZID[res_tbl$padj >= 0.05],
+## !DE and GO
+m <- length(intersect(res_tbl$ENTREZID[res_tbl$padj >= 0.05],
                       GO_0005925$ENTREZID))
 
-## DE not in SET
-m <- length(setdiff(res_tbl$ENTREZID[res_tbl$padj < 0.05],
+## DE and !GO
+p <- length(setdiff(res_tbl$ENTREZID[res_tbl$padj < 0.05],
                     GO_0005925$ENTREZID))
 
-## not DE not in SET
-n <- length(setdiff(res_tbl$ENTREZID[res_tbl$padj >= 0.05],
+## !DE not !GO
+q <- length(setdiff(res_tbl$ENTREZID[res_tbl$padj >= 0.05],
                     GO_0005925$ENTREZID))
 ```
 
+```{r}
+cont_mat <- matrix(c(n, m, p, q), nrow = 2)
+rownames(cont_mat) <- c("DE", "!DE")
+colnames(cont_mat) <- c("GO", "!GO")
+cont_mat
+```
+
+We can now apply a Fisher's exact (or hypergeometric test) that will
+test whether we can identify a statistically enrichment of DE genes in
+the GO category.
+
+```{r}
+fisher.test(cont_mat)
+```
+
+`r msmbstyle::question_begin()`
+
+Repeat the analysis above the the GO:0005813 term.
+
+`r msmbstyle::question_end()`
 
 
-### Gene set enrichment analysis (GSEA) {-}
+This approach is straightfoward and very fast. Its major drawback
+however is that we need to define a cutoff to differentiate DE from
+non-DE genes. Setting this threshold might have a effect on the
+results. 
 
+
+`r msmbstyle::question_begin()`
+
+Try setting different DE genes and check if, in the cases above, this
+has and effect on the GO terms of interest.
+
+`r msmbstyle::question_end()`
+
+### Gene set enrichment analysis (GSEA)
+
+Gene set enrichment analysis refers to a broad family of tests. Here,
+we will define the principles based on [@Subramanian:2005], keeping in
+mind that the exact implementation will differ in different tools.
+
+The major advantage of GSEA approaches is that they don't rely on
+defining DE genes. The first step is to **order** the genes of
+interest based on the statistics used, typically the p-values. This is
+already the case for our `res_tbl` table. We also need to know which
+genes are in our set of interest.
+
+```{r}
+res_tbl$inGO <- res_tbl$ENTREZID %in% GO_0005925$ENTREZID
+dplyr::select(res_tbl, ENTREZID, padj, inGO)
+```
+
+We are now going to compute a score by traversing to ordered gene list
+and count a positive score when we encounter a gene in the gene set,
+and a -1 when the gene is not in the gene set. The positive score,
+called `set_ratio` below, is computeted as as $\frac{n_{genes} -
+n_{genes~in~set}}{n_{genes~in~set}}$ so that the sum of all genes in
+the set and those not in the set becomes zero.
+
+The cumulative sum of these scores along the ordered gene list becomes
+the GSEA path which is plotted below, and the maximun score obtained
+along this path is the GSEA score.
+
+
+```{r, fig.cap = "Gene set enrichment analysis path for term GO:0005925."}
+set_ratio <- (nrow(res_tbl) - sum(res_tbl$inGO))/sum(res_tbl$inGO)
+gsea_path <- ifelse(res_tbl$inGO, set_ratio, -1)
+gsea_path <- cumsum(gsea_path)
+gsea_score <- max(gsea_path)
+plot(gsea_path, type = "l",
+     xlab = "Ordered genes (padj)", 
+     ylab = "score",
+     main = paste0("GSEA score: ", round(gsea_score)))
+abline(h = gsea_score, col = "steelblue", lty = "dotted")
+```
+
+To be able to compute a statistical significance, we need to compute a
+null distribution of GSEA scores, i.e. a distribution of scores
+reflecting the absence of any enrichment. This would typically be
+obtained by permuting the samples in the original data, repeating the
+statistical analysis, reorder the genes accodring to the new
+statistics (we used the adjusted p-value above) and compute a new GSEA
+score. This would be repeated a certain number of times.
+
+This is very time consuming the statistical tests for all the genes
+need to be recomputer. In addition, for experiments with limited
+number of samples, the number of permutations would be limited.
+
+Below, we are simply going to generate 100 random permutations of the
+gene list to simulate the procedure above and calculate the GSEA
+score.
+
+
+```{r}
+set.seed(123)
+gsea_null <- replicate(100, {
+    res_tmp <- res_tbl
+    res_tmp$padj <- sample(res_tmp$padj)
+    res_tmp <- arrange(res_tmp, padj)
+    tmp_path <- ifelse(res_tmp$inGO, set_ratio, -1)
+    tmp_path <- cumsum(tmp_path)
+    max(tmp_path)
+})
+
+hist(gsea_null)
+```
+
+The best score we could get would correspond to a permutation starting
+with all the `r sum(res_tbl$inGO)` genes in the set:
+
+```{r}
+gsea_max <- sum(res_tbl$inGO) * set_ratio
+gsea_max
+```
+
+while the worst score, where all the `r sum(res_tbl$inGO)` genes are
+at the end of the gene list would be zero.
+
+All the possibilities mentioned above are shown on the plots below.
+
+```{r, echo = FALSE, fig.cap = "Representation of all GSEA paths: real path (blue), best and worse possible paths (red) and random paths (dotted grey).", fig.fullwidth = TRUE, fig.width = 8, fig.height = 4}
+par(mfrow = c(1, 2))
+## with best/worse
+best_path <- c(rep(set_ratio, sum(res_tbl$inGO)),
+               rep(-1, sum(!res_tbl$inGO)))
+best_path <- cumsum(best_path)
+worse_path <- c(rep(-1, sum(!res_tbl$inGO)),
+                rep(set_ratio, sum(res_tbl$inGO)))
+worse_path <- cumsum(worse_path)
+gsea_min <- min(worse_path)
+plot(gsea_path, type = "l",
+     col = "steelblue",
+     xlab = "Ordered genes (padj)", 
+     ylab = "score",
+     ylim = c(gsea_min, gsea_max))
+abline(h = gsea_score, col = "red", lty = "dotted")
+grid()
+abline(h = 0)
+set.seed(123)
+gsea_null <- replicate(100, {
+    res_tmp <- res_tbl
+    res_tmp$padj <- sample(res_tmp$padj)
+    res_tmp <- arrange(res_tmp, padj)
+    tmp_path <- ifelse(res_tmp$inGO, set_ratio, -1)
+    tmp_path <- cumsum(tmp_path)
+    lines(tmp_path, lty = "dotted", col = "#00000060")
+    max(tmp_path)
+})
+lines(best_path, col = "red")
+lines(worse_path, col = "red")
+## no best/worse
+plot(gsea_path, type = "l",
+     col = "steelblue",
+     xlab = "Ordered genes (padj)", 
+     ylab = "score",
+     ylim = c(-1750, gsea_score))
+abline(h = gsea_score, col = "red", lty = "dotted")
+grid()
+abline(h = 0)
+set.seed(123)
+gsea_null <- replicate(100, {
+    res_tmp <- res_tbl
+    res_tmp$padj <- sample(res_tmp$padj)
+    res_tmp <- arrange(res_tmp, padj)
+    tmp_path <- ifelse(res_tmp$inGO, set_ratio, -1)
+    tmp_path <- cumsum(tmp_path)
+    lines(tmp_path, lty = "dotted", col = "#00000060")
+    max(tmp_path)    
+})
+```
+
+An empirical p-value can be computer by dividing the number of null
+scores that are greater than the real score divided by the number of
+permutations (the number of null scores). In our case, given that no
+null scores are greater, the nominal p-value would be 0.
+
+`r msmbstyle::question_begin()`
+
+Given that we have 100 permutations, how many null scores greater that
+the actual GSEA score do we need for our results to become non
+significant (assuming we set an alpha of 0.05)?
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+6 scores or more, as 6 values greater than `r gsea_score` produce a
+p-values of 6/100 = 0.06.
+
+
+`r msmbstyle::solution_end()`
 
 ## Using the `clusterProfiler` package
 
