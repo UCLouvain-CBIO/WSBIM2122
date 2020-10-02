@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-10-01" />
+<meta name="date" content="2020-10-02" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -169,37 +169,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <html><body><div id="sec:gsea" class="section level1">
 <h1>
 <span class="header-section-number">Chapter 6</span> Enrichment analyses</h1>
-<p>Motivation</p>
+<p><strong>Motivation</strong>: at the end of this chapter, the students will be able
+to address the following points:</p>
 <ul>
-<li>What are the next steps after a DE analysis?</li>
+<li>What are the next steps after a differential expression analysis?</li>
 <li>Why are enrichment analyses useful?</li>
-<li>Understanding an over-enrichment analysis.</li>
+<li>Understanding over-enrichment analyses.</li>
 <li>Understanding a gene set enrichment analysis.</li>
 <li>Application of the <em><a href="https://bioconductor.org/packages/3.11/clusterProfiler">clusterProfiler</a></em> package.</li>
 </ul>
 <div id="introduction" class="section level2">
 <h2>
 <span class="header-section-number">6.1</span> Introduction</h2>
-<ol style="list-style-type: decimal">
-<li><p>DE is univariate - each gene is tested on its own. This probably
-doesn’t reflect biology - genes expression work in conjunction, not
-in isolation. One wouldn’t expect that the effect of a drug, or a
-mutation, … would lead to the perturbation of a single gene
-expression.</p></li>
-<li><p>The univariate approach expects (tests for) significant changes
-(especially concidering adjustment for multiple testing). Moderate
-effects in many (related) genes wouldn’t be identified as
-statistically significant, even it such an effect my be
-biologically more plausible that one of a few large ones.</p></li>
-<li><p>The goal of an enrichment analysis is to test for a group of
-related genes, called gene sets, and test whether the genes within
-these set are enriched for differential expression.</p></li>
-</ol>
+<ul>
+<li><p>Differential expression analysis is <strong>univariate</strong> - each gene is
+tested on its own. This probably doesn’t reflect the underlying
+biology - genes work in conjunction, not in isolation. One wouldn’t
+expect that the effect of a drug, or a mutation, … would lead to
+the perturbation of a single gene expression.</p></li>
+<li><p>The univariate approach expects (or tests for) significant changes
+in single genes. Moderate effects in many (related) genes cannot, by
+definition be identified as statistically significant, even it such
+an effect may be biologically more plausible that one of a few large
+ones.</p></li>
+<li><p>The goal of an enrichment analysis is to test for a group of related
+genes, called <strong>gene sets</strong>, and test whether the genes within these
+sets are enriched for differentially expression.</p></li>
+</ul>
 </div>
 <div id="gene-sets" class="section level2">
 <h2>
 <span class="header-section-number">6.2</span> Gene sets</h2>
-<p>How do we define gene sets?</p>
+<p>While nothing would stop a user to create their own gene sets, the
+sets that are generally used</p>
 <p>GO, KEGG, ReactomeDB, MySigDB.</p>
 </div>
 <div id="statistical-analyses" class="section level2">
@@ -220,7 +222,7 @@ gene set enrichment analysis (GSEA).</p>
 <a href="sec-ms.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-10-01
+2020-10-02
 </p>
 </div>
 </div>

@@ -1,36 +1,43 @@
 # Enrichment analyses {#sec:gsea}
 
 
-Motivation
+**Motivation**: at the end of this chapter, the students will be able
+to address the following points:
 
-- What are the next steps after a DE analysis?
+- What are the next steps after a differential expression analysis?
 - Why are enrichment analyses useful?
-- Understanding an over-enrichment analysis.
+- Understanding over-enrichment analyses.
 - Understanding a gene set enrichment analysis.
 - Application of the `r BiocStyle::Biocpkg("clusterProfiler")` package.
 
 ## Introduction
 
-1. DE is univariate - each gene is tested on its own. This probably
-   doesn't reflect biology - genes expression work in conjunction, not
-   in isolation. One wouldn't expect that the effect of a drug, or a
-   mutation, ... would lead to the perturbation of a single gene
-   expression.
+- Differential expression analysis is **univariate** - each gene is
+  tested on its own. This probably doesn't reflect the underlying
+  biology - genes work in conjunction, not in isolation. One wouldn't
+  expect that the effect of a drug, or a mutation, ... would lead to
+  the perturbation of a single gene expression.
 
-2. The univariate approach expects (tests for) significant changes
-   (especially concidering adjustment for multiple testing). Moderate
-   effects in many (related) genes wouldn't be identified as
-   statistically significant, even it such an effect my be
-   biologically more plausible that one of a few large ones.
+- The univariate approach expects (or tests for) significant changes
+  in single genes. Moderate effects in many (related) genes cannot, by
+  definition be identified as statistically significant, even it such
+  an effect may be biologically more plausible that one of a few large
+  ones.
 
-3. The goal of an enrichment analysis is to test for a group of
-   related genes, called gene sets, and test whether the genes within
-   these set are enriched for differential expression.
-
+- The goal of an enrichment analysis is to test for a group of related
+  genes, called **gene sets**, and test whether the genes within these
+  sets are enriched for differentially expression.
 
 ## Gene sets
 
-How do we define gene sets?
+While nothing would stop a user to create their own gene sets, the
+sets that are generally used stem from community-maintained resources. 
+
+### Gene ontology (GO) {-}
+
+
+
+
 
 GO, KEGG, ReactomeDB, MySigDB.
 
@@ -42,3 +49,4 @@ gene set enrichment analysis (GSEA).
 
 ## Using the `clusterProfiler` package
    
+
