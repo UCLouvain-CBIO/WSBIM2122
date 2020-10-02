@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-10-02" />
+<meta name="date" content="2020-10-03" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -398,13 +398,12 @@ can be written</p>
 <p><span class="math inline">\(x_j\)</span> = 0 if sample j is the control sample</p>
 <p><span class="math inline">\(x_j\)</span> = 1 if sample j is the treated sample</p>
 </div>
-<div id="statistical-test" class="section level3">
+<div id="hypothesis-testing" class="section level3">
 <h3>
-<span class="header-section-number">5.1.5</span> Statistical test</h3>
-<div id="wald-test" class="section level4 unnumbered">
-<h4>Wald test</h4>
-<p>The logFC are computed from the data using the GLM, and these are associated to standard
-errors that depend on the variance of the counts.</p>
+<span class="header-section-number">5.1.5</span> Hypothesis testing</h3>
+<p>The logFC are computed from the data using the GLM, and these are
+associated to standard errors that depend on the variance of the
+counts.</p>
 <p><img src="figs/z_stat.png" width="80%" style="display: block; margin: auto;"></p>
 <p>The ultimate goal of a test for differential expression is to decide
 whether, for a given gene, an observed difference in read counts is
@@ -412,7 +411,7 @@ significant, that is, whether it is greater than what would be
 expected just due to natural random variation.</p>
 <p>The null hypothesis <span class="math inline">\(H_0\)</span> is that there is no differential expression across
 the sample groups, which is the same as saying that the log2FC = 0.
-A statistical test, the Wald test, will determine whether the data
+A statistical test, the <strong>Wald test</strong>, will determine whether the data
 provides sufficient evidence to conclude that this value is really
 different from zero.</p>
 <p>For the Wald test, the log2 fold-change is divided by its standard
@@ -422,11 +421,9 @@ probability that a z-statistic at least as extreme as the observed
 value would be selected at random. In principle, if this p-value is
 small (below a certain cutoff) the null hypothesis is rejected.</p>
 </div>
-<div id="multiple-testing-correction" class="section level4 unnumbered">
-<h4>Multiple testing correction</h4>
-<ul>
-<li><strong>False discovery rate (FDR)</strong></li>
-</ul>
+<div id="multiple-testing-correction" class="section level3">
+<h3>
+<span class="header-section-number">5.1.6</span> Multiple testing correction</h3>
 <p>Recall that a pvalue of 0.05 means that there is only 5% chance of
 getting this data if no real difference existed (if <span class="math inline">\(H_0\)</span> was really
 true). In other words, choosing a cut off of 0.05 means there is 5%
@@ -449,24 +446,25 @@ drug had no real effect on them. But 5% of 19000 genes means … 950
 false positive genes! Hence, pvalues obtained from the Wald test must
 be corrected for multiple testing to avoid excess false positives.</p>
 <p>By default DESeq2 uses Benjamini-Hochberg method to adjust pvalues.
-The third histogram bellow illustrates the principle behind this False
-discovery rate (FDR) adjustment. As differential expression analysis
-is done on the whole set of genes, the resulting pvalues will have a
-distribution corresponding to the combination of both histograms.
-Most of the p-values are uniformly distributed between 0 and 1 but
-there is a spike to the left close to zero, due to those p-values for
-which <span class="math inline">\(H_0\)</span> is false. The correction approach helps to estimate how
-many of the significant values are actually false positives. It tries
-to find the height where the p-value distribution flattens out
-(corresponding to the red line) and incorporates this height value
-into the calculation of FDR adjusted p-values.</p>
+The third histogram bellow illustrates the principle behind this
+<strong>False discovery rate (FDR)</strong> adjustment. As differential expression
+analysis is done on the whole set of genes, the resulting pvalues will
+have a distribution corresponding to the combination of both
+histograms. Most of the p-values are uniformly distributed between 0
+and 1 but there is a spike to the left close to zero, due to those
+p-values for which <span class="math inline">\(H_0\)</span> is false. The correction approach helps to
+estimate how many of the significant values are actually false
+positives. It tries to find the height where the p-value distribution
+flattens out (corresponding to the red line) and incorporates this
+height value into the calculation of FDR adjusted p-values.</p>
 <p>Choosing a cut off of 0.05 for padjusted values now implies that 5% of
 significant tests (but not 5% of all tests as before) will result in false
 positives.</p>
 <p><img src="figs/pval_histograms.png" width="100%" style="display: block; margin: auto;"></p>
-<ul>
-<li><strong>Independent filtering</strong></li>
-</ul>
+</div>
+<div id="independent-filtering" class="section level3">
+<h3>
+<span class="header-section-number">5.1.7</span> Independent filtering</h3>
 <p>Multiple testing adjustment tends to be associated with a loss of power.
 To counteract this effect, one possibility is to filter out those tests from
 the procedure that have no, or little chance of showing significant evidence,
@@ -490,7 +488,6 @@ genes which will have a significant p-adjusted value.
 The threshold chosen (the vertical line) is the lowest quantile for which the number of
 rejections is within 1 residual standard deviation to the peak of the curve.</p>
 <p><img src="figs/IF_threshold.png" width="100%" style="display: block; margin: auto;"></p>
-</div>
 </div>
 </div>
 <div id="running-deseq2" class="section level2">
@@ -612,13 +609,11 @@ function <code>DESeq()</code>. This function will automatically run the followin
 <pre><code>## final dispersion estimates</code></pre>
 <pre><code>## fitting model and testing</code></pre>
 </div>
-<div id="data-exploration" class="section level3">
+<div id="pca" class="section level3">
 <h3>
-<span class="header-section-number">5.2.3</span> Data exploration</h3>
+<span class="header-section-number">5.2.3</span> PCA</h3>
 <p>Before anything else, a good practice is to explore the data
 and perform quality controls checks.</p>
-<div id="pca" class="section level4 unnumbered">
-<h4>PCA</h4>
 <p>It is highly recommended to starts by a PCA to assess overall similarity between the samples:</p>
 <ul>
 <li><p>Which samples are similar/different to each other?</p></li>
@@ -712,8 +707,9 @@ for custom plotting.</p>
 <a class="sourceLine" id="cb178-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_text</span>()</a></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-75-1.png" width="672"></p>
 </div>
-<div id="inspecting-size-factors" class="section level4 unnumbered">
-<h4>Inspecting size factors</h4>
+<div id="inspecting-size-factors" class="section level3">
+<h3>
+<span class="header-section-number">5.2.4</span> Inspecting size factors</h3>
 <p>It is also advisable to investigate any systematic bias in the sequencing data, such as
 whether one sample has been sequenced more deeply than others. One can extract size factors
 using the <code>sizeFactors()</code> function.
@@ -754,18 +750,18 @@ Usually these size factors should vary around 1, indicating comparable sequencin
 </div>
 </div>
 </div>
-<div id="dispersion-plot" class="section level4 unnumbered">
-<h4>Dispersion plot</h4>
+<div id="dispersion-plot" class="section level3">
+<h3>
+<span class="header-section-number">5.2.5</span> Dispersion plot</h3>
 <p>Plotting the dispersion estimates is a useful diagnostic.
 This dispersion plot is typical, with the final dispersion, estimates shrunk from the
 gene-wise estimates towards the fitted estimates.</p>
 <div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1"><span class="kw">plotDispEsts</span>(dds)</a></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/dispersion_plot-1.png" width="672"></p>
 </div>
-</div>
-<div id="results" class="section level3">
+<div id="deseq2-results" class="section level3">
 <h3>
-<span class="header-section-number">5.2.4</span> Results</h3>
+<span class="header-section-number">5.2.6</span> DESeq2 results</h3>
 <p>The <code>resultsNames()</code> function gives the names of results that can be extracted.
 Note that by default, R will choose a reference level for factors based on alphabetical
 order. Here KD condition was hence set arbitrarily as the reference level. This means
@@ -942,8 +938,10 @@ that have been filtered out by the independent filtering procedure.</p>
 </p>
 </div>
 </div>
-<div id="independent-filtering-exploration" class="section level4 unnumbered">
-<h4>Independent filtering exploration</h4>
+</div>
+<div id="independent-filtering-exploration" class="section level3">
+<h3>
+<span class="header-section-number">5.2.7</span> Independent filtering exploration</h3>
 <p>The filtering threshold that has been used to filter low count genes can be extracted
 from the results metadata.</p>
 <div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb209-1" data-line-number="1"><span class="kw">metadata</span>(res)<span class="op">$</span>filterThreshold</a></code></pre></div>
@@ -1051,8 +1049,9 @@ Check how many genes have no padj?</li>
 </div>
 </div>
 </div>
-<div id="p-values-distribution" class="section level4 unnumbered">
-<h4>p-values distribution</h4>
+<div id="p-values-distribution" class="section level3">
+<h3>
+<span class="header-section-number">5.2.8</span> p-values distribution</h3>
 <p>Another useful diagnostic plot is the histogram of pvalues.
 It can give you an immediate idea of the proportion of genes differentially expressed,
 (the taller the is the left peak, the more p-values are close to 0 and therefore
@@ -1129,8 +1128,9 @@ the pvalues behaviour is now much nicer!</p>
 </div>
 </div>
 </div>
-<div id="ma-plot" class="section level4 unnumbered">
-<h4>MA-plot</h4>
+<div id="ma-plot" class="section level3">
+<h3>
+<span class="header-section-number">5.2.9</span> MA plot</h3>
 <p>Another interesting plot is the MA-plot (“Mean-Average” plot), a
 scatter plot of log2FC versus the mean of normalised counts. Genes
 with a padjusted value lower than 0.05 are colored. The plot
@@ -1142,8 +1142,9 @@ right quadrant of the plots (the most interesting candidates).</p>
 <div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb238-1" data-line-number="1"><span class="kw">plotMA</span>(res)</a></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-98-1.png" width="672"></p>
 </div>
-<div id="volcano-plot" class="section level4 unnumbered">
-<h4>Volcano-plot</h4>
+<div id="volcano-plot" class="section level3">
+<h3>
+<span class="header-section-number">5.2.10</span> Volcano plot</h3>
 <p>Drawing a volcano-plot is also informative to have a global view on the results.
 Recall that the most interesting features are those towards the top corners given
 that they have small pvalues and large fold-changes.</p>
@@ -1158,8 +1159,9 @@ that they have small pvalues and large fold-changes.</p>
 <a class="sourceLine" id="cb239-9" data-line-number="9"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">-1</span>)</a></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-99-1.png" width="672"></p>
 </div>
-<div id="plot-counts-of-genes" class="section level4 unnumbered">
-<h4>Plot counts of genes</h4>
+<div id="raw-counts-plots" class="section level3">
+<h3>
+<span class="header-section-number">5.2.11</span> Raw counts plots</h3>
 <p>It may be also useful to check the validity of the analysis by simply assessing the expression
 levels of the most highly differentially expressed genes.</p>
 <div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb240-1" data-line-number="1">best_genes &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></a>
@@ -1247,8 +1249,9 @@ This will result in higher dispersion values, and larger pvalues.</p>
 </div>
 </div>
 </div>
-<div id="adding-variables-to-result-table" class="section level4 unnumbered">
-<h4>Adding variables to result table</h4>
+<div id="querying-the-biomart-service" class="section level3">
+<h3>
+<span class="header-section-number">5.2.12</span> Querying the Biomart service</h3>
 <p>The result table only uses Ensembl gene IDs, but gene names may be
 more informative. Bioconductor’s <em><a href="https://bioconductor.org/packages/3.11/biomaRt">biomaRt</a></em>
 package can help with mapping various ID schemes to each other.</p>
@@ -1298,7 +1301,6 @@ data.</p>
 <p>Below, we store these results to use them in the next chapter.</p>
 <div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb254-1" data-line-number="1"><span class="kw">saveRDS</span>(res_tbl, <span class="dt">file =</span> <span class="st">"res_tbl.rds"</span>)</a></code></pre></div>
 
-</div>
 </div>
 </div>
 </div></body></html>
