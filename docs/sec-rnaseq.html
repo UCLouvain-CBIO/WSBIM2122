@@ -1298,8 +1298,10 @@ data.</p>
 ##  9 ENSG00…    1419.           3.00 0.240  12.5 6.39e- 36 1.18e- 32 ST3G…
 ## 10 ENSG00…    6134.           2.18 0.178  12.2 2.26e- 34 3.76e- 31 ITGB8
 ## # … with 58,925 more rows, and 1 more variable: ENTREZID &lt;int&gt;</code></pre>
-<p>Below, we store these results to use them in the next chapter.</p>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb254-1" data-line-number="1"><span class="kw">saveRDS</span>(res_tbl, <span class="dt">file =</span> <span class="st">"res_tbl.rds"</span>)</a></code></pre></div>
+<p>Below, we store these results and the <code>DESeqDataSet</code> object for in the
+next chapter.</p>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb254-1" data-line-number="1"><span class="kw">saveRDS</span>(dds, <span class="dt">file =</span> <span class="st">"./data/dds.rds"</span>)</a>
+<a class="sourceLine" id="cb254-2" data-line-number="2"><span class="kw">saveRDS</span>(res_tbl, <span class="dt">file =</span> <span class="st">"./data/res_tbl.rds"</span>)</a></code></pre></div>
 
 </div>
 </div>

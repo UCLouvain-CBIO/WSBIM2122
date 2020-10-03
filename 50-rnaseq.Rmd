@@ -1138,10 +1138,12 @@ res_tbl <- res_tbl %>%
 res_tbl
 ```
 
-Below, we store these results to use them in the next chapter.
+Below, we store these results and the `DESeqDataSet` object for in the
+next chapter.
 
 ```{r}
-saveRDS(res_tbl, file = "res_tbl.rds")
+saveRDS(dds, file = "./data/dds.rds")
+saveRDS(res_tbl, file = "./data/res_tbl.rds")
 ```
 
 

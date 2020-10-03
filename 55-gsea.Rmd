@@ -187,14 +187,14 @@ software. The MSigDB gene sets are divided into 9 collections:
 - Cell type signature gene sets (C8) curated from cluster markers
   identified in single-cell sequencing studies of human tissue.
 
-## Statistical analyses
+### Input data
 
 To illustrate enrichment analyses, we will use the DESeq2 results
-stored in the the `res_tbl` variable, computed in the previous
+stored in the `res_tbl` variable, computed in the previous
 chapter.
 
 ```{r, echo = FALSE}
-res_tbl <- readRDS("res_tbl.rds")
+res_tbl <- readRDS("./data/res_tbl.rds")
 ```
 
 We will focus on the genes that have an adjusted p-value (those that
@@ -204,13 +204,13 @@ have been tested) and that have unique ENTREZ gene identifiers.
 res_tbl <- res_tbl %>%
     filter(!is.na(ENTREZID),
            !is.na(padj),
-           !duplicated(res_tbl$ENTREZID))
+           !duplicated(ENTREZID)) %>%
+    mutate(ENTREZID = as.character(ENTREZID))
 
-res_tbl$ENTREZID <- as.character(res_tbl$ENTREZID)
 res_tbl
 ```
 
-### Over-enrichment analysis (ORA)
+## Over-enrichment analysis (ORA)
 
 To perform an over-enrichment analysis, we need to define:
 
@@ -267,7 +267,7 @@ fisher.test(cont_mat)
 
 `r msmbstyle::question_begin()`
 
-Repeat the analysis above the the GO:0005813 term.
+Repeat the ORA analysis above the GO:0005813 term.
 
 `r msmbstyle::question_end()`
 
@@ -285,7 +285,7 @@ has and effect on the GO terms of interest.
 
 `r msmbstyle::question_end()`
 
-### Gene set enrichment analysis (GSEA)
+## Gene set enrichment analysis (GSEA)
 
 Gene set enrichment analysis refers to a broad family of tests. Here,
 we will define the principles based on [@Subramanian:2005], keeping in
@@ -309,14 +309,19 @@ called `set_ratio` below, is computeted as as $\frac{n_{genes} -
 n_{genes~in~set}}{n_{genes~in~set}}$ so that the sum of all genes in
 the set and those not in the set becomes zero.
 
+```{r}
+set_ratio <- function(tbl) {
+    (nrow(tbl) - sum(tbl$inGO))/sum(tbl$inGO)
+}
+```
+
 The cumulative sum of these scores along the ordered gene list becomes
 the GSEA path which is plotted below, and the maximun score obtained
 along this path is the GSEA score.
 
 
 ```{r, fig.cap = "Gene set enrichment analysis path for term GO:0005925."}
-set_ratio <- (nrow(res_tbl) - sum(res_tbl$inGO))/sum(res_tbl$inGO)
-gsea_path <- ifelse(res_tbl$inGO, set_ratio, -1)
+gsea_path <- ifelse(res_tbl$inGO, set_ratio(res_tbl), -1)
 gsea_path <- cumsum(gsea_path)
 gsea_score <- max(gsea_path)
 plot(gsea_path, type = "l",
@@ -328,107 +333,141 @@ abline(h = gsea_score, col = "steelblue", lty = "dotted")
 
 To be able to compute a statistical significance, we need to compute a
 null distribution of GSEA scores, i.e. a distribution of scores
-reflecting the absence of any enrichment. This would typically be
-obtained by permuting the samples in the original data, repeating the
-statistical analysis, reorder the genes accodring to the new
-statistics (we used the adjusted p-value above) and compute a new GSEA
-score. This would be repeated a certain number of times.
+reflecting the absence of any enrichment. This is done by permuting
+the samples in the original data, repeating the statistical analysis,
+reorder the genes accodring to the new statistics (we used the
+adjusted p-value above) and compute a new GSEA score.
 
-This is very time consuming the statistical tests for all the genes
-need to be recomputer. In addition, for experiments with limited
-number of samples, the number of permutations would be limited.
 
-Below, we are simply going to generate 100 random permutations of the
-gene list to simulate the procedure above and calculate the GSEA
-score.
+```{r, message = FALSE}
+dds_tmp <- dds
+dds_tmp$Condition <- dds_tmp$Condition[sample(ncol(dds_tmp))]
+colData(dds)
+colData(dds_tmp)
 
+res_tmp <- DESeq(dds_tmp) %>%
+    results(name = "Condition_KD_vs_mock") %>%
+    as_tibble(rownames = "ENSEMBL") %>%
+    left_join(ensembl_to_geneName) %>%
+    mutate(inGO = ENTREZID %in% GO_0005925$ENTREZID) %>%
+    filter(!is.na(ENTREZID),
+           !is.na(padj),
+           !duplicated(ENTREZID)) %>%
+    dplyr::select(ENSEMBL, ENTREZID, padj, inGO) %>%
+    arrange(padj)
+
+res_tmp <- res_tmp %>%
+    mutate(score = ifelse(inGO, set_ratio(res_tmp), -1)) %>%
+    mutate(score = cumsum(score))
+
+res_tmp
+```
 
 ```{r}
-set.seed(123)
-gsea_null <- replicate(100, {
-    res_tmp <- res_tbl
-    res_tmp$padj <- sample(res_tmp$padj)
-    res_tmp <- arrange(res_tmp, padj)
-    tmp_path <- ifelse(res_tmp$inGO, set_ratio, -1)
-    tmp_path <- cumsum(tmp_path)
-    max(tmp_path)
-})
-
-hist(gsea_null)
+max(res_tmp$score)
+plot(res_tmp$score, type = "l")
 ```
 
-The best score we could get would correspond to a permutation starting
-with all the `r sum(res_tbl$inGO)` genes in the set:
+This approach is very time consuming, given that the statistical tests
+for all the genes need to be recomputer at each permutation. In
+addition, for experiments with limited number of samples, the number
+of permutations would be limited.
+
+We start by defining a function that will repeat the steps above and
+return a list containing the GSEA score and path.
 
 ```{r}
-gsea_max <- sum(res_tbl$inGO) * set_ratio
-gsea_max
+##' A function that assigns the permuted Conditions,
+##' runs DESeq and a GSEA analysis
+##'
+##' @param x a DESeq object.
+##' @param perm character() of length `ncol(x)` indicating the
+##'     permutation to be tested.
+##'
+##' @return A named list() of length 2 with the GSEA `score` and
+##'     `path`.
+gsea_perm <- function(x, perm) {
+    ## Set the Condition based on the permutation
+    x$Condition[perm] <- "mock"
+    x$Condition[-perm] <- "KD"
+    ## Run DESeq2, extract and annotate results
+    suppressMessages(
+        tbl <- DESeq(x) %>%
+            results(name = "Condition_KD_vs_mock") %>%
+            as_tibble(rownames = "ENSEMBL") %>%
+            left_join(ensembl_to_geneName) %>%
+            mutate(inGO = ENTREZID %in% GO_0005925$ENTREZID) %>%
+            filter(!is.na(ENTREZID),
+                   !is.na(padj),
+                   !duplicated(ENTREZID)) %>%
+            dplyr::select(ENSEMBL, ENTREZID, padj, inGO) %>%
+            arrange(padj)
+    )
+    ## Compute GSEA results
+    tbl <- tbl %>%
+        mutate(score = if_else(inGO, set_ratio(tbl), -1)) %>%
+        mutate(score = cumsum(score))
+    list(score = max(tbl$score), path = tbl$score)
+}
 ```
 
-while the worst score, where all the `r sum(res_tbl$inGO)` genes are
-at the end of the gene list would be zero.
+We will expecute this function on all unique permutations,
+corresponding on the 10 first columns (including the actual design, in
+the first column). Note that columns 11 to 20 are simply the opposite
+of the first 10.
 
-All the possibilities mentioned above are shown on the plots below.
-
-```{r, echo = FALSE, fig.cap = "Representation of all GSEA paths: real path (blue), best and worse possible paths (red) and random paths (dotted grey).", fig.fullwidth = TRUE, fig.width = 8, fig.height = 4}
-par(mfrow = c(1, 2))
-## with best/worse
-best_path <- c(rep(set_ratio, sum(res_tbl$inGO)),
-               rep(-1, sum(!res_tbl$inGO)))
-best_path <- cumsum(best_path)
-worse_path <- c(rep(-1, sum(!res_tbl$inGO)),
-                rep(set_ratio, sum(res_tbl$inGO)))
-worse_path <- cumsum(worse_path)
-gsea_min <- min(worse_path)
-plot(gsea_path, type = "l",
-     col = "steelblue",
-     xlab = "Ordered genes (padj)", 
-     ylab = "score",
-     ylim = c(gsea_min, gsea_max))
-abline(h = gsea_score, col = "red", lty = "dotted")
-grid()
-abline(h = 0)
-set.seed(123)
-gsea_null <- replicate(100, {
-    res_tmp <- res_tbl
-    res_tmp$padj <- sample(res_tmp$padj)
-    res_tmp <- arrange(res_tmp, padj)
-    tmp_path <- ifelse(res_tmp$inGO, set_ratio, -1)
-    tmp_path <- cumsum(tmp_path)
-    lines(tmp_path, lty = "dotted", col = "#00000060")
-    max(tmp_path)
-})
-lines(best_path, col = "red")
-lines(worse_path, col = "red")
-## no best/worse
-plot(gsea_path, type = "l",
-     col = "steelblue",
-     xlab = "Ordered genes (padj)", 
-     ylab = "score",
-     ylim = c(-1750, gsea_score))
-abline(h = gsea_score, col = "red", lty = "dotted")
-grid()
-abline(h = 0)
-set.seed(123)
-gsea_null <- replicate(100, {
-    res_tmp <- res_tbl
-    res_tmp$padj <- sample(res_tmp$padj)
-    res_tmp <- arrange(res_tmp, padj)
-    tmp_path <- ifelse(res_tmp$inGO, set_ratio, -1)
-    tmp_path <- cumsum(tmp_path)
-    lines(tmp_path, lty = "dotted", col = "#00000060")
-    max(tmp_path)    
-})
+```{r}
+(perms <- combn(6, 3))
 ```
+
+We not apply our function on every permutation.
+
+```{r, cache = TRUE}
+gsea_scores <- apply(perms[, 1:10], 2, function(p) gsea_perm(dds, p))
+```
+
+And extract the scores and paths.
+
+```{r}
+paths <- sapply(gsea_scores, "[[", 2)
+(scores <- sapply(gsea_scores, "[[", 1))
+```
+
+If we compare the actual score to the permutation scores, we see that
+it is the largest one. 
+
+```{r}
+plot(density(scores))
+rug(scores)
+abline(v = scores[1])
+```
+
 
 An empirical p-value can be computer by dividing the number of null
 scores that are greater than the real score divided by the number of
 permutations (the number of null scores). In our case, given that no
 null scores are greater, the nominal p-value would be 0.
 
+```{r}
+sum(scores > scores[1])/length(scores)
+```
+
+Below, we illustrate all GSEA path and confirm that the actual score
+is indeed the largest one.
+
+```{r, fig.cap = "Representation of all GSEA paths: real path (blue) and random paths (dotted grey)."}
+plot(paths[[1]], type = "l",
+     ylim = c(min(unlist(paths)), max(scores)),
+     col = "steelblue")
+grid()
+for (i in 2:length(paths))
+    lines(paths[[i]], type = "l", lty = "dotted")
+```
+
+
 `r msmbstyle::question_begin()`
 
-Given that we have 100 permutations, how many null scores greater that
+Given that we have 10 permutations, how many null scores greater that
 the actual GSEA score do we need for our results to become non
 significant (assuming we set an alpha of 0.05)?
 
@@ -437,13 +476,32 @@ significant (assuming we set an alpha of 0.05)?
 
 `r msmbstyle::solution_begin()`
 
-6 scores or more, as 6 values greater than `r gsea_score` produce a
-p-values of 6/100 = 0.06.
-
+1 permutation score or more is enough to loose significativite, as a
+single value greater than `r round(scores[1])` produces a p-value
+of 1/10 = 0.1.
 
 `r msmbstyle::solution_end()`
 
+There exist various approaches to the GSEA analysis, that apply
+different permutation approaches to increate the number of possible
+permutations and reduce the running time.
+
+`r msmbstyle::question_begin()`
+
+Repeat the GSEA analysis above the GO:0005813 term.
+
+`r msmbstyle::question_end()`
+
+
+
 ## Using the `clusterProfiler` package
+
+I practice, the analyses presented above are executed using any of
+[the very
+many](http://bioconductor.org/packages/release/BiocViews.html#___GeneSetEnrichment)
+packages that are available.
+Here, we will demonstrate `r BiocStyle::Biocpkg("clusterProfiler")`.
+
 
 ```{r, eval = FALSE}
 library("clusterProfiler")
