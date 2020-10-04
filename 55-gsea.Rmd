@@ -549,7 +549,7 @@ further exploration of the results.
 
 ### ORA using GO sets
 
-```{r}
+```{r, message = FALSE}
 go_ora <- enrichGO(gene = as.character(res_tbl$ENTREZID[res_tbl$padj < 0.05]),
                    universe = as.character(res_tbl$ENTREZID),
                    OrgDb = org.Hs.eg.db,
