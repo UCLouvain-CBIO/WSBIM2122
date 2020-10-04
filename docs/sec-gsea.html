@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-10-03" />
+<meta name="date" content="2020-10-04" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -149,7 +149,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a id="active-page" href="sec-gsea.html"><span class="toc-section-number">6</span> Enrichment analyses</a><ul class="toc-sections">
 <li class="toc"><a href="#introduction"> Introduction</a></li>
 <li class="toc"><a href="#gene-sets"> Gene sets</a></li>
-<li class="toc"><a href="#over-enrichment-analysis-ora"> Over-enrichment analysis (ORA)</a></li>
+<li class="toc"><a href="#over-representation-analysis-ora"> Over representation analysis (ORA)</a></li>
 <li class="toc"><a href="#gene-set-enrichment-analysis-gsea"> Gene set enrichment analysis (GSEA)</a></li>
 <li class="toc"><a href="#using-the-clusterprofiler-package"> Using the <code>clusterProfiler</code> package</a></li>
 </ul>
@@ -175,7 +175,7 @@ to address the following points:</p>
 <ul>
 <li>What are the next steps after a differential expression analysis?</li>
 <li>Why are enrichment analyses useful?</li>
-<li>Understanding over-enrichment analyses.</li>
+<li>Understanding over representation analyses.</li>
 <li>Understanding a gene set enrichment analysis.</li>
 <li>Application of the <em><a href="https://bioconductor.org/packages/3.11/clusterProfiler">clusterProfiler</a></em> package.</li>
 </ul>
@@ -248,16 +248,16 @@ annotated with a GO term (the <code>keys</code> below) of interest.</p>
 matrix and that forms a point of termination of actin filaments. In
 insects focal adhesion has also been referred to as hemi-adherens
 junction (HAJ).</code></pre>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb257-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"GO.db"</span>)</a>
-<a class="sourceLine" id="cb257-2" data-line-number="2"><span class="kw">library</span>(<span class="st">"org.Hs.eg.db"</span>)</a>
-<a class="sourceLine" id="cb257-3" data-line-number="3">GO_<span class="dv">0005925</span> &lt;-<span class="st"> </span><span class="kw">select</span>(org.Hs.eg.db,</a>
-<a class="sourceLine" id="cb257-4" data-line-number="4">                     <span class="dt">keys =</span> <span class="st">"GO:0005925"</span>,</a>
-<a class="sourceLine" id="cb257-5" data-line-number="5">                     <span class="dt">columns =</span> <span class="kw">c</span>(<span class="st">"ENTREZID"</span>, <span class="st">"SYMBOL"</span>),</a>
-<a class="sourceLine" id="cb257-6" data-line-number="6">                     <span class="dt">keytype =</span> <span class="st">"GO"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb257-7" data-line-number="7"><span class="st">    </span>as_tibble <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb257-8" data-line-number="8"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">duplicated</span>(ENTREZID))</a></code></pre></div>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb259-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"GO.db"</span>)</a>
+<a class="sourceLine" id="cb259-2" data-line-number="2"><span class="kw">library</span>(<span class="st">"org.Hs.eg.db"</span>)</a>
+<a class="sourceLine" id="cb259-3" data-line-number="3">GO_<span class="dv">0005925</span> &lt;-<span class="st"> </span><span class="kw">select</span>(org.Hs.eg.db,</a>
+<a class="sourceLine" id="cb259-4" data-line-number="4">                     <span class="dt">keys =</span> <span class="st">"GO:0005925"</span>,</a>
+<a class="sourceLine" id="cb259-5" data-line-number="5">                     <span class="dt">columns =</span> <span class="kw">c</span>(<span class="st">"ENTREZID"</span>, <span class="st">"SYMBOL"</span>),</a>
+<a class="sourceLine" id="cb259-6" data-line-number="6">                     <span class="dt">keytype =</span> <span class="st">"GO"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb259-7" data-line-number="7"><span class="st">    </span>as_tibble <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb259-8" data-line-number="8"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">duplicated</span>(ENTREZID))</a></code></pre></div>
 <pre><code>## 'select()' returned 1:many mapping between keys and columns</code></pre>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb259-1" data-line-number="1">GO_<span class="dv">0005925</span></a></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb261-1" data-line-number="1">GO_<span class="dv">0005925</span></a></code></pre></div>
 <pre><code>## # A tibble: 405 x 5
 ##    GO         EVIDENCE ONTOLOGY ENTREZID SYMBOL
 ##    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt; 
@@ -297,14 +297,14 @@ continually during the cell-division cycle.</code></pre>
 ► Solution<span id="sol-start-16" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-16', 'sol-start-16')"></span>
 </p>
 <div id="sol-body-16" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb262-1" data-line-number="1">GO_<span class="dv">0005813</span> &lt;-<span class="st"> </span><span class="kw">select</span>(org.Hs.eg.db,</a>
-<a class="sourceLine" id="cb262-2" data-line-number="2">                     <span class="dt">keys =</span> <span class="st">"GO:0005813"</span>,</a>
-<a class="sourceLine" id="cb262-3" data-line-number="3">                     <span class="dt">columns =</span> <span class="kw">c</span>(<span class="st">"ENTREZID"</span>, <span class="st">"SYMBOL"</span>),</a>
-<a class="sourceLine" id="cb262-4" data-line-number="4">                     <span class="dt">keytype =</span> <span class="st">"GO"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb262-5" data-line-number="5"><span class="st">    </span>as_tibble <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb262-6" data-line-number="6"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">duplicated</span>(ENTREZID))</a></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb264-1" data-line-number="1">GO_<span class="dv">0005813</span> &lt;-<span class="st"> </span><span class="kw">select</span>(org.Hs.eg.db,</a>
+<a class="sourceLine" id="cb264-2" data-line-number="2">                     <span class="dt">keys =</span> <span class="st">"GO:0005813"</span>,</a>
+<a class="sourceLine" id="cb264-3" data-line-number="3">                     <span class="dt">columns =</span> <span class="kw">c</span>(<span class="st">"ENTREZID"</span>, <span class="st">"SYMBOL"</span>),</a>
+<a class="sourceLine" id="cb264-4" data-line-number="4">                     <span class="dt">keytype =</span> <span class="st">"GO"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb264-5" data-line-number="5"><span class="st">    </span>as_tibble <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb264-6" data-line-number="6"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">duplicated</span>(ENTREZID))</a></code></pre></div>
 <pre><code>## 'select()' returned 1:many mapping between keys and columns</code></pre>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb264-1" data-line-number="1">GO_<span class="dv">0005813</span></a></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb266-1" data-line-number="1">GO_<span class="dv">0005813</span></a></code></pre></div>
 <pre><code>## # A tibble: 483 x 5
 ##    GO         EVIDENCE ONTOLOGY ENTREZID SYMBOL
 ##    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt; 
@@ -352,9 +352,9 @@ open-source, curated and peer-reviewed pathway database. The
 Bioconductor <em><a href="https://bioconductor.org/packages/3.11/reactome.db">reactome.db</a></em> package provides
 access to reactome maps and annotations within R.</p>
 </div>
-<div id="molecular-signatures-database-mysigdb" class="section level3">
+<div id="molecular-signatures-database-msigdb" class="section level3">
 <h3>
-<span class="header-section-number">6.2.4</span> Molecular Signatures Database (MySigDB)</h3>
+<span class="header-section-number">6.2.4</span> Molecular Signatures Database (MSigDB)</h3>
 <p>MSigDB is a collection of annotated gene sets for use with GSEA
 software. The MSigDB gene sets are divided into 9 collections:</p>
 <ul>
@@ -378,6 +378,8 @@ microarray gene expression data from immunologic studies.</li>
 <li>Cell type signature gene sets (C8) curated from cluster markers
 identified in single-cell sequencing studies of human tissue.</li>
 </ul>
+<p>The <em><a href="https://CRAN.R-project.org/package=msigdbr">msigdbr</a></em> CRAN package provides the MSigDB
+gene sets in a standard R data frame with key-value pairs.</p>
 </div>
 <div id="input-data" class="section level3">
 <h3>
@@ -387,13 +389,13 @@ stored in the <code>res_tbl</code> variable, computed in the previous
 chapter.</p>
 <p>We will focus on the genes that have an adjusted p-value (those that
 have been tested) and that have unique ENTREZ gene identifiers.</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb266-1" data-line-number="1">res_tbl &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb266-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ENTREZID),</a>
-<a class="sourceLine" id="cb266-3" data-line-number="3">           <span class="op">!</span><span class="kw">is.na</span>(padj),</a>
-<a class="sourceLine" id="cb266-4" data-line-number="4">           <span class="op">!</span><span class="kw">duplicated</span>(ENTREZID)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb266-5" data-line-number="5"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">ENTREZID =</span> <span class="kw">as.character</span>(ENTREZID))</a>
-<a class="sourceLine" id="cb266-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb266-7" data-line-number="7">res_tbl</a></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb268-1" data-line-number="1">res_tbl &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb268-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ENTREZID),</a>
+<a class="sourceLine" id="cb268-3" data-line-number="3">           <span class="op">!</span><span class="kw">is.na</span>(padj),</a>
+<a class="sourceLine" id="cb268-4" data-line-number="4">           <span class="op">!</span><span class="kw">duplicated</span>(ENTREZID)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb268-5" data-line-number="5"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">ENTREZID =</span> <span class="kw">as.character</span>(ENTREZID))</a>
+<a class="sourceLine" id="cb268-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb268-7" data-line-number="7">res_tbl</a></code></pre></div>
 <pre><code>## # A tibble: 13,719 x 9
 ##    ENSEMBL baseMean log2FoldChange lfcSE  stat    pvalue      padj gene 
 ##    &lt;chr&gt;      &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;
@@ -410,10 +412,42 @@ have been tested) and that have unique ENTREZ gene identifiers.</p>
 ## # … with 13,709 more rows, and 1 more variable: ENTREZID &lt;chr&gt;</code></pre>
 </div>
 </div>
-<div id="over-enrichment-analysis-ora" class="section level2">
+<div id="over-representation-analysis-ora" class="section level2">
 <h2>
-<span class="header-section-number">6.3</span> Over-enrichment analysis (ORA)</h2>
-<p>To perform an over-enrichment analysis, we need to define:</p>
+<span class="header-section-number">6.3</span> Over representation analysis (ORA)</h2>
+<p>An over representation analysis relies on the hypergeometric
+distribution</p>
+<p><span class="math display">\[ P(X = k) = \frac{\binom{N}{k} \binom{N-K}{n-k}}{\binom{N}{n}} \]</span></p>
+<p>where</p>
+<ul>
+<li>
+<span class="math inline">\(N\)</span> is the population size,</li>
+<li>
+<span class="math inline">\(K\)</span> is the number of success states in the population,</li>
+<li>
+<span class="math inline">\(n\)</span> is the number of draws (i.e. quantity drawn in each trial),</li>
+<li>
+<span class="math inline">\(k\)</span>kis the number of observed successes,</li>
+<li>
+<span class="math inline">\(\binom{n}{k}\)</span> is a binomial coefficient <span class="math inline">\(\frac{n!}{k! (n-k)!}\)</span>.</li>
+</ul>
+<p>The hypergeometric distribution is a discrete probability distribution
+that describes the probability of <span class="math inline">\(k\)</span> successes (random draws for
+which the object drawn has a specified feature) in <span class="math inline">\(n\)</span> draws, without
+replacement, from a finite population of size <span class="math inline">\(N\)</span> that contains
+exactly <span class="math inline">\(K\)</span> objects with that feature, wherein each draw is either a
+success or a failure.</p>
+<p>The example used to describe the distribution is an urn contain <span class="math inline">\(N\)</span>
+marbles of two colours. There are <span class="math inline">\(K\)</span> green and and <span class="math inline">\(N-K\)</span> red marbles
+in the urn. Drawing a green marble is defined as success, and a red
+marble failure. Using the formula above, we can compute the
+probability to draw <span class="math inline">\(k\)</span> green marbles from the urn.</p>
+<p>The in frame of an enrichment analysis, we use the following
+formulation to calculate a probabiliy that we have more green marbles
+than we would expect by change, i.e. there to be an over
+representation of green marbles.</p>
+<p><span class="math display">\[ p = 1 - \sum_{i = 0}^{k - 1} \frac{\binom{N}{k} \binom{N-K}{n-k}}{\binom{N}{n}} \]</span></p>
+<p>To perform an over representation analysis, we thus need to define:</p>
 <ul>
 <li>among all the genes, which ones are differentially expressed (DE);</li>
 <li>among all the genes, which ones are part of the gene set of
@@ -422,45 +456,45 @@ interest.</li>
 <p>And fill out the following table and count the number of DE genes that
 are in the set of interest, the non-DE that are in the set, and the DE
 and non-DE genes that are not in the set:</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb268-1" data-line-number="1">     <span class="op">|</span><span class="st"> </span>GO <span class="op">|</span><span class="st"> </span><span class="op">!</span>GO</a>
-<a class="sourceLine" id="cb268-2" data-line-number="2"><span class="op">-----+----+------</span></a>
-<a class="sourceLine" id="cb268-3" data-line-number="3"><span class="st">  </span>DE <span class="op">|</span><span class="st"> </span>n  <span class="op">|</span><span class="st">  </span>p</a>
-<a class="sourceLine" id="cb268-4" data-line-number="4"> <span class="op">!</span>DE <span class="op">|</span><span class="st"> </span>m  <span class="op">|</span><span class="st">  </span>q</a></code></pre></div>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb269-1" data-line-number="1"><span class="co">## DE and GO</span></a>
-<a class="sourceLine" id="cb269-2" data-line-number="2">n &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">intersect</span>(res_tbl<span class="op">$</span>ENTREZID[res_tbl<span class="op">$</span>padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>],</a>
-<a class="sourceLine" id="cb269-3" data-line-number="3">                      GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID))</a>
-<a class="sourceLine" id="cb269-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb269-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb269-6" data-line-number="6"><span class="co">## !DE and GO</span></a>
-<a class="sourceLine" id="cb269-7" data-line-number="7">m &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">intersect</span>(res_tbl<span class="op">$</span>ENTREZID[res_tbl<span class="op">$</span>padj <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.05</span>],</a>
-<a class="sourceLine" id="cb269-8" data-line-number="8">                      GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID))</a>
-<a class="sourceLine" id="cb269-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb269-10" data-line-number="10"><span class="co">## DE and !GO</span></a>
-<a class="sourceLine" id="cb269-11" data-line-number="11">p &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">setdiff</span>(res_tbl<span class="op">$</span>ENTREZID[res_tbl<span class="op">$</span>padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>],</a>
-<a class="sourceLine" id="cb269-12" data-line-number="12">                    GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID))</a>
-<a class="sourceLine" id="cb269-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb269-14" data-line-number="14"><span class="co">## !DE not !GO</span></a>
-<a class="sourceLine" id="cb269-15" data-line-number="15">q &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">setdiff</span>(res_tbl<span class="op">$</span>ENTREZID[res_tbl<span class="op">$</span>padj <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.05</span>],</a>
-<a class="sourceLine" id="cb269-16" data-line-number="16">                    GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID))</a></code></pre></div>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb270-1" data-line-number="1">cont_mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(n, m, p, q), <span class="dt">nrow =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb270-2" data-line-number="2"><span class="kw">rownames</span>(cont_mat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"DE"</span>, <span class="st">"!DE"</span>)</a>
-<a class="sourceLine" id="cb270-3" data-line-number="3"><span class="kw">colnames</span>(cont_mat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"GO"</span>, <span class="st">"!GO"</span>)</a>
-<a class="sourceLine" id="cb270-4" data-line-number="4">cont_mat</a></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb270-1" data-line-number="1">     <span class="op">|</span><span class="st"> </span>GO <span class="op">|</span><span class="st"> </span><span class="op">!</span>GO</a>
+<a class="sourceLine" id="cb270-2" data-line-number="2"><span class="op">-----+----+------</span></a>
+<a class="sourceLine" id="cb270-3" data-line-number="3"><span class="st">  </span>DE <span class="op">|</span><span class="st"> </span>n  <span class="op">|</span><span class="st">  </span>p</a>
+<a class="sourceLine" id="cb270-4" data-line-number="4"> <span class="op">!</span>DE <span class="op">|</span><span class="st"> </span>m  <span class="op">|</span><span class="st">  </span>q</a></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" data-line-number="1"><span class="co">## DE and GO</span></a>
+<a class="sourceLine" id="cb271-2" data-line-number="2">n &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">intersect</span>(res_tbl<span class="op">$</span>ENTREZID[res_tbl<span class="op">$</span>padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>],</a>
+<a class="sourceLine" id="cb271-3" data-line-number="3">                      GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID))</a>
+<a class="sourceLine" id="cb271-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb271-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb271-6" data-line-number="6"><span class="co">## !DE and GO</span></a>
+<a class="sourceLine" id="cb271-7" data-line-number="7">m &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">intersect</span>(res_tbl<span class="op">$</span>ENTREZID[res_tbl<span class="op">$</span>padj <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.05</span>],</a>
+<a class="sourceLine" id="cb271-8" data-line-number="8">                      GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID))</a>
+<a class="sourceLine" id="cb271-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb271-10" data-line-number="10"><span class="co">## DE and !GO</span></a>
+<a class="sourceLine" id="cb271-11" data-line-number="11">p &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">setdiff</span>(res_tbl<span class="op">$</span>ENTREZID[res_tbl<span class="op">$</span>padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>],</a>
+<a class="sourceLine" id="cb271-12" data-line-number="12">                    GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID))</a>
+<a class="sourceLine" id="cb271-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb271-14" data-line-number="14"><span class="co">## !DE not !GO</span></a>
+<a class="sourceLine" id="cb271-15" data-line-number="15">q &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">setdiff</span>(res_tbl<span class="op">$</span>ENTREZID[res_tbl<span class="op">$</span>padj <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.05</span>],</a>
+<a class="sourceLine" id="cb271-16" data-line-number="16">                    GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID))</a></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb272-1" data-line-number="1">cont_mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(n, m, p, q), <span class="dt">nrow =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb272-2" data-line-number="2"><span class="kw">rownames</span>(cont_mat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"DE"</span>, <span class="st">"!DE"</span>)</a>
+<a class="sourceLine" id="cb272-3" data-line-number="3"><span class="kw">colnames</span>(cont_mat) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"GO"</span>, <span class="st">"!GO"</span>)</a>
+<a class="sourceLine" id="cb272-4" data-line-number="4">cont_mat</a></code></pre></div>
 <pre><code>##      GO  !GO
 ## DE  158 4026
 ## !DE 201 9334</code></pre>
 <p>We can now apply a Fisher’s exact (or hypergeometric test) that will
 test whether we can identify a statistically enrichment of DE genes in
 the GO category.</p>
-<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb272-1" data-line-number="1"><span class="kw">fisher.test</span>(cont_mat)</a></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb274-1" data-line-number="1"><span class="kw">fisher.test</span>(cont_mat, <span class="dt">alternative =</span> <span class="st">"greater"</span>)</a></code></pre></div>
 <pre><code>## 
 ## 	Fisher's Exact Test for Count Data
 ## 
 ## data:  cont_mat
-## p-value = 5.285e-08
-## alternative hypothesis: true odds ratio is not equal to 1
+## p-value = 3.119e-08
+## alternative hypothesis: true odds ratio is greater than 1
 ## 95 percent confidence interval:
-##  1.465125 2.263592
+##  1.516306      Inf
 ## sample estimates:
 ## odds ratio 
 ##   1.822262</code></pre>
@@ -503,8 +537,8 @@ defining DE genes. The first step is to <strong>order</strong> the genes of
 interest based on the statistics used, typically the p-values. This is
 already the case for our <code>res_tbl</code> table. We also need to know which
 genes are in our set of interest.</p>
-<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb274-1" data-line-number="1">res_tbl<span class="op">$</span>inGO &lt;-<span class="st"> </span>res_tbl<span class="op">$</span>ENTREZID <span class="op">%in%</span><span class="st"> </span>GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID</a>
-<a class="sourceLine" id="cb274-2" data-line-number="2">dplyr<span class="op">::</span><span class="kw">select</span>(res_tbl, ENTREZID, padj, inGO)</a></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb276-1" data-line-number="1">res_tbl<span class="op">$</span>inGO &lt;-<span class="st"> </span>res_tbl<span class="op">$</span>ENTREZID <span class="op">%in%</span><span class="st"> </span>GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID</a>
+<a class="sourceLine" id="cb276-2" data-line-number="2">dplyr<span class="op">::</span><span class="kw">select</span>(res_tbl, ENTREZID, padj, inGO)</a></code></pre></div>
 <pre><code>## # A tibble: 13,719 x 3
 ##    ENTREZID      padj inGO 
 ##    &lt;chr&gt;        &lt;dbl&gt; &lt;lgl&gt;
@@ -524,20 +558,20 @@ and count a positive score when we encounter a gene in the gene set,
 and a -1 when the gene is not in the gene set. The positive score,
 called <code>set_ratio</code> below, is computeted as as <span class="math inline">\(\frac{n_{genes} - n_{genes~in~set}}{n_{genes~in~set}}\)</span> so that the sum of all genes in
 the set and those not in the set becomes zero.</p>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb276-1" data-line-number="1">set_ratio &lt;-<span class="st"> </span><span class="cf">function</span>(tbl) {</a>
-<a class="sourceLine" id="cb276-2" data-line-number="2">    (<span class="kw">nrow</span>(tbl) <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(tbl<span class="op">$</span>inGO))<span class="op">/</span><span class="kw">sum</span>(tbl<span class="op">$</span>inGO)</a>
-<a class="sourceLine" id="cb276-3" data-line-number="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb278-1" data-line-number="1">set_ratio &lt;-<span class="st"> </span><span class="cf">function</span>(tbl) {</a>
+<a class="sourceLine" id="cb278-2" data-line-number="2">    (<span class="kw">nrow</span>(tbl) <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(tbl<span class="op">$</span>inGO))<span class="op">/</span><span class="kw">sum</span>(tbl<span class="op">$</span>inGO)</a>
+<a class="sourceLine" id="cb278-3" data-line-number="3">}</a></code></pre></div>
 <p>The cumulative sum of these scores along the ordered gene list becomes
 the GSEA path which is plotted below, and the maximun score obtained
 along this path is the GSEA score.</p>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb277-1" data-line-number="1">gsea_path &lt;-<span class="st"> </span><span class="kw">ifelse</span>(res_tbl<span class="op">$</span>inGO, <span class="kw">set_ratio</span>(res_tbl), <span class="dv">-1</span>)</a>
-<a class="sourceLine" id="cb277-2" data-line-number="2">gsea_path &lt;-<span class="st"> </span><span class="kw">cumsum</span>(gsea_path)</a>
-<a class="sourceLine" id="cb277-3" data-line-number="3">gsea_score &lt;-<span class="st"> </span><span class="kw">max</span>(gsea_path)</a>
-<a class="sourceLine" id="cb277-4" data-line-number="4"><span class="kw">plot</span>(gsea_path, <span class="dt">type =</span> <span class="st">"l"</span>,</a>
-<a class="sourceLine" id="cb277-5" data-line-number="5">     <span class="dt">xlab =</span> <span class="st">"Ordered genes (padj)"</span>, </a>
-<a class="sourceLine" id="cb277-6" data-line-number="6">     <span class="dt">ylab =</span> <span class="st">"score"</span>,</a>
-<a class="sourceLine" id="cb277-7" data-line-number="7">     <span class="dt">main =</span> <span class="kw">paste0</span>(<span class="st">"GSEA score: "</span>, <span class="kw">round</span>(gsea_score)))</a>
-<a class="sourceLine" id="cb277-8" data-line-number="8"><span class="kw">abline</span>(<span class="dt">h =</span> gsea_score, <span class="dt">col =</span> <span class="st">"steelblue"</span>, <span class="dt">lty =</span> <span class="st">"dotted"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb279-1" data-line-number="1">gsea_path &lt;-<span class="st"> </span><span class="kw">ifelse</span>(res_tbl<span class="op">$</span>inGO, <span class="kw">set_ratio</span>(res_tbl), <span class="dv">-1</span>)</a>
+<a class="sourceLine" id="cb279-2" data-line-number="2">gsea_path &lt;-<span class="st"> </span><span class="kw">cumsum</span>(gsea_path)</a>
+<a class="sourceLine" id="cb279-3" data-line-number="3">gsea_score &lt;-<span class="st"> </span><span class="kw">max</span>(gsea_path)</a>
+<a class="sourceLine" id="cb279-4" data-line-number="4"><span class="kw">plot</span>(gsea_path, <span class="dt">type =</span> <span class="st">"l"</span>,</a>
+<a class="sourceLine" id="cb279-5" data-line-number="5">     <span class="dt">xlab =</span> <span class="st">"Ordered genes (padj)"</span>, </a>
+<a class="sourceLine" id="cb279-6" data-line-number="6">     <span class="dt">ylab =</span> <span class="st">"score"</span>,</a>
+<a class="sourceLine" id="cb279-7" data-line-number="7">     <span class="dt">main =</span> <span class="kw">paste0</span>(<span class="st">"GSEA score: "</span>, <span class="kw">round</span>(gsea_score)))</a>
+<a class="sourceLine" id="cb279-8" data-line-number="8"><span class="kw">abline</span>(<span class="dt">h =</span> gsea_score, <span class="dt">col =</span> <span class="st">"steelblue"</span>, <span class="dt">lty =</span> <span class="st">"dotted"</span>)</a></code></pre></div>
 <div class="figure">
 <span id="fig:unnamed-chunk-121"></span>
 <p class="caption marginnote shownote">
@@ -551,9 +585,9 @@ reflecting the absence of any enrichment. This is done by permuting
 the samples in the original data, repeating the statistical analysis,
 reorder the genes accodring to the new statistics (we used the
 adjusted p-value above) and compute a new GSEA score.</p>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb278-1" data-line-number="1">dds_tmp &lt;-<span class="st"> </span>dds</a>
-<a class="sourceLine" id="cb278-2" data-line-number="2">dds_tmp<span class="op">$</span>Condition &lt;-<span class="st"> </span>dds_tmp<span class="op">$</span>Condition[<span class="kw">sample</span>(<span class="kw">ncol</span>(dds_tmp))]</a>
-<a class="sourceLine" id="cb278-3" data-line-number="3"><span class="kw">colData</span>(dds)</a></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb280-1" data-line-number="1">dds_tmp &lt;-<span class="st"> </span>dds</a>
+<a class="sourceLine" id="cb280-2" data-line-number="2">dds_tmp<span class="op">$</span>Condition &lt;-<span class="st"> </span>dds_tmp<span class="op">$</span>Condition[<span class="kw">sample</span>(<span class="kw">ncol</span>(dds_tmp))]</a>
+<a class="sourceLine" id="cb280-3" data-line-number="3"><span class="kw">colData</span>(dds)</a></code></pre></div>
 <pre><code>## DataFrame with 6 rows and 4 columns
 ##                Cell        Type Condition sizeFactor
 ##         &lt;character&gt; &lt;character&gt;  &lt;factor&gt;  &lt;numeric&gt;
@@ -563,49 +597,49 @@ adjusted p-value above) and compute a new GSEA score.</p>
 ## sample4       Cell1  Epithelial      KD     0.966025
 ## sample5       Cell1  Epithelial      KD     1.042111
 ## sample6       Cell1  Epithelial      KD     1.012664</code></pre>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb280-1" data-line-number="1"><span class="kw">colData</span>(dds_tmp)</a></code></pre></div>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb282-1" data-line-number="1"><span class="kw">colData</span>(dds_tmp)</a></code></pre></div>
 <pre><code>## DataFrame with 6 rows and 4 columns
 ##                Cell        Type Condition sizeFactor
 ##         &lt;character&gt; &lt;character&gt;  &lt;factor&gt;  &lt;numeric&gt;
 ## sample1       Cell1  Epithelial      mock   0.726883
-## sample2       Cell1  Epithelial      KD     1.308664
+## sample2       Cell1  Epithelial      mock   1.308664
 ## sample3       Cell1  Epithelial      mock   1.077368
 ## sample4       Cell1  Epithelial      KD     0.966025
 ## sample5       Cell1  Epithelial      KD     1.042111
-## sample6       Cell1  Epithelial      mock   1.012664</code></pre>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb282-1" data-line-number="1">res_tmp &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds_tmp) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb282-2" data-line-number="2"><span class="st">    </span><span class="kw">results</span>(<span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb282-3" data-line-number="3"><span class="st">    </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb282-4" data-line-number="4"><span class="st">    </span><span class="kw">left_join</span>(ensembl_to_geneName) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb282-5" data-line-number="5"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">inGO =</span> ENTREZID <span class="op">%in%</span><span class="st"> </span>GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb282-6" data-line-number="6"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ENTREZID),</a>
-<a class="sourceLine" id="cb282-7" data-line-number="7">           <span class="op">!</span><span class="kw">is.na</span>(padj),</a>
-<a class="sourceLine" id="cb282-8" data-line-number="8">           <span class="op">!</span><span class="kw">duplicated</span>(ENTREZID)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb282-9" data-line-number="9"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">select</span>(ENSEMBL, ENTREZID, padj, inGO) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb282-10" data-line-number="10"><span class="st">    </span><span class="kw">arrange</span>(padj)</a>
-<a class="sourceLine" id="cb282-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb282-12" data-line-number="12">res_tmp &lt;-<span class="st"> </span>res_tmp <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb282-13" data-line-number="13"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">score =</span> <span class="kw">ifelse</span>(inGO, <span class="kw">set_ratio</span>(res_tmp), <span class="dv">-1</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb282-14" data-line-number="14"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">score =</span> <span class="kw">cumsum</span>(score))</a>
-<a class="sourceLine" id="cb282-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb282-16" data-line-number="16">res_tmp</a></code></pre></div>
-<pre><code>## # A tibble: 19,094 x 5
-##    ENSEMBL          ENTREZID  padj inGO  score
-##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
-##  1 ENSG00000223972     84771  1.00 FALSE    -1
-##  2 ENSG00000223972    727856  1.00 FALSE    -2
-##  3 ENSG00000223972 100287102  1.00 FALSE    -3
-##  4 ENSG00000223972 100287596  1.00 FALSE    -4
-##  5 ENSG00000223972 102725121  1.00 FALSE    -5
-##  6 ENSG00000227232    653635  1.00 FALSE    -6
-##  7 ENSG00000278267 102466751  1.00 FALSE    -7
-##  8 ENSG00000279457 102723897  1.00 FALSE    -8
-##  9 ENSG00000230021 101928626  1.00 FALSE    -9
-## 10 ENSG00000237491 105378580  1.00 FALSE   -10
-## # … with 19,084 more rows</code></pre>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb284-1" data-line-number="1"><span class="kw">max</span>(res_tmp<span class="op">$</span>score)</a></code></pre></div>
-<pre><code>## [1] 510.3232</code></pre>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb286-1" data-line-number="1"><span class="kw">plot</span>(res_tmp<span class="op">$</span>score, <span class="dt">type =</span> <span class="st">"l"</span>)</a></code></pre></div>
+## sample6       Cell1  Epithelial      KD     1.012664</code></pre>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb284-1" data-line-number="1">res_tmp &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds_tmp) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-2" data-line-number="2"><span class="st">    </span><span class="kw">results</span>(<span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-3" data-line-number="3"><span class="st">    </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-4" data-line-number="4"><span class="st">    </span><span class="kw">left_join</span>(ensembl_to_geneName) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-5" data-line-number="5"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">inGO =</span> ENTREZID <span class="op">%in%</span><span class="st"> </span>GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-6" data-line-number="6"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ENTREZID),</a>
+<a class="sourceLine" id="cb284-7" data-line-number="7">           <span class="op">!</span><span class="kw">is.na</span>(padj),</a>
+<a class="sourceLine" id="cb284-8" data-line-number="8">           <span class="op">!</span><span class="kw">duplicated</span>(ENTREZID)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-9" data-line-number="9"><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">select</span>(ENSEMBL, ENTREZID, padj, inGO) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-10" data-line-number="10"><span class="st">    </span><span class="kw">arrange</span>(padj)</a>
+<a class="sourceLine" id="cb284-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb284-12" data-line-number="12">res_tmp &lt;-<span class="st"> </span>res_tmp <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-13" data-line-number="13"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">score =</span> <span class="kw">ifelse</span>(inGO, <span class="kw">set_ratio</span>(res_tmp), <span class="dv">-1</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-14" data-line-number="14"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">score =</span> <span class="kw">cumsum</span>(score))</a>
+<a class="sourceLine" id="cb284-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb284-16" data-line-number="16">res_tmp</a></code></pre></div>
+<pre><code>## # A tibble: 13,704 x 5
+##    ENSEMBL         ENTREZID      padj inGO  score
+##    &lt;chr&gt;              &lt;int&gt;     &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
+##  1 ENSG00000101856    10857 1.37e-147 FALSE  -1  
+##  2 ENSG00000177494    79413 5.20e- 67 FALSE  -2  
+##  3 ENSG00000136159    55270 1.84e- 44 FALSE  -3  
+##  4 ENSG00000175315     1474 9.16e- 43 FALSE  -4  
+##  5 ENSG00000128245     7533 1.88e- 42 FALSE  -5  
+##  6 ENSG00000113272    54974 9.55e- 39 FALSE  -6  
+##  7 ENSG00000213853     2013 2.01e- 36 FALSE  -7  
+##  8 ENSG00000115107    55240 1.49e- 33 FALSE  -8  
+##  9 ENSG00000008513     6482 1.18e- 32 FALSE  -9  
+## 10 ENSG00000105855     3696 3.76e- 31 TRUE   28.2
+## # … with 13,694 more rows</code></pre>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb286-1" data-line-number="1"><span class="kw">max</span>(res_tmp<span class="op">$</span>score)</a></code></pre></div>
+<pre><code>## [1] 2243.749</code></pre>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb288-1" data-line-number="1"><span class="kw">plot</span>(res_tmp<span class="op">$</span>score, <span class="dt">type =</span> <span class="st">"l"</span>)</a></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-123-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests
 for all the genes need to be recomputer at each permutation. In
@@ -613,43 +647,43 @@ addition, for experiments with limited number of samples, the number
 of permutations would be limited.</p>
 <p>We start by defining a function that will repeat the steps above and
 return a list containing the GSEA score and path.</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb287-1" data-line-number="1"><span class="co">##' A function that assigns the permuted Conditions,</span></a>
-<a class="sourceLine" id="cb287-2" data-line-number="2"><span class="co">##' runs DESeq and a GSEA analysis</span></a>
-<a class="sourceLine" id="cb287-3" data-line-number="3"><span class="co">##'</span></a>
-<a class="sourceLine" id="cb287-4" data-line-number="4"><span class="co">##' @param x a DESeq object.</span></a>
-<a class="sourceLine" id="cb287-5" data-line-number="5"><span class="co">##' @param perm character() of length `ncol(x)` indicating the</span></a>
-<a class="sourceLine" id="cb287-6" data-line-number="6"><span class="co">##'     permutation to be tested.</span></a>
-<a class="sourceLine" id="cb287-7" data-line-number="7"><span class="co">##'</span></a>
-<a class="sourceLine" id="cb287-8" data-line-number="8"><span class="co">##' @return A named list() of length 2 with the GSEA `score` and</span></a>
-<a class="sourceLine" id="cb287-9" data-line-number="9"><span class="co">##'     `path`.</span></a>
-<a class="sourceLine" id="cb287-10" data-line-number="10">gsea_perm &lt;-<span class="st"> </span><span class="cf">function</span>(x, perm) {</a>
-<a class="sourceLine" id="cb287-11" data-line-number="11">    <span class="co">## Set the Condition based on the permutation</span></a>
-<a class="sourceLine" id="cb287-12" data-line-number="12">    x<span class="op">$</span>Condition[perm] &lt;-<span class="st"> "mock"</span></a>
-<a class="sourceLine" id="cb287-13" data-line-number="13">    x<span class="op">$</span>Condition[<span class="op">-</span>perm] &lt;-<span class="st"> "KD"</span></a>
-<a class="sourceLine" id="cb287-14" data-line-number="14">    <span class="co">## Run DESeq2, extract and annotate results</span></a>
-<a class="sourceLine" id="cb287-15" data-line-number="15">    <span class="kw">suppressMessages</span>(</a>
-<a class="sourceLine" id="cb287-16" data-line-number="16">        tbl &lt;-<span class="st"> </span><span class="kw">DESeq</span>(x) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb287-17" data-line-number="17"><span class="st">            </span><span class="kw">results</span>(<span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb287-18" data-line-number="18"><span class="st">            </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb287-19" data-line-number="19"><span class="st">            </span><span class="kw">left_join</span>(ensembl_to_geneName) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb287-20" data-line-number="20"><span class="st">            </span><span class="kw">mutate</span>(<span class="dt">inGO =</span> ENTREZID <span class="op">%in%</span><span class="st"> </span>GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb287-21" data-line-number="21"><span class="st">            </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ENTREZID),</a>
-<a class="sourceLine" id="cb287-22" data-line-number="22">                   <span class="op">!</span><span class="kw">is.na</span>(padj),</a>
-<a class="sourceLine" id="cb287-23" data-line-number="23">                   <span class="op">!</span><span class="kw">duplicated</span>(ENTREZID)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb287-24" data-line-number="24"><span class="st">            </span>dplyr<span class="op">::</span><span class="kw">select</span>(ENSEMBL, ENTREZID, padj, inGO) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb287-25" data-line-number="25"><span class="st">            </span><span class="kw">arrange</span>(padj)</a>
-<a class="sourceLine" id="cb287-26" data-line-number="26">    )</a>
-<a class="sourceLine" id="cb287-27" data-line-number="27">    <span class="co">## Compute GSEA results</span></a>
-<a class="sourceLine" id="cb287-28" data-line-number="28">    tbl &lt;-<span class="st"> </span>tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb287-29" data-line-number="29"><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">score =</span> <span class="kw">if_else</span>(inGO, <span class="kw">set_ratio</span>(tbl), <span class="dv">-1</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb287-30" data-line-number="30"><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">score =</span> <span class="kw">cumsum</span>(score))</a>
-<a class="sourceLine" id="cb287-31" data-line-number="31">    <span class="kw">list</span>(<span class="dt">score =</span> <span class="kw">max</span>(tbl<span class="op">$</span>score), <span class="dt">path =</span> tbl<span class="op">$</span>score)</a>
-<a class="sourceLine" id="cb287-32" data-line-number="32">}</a></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb289-1" data-line-number="1"><span class="co">##' A function that assigns the permuted Conditions,</span></a>
+<a class="sourceLine" id="cb289-2" data-line-number="2"><span class="co">##' runs DESeq and a GSEA analysis</span></a>
+<a class="sourceLine" id="cb289-3" data-line-number="3"><span class="co">##'</span></a>
+<a class="sourceLine" id="cb289-4" data-line-number="4"><span class="co">##' @param x a DESeq object.</span></a>
+<a class="sourceLine" id="cb289-5" data-line-number="5"><span class="co">##' @param perm character() of length `ncol(x)` indicating the</span></a>
+<a class="sourceLine" id="cb289-6" data-line-number="6"><span class="co">##'     permutation to be tested.</span></a>
+<a class="sourceLine" id="cb289-7" data-line-number="7"><span class="co">##'</span></a>
+<a class="sourceLine" id="cb289-8" data-line-number="8"><span class="co">##' @return A named list() of length 2 with the GSEA `score` and</span></a>
+<a class="sourceLine" id="cb289-9" data-line-number="9"><span class="co">##'     `path`.</span></a>
+<a class="sourceLine" id="cb289-10" data-line-number="10">gsea_perm &lt;-<span class="st"> </span><span class="cf">function</span>(x, perm) {</a>
+<a class="sourceLine" id="cb289-11" data-line-number="11">    <span class="co">## Set the Condition based on the permutation</span></a>
+<a class="sourceLine" id="cb289-12" data-line-number="12">    x<span class="op">$</span>Condition[perm] &lt;-<span class="st"> "mock"</span></a>
+<a class="sourceLine" id="cb289-13" data-line-number="13">    x<span class="op">$</span>Condition[<span class="op">-</span>perm] &lt;-<span class="st"> "KD"</span></a>
+<a class="sourceLine" id="cb289-14" data-line-number="14">    <span class="co">## Run DESeq2, extract and annotate results</span></a>
+<a class="sourceLine" id="cb289-15" data-line-number="15">    <span class="kw">suppressMessages</span>(</a>
+<a class="sourceLine" id="cb289-16" data-line-number="16">        tbl &lt;-<span class="st"> </span><span class="kw">DESeq</span>(x) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb289-17" data-line-number="17"><span class="st">            </span><span class="kw">results</span>(<span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb289-18" data-line-number="18"><span class="st">            </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb289-19" data-line-number="19"><span class="st">            </span><span class="kw">left_join</span>(ensembl_to_geneName) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb289-20" data-line-number="20"><span class="st">            </span><span class="kw">mutate</span>(<span class="dt">inGO =</span> ENTREZID <span class="op">%in%</span><span class="st"> </span>GO_<span class="dv">0005925</span><span class="op">$</span>ENTREZID) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb289-21" data-line-number="21"><span class="st">            </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(ENTREZID),</a>
+<a class="sourceLine" id="cb289-22" data-line-number="22">                   <span class="op">!</span><span class="kw">is.na</span>(padj),</a>
+<a class="sourceLine" id="cb289-23" data-line-number="23">                   <span class="op">!</span><span class="kw">duplicated</span>(ENTREZID)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb289-24" data-line-number="24"><span class="st">            </span>dplyr<span class="op">::</span><span class="kw">select</span>(ENSEMBL, ENTREZID, padj, inGO) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb289-25" data-line-number="25"><span class="st">            </span><span class="kw">arrange</span>(padj)</a>
+<a class="sourceLine" id="cb289-26" data-line-number="26">    )</a>
+<a class="sourceLine" id="cb289-27" data-line-number="27">    <span class="co">## Compute GSEA results</span></a>
+<a class="sourceLine" id="cb289-28" data-line-number="28">    tbl &lt;-<span class="st"> </span>tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb289-29" data-line-number="29"><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">score =</span> <span class="kw">if_else</span>(inGO, <span class="kw">set_ratio</span>(tbl), <span class="dv">-1</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb289-30" data-line-number="30"><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">score =</span> <span class="kw">cumsum</span>(score))</a>
+<a class="sourceLine" id="cb289-31" data-line-number="31">    <span class="kw">list</span>(<span class="dt">score =</span> <span class="kw">max</span>(tbl<span class="op">$</span>score), <span class="dt">path =</span> tbl<span class="op">$</span>score)</a>
+<a class="sourceLine" id="cb289-32" data-line-number="32">}</a></code></pre></div>
 <p>We will expecute this function on all unique permutations,
 corresponding on the 10 first columns (including the actual design, in
 the first column). Note that columns 11 to 20 are simply the opposite
 of the first 10.</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb288-1" data-line-number="1">(perms &lt;-<span class="st"> </span><span class="kw">combn</span>(<span class="dv">6</span>, <span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb290-1" data-line-number="1">(perms &lt;-<span class="st"> </span><span class="kw">combn</span>(<span class="dv">6</span>, <span class="dv">3</span>))</a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
 ## [1,]    1    1    1    1    1    1    1    1    1     1     2     2     2     2
 ## [2,]    2    2    2    2    3    3    3    4    4     5     3     3     3     4
@@ -659,32 +693,32 @@ of the first 10.</p>
 ## [2,]     4     5     4     4     5     5
 ## [3,]     6     6     5     6     6     6</code></pre>
 <p>We not apply our function on every permutation.</p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb290-1" data-line-number="1">gsea_scores &lt;-<span class="st"> </span><span class="kw">apply</span>(perms[, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>], <span class="dv">2</span>, <span class="cf">function</span>(p) <span class="kw">gsea_perm</span>(dds, p))</a></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb292-1" data-line-number="1">gsea_scores &lt;-<span class="st"> </span><span class="kw">apply</span>(perms[, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>], <span class="dv">2</span>, <span class="cf">function</span>(p) <span class="kw">gsea_perm</span>(dds, p))</a></code></pre></div>
 <p>And extract the scores and paths.</p>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb291-1" data-line-number="1">paths &lt;-<span class="st"> </span><span class="kw">sapply</span>(gsea_scores, <span class="st">"[["</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb291-2" data-line-number="2">(scores &lt;-<span class="st"> </span><span class="kw">sapply</span>(gsea_scores, <span class="st">"[["</span>, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb293-1" data-line-number="1">paths &lt;-<span class="st"> </span><span class="kw">sapply</span>(gsea_scores, <span class="st">"[["</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb293-2" data-line-number="2">(scores &lt;-<span class="st"> </span><span class="kw">sapply</span>(gsea_scores, <span class="st">"[["</span>, <span class="dv">1</span>))</a></code></pre></div>
 <pre><code>##  [1] 2243.7493  580.3039  509.7576  514.1061  500.7626  508.7576  510.3232
 ##  [8]  633.5000  716.2121  433.4621</code></pre>
 <p>If we compare the actual score to the permutation scores, we see that
 it is the largest one.</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb293-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">density</span>(scores))</a>
-<a class="sourceLine" id="cb293-2" data-line-number="2"><span class="kw">rug</span>(scores)</a>
-<a class="sourceLine" id="cb293-3" data-line-number="3"><span class="kw">abline</span>(<span class="dt">v =</span> scores[<span class="dv">1</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb295-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">density</span>(scores))</a>
+<a class="sourceLine" id="cb295-2" data-line-number="2"><span class="kw">rug</span>(scores)</a>
+<a class="sourceLine" id="cb295-3" data-line-number="3"><span class="kw">abline</span>(<span class="dt">v =</span> scores[<span class="dv">1</span>])</a></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-128-1.png" width="672"></p>
 <p>An empirical p-value can be computer by dividing the number of null
 scores that are greater than the real score divided by the number of
 permutations (the number of null scores). In our case, given that no
 null scores are greater, the nominal p-value would be 0.</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb294-1" data-line-number="1"><span class="kw">sum</span>(scores <span class="op">&gt;</span><span class="st"> </span>scores[<span class="dv">1</span>])<span class="op">/</span><span class="kw">length</span>(scores)</a></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" data-line-number="1"><span class="kw">sum</span>(scores <span class="op">&gt;</span><span class="st"> </span>scores[<span class="dv">1</span>])<span class="op">/</span><span class="kw">length</span>(scores)</a></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <p>Below, we illustrate all GSEA path and confirm that the actual score
 is indeed the largest one.</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" data-line-number="1"><span class="kw">plot</span>(paths[[<span class="dv">1</span>]], <span class="dt">type =</span> <span class="st">"l"</span>,</a>
-<a class="sourceLine" id="cb296-2" data-line-number="2">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="kw">min</span>(<span class="kw">unlist</span>(paths)), <span class="kw">max</span>(scores)),</a>
-<a class="sourceLine" id="cb296-3" data-line-number="3">     <span class="dt">col =</span> <span class="st">"steelblue"</span>)</a>
-<a class="sourceLine" id="cb296-4" data-line-number="4"><span class="kw">grid</span>()</a>
-<a class="sourceLine" id="cb296-5" data-line-number="5"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="kw">length</span>(paths))</a>
-<a class="sourceLine" id="cb296-6" data-line-number="6">    <span class="kw">lines</span>(paths[[i]], <span class="dt">type =</span> <span class="st">"l"</span>, <span class="dt">lty =</span> <span class="st">"dotted"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb298-1" data-line-number="1"><span class="kw">plot</span>(paths[[<span class="dv">1</span>]], <span class="dt">type =</span> <span class="st">"l"</span>,</a>
+<a class="sourceLine" id="cb298-2" data-line-number="2">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="kw">min</span>(<span class="kw">unlist</span>(paths)), <span class="kw">max</span>(scores)),</a>
+<a class="sourceLine" id="cb298-3" data-line-number="3">     <span class="dt">col =</span> <span class="st">"steelblue"</span>)</a>
+<a class="sourceLine" id="cb298-4" data-line-number="4"><span class="kw">grid</span>()</a>
+<a class="sourceLine" id="cb298-5" data-line-number="5"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="kw">length</span>(paths))</a>
+<a class="sourceLine" id="cb298-6" data-line-number="6">    <span class="kw">lines</span>(paths[[i]], <span class="dt">type =</span> <span class="st">"l"</span>, <span class="dt">lty =</span> <span class="st">"dotted"</span>)</a></code></pre></div>
 <div class="figure">
 <span id="fig:unnamed-chunk-130"></span>
 <p class="caption marginnote shownote">
@@ -741,17 +775,17 @@ permutations and reduce the running time.</p>
 many</a>
 packages that are available.
 Here, we will demonstrate <em><a href="https://bioconductor.org/packages/3.11/clusterProfiler">clusterProfiler</a></em>.</p>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb297-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"clusterProfiler"</span>)</a>
-<a class="sourceLine" id="cb297-2" data-line-number="2">ego &lt;-<span class="st"> </span><span class="kw">enrichGO</span>(<span class="dt">gene =</span> <span class="kw">as.character</span>(res_tbl<span class="op">$</span>ENTREZ[res_tbl<span class="op">$</span>padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>]),</a>
-<a class="sourceLine" id="cb297-3" data-line-number="3">                <span class="dt">universe =</span> <span class="kw">as.character</span>(res_tbl<span class="op">$</span>ENTREZ),</a>
-<a class="sourceLine" id="cb297-4" data-line-number="4">                <span class="dt">OrgDb =</span> org.Hs.eg.db,</a>
-<a class="sourceLine" id="cb297-5" data-line-number="5">                <span class="dt">ont =</span> <span class="st">"CC"</span>,</a>
-<a class="sourceLine" id="cb297-6" data-line-number="6">                <span class="dt">pAdjustMethod =</span> <span class="st">"BH"</span>,</a>
-<a class="sourceLine" id="cb297-7" data-line-number="7">                <span class="dt">pvalueCutoff =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb297-8" data-line-number="8">                <span class="dt">qvalueCutoff =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb297-9" data-line-number="9">                <span class="dt">readable =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb297-10" data-line-number="10"><span class="st">    </span>as_tibble</a>
-<a class="sourceLine" id="cb297-11" data-line-number="11">ego</a></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb299-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"clusterProfiler"</span>)</a>
+<a class="sourceLine" id="cb299-2" data-line-number="2">ego &lt;-<span class="st"> </span><span class="kw">enrichGO</span>(<span class="dt">gene =</span> <span class="kw">as.character</span>(res_tbl<span class="op">$</span>ENTREZ[res_tbl<span class="op">$</span>padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>]),</a>
+<a class="sourceLine" id="cb299-3" data-line-number="3">                <span class="dt">universe =</span> <span class="kw">as.character</span>(res_tbl<span class="op">$</span>ENTREZ),</a>
+<a class="sourceLine" id="cb299-4" data-line-number="4">                <span class="dt">OrgDb =</span> org.Hs.eg.db,</a>
+<a class="sourceLine" id="cb299-5" data-line-number="5">                <span class="dt">ont =</span> <span class="st">"CC"</span>,</a>
+<a class="sourceLine" id="cb299-6" data-line-number="6">                <span class="dt">pAdjustMethod =</span> <span class="st">"BH"</span>,</a>
+<a class="sourceLine" id="cb299-7" data-line-number="7">                <span class="dt">pvalueCutoff =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb299-8" data-line-number="8">                <span class="dt">qvalueCutoff =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb299-9" data-line-number="9">                <span class="dt">readable =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb299-10" data-line-number="10"><span class="st">    </span>as_tibble</a>
+<a class="sourceLine" id="cb299-11" data-line-number="11">ego</a></code></pre></div>
 
 </div>
 </div></body></html>
@@ -761,7 +795,7 @@ Here, we will demonstrate <em><a href="https://bioconductor.org/packages/3.11/cl
 <a href="sec-ms.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-10-03
+2020-10-04
 </p>
 </div>
 </div>

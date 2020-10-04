@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-10-03" />
+<meta name="date" content="2020-10-04" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -1263,15 +1263,15 @@ data.</p>
 <a class="sourceLine" id="cb248-2" data-line-number="2"><span class="kw">library</span>(<span class="st">"org.Hs.eg.db"</span>)</a>
 <a class="sourceLine" id="cb248-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb248-4" data-line-number="4"><span class="co">## Load homo sapiens ensembl dataset</span></a>
-<a class="sourceLine" id="cb248-5" data-line-number="5">mart &lt;-<span class="st"> </span><span class="kw">useDataset</span>(<span class="st">"hsapiens_gene_ensembl"</span>, <span class="kw">useMart</span>(<span class="st">"ensembl"</span>))</a>
-<a class="sourceLine" id="cb248-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb248-7" data-line-number="7"><span class="co">## Attributes define the values we are interested to retrieve.</span></a>
-<a class="sourceLine" id="cb248-8" data-line-number="8"><span class="co">## listAttributes(mart)</span></a>
-<a class="sourceLine" id="cb248-9" data-line-number="9">ensembl_to_geneName &lt;-<span class="st"> </span><span class="kw">getBM</span>(<span class="dt">attributes =</span> <span class="kw">c</span>(<span class="st">"ensembl_gene_id"</span>, <span class="st">"external_gene_name"</span>,</a>
-<a class="sourceLine" id="cb248-10" data-line-number="10">                                            <span class="st">"entrezgene_id"</span>),</a>
-<a class="sourceLine" id="cb248-11" data-line-number="11">                             <span class="dt">mart =</span> mart)</a>
-<a class="sourceLine" id="cb248-12" data-line-number="12"><span class="kw">names</span>(ensembl_to_geneName) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"ENSEMBL"</span>, <span class="st">"gene"</span>, <span class="st">"ENTREZID"</span>)</a>
-<a class="sourceLine" id="cb248-13" data-line-number="13"><span class="kw">head</span>(ensembl_to_geneName)</a></code></pre></div>
+<a class="sourceLine" id="cb248-5" data-line-number="5">mart &lt;-<span class="st"> </span><span class="kw">useDataset</span>(<span class="st">"hsapiens_gene_ensembl"</span>, <span class="kw">useMart</span>(<span class="st">"ensembl"</span>))</a></code></pre></div>
+<pre><code>## Ensembl site unresponsive, trying asia mirror</code></pre>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb250-1" data-line-number="1"><span class="co">## Attributes define the values we are interested to retrieve.</span></a>
+<a class="sourceLine" id="cb250-2" data-line-number="2"><span class="co">## listAttributes(mart)</span></a>
+<a class="sourceLine" id="cb250-3" data-line-number="3">ensembl_to_geneName &lt;-<span class="st"> </span><span class="kw">getBM</span>(<span class="dt">attributes =</span> <span class="kw">c</span>(<span class="st">"ensembl_gene_id"</span>, <span class="st">"external_gene_name"</span>,</a>
+<a class="sourceLine" id="cb250-4" data-line-number="4">                                            <span class="st">"entrezgene_id"</span>),</a>
+<a class="sourceLine" id="cb250-5" data-line-number="5">                             <span class="dt">mart =</span> mart)</a>
+<a class="sourceLine" id="cb250-6" data-line-number="6"><span class="kw">names</span>(ensembl_to_geneName) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"ENSEMBL"</span>, <span class="st">"gene"</span>, <span class="st">"ENTREZID"</span>)</a>
+<a class="sourceLine" id="cb250-7" data-line-number="7"><span class="kw">head</span>(ensembl_to_geneName)</a></code></pre></div>
 <pre><code>##           ENSEMBL    gene ENTREZID
 ## 1 ENSG00000210049   MT-TF       NA
 ## 2 ENSG00000211459 MT-RNR1       NA
@@ -1279,11 +1279,11 @@ data.</p>
 ## 4 ENSG00000210082 MT-RNR2       NA
 ## 5 ENSG00000209082  MT-TL1       NA
 ## 6 ENSG00000198888  MT-ND1     4535</code></pre>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb250-1" data-line-number="1">res_tbl &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb250-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(ensembl_to_geneName) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb250-3" data-line-number="3"><span class="st">  </span><span class="kw">arrange</span>(padj)</a></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb252-1" data-line-number="1">res_tbl &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb252-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(ensembl_to_geneName) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb252-3" data-line-number="3"><span class="st">  </span><span class="kw">arrange</span>(padj)</a></code></pre></div>
 <pre><code>## Joining, by = "ENSEMBL"</code></pre>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb252-1" data-line-number="1">res_tbl</a></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb254-1" data-line-number="1">res_tbl</a></code></pre></div>
 <pre><code>## # A tibble: 58,935 x 9
 ##    ENSEMBL baseMean log2FoldChange lfcSE  stat    pvalue      padj gene 
 ##    &lt;chr&gt;      &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;
@@ -1300,8 +1300,8 @@ data.</p>
 ## # … with 58,925 more rows, and 1 more variable: ENTREZID &lt;int&gt;</code></pre>
 <p>Below, we store these results and the <code>DESeqDataSet</code> object for in the
 next chapter.</p>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb254-1" data-line-number="1"><span class="kw">saveRDS</span>(dds, <span class="dt">file =</span> <span class="st">"./data/dds.rds"</span>)</a>
-<a class="sourceLine" id="cb254-2" data-line-number="2"><span class="kw">saveRDS</span>(res_tbl, <span class="dt">file =</span> <span class="st">"./data/res_tbl.rds"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb256-1" data-line-number="1"><span class="kw">saveRDS</span>(dds, <span class="dt">file =</span> <span class="st">"./data/dds.rds"</span>)</a>
+<a class="sourceLine" id="cb256-2" data-line-number="2"><span class="kw">saveRDS</span>(res_tbl, <span class="dt">file =</span> <span class="st">"./data/res_tbl.rds"</span>)</a></code></pre></div>
 
 </div>
 </div>
@@ -1312,7 +1312,7 @@ next chapter.</p>
 <a href="sec-gsea.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-10-03
+2020-10-04
 </p>
 </div>
 </div>
