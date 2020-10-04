@@ -93,7 +93,7 @@ insects focal adhesion has also been referred to as hemi-adherens
 junction (HAJ).
 ```
 
-```{r}
+```{r go.db1}
 library("GO.db")
 library("org.Hs.eg.db")
 GO_0005925 <- select(org.Hs.eg.db,
@@ -127,7 +127,7 @@ continually during the cell-division cycle.
 
 `r msmbstyle::solution_begin()`
 
-```{r}
+```{r go.db2}
 GO_0005813 <- select(org.Hs.eg.db,
                      keys = "GO:0005813",
                      columns = c("ENTREZID", "SYMBOL"),
@@ -204,7 +204,7 @@ res_tbl <- readRDS("./data/res_tbl.rds")
 We will focus on the genes that have an adjusted p-value (those that
 have been tested) and that have unique ENTREZ gene identifiers.
 
-```{r}
+```{r res_tbl}
 res_tbl <- res_tbl %>%
     filter(!is.na(ENTREZID),
            !is.na(padj),
@@ -266,7 +266,7 @@ rownames(d) <- c("DE", "not_DE")
 knitr::kable(d)
 ```
 
-```{r}
+```{r ora}
 ## DE and GO
 n <- length(intersect(res_tbl$ENTREZID[res_tbl$padj < 0.05],
                       GO_0005925$ENTREZID))
@@ -295,7 +295,7 @@ We can now apply a Fisher's exact (or hypergeometric test) that will
 test whether we can identify a statistically enrichment of DE genes in
 the GO category.
 
-```{r}
+```{r ora2}
 fisher.test(cont_mat, alternative = "greater")
 ```
 
@@ -331,15 +331,14 @@ mind that the exact implementation will differ in different tools.
 
 The major advantage of GSEA approaches is that they don't rely on
 defining DE genes. The first step is to **order** the genes of
-interest based on the statistics used, typically the p-values. This is
-already the case for our `res_tbl` table. We also need to know which
-genes are in our set of interest.
+interest based on the statistics used; here, we will use the
+p-values. This is already the case for our `res_tbl` table. We also
+need to know which genes are in our set of interest.
 
-```{r}
+```{r ingo}
 res_tbl$inGO <- res_tbl$ENTREZID %in% GO_0005925$ENTREZID
 dplyr::select(res_tbl, ENTREZID, padj, inGO)
 ```
-
 We are now going to compute a score by traversing to ordered gene list
 and count a positive score when we encounter a gene in the gene set,
 and a -1 when the gene is not in the gene set. The positive score,
@@ -358,7 +357,7 @@ the GSEA path which is plotted below, and the maximun score obtained
 along this path is the GSEA score.
 
 
-```{r, fig.cap = "Gene set enrichment analysis path for term GO:0005925."}
+```{r gsea1, fig.cap = "Gene set enrichment analysis path for term GO:0005925."}
 gsea_path <- ifelse(res_tbl$inGO, set_ratio(res_tbl), -1)
 gsea_path <- cumsum(gsea_path)
 gsea_score <- max(gsea_path)
@@ -377,7 +376,7 @@ reorder the genes accodring to the new statistics (we used the
 adjusted p-value above) and compute a new GSEA score.
 
 
-```{r, message = FALSE}
+```{r gsea2, message = FALSE}
 dds_tmp <- dds
 dds_tmp$Condition <- dds_tmp$Condition[sample(ncol(dds_tmp))]
 colData(dds)
@@ -459,7 +458,7 @@ of the first 10.
 
 We not apply our function on every permutation.
 
-```{r, cache = TRUE}
+```{r gsea4, cache = TRUE}
 paths <- apply(perms[, 1:10], 2, function(p) gsea_perm(dds, p))
 ```
 
@@ -477,7 +476,6 @@ plot(density(scores))
 rug(scores)
 abline(v = scores[1])
 ```
-
 
 An empirical p-value can be computer by dividing the number of null
 scores that are greater than the real score divided by the number of
@@ -528,7 +526,9 @@ Repeat the GSEA analysis above the GO:0005813 term.
 
 `r msmbstyle::question_end()`
 
-
+While there is not need to define a list of differentially expressed
+genes for the GSEA analysis, the genes need to be ordered, which can
+be done in different ways and lead to different results.
 
 ## Using the `clusterProfiler` package
 
@@ -536,11 +536,15 @@ I practice, the analyses presented above are executed using any of
 [the very
 many](http://bioconductor.org/packages/release/BiocViews.html#___GeneSetEnrichment)
 packages that are available.
-Here, we will demonstrate `r BiocStyle::Biocpkg("clusterProfiler")`.
+Here, we will demonstrate `r BiocStyle::Biocpkg("clusterProfiler")`[^cp], 
+that itself relies on other packages to perform the GSEA-related computations.
+
+[^cp]: https://yulab-smu.top/clusterProfiler-book/
 
 ```{r, message = FALSE}
 library("clusterProfiler")
 ```
+
 
 These dedicated packages will perform either of the two tests (or
 variations thereof) to all sets, adjust the computed p-values for
@@ -549,9 +553,11 @@ further exploration of the results.
 
 ### ORA using GO sets
 
-```{r, message = FALSE}
-go_ora <- enrichGO(gene = as.character(res_tbl$ENTREZID[res_tbl$padj < 0.05]),
-                   universe = as.character(res_tbl$ENTREZID),
+```{r cp1, message = FALSE, cache = TRUE}
+de_genes <- res_tbl$ENTREZID[res_tbl$padj < 0.05]
+
+go_ora <- enrichGO(gene = de_genes,
+                   universe = res_tbl$ENTREZID,
                    OrgDb = org.Hs.eg.db,
                    ont = "CC",
                    readable = TRUE) %>%
@@ -569,14 +575,18 @@ for details.
 
 ### GSEA using GO sets
 
-```{r}
+The functions that perform GSEA in `clusterProfiler` require the genes
+to be ordered in decreasing order. This indicates that the p-values
+can't be used without transformations. One could also use the log2
+fold-change or the (absolute value) test statistics.
+
+```{r cp2, message = FALSE, cache = TRUE, warning = FALSE}
 ordered_genes <- abs(res_tbl$stat)
 names(ordered_genes) <- res_tbl$ENTREZID
 ordered_genes <- sort(ordered_genes, decreasing = TRUE)
 
 go_gsea <- gseGO(gene = ordered_genes,
-                 OrgDb = org.Hs.eg.db,
-                 ont = "CC") %>%
+                 OrgDb = org.Hs.eg.db) %>%
     as_tibble
 go_gsea
 ```
@@ -591,6 +601,13 @@ Repeat the GSEA analysis above using all GO namespaces. See
 
 `r msmbstyle::question_begin()`
 
+Compare and discuss the use of these different ways to order the genes
+for the GSEA analysis.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin()`
+
 Compare the GO and GSEA results. Which GO terms are shared or unique
 to each approach?
 
@@ -598,10 +615,14 @@ to each approach?
 
 `r msmbstyle::solution_begin()`
 
-```{r}
-go_cc <- full_join(go_ora %>% filter(p.adjust < 0.01) %>% select(ID, p.adjust),
-                   go_gsea %>% filter(p.adjust < 0.01) %>% select(ID, p.adjust),
-                   by = c("ID" = "ID"))
+```{r cp3}
+go_cc <- full_join(go_ora %>%
+                   filter(p.adjust < 0.01) %>%
+                   dplyr::select(ID, p.adjust),
+                 go_gsea %>%
+                   filter(p.adjust < 0.01) %>%
+                   dplyr::select(ID, p.adjust),
+                 by = c("ID" = "ID"))
 
 ## shared
 na.omit(go_cc)
@@ -620,6 +641,41 @@ filter(go_cc, is.na(p.adjust.x))
 The `enrichKEGG()` and `gseKEGG()` functions can be used to perform
 the ORA and GSEA analyses againt the KEGG sets.
 
+`r msmbstyle::question_begin()`
+
+Perform ORA and GSEA analysis using the KEGG set.
+
+`r msmbstyle::question_end()`
+
 ## Using MSigDb sets
 
-The `enricher()` function can be used ...
+We will use the hallmark gene set as an example here, but any set
+described above can be utilised.
+
+```{r msigdb}
+library("msigdbr")
+msig_h <- msigdbr(species = "Homo sapiens", category = "H") %>% 
+    dplyr::select(gs_name, entrez_gene) %>%
+    dplyr::rename(ont = gs_name, gene = entrez_gene)
+msig_h
+```
+
+The `msig_h` table can now be used with the `enricher()` and `GSEA()`
+functions from the `clusterProfiler` package to perform ORA and GSEA
+analyses on the MSigDB hallmark gene set.
+
+```{r msig_ora}
+msig_ora <- enricher(gene = de_genes,
+                     universe = res_tbl$ENTREZID,
+                     TERM2GENE = msig_h) %>%
+    as_tibble
+msig_ora
+```
+
+```{r, msig_gsea, message = FALSE, warning = FALSE}
+msig_gsea <- GSEA(ordered_genes, TERM2GENE = msig_h) %>%
+    as_tibble
+msig_gsea
+```
+
+## Visualisation of enrichment analyses
