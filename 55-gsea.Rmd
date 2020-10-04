@@ -35,7 +35,7 @@ to address the following points:
 ## Gene sets
 
 While nothing would stop a user to create their own gene sets, the
-sets that are generally used stem from community-maintained resources. 
+sets that are generally used stem from community-maintained resources.
 
 ### Gene Ontology (GO)
 
@@ -58,7 +58,7 @@ These terms are classed into three categories, called *namespaces*:
 Here's an example of GO term `GO:0007155`, that describes cell adhesion.
 
 ```
-A Term from the GO ontology: GO:0007155 
+A Term from the GO ontology: GO:0007155
  Label: cell adhesion
   The attachment of a cell, either to another cell or to an underlying
   substrate such as the extracellular matrix, via cell adhesion
@@ -74,15 +74,16 @@ annotated with that term.
 knitr::include_graphics("figs/go-screenshot.png")
 ```
 
-The whole Gene Ontology is can be accessed in R with the 
+The whole Gene Ontology is can be accessed in R with the
 `r BiocStyle::Biocpkg("GO.db")` package.
 
 
 In the code chunk below, we query the `GO.db` package through the
-`org.Hs.eg.db` interface. This *org.db* for Homo sapiens enables to
-perform various queries for human genes, such as retrieving all gene
-symbols and ENTREZ identifiers (the `columns` below) that are
-annotated with a GO term (the `keys` below) of interest.
+`org.Hs.eg.db` interface. This *org.db*-type of packages for Homo
+sapiens enables to perform various queries for human genes, such as
+retrieving all gene symbols and ENTREZ identifiers (the `columns`
+below) that are annotated with a GO term (the `keys` below) of
+interest.
 
 The GO term of interest here is focal adhesion:
 ```
@@ -143,7 +144,7 @@ GO_0005813
 [KEGG](https://www.genome.jp/kegg/pathway.html) pathway is a
 collection of manually drawn and curated pathway maps representing
 current knowledge of the molecular interaction, reaction and relation
-networks. 
+networks.
 
 The figure below shows the [pathways for the cell
 cycle](https://www.genome.jp/kegg-bin/show_pathway?hsa04110) in
@@ -152,7 +153,7 @@ humans.
 ```{r, echo=FALSE, fig.align='center', out.width='100%', fig.cap="KEGG pathway for cell cycle."}
 knitr::include_graphics("figs/hsa04110.png")
 ```
-The `r BiocStyle::Biocpkg("KEGGREST")` package provides a client interface to the KEGG server. 
+The `r BiocStyle::Biocpkg("KEGGREST")` package provides a client interface to the KEGG server.
 
 ### Reactome
 
@@ -216,7 +217,13 @@ res_tbl
 ## Over representation analysis (ORA)
 
 An over representation analysis relies on the hypergeometric
-distribution
+distribution. The hypergeometric distribution is a discrete
+probability distribution that describes the probability of $k$
+successes (random draws for which the object drawn has a specified
+feature) in $n$ draws, without replacement, from a finite population
+of size $N$ that contains exactly $K$ objects with that feature,
+wherein each draw is either a success or a failure.
+
 
 $$ P(X = k) = \frac{\binom{N}{k} \binom{N-K}{n-k}}{\binom{N}{n}} $$
 
@@ -225,15 +232,9 @@ where
 - $N$ is the population size,
 - $K$ is the number of success states in the population,
 - $n$ is the number of draws (i.e. quantity drawn in each trial),
-- $k$kis the number of observed successes,
+- $k$ is the number of observed successes,
 - $\binom{n}{k}$ is a binomial coefficient $\frac{n!}{k! (n-k)!}$.
 
-The hypergeometric distribution is a discrete probability distribution
-that describes the probability of $k$ successes (random draws for
-which the object drawn has a specified feature) in $n$ draws, without
-replacement, from a finite population of size $N$ that contains
-exactly $K$ objects with that feature, wherein each draw is either a
-success or a failure. 
 
 The example used to describe the distribution is an urn contain $N$
 marbles of two colours. There are $K$ green and and $N-K$ red marbles
@@ -241,16 +242,17 @@ in the urn. Drawing a green marble is defined as success, and a red
 marble failure. Using the formula above, we can compute the
 probability to draw $k$ green marbles from the urn.
 
-The in frame of an enrichment analysis, we use the following
-formulation to calculate a probabiliy that we have more green marbles
-than we would expect by change, i.e. there to be an over
+The in frame of an enrichment analysis [@Rivals:2007], we use the
+following formulation to calculate a probabiliy that we have more
+green marbles than we would expect by change, i.e. there to be an over
 representation of green marbles.
 
 $$ p = 1 - \sum_{i = 0}^{k - 1} \frac{\binom{N}{k} \binom{N-K}{n-k}}{\binom{N}{n}} $$
 
 To perform an over representation analysis, we thus need to define:
 
-- among all the genes, which ones are differentially expressed (DE);
+- among all the genes (called the universe), which ones are
+  differentially expressed (DE);
 - among all the genes, which ones are part of the gene set of
   interest.
 
@@ -258,13 +260,10 @@ And fill out the following table and count the number of DE genes that
 are in the set of interest, the non-DE that are in the set, and the DE
 and non-DE genes that are not in the set:
 
-```{r, eval = FALSE}
-            
-     | GO | !GO
------+----+------
-  DE | n  |  p
- !DE | m  |  q
-
+```{r, echo = FALSE}
+d <- data.frame(GO = c("n", "m"), "not_GO" = c("p", "q"))
+rownames(d) <- c("DE", "not_DE")
+knitr::kable(d)
 ```
 
 ```{r}
@@ -272,24 +271,23 @@ and non-DE genes that are not in the set:
 n <- length(intersect(res_tbl$ENTREZID[res_tbl$padj < 0.05],
                       GO_0005925$ENTREZID))
 
-
-## !DE and GO
+## not DE and GO
 m <- length(intersect(res_tbl$ENTREZID[res_tbl$padj >= 0.05],
                       GO_0005925$ENTREZID))
 
-## DE and !GO
+## DE and not GO
 p <- length(setdiff(res_tbl$ENTREZID[res_tbl$padj < 0.05],
                     GO_0005925$ENTREZID))
 
-## !DE not !GO
+## not DE not not GO
 q <- length(setdiff(res_tbl$ENTREZID[res_tbl$padj >= 0.05],
                     GO_0005925$ENTREZID))
 ```
 
 ```{r}
 cont_mat <- matrix(c(n, m, p, q), nrow = 2)
-rownames(cont_mat) <- c("DE", "!DE")
-colnames(cont_mat) <- c("GO", "!GO")
+rownames(cont_mat) <- c("DE", "not_DE")
+colnames(cont_mat) <- c("GO", "not_GO")
 cont_mat
 ```
 
@@ -301,6 +299,10 @@ the GO category.
 fisher.test(cont_mat, alternative = "greater")
 ```
 
+Note that we could keep the default `alternative = "two.sided"` to
+test to over or under representation.
+
+
 `r msmbstyle::question_begin()`
 
 Repeat the ORA analysis above the GO:0005813 term.
@@ -311,7 +313,7 @@ Repeat the ORA analysis above the GO:0005813 term.
 This approach is straightfoward and very fast. Its major drawback
 however is that we need to define a cutoff to differentiate DE from
 non-DE genes. Setting this threshold might have a effect on the
-results. 
+results.
 
 
 `r msmbstyle::question_begin()`
@@ -341,7 +343,7 @@ dplyr::select(res_tbl, ENTREZID, padj, inGO)
 We are now going to compute a score by traversing to ordered gene list
 and count a positive score when we encounter a gene in the gene set,
 and a -1 when the gene is not in the gene set. The positive score,
-called `set_ratio` below, is computeted as as $\frac{n_{genes} -
+computed by `set_ratio()` below, is defined by $\frac{n_{genes} -
 n_{genes~in~set}}{n_{genes~in~set}}$ so that the sum of all genes in
 the set and those not in the set becomes zero.
 
@@ -361,7 +363,7 @@ gsea_path <- ifelse(res_tbl$inGO, set_ratio(res_tbl), -1)
 gsea_path <- cumsum(gsea_path)
 gsea_score <- max(gsea_path)
 plot(gsea_path, type = "l",
-     xlab = "Ordered genes (padj)", 
+     xlab = "Ordered genes (padj)",
      ylab = "score",
      main = paste0("GSEA score: ", round(gsea_score)))
 abline(h = gsea_score, col = "steelblue", lty = "dotted")
@@ -417,11 +419,10 @@ return a list containing the GSEA score and path.
 ##' runs DESeq and a GSEA analysis
 ##'
 ##' @param x a DESeq object.
-##' @param perm character() of length `ncol(x)` indicating the
+##' @param perm `character()` of length `ncol(x)` indicating the
 ##'     permutation to be tested.
 ##'
-##' @return A named list() of length 2 with the GSEA `score` and
-##'     `path`.
+##' @return `numeric()` containing the GSEA path.
 gsea_perm <- function(x, perm) {
     ## Set the Condition based on the permutation
     x$Condition[perm] <- "mock"
@@ -443,7 +444,7 @@ gsea_perm <- function(x, perm) {
     tbl <- tbl %>%
         mutate(score = if_else(inGO, set_ratio(tbl), -1)) %>%
         mutate(score = cumsum(score))
-    list(score = max(tbl$score), path = tbl$score)
+    return(tbl$score)
 }
 ```
 
@@ -459,18 +460,17 @@ of the first 10.
 We not apply our function on every permutation.
 
 ```{r, cache = TRUE}
-gsea_scores <- apply(perms[, 1:10], 2, function(p) gsea_perm(dds, p))
+paths <- apply(perms[, 1:10], 2, function(p) gsea_perm(dds, p))
 ```
 
-And extract the scores and paths.
+And calculate the scores
 
 ```{r}
-paths <- sapply(gsea_scores, "[[", 2)
-(scores <- sapply(gsea_scores, "[[", 1))
+scores <- sapply(paths, max)
 ```
 
 If we compare the actual score to the permutation scores, we see that
-it is the largest one. 
+it is the largest one.
 
 ```{r}
 plot(density(scores))
@@ -497,7 +497,7 @@ plot(paths[[1]], type = "l",
      col = "steelblue")
 grid()
 for (i in 2:length(paths))
-    lines(paths[[i]], type = "l", lty = "dotted")
+    lines(paths[[i]], type = "l", col = "#00000060")
 ```
 
 
@@ -538,17 +538,88 @@ many](http://bioconductor.org/packages/release/BiocViews.html#___GeneSetEnrichme
 packages that are available.
 Here, we will demonstrate `r BiocStyle::Biocpkg("clusterProfiler")`.
 
-
-```{r, eval = FALSE}
+```{r, message = FALSE}
 library("clusterProfiler")
-ego <- enrichGO(gene = as.character(res_tbl$ENTREZ[res_tbl$padj < 0.05]),
-                universe = as.character(res_tbl$ENTREZ),
-                OrgDb = org.Hs.eg.db,
-                ont = "CC",
-                pAdjustMethod = "BH",
-                pvalueCutoff = 1,
-                qvalueCutoff = 1,
-                readable = TRUE) %>%
-    as_tibble
-ego
 ```
+
+These dedicated packages will perform either of the two tests (or
+variations thereof) to all sets, adjust the computed p-values for
+multiplicity, and provide additional details and visualisations for
+further exploration of the results.
+
+### ORA using GO sets
+
+```{r}
+go_ora <- enrichGO(gene = as.character(res_tbl$ENTREZID[res_tbl$padj < 0.05]),
+                   universe = as.character(res_tbl$ENTREZID),
+                   OrgDb = org.Hs.eg.db,
+                   ont = "CC",
+                   readable = TRUE) %>%
+    as_tibble
+go_ora
+```
+
+`r msmbstyle::question_begin()`
+
+Repeat the ORA analysis above using all GO namespaces. See `?enrichGO`
+for details.
+
+`r msmbstyle::question_end()`
+
+
+### GSEA using GO sets
+
+```{r}
+ordered_genes <- abs(res_tbl$stat)
+names(ordered_genes) <- res_tbl$ENTREZID
+ordered_genes <- sort(ordered_genes, decreasing = TRUE)
+
+go_gsea <- gseGO(gene = ordered_genes,
+                 OrgDb = org.Hs.eg.db,
+                 ont = "CC") %>%
+    as_tibble
+go_gsea
+```
+
+`r msmbstyle::question_begin()`
+
+Repeat the GSEA analysis above using all GO namespaces. See
+`?enrichGO` for details.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin()`
+
+Compare the GO and GSEA results. Which GO terms are shared or unique
+to each approach?
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+```{r}
+go_cc <- full_join(go_ora %>% filter(p.adjust < 0.01) %>% select(ID, p.adjust),
+                   go_gsea %>% filter(p.adjust < 0.01) %>% select(ID, p.adjust),
+                   by = c("ID" = "ID"))
+
+## shared
+na.omit(go_cc)
+
+## ORA only
+filter(go_cc, is.na(p.adjust.y))
+
+## GSEA only
+filter(go_cc, is.na(p.adjust.x))
+```
+
+`r msmbstyle::solution_end()`
+
+## Using KEGG sets
+
+The `enrichKEGG()` and `gseKEGG()` functions can be used to perform
+the ORA and GSEA analyses againt the KEGG sets.
+
+## Using MSigDb sets
+
+The `enricher()` function can be used ...
