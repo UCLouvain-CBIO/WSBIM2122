@@ -636,7 +636,7 @@ filter(go_cc, is.na(p.adjust.x))
 
 `r msmbstyle::solution_end()`
 
-## Using KEGG sets
+### Using KEGG sets
 
 The `enrichKEGG()` and `gseKEGG()` functions can be used to perform
 the ORA and GSEA analyses againt the KEGG sets.
@@ -647,7 +647,7 @@ Perform ORA and GSEA analysis using the KEGG set.
 
 `r msmbstyle::question_end()`
 
-## Using MSigDb sets
+### Using MSigDb sets
 
 We will use the hallmark gene set as an example here, but any set
 described above can be utilised.
@@ -679,3 +679,14 @@ msig_gsea
 ```
 
 ## Visualisation of enrichment analyses
+
+## Discussion
+
+Enrichment analyses are powerful techniques, as they allow to
+integrate thousands of univariate results into biologically driven
+sets.
+
+Their interpretation isn't however always straightforward when
+different methods (ORA and GSEA) and implementations (different GSEA
+permutation strategies) or user-set parameters (DE cutoffs in ORA,
+ordering criteria in GSEA) provide different results.

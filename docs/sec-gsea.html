@@ -126,9 +126,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="toc"><a href="#over-representation-analysis-ora"> Over representation analysis (ORA)</a></li>
 <li class="toc"><a href="#gene-set-enrichment-analysis-gsea"> Gene set enrichment analysis (GSEA)</a></li>
 <li class="toc"><a href="#using-the-clusterprofiler-package"> Using the <code>clusterProfiler</code> package</a></li>
-<li class="toc"><a href="#using-kegg-sets"> Using KEGG sets</a></li>
-<li class="toc"><a href="#using-msigdb-sets"> Using MSigDb sets</a></li>
 <li class="toc"><a href="#visualisation-of-enrichment-analyses"> Visualisation of enrichment analyses</a></li>
+<li class="toc"><a href="#discussion"> Discussion</a></li>
 </ul>
 <a href="sec-ms.html"><span class="toc-section-number">7</span> Mass spectrometry</a>
 <a href="sec-prot.html"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
@@ -502,12 +501,12 @@ dds_tmp<span class="op">$</span>Condition &lt;-<span class="st"> </span>dds_tmp<
 <pre><code>## DataFrame with 6 rows and 4 columns
 ##                Cell        Type Condition sizeFactor
 ##         &lt;character&gt; &lt;character&gt;  &lt;factor&gt;  &lt;numeric&gt;
-## sample1       Cell1  Epithelial      KD     0.726883
+## sample1       Cell1  Epithelial      mock   0.726883
 ## sample2       Cell1  Epithelial      KD     1.308664
 ## sample3       Cell1  Epithelial      mock   1.077368
-## sample4       Cell1  Epithelial      mock   0.966025
-## sample5       Cell1  Epithelial      KD     1.042111
-## sample6       Cell1  Epithelial      mock   1.012664</code></pre>
+## sample4       Cell1  Epithelial      KD     0.966025
+## sample5       Cell1  Epithelial      mock   1.042111
+## sample6       Cell1  Epithelial      KD     1.012664</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_tmp &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds_tmp) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">results</span>(<span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span>
@@ -539,7 +538,7 @@ res_tmp</code></pre></div>
 ## 10 ENSG00000237491 105378580  1.00 FALSE   -10
 ## # … with 19,082 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">max</span>(res_tmp<span class="op">$</span>score)</code></pre></div>
-<pre><code>## [1] 509.7576</code></pre>
+<pre><code>## [1] 508.7576</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(res_tmp<span class="op">$</span>score, <span class="dt">type =</span> <span class="st">"l"</span>)</code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-115-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests for all the genes need to be recomputer at each permutation. In addition, for experiments with limited number of samples, the number of permutations would be limited.</p>
@@ -813,10 +812,9 @@ go_gsea</code></pre></div>
 </div>
 </div>
 </div>
-</div>
-<div id="using-kegg-sets" class="section level2">
-<h2>
-<span class="header-section-number">6.6</span> Using KEGG sets</h2>
+<div id="using-kegg-sets" class="section level3">
+<h3>
+<span class="header-section-number">6.5.3</span> Using KEGG sets</h3>
 <p>The <code>enrichKEGG()</code> and <code>gseKEGG()</code> functions can be used to perform the ORA and GSEA analyses againt the KEGG sets.</p>
 <div class="question">
 <p class="question-begin">
@@ -830,9 +828,9 @@ go_gsea</code></pre></div>
 </div>
 </div>
 </div>
-<div id="using-msigdb-sets" class="section level2">
-<h2>
-<span class="header-section-number">6.7</span> Using MSigDb sets</h2>
+<div id="using-msigdb-sets" class="section level3">
+<h3>
+<span class="header-section-number">6.5.4</span> Using MSigDb sets</h3>
 <p>We will use the hallmark gene set as an example here, but any set described above can be utilised.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"msigdbr"</span>)
 msig_h &lt;-<span class="st"> </span><span class="kw">msigdbr</span>(<span class="dt">species =</span> <span class="st">"Homo sapiens"</span>, <span class="dt">category =</span> <span class="st">"H"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -891,9 +889,16 @@ msig_gsea</code></pre></div>
 ## # … with 3 more variables: rank &lt;int&gt;, leading_edge &lt;chr&gt;,
 ## #   core_enrichment &lt;chr&gt;</code></pre>
 </div>
+</div>
 <div id="visualisation-of-enrichment-analyses" class="section level2">
 <h2>
-<span class="header-section-number">6.8</span> Visualisation of enrichment analyses</h2>
+<span class="header-section-number">6.6</span> Visualisation of enrichment analyses</h2>
+</div>
+<div id="discussion" class="section level2">
+<h2>
+<span class="header-section-number">6.7</span> Discussion</h2>
+<p>Enrichment analyses are powerful techniques, as they allow to integrate thousands of univariate results into biologically driven sets.</p>
+<p>Their interpretation isn't however always straightforward when different methods (ORA and GSEA) and implementations (different GSEA permutation strategies) or user-set parameters (DE cutoffs in ORA, ordering criteria in GSEA) provide different results.</p>
 
 </div>
 </div></body></html>
