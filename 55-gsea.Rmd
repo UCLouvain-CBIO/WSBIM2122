@@ -42,11 +42,15 @@ sets that are generally used stem from community-maintained resources.
 The [Gene Ontology](http://geneontology.org/) [@Ashburner:2000]
 defines GO terms. These terms are based on a controlled vocabulary (to
 resuse the same words in a consistent way) and relations[^gorel] that
-define the links between terms.
+define the directed links between terms. These relations define a
+hierarchy between GO terms: all term can be represented as a (direct
+acyclic) graph (DAG). There exist thus very general and very specific
+terms.
 
 [^gorel]: Example of relations between terms are, for example, *is_a*
      (mitosis *is_a* cell cycle phase) or *part_of* (mitosis *part_of*
      M phase of mitotic cell cycle).
+
 
 These terms are classed into three categories, called *namespaces*:
 
@@ -536,7 +540,7 @@ I practice, the analyses presented above are executed using any of
 [the very
 many](http://bioconductor.org/packages/release/BiocViews.html#___GeneSetEnrichment)
 packages that are available.
-Here, we will demonstrate `r BiocStyle::Biocpkg("clusterProfiler")`[^cp], 
+Here, we will demonstrate `r BiocStyle::Biocpkg("clusterProfiler")`[^cp],
 that itself relies on other packages to perform the GSEA-related computations.
 
 [^cp]: https://yulab-smu.top/clusterProfiler-book/
@@ -654,7 +658,7 @@ described above can be utilised.
 
 ```{r msigdb}
 library("msigdbr")
-msig_h <- msigdbr(species = "Homo sapiens", category = "H") %>% 
+msig_h <- msigdbr(species = "Homo sapiens", category = "H") %>%
     dplyr::select(gs_name, entrez_gene) %>%
     dplyr::rename(ont = gs_name, gene = entrez_gene)
 msig_h
