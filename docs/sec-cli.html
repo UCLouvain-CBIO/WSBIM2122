@@ -14,20 +14,19 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-10-06" />
+<meta name="date" content="2020-10-07" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   TeX: { equationNumbers: { autoNumber: "AMS" } }
 });
 </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" type="text/javascript"></script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
 <title>Chapter 1 The shell | Omics Data Analysis</title>
 
-<script src="libs/header-attrs-2.3/header-attrs.js"></script>
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
@@ -61,68 +60,41 @@ if(f.classList.contains('fa-plus-square')) {
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 
@@ -170,14 +142,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec:cli" class="section level1" number="1">
+<html><body><div id="sec:cli" class="section level1">
 <h1>
 <span class="header-section-number">Chapter 1</span> The shell</h1>
-<p>This chapter is based on the Data Carpentries <a href="https://swcarpentry.github.io/shell-novice/">The Unix
-Shell</a> and <a href="https://datacarpentry.org/shell-genomics/">Introduction
-to the Command Line for
-Genomics</a> lessons.</p>
-<div id="introduction" class="section level2" number="1.1">
+<p>This chapter is based on the Data Carpentries <a href="https://swcarpentry.github.io/shell-novice/">The Unix Shell</a> and <a href="https://datacarpentry.org/shell-genomics/">Introduction to the Command Line for Genomics</a> lessons.</p>
+<div id="introduction" class="section level2">
 <h2>
 <span class="header-section-number">1.1</span> Introduction</h2>
 <p>Learning objectives:</p>
@@ -188,101 +157,47 @@ Genomics</a> lessons.</p>
 </ul>
 <div id="what-is-a-shell-and-why-should-i-care" class="section level3 unnumbered">
 <h3>What is a shell and why should I care?</h3>
-<p>A shell is a computer program that presents a command line interface
-which allows you to control your computer using commands entered with
-a keyboard instead of controlling graphical user interfaces (GUIs)
-with a mouse/keyboard combination.</p>
+<p>A shell is a computer program that presents a command line interface which allows you to control your computer using commands entered with a keyboard instead of controlling graphical user interfaces (GUIs) with a mouse/keyboard combination.</p>
 <p>There are many reasons to learn about the shell:</p>
 <ul>
-<li>Many bioinformatics tools can only be used through a command line
-interface, or have extra capabilities in the command line version
-that are not available in the GUI. This is true, for example, of
-<a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">BLAST</a>, which offers many
-advanced functions only accessible to users who know how to use a
-shell.</li>
-<li>In bioinformatics you often need to do the same set of tasks with a
-large number of files. Learning the shell will allow you to automate
-those repetitive tasks and leave you free to do more exciting
-things.</li>
-<li>The shell makes your work less error-prone. When humans do the same
-thing a hundred different times (or even ten times), they’re likely
-to make a mistake. Your computer can do the same thing a thousand
-times with no mistakes.</li>
-<li>The shell makes your work more reproducible. When you carry out your
-work in the command-line (rather than a GUI), your computer keeps a
-record of every step that you’ve carried out, which you can use to
-re-do your work when you need to. It also gives you a way to
-communicate unambiguously what you’ve done, so that others can check
-your work or apply your process to new data.</li>
-<li>Many bioinformatic tasks require large amounts of computing power
-and can’t realistically be run on your own machine. These tasks are
-best performed using powerfull remote computers or cloud computing,
-which can only be accessed through a shell.</li>
+<li>Many bioinformatics tools can only be used through a command line interface, or have extra capabilities in the command line version that are not available in the GUI. This is true, for example, of <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">BLAST</a>, which offers many advanced functions only accessible to users who know how to use a shell.</li>
+<li>In bioinformatics you often need to do the same set of tasks with a large number of files. Learning the shell will allow you to automate those repetitive tasks and leave you free to do more exciting things.</li>
+<li>The shell makes your work less error-prone. When humans do the same thing a hundred different times (or even ten times), they're likely to make a mistake. Your computer can do the same thing a thousand times with no mistakes.</li>
+<li>The shell makes your work more reproducible. When you carry out your work in the command-line (rather than a GUI), your computer keeps a record of every step that you've carried out, which you can use to re-do your work when you need to. It also gives you a way to communicate unambiguously what you've done, so that others can check your work or apply your process to new data.</li>
+<li>Many bioinformatic tasks require large amounts of computing power and can't realistically be run on your own machine. These tasks are best performed using powerfull remote computers or cloud computing, which can only be accessed through a shell.</li>
 </ul>
-<p>In this lesson you will learn how to use the command line interface to
-move around in your file system.</p>
+<p>In this lesson you will learn how to use the command line interface to move around in your file system.</p>
 </div>
 <div id="how-to-access-the-shell" class="section level3 unnumbered">
 <h3>How to access the shell</h3>
-<p>On a Mac or LiOn a Mac or Linux machine, you can access a shell
-through a program called Terminal, which is already available on your
-computer. If you’re using Windows, you’ll need to download a separate
-program to access the shell.nux machine, you can access a shell
-through a program called Terminal, which is already available on your
-computer. If you’re using Windows, you can install a <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Windows
-Subsystem for
-Linux</a>. We
-are going to the use RStudio Terminal.</p>
+<p>On a Mac or LiOn a Mac or Linux machine, you can access a shell through a program called Terminal, which is already available on your computer. If you're using Windows, you'll need to download a separate program to access the shell.nux machine, you can access a shell through a program called Terminal, which is already available on your computer. If you're using Windows, you can install a <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Windows Subsystem for Linux</a>. We are going to the use RStudio Terminal.</p>
 <p><img src="figs/rstudio_terminal.png" width="80%" style="display: block; margin: auto;"></p>
-<p>At any point, you can use the <code>clear</code> command or the <code>Ctrl+L</code> keyboard
-shortcut to clear the screen.</p>
+<p>At any point, you can use the <code>clear</code> command or the <code>Ctrl+L</code> keyboard shortcut to clear the screen.</p>
 </div>
 <div id="the-shell" class="section level3 unnumbered">
 <h3>The Shell</h3>
-<p>The shell is a program where users can type commands. With the shell,
-it’s possible to invoke complicated programs like climate modeling
-software or simple commands that create an empty directory with only
-one line of code. The most popular Unix shell is Bash (the Bourne
-Again SHell — so-called because it’s derived from a shell written by
-Stephen Bourne). Bash is the default shell on most modern
-implementations of Unix and in most packages that provide Unix-like
-tools for Windows.</p>
-<p>When the shell is first opened, you are presented with a prompt,
-indicating that the shell is waiting for input.</p>
+<p>The shell is a program where users can type commands. With the shell, it's possible to invoke complicated programs like climate modeling software or simple commands that create an empty directory with only one line of code. The most popular Unix shell is Bash (the Bourne Again SHell — so-called because it's derived from a shell written by Stephen Bourne). Bash is the default shell on most modern implementations of Unix and in most packages that provide Unix-like tools for Windows.</p>
+<p>When the shell is first opened, you are presented with a prompt, indicating that the shell is waiting for input.</p>
 <pre><code>$</code></pre>
-<p>The shell typically uses <code>$</code> as the prompt, but may use a different
-symbol. In the examples for this lesson, we’ll show the prompt as $
-. Most importantly: when typing commands, either from these lessons or
-from other sources, do not type the prompt, only the commands that
-follow it.</p>
-<p>So let’s try our first command, <code>ls</code> which is short for listing. This
-command will list the contents of the current directory:</p>
+<p>The shell typically uses <code>$</code> as the prompt, but may use a different symbol. In the examples for this lesson, we'll show the prompt as $ . Most importantly: when typing commands, either from these lessons or from other sources, do not type the prompt, only the commands that follow it.</p>
+<p>So let's try our first command, <code>ls</code> which is short for listing. This command will list the contents of the current directory:</p>
 <pre><code>$ ls
 Desktop     Downloads   Movies      Pictures
 Documents   Library     Music       Public</code></pre>
-<p>If the shell can’t find a program whose name is the command you typed,
-it will print an error message such as:</p>
+<p>If the shell can't find a program whose name is the command you typed, it will print an error message such as:</p>
 <pre><code>$ ks
 ks: command not found</code></pre>
-<p>This might happen if the command was mis-typed or if the program
-corresponding to that command is not installed.</p>
+<p>This might happen if the command was mis-typed or if the program corresponding to that command is not installed.</p>
 </div>
 </div>
-<div id="navigating-files-and-directories" class="section level2" number="1.2">
+<div id="navigating-files-and-directories" class="section level2">
 <h2>
 <span class="header-section-number">1.2</span> Navigating Files and Directories</h2>
-<p>Let’s find out where we are by running a command called pwd (which
-stands for “print working directory”). At any moment, our current
-working directory is our current default directory, i.e., the
-directory that the computer assumes we want to run commands in, unless
-we explicitly specify something else. Here, the computer’s response is
-/home/dcuser, which is the top level directory within our cloud
-system:</p>
+<p>Let's find out where we are by running a command called pwd (which stands for "print working directory"). At any moment, our current working directory is our current default directory, i.e., the directory that the computer assumes we want to run commands in, unless we explicitly specify something else. Here, the computer's response is /home/dcuser, which is the top level directory within our cloud system:</p>
 <pre><code>$ pwd
 /home/lgatto</code></pre>
-<p>To create a shared set of files and directories, we will use the
-<code>rWSBIM2122::prepare_shell()</code> function in RStudio’s R console:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="sec-cli.html#cb9-1" aria-hidden="true"></a>rWSBIM2122<span class="op">::</span><span class="kw">prepare_shell</span>()</span></code></pre></div>
+<p>To create a shared set of files and directories, we will use the <code>rWSBIM2122::prepare_shell()</code> function in RStudio's R console:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rWSBIM2122<span class="op">::</span><span class="kw">prepare_shell</span>()</code></pre></div>
 <pre><code>## Preparing shell data in 'wsbim2122_data'.</code></pre>
 <pre><code>## wsbim2122_data is ready.</code></pre>
 <div class="question">
@@ -290,25 +205,20 @@ system:</p>
 ► Question
 </p>
 <div class="question-body">
-<p>Using the <code>ls</code> shell command in the Terminal, verify that you have a
-new directory called <code>wsbim2122_data</code>.</p>
+<p>Using the <code>ls</code> shell command in the Terminal, verify that you have a new directory called <code>wsbim2122_data</code>.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
-<p>Let’s say we want to navigate to the <code>wsbim2122_data</code> directory we saw
-above. We can use the <code>cd</code> command (<em>change directory</em>) to get there:</p>
+<p>Let's say we want to navigate to the <code>wsbim2122_data</code> directory we saw above. We can use the <code>cd</code> command (<em>change directory</em>) to get there:</p>
 <pre><code>$ cd wsbim2122_data</code></pre>
 <div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
-<p>What files and/or directories can you find in the <code>wsbim2122_data</code>
-directory? You can make the <code>ls</code> output more comprehensible by using
-the flag <code>-F</code>, which tells ls to add a trailing <code>/</code> to the names of
-directories.</p>
+<p>What files and/or directories can you find in the <code>wsbim2122_data</code> directory? You can make the <code>ls</code> output more comprehensible by using the flag <code>-F</code>, which tells ls to add a trailing <code>/</code> to the names of directories.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -316,26 +226,15 @@ directories.</p>
 </div>
 <p><code>ls</code> has lots of other options. To find out what they are, we can type:</p>
 <pre><code>$ man ls</code></pre>
-<p><code>man</code> (short for manual) displays detailed documentation (also
-referred as man page or man file) for <code>bash</code> commands. It is a
-powerful resource to explore bash commands, understand their usage and
-flags. Some manual files are very long. You can scroll through the
-file using your keyboard’s down arrow or use the <code>Space</code> key to go
-forward one page and the <code>b</code> key to go backwards one page. When you
-are done reading, hit <code>q</code> to quit.</p>
-<p>An alternative to access the manual page (and sometimes, depending on
-the environment, only one is available) is the pass <code>--help</code> to the
-command:</p>
+<p><code>man</code> (short for manual) displays detailed documentation (also referred as man page or man file) for <code>bash</code> commands. It is a powerful resource to explore bash commands, understand their usage and flags. Some manual files are very long. You can scroll through the file using your keyboard's down arrow or use the <code>Space</code> key to go forward one page and the <code>b</code> key to go backwards one page. When you are done reading, hit <code>q</code> to quit.</p>
+<p>An alternative to access the manual page (and sometimes, depending on the environment, only one is available) is the pass <code>--help</code> to the command:</p>
 <pre><code>$ ls --help</code></pre>
 <div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
-<p>Use the <code>-l</code> option for the ls command to display more information for
-each item in the directory. What is one piece of additional
-information this long format gives you that you don’t see with the
-bare ls command?</p>
+<p>Use the <code>-l</code> option for the ls command to display more information for each item in the directory. What is one piece of additional information this long format gives you that you don't see with the bare ls command?</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -343,52 +242,37 @@ bare ls command?</p>
 </div>
 <div id="shortcut-tab-completion" class="section level3 unnumbered">
 <h3>Shortcut: Tab Completion</h3>
-<p>Typing out file or directory names can waste a lot of time and it’s
-easy to make typing mistakes. Instead we can use tab complete as a
-shortcut. When you start typing out the name of a directory or file,
-then hit the <code>Tab</code> key, the shell will try to fill in the rest of the
-directory or file name.</p>
+<p>Typing out file or directory names can waste a lot of time and it's easy to make typing mistakes. Instead we can use tab complete as a shortcut. When you start typing out the name of a directory or file, then hit the <code>Tab</code> key, the shell will try to fill in the rest of the directory or file name.</p>
 <p>Return to your home directory:</p>
 <pre><code>$ cd</code></pre>
 <p>then enter:</p>
 <pre><code>$ cd wsbi&lt;tab&gt;</code></pre>
-<p>The shell will fill in the rest of the directory name for
-<code>wsbim2122_data</code>.</p>
-<p>Tab completion isn’t limited to <code>cd</code>; it works with any shell command.</p>
+<p>The shell will fill in the rest of the directory name for <code>wsbim2122_data</code>.</p>
+<p>Tab completion isn't limited to <code>cd</code>; it works with any shell command.</p>
 <p>Using tab completion will save you a lot of typos and time!</p>
 <pre><code>$ cd wsbim2122_date
 cd: wsbim2122_date: No such file or directory</code></pre>
 </div>
-<div id="hidden-files-and-directories" class="section level3" number="1.2.1">
+<div id="hidden-files-and-directories" class="section level3">
 <h3>
 <span class="header-section-number">1.2.1</span> Hidden files and directories</h3>
-<p>Files and directories that start with a <code>.</code> are hidden, i.e that they
-won’t show up with <code>ls</code>. To display <em>all</em> files and directories,
-including the hidden ones, you can use the <code>-a</code> flag.</p>
+<p>Files and directories that start with a <code>.</code> are hidden, i.e that they won't show up with <code>ls</code>. To display <em>all</em> files and directories, including the hidden ones, you can use the <code>-a</code> flag.</p>
 <pre><code>$ ls -a</code></pre>
 <p>You can combine multiple flags in two ways:</p>
 <pre><code>$ ls -F -a
 $ ls -Fa</code></pre>
-<p>In addition to these hidden files, such as <code>.bash_profile</code>, you will
-also two hidden directories, namely <code>.</code> and <code>..</code>. <code>.</code> refers to the
-current directory (the one shown by <code>pwd</code>) and <code>..</code> refers to the
-parent directory.</p>
-<p>We have seen how we can use <code>cd wsbim2122_data</code> to move into
-<code>wsbim2122_data</code>. To move back out of <code>wsbim2122_data</code>, you can use:</p>
+<p>In addition to these hidden files, such as <code>.bash_profile</code>, you will also two hidden directories, namely <code>.</code> and <code>..</code>. <code>.</code> refers to the current directory (the one shown by <code>pwd</code>) and <code>..</code> refers to the parent directory.</p>
+<p>We have seen how we can use <code>cd wsbim2122_data</code> to move into <code>wsbim2122_data</code>. To move back out of <code>wsbim2122_data</code>, you can use:</p>
 <pre><code>$ cd ..</code></pre>
-<p>The shell interprets the character <code>~</code> (tilde) at the start of a path
-to mean <em>the current user’s home directory</em>.</p>
+<p>The shell interprets the character <code>~</code> (tilde) at the start of a path to mean <em>the current user's home directory</em>.</p>
 <div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
 <ul>
-<li><p>Navitage to the <code>wsbim2122_data</code> directory. From there, list the files
-and direcoties in it’s parent directory.</p></li>
-<li><p>Using a single command, list the files and directries in your home
-directory. Make sure this command will work from anywhere on your
-system.</p></li>
+<li><p>Navitage to the <code>wsbim2122_data</code> directory. From there, list the files and direcoties in it's parent directory.</p></li>
+<li><p>Using a single command, list the files and directries in your home directory. Make sure this command will work from anywhere on your system.</p></li>
 </ul>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -397,11 +281,10 @@ system.</p></li>
 </div>
 </div>
 </div>
-<div id="working-with-files-and-directories" class="section level2" number="1.3">
+<div id="working-with-files-and-directories" class="section level2">
 <h2>
 <span class="header-section-number">1.3</span> Working with Files and Directories</h2>
-<p>To create a directory, you can use the <code>mkdir</code> command, short for
-<em>make directory</em>:</p>
+<p>To create a directory, you can use the <code>mkdir</code> command, short for <em>make directory</em>:</p>
 <pre><code>$ mkdir my_dir</code></pre>
 <p>To create (empty) files, use the <code>touch</code> command:</p>
 <pre><code>$ touch my_file.txt</code></pre>
@@ -410,44 +293,24 @@ system.</p></li>
 ► Question
 </p>
 <div class="question-body">
-<p>Make sure you are in the <code>wsbim2122_data</code> directory and create a new one
-called <code>wsbim2122_notes</code> and, in that directory, 3 files respectively
-called <code>shell_notes.txt</code>, <code>report.Rmd</code> and <code>omics.md</code>.</p>
+<p>Make sure you are in the <code>wsbim2122_data</code> directory and create a new one called <code>wsbim2122_notes</code> and, in that directory, 3 files respectively called <code>shell_notes.txt</code>, <code>report.Rmd</code> and <code>omics.md</code>.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
-<p>Note that the files created above contain a <strong>file name</strong>
-(<code>shell_notes</code>, <code>report</code>, <code>omics</code>) and the <strong>file extension</strong> (<code>txt</code>,
-<code>Rmd</code> and <code>md</code>)! You can of course create a file without extension,
-but you (and the computer) won’t know what type of file it is from its
-name.</p>
-<p>The tips about variable naming that we saw in previous years also hold
-for file names. Complicated names of files and directories can make
-your life painful when working on the command line. Here we provide a
-few useful tips for the names of your files.</p>
+<p>Note that the files created above contain a <strong>file name</strong> (<code>shell_notes</code>, <code>report</code>, <code>omics</code>) and the <strong>file extension</strong> (<code>txt</code>, <code>Rmd</code> and <code>md</code>)! You can of course create a file without extension, but you (and the computer) won't know what type of file it is from its name.</p>
+<p>The tips about variable naming that we saw in previous years also hold for file names. Complicated names of files and directories can make your life painful when working on the command line. Here we provide a few useful tips for the names of your files.</p>
 <ol style="list-style-type: decimal">
-<li><p>Don’t use spaces. Spaces can make a name more meaningful, but since
-spaces are used to separate arguments on the command line it is
-better to avoid them in names of files and directories. You can use
-<code>-</code> or <code>_</code> instead.</p></li>
-<li><p>Don’t begin the name with <code>-</code> (dash). Commands treat names starting
-with - as options.</p></li>
-<li><p>Stick with letters, numbers, . (period or ‘full stop’), - (dash)
-and _ (underscore).</p></li>
+<li>Don't use spaces. Spaces can make a name more meaningful, but since spaces are used to separate arguments on the command line it is better to avoid them in names of files and directories. You can use <code>-</code> or <code>_</code> instead.</li>
+<li><p>Don't begin the name with <code>-</code> (dash). Commands treat names starting with - as options.</p></li>
+<li><p>Stick with letters, numbers, . (period or ‘full stop'), - (dash) and _ (underscore).</p></li>
 </ol>
-<p>Many other characters have special meanings on the command line. There
-are special characters that can cause your command to not work as
-expected and can even result in data loss.</p>
-<p>If you need to refer to names of files or directories that have spaces
-or other special characters, you should surround the name in quotes
-("").</p>
+<p>Many other characters have special meanings on the command line. There are special characters that can cause your command to not work as expected and can even result in data loss.</p>
+<p>If you need to refer to names of files or directories that have spaces or other special characters, you should surround the name in quotes ("").</p>
 <div id="viewing-files" class="section level3 unnumbered">
 <h3>Viewing files</h3>
-<p>To view a file, you can use <code>cat</code> to display the whole file at
-once. This might work for the file that you just edited (try it out),
-but not for any of the files in the <code>wsbim2122_data/data</code> directory.</p>
+<p>To view a file, you can use <code>cat</code> to display the whole file at once. This might work for the file that you just edited (try it out), but not for any of the files in the <code>wsbim2122_data/data</code> directory.</p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -456,20 +319,15 @@ but not for any of the files in the <code>wsbim2122_data/data</code> directory.<
 <ul>
 <li>Navigate to the <code>wsbim2122_data/data</code> directory.</li>
 <li>View the content of one of the files starting with <code>seq</code>.</li>
-<li>Use either of <code>head</code> or <code>tail</code> to view the few first and last lines
-of that fils.</li>
-<li>How many first and last lines to you see? Read the <code>head</code> manual
-page to view the 20 first/last lines.</li>
+<li>Use either of <code>head</code> or <code>tail</code> to view the few first and last lines of that fils.</li>
+<li>How many first and last lines to you see? Read the <code>head</code> manual page to view the 20 first/last lines.</li>
 </ul>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
-<p><code>cat</code> is a terrific program, but when the file is really big, it can
-be annoying to use. The program, <code>less</code>, is useful for this
-case. <code>less</code> opens the file as read only, and lets you navigate
-through it. The navigation commands are identical to the man program:</p>
+<p><code>cat</code> is a terrific program, but when the file is really big, it can be annoying to use. The program, <code>less</code>, is useful for this case. <code>less</code> opens the file as read only, and lets you navigate through it. The navigation commands are identical to the man program:</p>
 <ul>
 <li>use <code>b</code> to go backward</li>
 <li>use <code>g</code> to go to the beginning</li>
@@ -487,18 +345,8 @@ through it. The navigation commands are identical to the man program:</p>
 </p>
 </div>
 </div>
-<p><code>less</code> also gives you a way of searching through files. Use the <code>/</code>
-key to begin a search. Enter the word you would like to search for and
-press enter. The screen will jump to the next location where that word
-is found.</p>
-<p><strong>Shortcut</strong>: If you hit <code>/</code> then <code>enter</code>, less will repeat the
-previous search. less searches from the current location and works its
-way forward. Scroll up a couple lines on your terminal to verify you
-are at the beginning of the file. Note, if you are at the end of the
-file and search for the sequence <code>CAA</code>, less will not find it. You
-either need to go to the beginning of the file (by typing g) and
-search again using <code>/</code> or you can use <code>?</code> to search backwards in the
-same way you used <code>/</code> previously.</p>
+<p><code>less</code> also gives you a way of searching through files. Use the <code>/</code> key to begin a search. Enter the word you would like to search for and press enter. The screen will jump to the next location where that word is found.</p>
+<p><strong>Shortcut</strong>: If you hit <code>/</code> then <code>enter</code>, less will repeat the previous search. less searches from the current location and works its way forward. Scroll up a couple lines on your terminal to verify you are at the beginning of the file. Note, if you are at the end of the file and search for the sequence <code>CAA</code>, less will not find it. You either need to go to the beginning of the file (by typing g) and search again using <code>/</code> or you can use <code>?</code> to search backwards in the same way you used <code>/</code> previously.</p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -513,27 +361,16 @@ same way you used <code>/</code> previously.</p>
 </div>
 <div id="using-a-text-editor-in-the-shell" class="section level3 unnumbered">
 <h3>Using a text editor in the shell?</h3>
-<p>For this course, given that we are using RStudio, you will be able to
-view and edit your files with it directly. However, this won’t be
-possible if you use the terminal outside of RStudio, such as when you
-connect to a server.</p>
-<p>There exist several text-based editors, i.e. editors that can be used
-in the shell without a dedicated graphical user interface. Here, we
-will use <code>nano</code> for its simplicity.</p>
+<p>For this course, given that we are using RStudio, you will be able to view and edit your files with it directly. However, this won't be possible if you use the terminal outside of RStudio, such as when you connect to a server.</p>
+<p>There exist several text-based editors, i.e. editors that can be used in the shell without a dedicated graphical user interface. Here, we will use <code>nano</code> for its simplicity.</p>
 <p>Open one of the files that you just created with</p>
 <pre><code>$ nano shell_notes.txt</code></pre>
-<p>Let’s type in a few lines of text. Once we’re happy with our text, we
-can press <code>Ctrl+O</code> (press the <code>Ctrl</code> or <code>Control</code> key and, while
-holding it down, press the <code>O</code> key) to write our data to disk (we’ll
-be asked what file we want to save this to: press <code>Return</code> to accept
-the suggested default).</p>
-<p>Once our file is saved, we can use <code>Ctrl+X</code> to quit the editor and
-return to the shell.</p>
+<p>Let's type in a few lines of text. Once we're happy with our text, we can press <code>Ctrl+O</code> (press the <code>Ctrl</code> or <code>Control</code> key and, while holding it down, press the <code>O</code> key) to write our data to disk (we'll be asked what file we want to save this to: press <code>Return</code> to accept the suggested default).</p>
+<p>Once our file is saved, we can use <code>Ctrl+X</code> to quit the editor and return to the shell.</p>
 </div>
 <div id="creating-moving-copying-and-removing" class="section level3 unnumbered">
 <h3>Creating, moving, copying, and removing</h3>
-<p>Make sure you are inside the <code>wsbim2122_data/data</code> directory and create
-two new directories, namely <code>fas</code> and <code>sim</code>.</p>
+<p>Make sure you are inside the <code>wsbim2122_data/data</code> directory and create two new directories, namely <code>fas</code> and <code>sim</code>.</p>
 <p>To copy the <code>seq_1.fas</code> file into the <code>fas</code>:</p>
 <pre><code>$ cp seq_1.fas fas</code></pre>
 <div class="question">
@@ -543,8 +380,7 @@ two new directories, namely <code>fas</code> and <code>sim</code>.</p>
 <div class="question-body">
 <ul>
 <li>Verify that the file now also exists in the <code>fas</code> directory.</li>
-<li>Copy the <code>sim_1.csv</code> file into the <code>sim</code> directory and check that it
-worked.</li>
+<li>Copy the <code>sim_1.csv</code> file into the <code>sim</code> directory and check that it worked.</li>
 </ul>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -560,23 +396,19 @@ worked.</li>
 <div class="question-body">
 <ul>
 <li>Verify that the file now also exists in the <code>fas</code> directory only.</li>
-<li>Move the <code>sim_2.csv</code> file into the <code>sim</code> directory and check that it
-worked.</li>
+<li>Move the <code>sim_2.csv</code> file into the <code>sim</code> directory and check that it worked.</li>
 </ul>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
-<p>We now have two copies of the <code>seq_1.fas</code> and <code>sim_1.csv</code> files. The
-<code>rm</code> command can be used to delete them, either one by one</p>
+<p>We now have two copies of the <code>seq_1.fas</code> and <code>sim_1.csv</code> files. The <code>rm</code> command can be used to delete them, either one by one</p>
 <pre><code>$ rm seq_1.fas
 $ rm sim_1.fas</code></pre>
 <p>or in one go</p>
 <pre><code>$ rm seq_1.fas sim_1.fas</code></pre>
-<p>We can use wildcards for accessing or manipulate multiple files at
-once. For instance, to move all <code>fas</code> files to the <code>seq</code> directory, we
-can:</p>
+<p>We can use wildcards for accessing or manipulate multiple files at once. For instance, to move all <code>fas</code> files to the <code>seq</code> directory, we can:</p>
 <pre><code>$ mv seq*.fas seq</code></pre>
 <div class="question">
 <p class="question-begin">
@@ -610,19 +442,12 @@ wsbim2122_data/new_dir/data/sim_100.fas</code></pre>
 </div>
 </div>
 </div>
-<div id="data-analysis-in-the-shell" class="section level2" number="1.4">
+<div id="data-analysis-in-the-shell" class="section level2">
 <h2>
 <span class="header-section-number">1.4</span> Data analysis in the shell</h2>
-<p>Above, you searched for the <code>TATATA</code> pattern in one of the <code>fas</code>
-files. We could do the same thing without opening the file with the
-<code>grep</code> command.</p>
+<p>Above, you searched for the <code>TATATA</code> pattern in one of the <code>fas</code> files. We could do the same thing without opening the file with the <code>grep</code> command.</p>
 <pre><code>$ grep TATATA seq_1.fas</code></pre>
-<p>The command above greps all the lines that match the pattern of
-interest and prints them in the standard output. If there’s one a few,
-we could easily count the lines. Firstly, this approach is error
-prone, as it relies on a manual step. Secondly, it doesn’t
-scale. Instead, we can use the <code>wc</code>, short for <em>word count</em>
-command. Let first test it on the <code>seq_1.fas</code> file:</p>
+<p>The command above greps all the lines that match the pattern of interest and prints them in the standard output. If there's one a few, we could easily count the lines. Firstly, this approach is error prone, as it relies on a manual step. Secondly, it doesn't scale. Instead, we can use the <code>wc</code>, short for <em>word count</em> command. Let first test it on the <code>seq_1.fas</code> file:</p>
 <pre><code>$ wc seq_1.fas</code></pre>
 <div class="question">
 <p class="question-begin">
@@ -638,31 +463,24 @@ command. Let first test it on the <code>seq_1.fas</code> file:</p>
 </p>
 </div>
 </div>
-<p>Below we first <em>redirect</em> the output of <code>grep</code> into a new file and
-then count the number of lines with <code>wc</code>:</p>
+<p>Below we first <em>redirect</em> the output of <code>grep</code> into a new file and then count the number of lines with <code>wc</code>:</p>
 <pre><code>$ grep TATATA seq_1.fas &gt; tatata_1
 $ wc tatata_1</code></pre>
-<p>The <code>&gt; file.txt</code> redirects the output to a file called <code>file.txt</code>. If
-a file named <code>file.txt</code> already exists, the it will be overwritten. If
-however, you want to add the output to <code>file.txt</code>, then you should use
-<code>&gt;&gt;</code>. Execute following lines to compare the two redirection
-operators.</p>
+<p>The <code>&gt; file.txt</code> redirects the output to a file called <code>file.txt</code>. If a file named <code>file.txt</code> already exists, the it will be overwritten. If however, you want to add the output to <code>file.txt</code>, then you should use <code>&gt;&gt;</code>. Execute following lines to compare the two redirection operators.</p>
 <pre><code>$ wc -l seq_1.fas &gt; nlines1.txt
 $ wc -l seq_2.fas &gt; nlines1.txt
 $ wc -l seq_1.fas &gt; nlines2.txt
 $ wc -l seq_2.fas &gt;&gt; nlines2.txt
 cat nlines1.txt
 cat nlines2.txt</code></pre>
-<p>To avoid the creation of this intermediate file, the output of <code>grep</code>
-can be directly piped into <code>wc</code>:</p>
+<p>To avoid the creation of this intermediate file, the output of <code>grep</code> can be directly piped into <code>wc</code>:</p>
 <pre><code>$ grep TATATA seq_1.fas | wc</code></pre>
 <div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
-<p>Cound the number of line containing the <code>TATATA</code> pattern in all the
-<code>fas</code> files.</p>
+<p>Cound the number of line containing the <code>TATATA</code> pattern in all the <code>fas</code> files.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -675,13 +493,9 @@ can be directly piped into <code>wc</code>:</p>
 <div class="question-body">
 <ul>
 <li><p>How many <code>fas</code> files do you have?</p></li>
-<li><p>Use <code>head</code> to extract only the sequence headers (the first lines)
-from all the <code>fas</code> files.</p></li>
-<li><p>Use <code>grep</code> to extract only the sequence headers (the first lines)
-from all the <code>fas</code> files.</p></li>
-<li><p>Use <code>grep</code> to extract everything but the sequence headers from all
-the <code>fas</code> files. See the <code>grep</code> manual page to find an appropriate
-tag.</p></li>
+<li><p>Use <code>head</code> to extract only the sequence headers (the first lines) from all the <code>fas</code> files.</p></li>
+<li><p>Use <code>grep</code> to extract only the sequence headers (the first lines) from all the <code>fas</code> files.</p></li>
+<li><p>Use <code>grep</code> to extract everything but the sequence headers from all the <code>fas</code> files. See the <code>grep</code> manual page to find an appropriate tag.</p></li>
 </ul>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -695,8 +509,7 @@ tag.</p></li>
 <div class="question-body">
 <ul>
 <li>Navigate to your directory containing the <code>sim_*.csv</code> files.</li>
-<li>Look at a couple of them and familiarise yourselves with their
-content.</li>
+<li>Look at a couple of them and familiarise yourselves with their content.</li>
 <li>How many files are there?</li>
 <li>How many points where simulated over all files?</li>
 <li>How many points with <code>id</code> b where simulated over all files?</li>
@@ -711,12 +524,8 @@ content.</li>
 ► Question
 </p>
 <div class="question-body">
-<p>Image that you task is to load all the simulation data into R to
-compare the <code>x</code> and <code>y</code> values for each <code>id</code>. You could <a href="https://uclouvain-cbio.github.io/WSBIM1207/sec-prog.html#analysing-data-from-multiple-files">read each
-file into R individually and then combine the
-data</a>.</p>
-<p>An alternative would be to use what we have learned so far to create a
-single file, <code>all_sims.csv</code> containing all the simulation data.</p>
+<p>Image that you task is to load all the simulation data into R to compare the <code>x</code> and <code>y</code> values for each <code>id</code>. You could <a href="https://uclouvain-cbio.github.io/WSBIM1207/sec-prog.html#analysing-data-from-multiple-files">read each file into R individually and then combine the data</a>.</p>
+<p>An alternative would be to use what we have learned so far to create a single file, <code>all_sims.csv</code> containing all the simulation data.</p>
 <p>Check that the number of line in <code>all_sims.csv</code> matches what you found above.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -724,98 +533,59 @@ single file, <code>all_sims.csv</code> containing all the simulation data.</p>
 </div>
 </div>
 </div>
-<div id="writing-scripts" class="section level2" number="1.5">
+<div id="writing-scripts" class="section level2">
 <h2>
 <span class="header-section-number">1.5</span> Writing scripts</h2>
-<p>A really powerful thing about the command line is that you can write
-scripts. Scripts let you save commands to run them and also lets you
-put multiple commands together. Though writing scripts may require an
-additional time investment initially, this can save you time as you
-run them repeatedly. Scripts can also address the challenge of
-reproducibility: if you need to repeat an analysis, you retain a
-record of your command history within the script.</p>
-<p>Let’s create a shell script that combines all the simulation files
-into a single new file. This will allow us to easily recreate that
-file once additional simulations are performed.</p>
+<p>A really powerful thing about the command line is that you can write scripts. Scripts let you save commands to run them and also lets you put multiple commands together. Though writing scripts may require an additional time investment initially, this can save you time as you run them repeatedly. Scripts can also address the challenge of reproducibility: if you need to repeat an analysis, you retain a record of your command history within the script.</p>
+<p>Let's create a shell script that combines all the simulation files into a single new file. This will allow us to easily recreate that file once additional simulations are performed.</p>
 <ul>
-<li>Start by creating a new file that will contain the script, giving
-it the extension <code>.sh</code>.</li>
+<li>Start by creating a new file that will contain the script, giving it the extension <code>.sh</code>.</li>
 </ul>
 <pre><code>touch combine_all_simulations.sh</code></pre>
 <ul>
-<li><p>Add the shell commands from the exercise into that file. You can use
-an editor, either <code>nano</code> directly from the terminal, or RStudio.</p></li>
+<li><p>Add the shell commands from the exercise into that file. You can use an editor, either <code>nano</code> directly from the terminal, or RStudio.</p></li>
 <li><p>Execute your script with</p></li>
 </ul>
 <pre><code>sh combine_all_simulations.sh</code></pre>
 <div id="making-the-script-into-a-program" class="section level3 unnumbered">
 <h3>Making the script into a program</h3>
-<p>Let’s test the <code>-l</code> (for long) tag of <code>ls</code></p>
+<p>Let's test the <code>-l</code> (for long) tag of <code>ls</code></p>
 <pre><code>$ ls combine_all_simulations.sh
 -rw-rw-r-- 1 lgatto lgatto 79 sept. 17 22:32 combine_all_simulations.sh</code></pre>
-<p>This long output gives us, in addition to the file name, the time and
-data is was created, the owner (and group) of the file (twice lgatto
-here) and the files permissions.</p>
-<p>There are ten slots in the permissions list. The first character in
-this list is related to file type, not permissions, so we’ll ignore it
-for now. The next three characters relate to the permissions that the
-file owner has, the next three relate to the permissions for group
-members, and the final three characters specify what other users
-outside of your group can do with the file. We’re going to concentrate
-on the three positions that deal with your permissions (as the file
-owner).</p>
+<p>This long output gives us, in addition to the file name, the time and data is was created, the owner (and group) of the file (twice lgatto here) and the files permissions.</p>
+<p>There are ten slots in the permissions list. The first character in this list is related to file type, not permissions, so we'll ignore it for now. The next three characters relate to the permissions that the file owner has, the next three relate to the permissions for group members, and the final three characters specify what other users outside of your group can do with the file. We're going to concentrate on the three positions that deal with your permissions (as the file owner).</p>
 <div class="figure" style="text-align: center">
 <span id="fig:unnamed-chunk-3"></span>
 <p class="caption marginnote shownote">
-Figure 1.1: The 10 slots defining the file permission (figure from the Data Carpentry’s <a href="https://datacarpentry.org/shell-genomics/03-working-with-files/"><em>Working with Files and Directories</em></a> lesson.
+Figure 1.1: The 10 slots defining the file permission (figure from the Data Carpentry's <a href="https://datacarpentry.org/shell-genomics/03-working-with-files/"><em>Working with Files and Directories</em></a> lesson.
 </p>
 <img src="figs/rwx_figure.svg" alt="The 10 slots defining the file permission (figure from the Data Carpentry's [*Working with Files and Directories*](https://datacarpentry.org/shell-genomics/03-working-with-files/) lesson." width="100%">
 </div>
-<p>Here the three positions that relate to the file owner are <code>rw-</code>. The
-<code>r</code> means that you have permission to read the file, the <code>w</code> indicates
-that you have permission to write to (i.e. make changes to) the file,
-and the third position is a <code>-</code>, indicating that you don’t have
-permission to execute that file, i.e. to run it as a program.</p>
-<p>Our goal for now is to change permissions on this file so that it
-becomes executable. An for security purposes, we want only the file
-owner to be able to execute it.</p>
+<p>Here the three positions that relate to the file owner are <code>rw-</code>. The <code>r</code> means that you have permission to read the file, the <code>w</code> indicates that you have permission to write to (i.e. make changes to) the file, and the third position is a <code>-</code>, indicating that you don't have permission to execute that file, i.e. to run it as a program.</p>
+<p>Our goal for now is to change permissions on this file so that it becomes executable. An for security purposes, we want only the file owner to be able to execute it.</p>
 <pre><code>$ chmod u+x combine_all_simulations.sh
 $ ls -l combine_all_simulations.sh
 -rwxrw-r-- 1 lgatto lgatto 79 sept. 17 22:32 combine_all_simulations.sh</code></pre>
-<p>And now, it will be possible to execute the script without excplicitly
-using <code>sh</code>.</p>
+<p>And now, it will be possible to execute the script without excplicitly using <code>sh</code>.</p>
 <pre><code>combine_all_simulations.sh</code></pre>
-<p>If you want to make sure you don’t want to inadvertently delete a
-file, it is possible to remove all <code>w</code> permissions:</p>
+<p>If you want to make sure you don't want to inadvertently delete a file, it is possible to remove all <code>w</code> permissions:</p>
 <pre><code>$ chmod a+w combine_all_simulations.sh
 $ ls -l combine_all_simulations.sh
 -r-xr--r-- 1 lgatto lgatto 79 sept. 17 22:32 combine_all_simulations.sh</code></pre>
-<p>If you now try to delete the file with <code>rm combine_all_simulations.sh</code>, you’ll be asked if you want to override
-your file permissions:</p>
+<p>If you now try to delete the file with <code>rm combine_all_simulations.sh</code>, you'll be asked if you want to override your file permissions:</p>
 <pre><code>rm: remove write-protected regular file ‘combine_all_simulations.sh'?</code></pre>
-<p>If you enter <code>n</code> (for no), the file will not be deleted. If you enter
-<code>y</code>, you will delete the file. This gives us an extra measure of
-security, as there is one more step between us and deleting our data
-files.</p>
-<p><strong>Important</strong>: The <code>rm</code> command permanently removes the file. Be
-careful with this command. It doesn’t just nicely put the files in the
-Trash. They’re really gone.</p>
-<p>By default, <code>rm</code> will not delete directories. You can tell <code>rm</code> to
-delete a directory using the <code>-r</code> (recursive) option.</p>
-<p>To complete this chapter on shell, let’s conclude by mentioning the R
-<code>system()</code> and <code>system2()</code> functions, that enable to invoke a system
-command such as a shell script:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="sec-cli.html#cb42-1" aria-hidden="true"></a><span class="kw">system</span>(<span class="st">"combine_all_simulations.sh"</span>)</span></code></pre></div>
+<p>If you enter <code>n</code> (for no), the file will not be deleted. If you enter <code>y</code>, you will delete the file. This gives us an extra measure of security, as there is one more step between us and deleting our data files.</p>
+<p><strong>Important</strong>: The <code>rm</code> command permanently removes the file. Be careful with this command. It doesn't just nicely put the files in the Trash. They're really gone.</p>
+<p>By default, <code>rm</code> will not delete directories. You can tell <code>rm</code> to delete a directory using the <code>-r</code> (recursive) option.</p>
+<p>To complete this chapter on shell, let's conclude by mentioning the R <code>system()</code> and <code>system2()</code> functions, that enable to invoke a system command such as a shell script:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system</span>(<span class="st">"combine_all_simulations.sh"</span>)</code></pre></div>
 </div>
 </div>
-<div id="references" class="section level2" number="1.6">
+<div id="references" class="section level2">
 <h2>
 <span class="header-section-number">1.6</span> References</h2>
 <ul>
-<li>The Data Carpentries <a href="https://swcarpentry.github.io/shell-novice/">The Unix
-Shell</a> and
-<a href="https://datacarpentry.org/shell-genomics/">Introduction to the Command Line for
-Genomics</a> lessons.</li>
+<li>The Data Carpentries <a href="https://swcarpentry.github.io/shell-novice/">The Unix Shell</a> and <a href="https://datacarpentry.org/shell-genomics/">Introduction to the Command Line for Genomics</a> lessons.</li>
 <li>
 <em>Bioinformatics Data Skills</em> <span class="citation">(Buffalo <label for="tufte-mn-6" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-6" class="margin-toggle">2015<span class="marginnote">Buffalo, Vince. 2015. <em>Bioinformatics Data Skills</em>. O’Reilly Media, Inc.</span>)</span>.</li>
 </ul>
@@ -827,7 +597,7 @@ Genomics</a> lessons.</li>
 <a href="sec-rmd.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-10-06
+2020-10-07
 </p>
 </div>
 </div>

@@ -3,6 +3,7 @@
 ```{r, message = FALSE, echo = FALSE}
 library("GO.db")
 library("org.Hs.eg.db")
+library("tidyverse")
 ```
 
 **Motivation**: at the end of this chapter, the students will be able
@@ -584,13 +585,14 @@ to be ordered in decreasing order. This indicates that the p-values
 can't be used without transformations. One could also use the log2
 fold-change or the (absolute value) test statistics.
 
-```{r cp2, message = FALSE, cache = TRUE, warning = FALSE}
+```{r cp2, message = FALSE, cache = TRUE}
 ordered_genes <- abs(res_tbl$stat)
 names(ordered_genes) <- res_tbl$ENTREZID
 ordered_genes <- sort(ordered_genes, decreasing = TRUE)
 
 go_gsea <- gseGO(gene = ordered_genes,
-                 OrgDb = org.Hs.eg.db) %>%
+                 OrgDb = org.Hs.eg.db,
+                 scoreType = "pos") %>%
     as_tibble
 go_gsea
 ```
@@ -676,13 +678,15 @@ msig_ora <- enricher(gene = de_genes,
 msig_ora
 ```
 
-```{r, msig_gsea, message = FALSE, warning = FALSE}
-msig_gsea <- GSEA(ordered_genes, TERM2GENE = msig_h) %>%
+```{r, msig_gsea, message = FALSE}
+msig_gsea <- GSEA(ordered_genes, TERM2GENE = msig_h, scoreType = "pos") %>%
     as_tibble
 msig_gsea
 ```
 
 ## Visualisation of enrichment analyses
+
+- include volcano plots with geneset genes
 
 ## Discussion
 
