@@ -1033,9 +1033,10 @@ as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = TRUE),
 
 `r msmbstyle::question_begin()`
 
-1. Identify and inspect counts of the genes plotted in red in the following volcano-plot.
-These genes have a very large log2FC (|log2FC| > 5) but are far from bearing the lowest
-padjusted value (their padjusted value is between 0.05 and 1e-5).
+1. Identify and inspect counts of the genes plotted in red in the
+   following volcano-plot. These genes have a very large log2FC
+   (|log2FC| > 5) but are far from bearing the lowest padjusted value
+   (their padjusted value is between 0.05 and 1e-5).
 
 ```{r, echo = FALSE}
 res_tbl %>%
@@ -1053,18 +1054,20 @@ res_tbl %>%
   geom_vline(xintercept = -5)
 ```
 
-2. Compare counts with previous counts plots (counts of genes with lowest pvalues).
-what is the most striking?
+2. Compare counts with previous counts plots (counts of genes with
+   lowest pvalues).  what is the most striking?
 
-3. Using dispersions() function, compare dispersion values for both group of genes
+3. Using dispersions() function, compare dispersion values for both
+   group of genes
 
 `r msmbstyle::question_end()`
 
 `r msmbstyle::solution_begin()`
 
-1. Identify and inspect counts of the genes plotted in red in the following volcano-plot.
-These genes have a very large log2FC (|log2FC| > 5) but are far from bearing the lowest
-padjusted value (their padjusted value is between 0.05 and 1e-5).
+1. Identify and inspect counts of the genes plotted in red in the
+   following volcano-plot.  These genes have a very large log2FC
+   (|log2FC| > 5) but are far from bearing the lowest padjusted value
+   (their padjusted value is between 0.05 and 1e-5).
 
 ```{r}
 selected_genes <- res_tbl %>%
@@ -1090,7 +1093,8 @@ what is the most striking?
 These genes have very low counts. Even if they show a strong log2FC, their variability is very high.
 This will result in higher dispersion values, and larger pvalues.
 
-3. Using dispersion() function, compare dispersion values for both group of genes
+3. Using `dispersions()` function, compare dispersion values for both
+   group of genes
 
 ```{r}
 dispersions(dds[best_genes$ENSEMBL,])

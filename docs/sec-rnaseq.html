@@ -891,7 +891,7 @@ dds_bis &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds[keep, ])
 </ol>
 <p>These genes have very low counts. Even if they show a strong log2FC, their variability is very high. This will result in higher dispersion values, and larger pvalues.</p>
 <ol start="3" style="list-style-type: decimal">
-<li>Using dispersion() function, compare dispersion values for both group of genes</li>
+<li>Using <code>dispersions()</code> function, compare dispersion values for both group of genes</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dispersions</span>(dds[best_genes<span class="op">$</span>ENSEMBL,])</code></pre></div>
 <pre><code>## [1] 0.01718122 0.02025994 0.01427782 0.04048283 0.01433817 0.01637945</code></pre>
