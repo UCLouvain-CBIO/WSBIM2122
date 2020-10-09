@@ -829,7 +829,7 @@ dds_bis &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds[keep, ])
 <span class="st">  </span><span class="kw">arrange</span>(padj)  <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">head</span>(<span class="dv">6</span>)
 
-<span class="kw">as_tibble</span>(<span class="kw">counts</span>(dds[best_genes<span class="op">$</span>ENSEMBL, ], <span class="dt">normalize =</span> T),
+<span class="kw">as_tibble</span>(<span class="kw">counts</span>(dds[best_genes<span class="op">$</span>ENSEMBL, ], <span class="dt">normalize =</span> <span class="ot">TRUE</span>),
           <span class="dt">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">gather</span>(sample, counts, <span class="op">-</span>ENSEMBL) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">left_join</span>(<span class="kw">as_tibble</span>(coldata, <span class="dt">rownames =</span> <span class="st">"sample"</span>)) <span class="op">%&gt;%</span>
@@ -872,7 +872,7 @@ dds_bis &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds[keep, ])
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">selected_genes &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">&amp;</span><span class="st"> </span>padj <span class="op">&gt;</span><span class="st"> </span><span class="fl">1e-5</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">abs</span>(log2FoldChange) <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>)
 
-<span class="kw">as_tibble</span>(<span class="kw">counts</span>(dds[selected_genes<span class="op">$</span>ENSEMBL, ], <span class="dt">normalize =</span> T),
+<span class="kw">as_tibble</span>(<span class="kw">counts</span>(dds[selected_genes<span class="op">$</span>ENSEMBL, ], <span class="dt">normalize =</span> <span class="ot">TRUE</span>),
           <span class="dt">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">gather</span>(sample, counts, <span class="op">-</span>ENSEMBL) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">left_join</span>(<span class="kw">as_tibble</span>(coldata, <span class="dt">rownames =</span> <span class="st">"sample"</span>)) <span class="op">%&gt;%</span>

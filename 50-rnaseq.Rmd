@@ -414,7 +414,7 @@ Let's start by installing the
 [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) package.
 
 
-```{r, echo = F}
+```{r, echo = FALSE}
 suppressPackageStartupMessages(library("DESeq2"))
 suppressPackageStartupMessages(library("tidyverse"))
 ```
@@ -1017,7 +1017,7 @@ best_genes <- res_tbl %>%
   arrange(padj)  %>%
   head(6)
 
-as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = T),
+as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = TRUE),
           rownames = 'ENSEMBL') %>%
   gather(sample, counts, -ENSEMBL) %>%
   left_join(as_tibble(coldata, rownames = "sample")) %>%
@@ -1070,7 +1070,7 @@ padjusted value (their padjusted value is between 0.05 and 1e-5).
 selected_genes <- res_tbl %>%
   filter(padj < 0.05 & padj > 1e-5 & abs(log2FoldChange) > 5)
 
-as_tibble(counts(dds[selected_genes$ENSEMBL, ], normalize = T),
+as_tibble(counts(dds[selected_genes$ENSEMBL, ], normalize = TRUE),
           rownames = 'ENSEMBL') %>%
   gather(sample, counts, -ENSEMBL) %>%
   left_join(as_tibble(coldata, rownames = "sample")) %>%
