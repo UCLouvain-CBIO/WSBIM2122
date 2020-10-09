@@ -718,6 +718,7 @@ entrez_ids <- strsplit(msig_gsea$core_enrichment[[1]], "/")[[1]]
 
 res_tbl %>%
     mutate(inGO = ENTREZID %in% entrez_ids) %>%
+    arrange(inGO) %>% ## to plot inGO points last
     ggplot(aes(x = log2FoldChange,
                y = -log10(padj),
                colour = inGO)) +
