@@ -289,13 +289,13 @@ DT::datatable(des, rownames = FALSE,
 Such situation require a new model formula syntax, that
 
 ```{r, eval = FALSE}
-~ genotype*condition
+~ genotype * condition
 ```
 
 which is equivalent to
 
 ```{r, eval = FALSE}
-~ genotype + condition + genotype*condition
+~ genotype + condition + genotype * condition
 ```
 
 Here, coefficients are estimated for `genotype`, `condition` and the
@@ -338,7 +338,7 @@ x <-
 ## Analyse gene 1
 x_i <- filter(x, rowname == "gene_1")
 x_i
-mod_i <- lm(expression ~ condition*cell_type, data = x_i)
+mod_i <- lm(expression ~ condition * cell_type, data = x_i)
 summary(mod_i)
 
 ggplot(x_i, aes(x = sample, y = expression,
@@ -351,7 +351,7 @@ ggplot(x_i, aes(x = sample, y = expression,
 ## Analyse gene 2
 x_i <- filter(x, rowname == "gene_2")
 x_i
-mod_i <- lm(expression ~ condition*cell_type, data = x_i)
+mod_i <- lm(expression ~ condition * cell_type, data = x_i)
 summary(mod_i)
 
 ggplot(x_i, aes(x = sample, y = expression, colour = cell_type)) +
@@ -363,7 +363,7 @@ ggplot(x_i, aes(x = sample, y = expression, colour = cell_type)) +
 ## Analyse gene 3
 x_i <- filter(x, rowname == "gene_3")
 x_i
-mod_i <- lm(expression ~ condition*cell_type, data = x_i)
+mod_i <- lm(expression ~ condition * cell_type, data = x_i)
 summary(mod_i)
 
 ggplot(x_i, aes(x = sample, y = expression, colour = condition)) +
@@ -375,7 +375,7 @@ ggplot(x_i, aes(x = sample, y = expression, colour = condition)) +
 ## Analyse gene 4
 x_i <- filter(x, rowname == "gene_4")
 x_i
-mod_i <- lm(expression ~ condition*cell_type, data = x_i)
+mod_i <- lm(expression ~ condition * cell_type, data = x_i)
 summary(mod_i)
 
 ggplot(x_i, aes(x = sample, y = expression,
@@ -389,7 +389,7 @@ ggplot(x_i, aes(x = sample, y = expression,
 ## Analyse gene 5
 x_i <- filter(x, rowname == "gene_5")
 x_i
-mod_i <- lm(expression ~ condition*cell_type, data = x_i)
+mod_i <- lm(expression ~ condition * cell_type, data = x_i)
 summary(mod_i)
 
 group_by(x_i, cell_type, condition) %>% summarise(mean = mean(expression))
@@ -404,3 +404,41 @@ ggplot(x_i, aes(x = sample, y = expression,
 ```
 
 `r msmbstyle::solution_end()`
+
+
+## Which model to use?
+
+The same experimental design can be analysed using different
+models. Some are clearly not appropriate, such as the omission of the
+ID variable in the first example. Other cases aren't that clear.
+
+- If we return to the previous example for gene 3, we see that in both
+  cases, we obtain significant results for the cell type coefficient,
+  albeit with a much smaller p-value in the simpler model. This is due
+  to the cost of using a more complex model and reducing the degrees
+  of freedom that affect the calculation of the statistics.
+
+
+
+```{r}
+x_i <- filter(x, rowname == "gene_3")
+summary(lm(expression ~ condition + cell_type, data = x_i))
+summary(lm(expression ~ condition * cell_type, data = x_i))
+```
+
+- If we look at gene 5, we see that we miss out several significant
+  effects if we use the simpler model, without interactions.
+
+
+```{r}
+x_i <- filter(x, rowname == "gene_5")
+summary(lm(expression ~ condition + cell_type, data = x_i))
+summary(lm(expression ~ condition * cell_type, data = x_i))
+```
+
+In high throughput experiments, where we test tens of thousands of
+genes, we can't explore each gene separately with a different
+model. The same model is applied to all genes and the significance of
+coefficient(s) of interest are considered.
+
+Solving this dilema isn't a statistical issue, but a scientific question.
