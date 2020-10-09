@@ -696,9 +696,11 @@ to the whole set of results is to highlight the genes in a particular
 set of interest on the volcano plot.
 
 ```{r}
-plot(res_tbl$log2FoldChange, -log10(res_tbl$padj),
-     col = ifelse(res_tbl$ENTREZID %in% GO_0005925$ENTREZID,
-                  "red", "black"))
+sel <- res_tbl$ENTREZID %in% GO_0005925$ENTREZID
+plot(res_tbl$log2FoldChange, -log10(res_tbl$padj))
+points(res_tbl$log2FoldChange[sel],
+     -log10(res_tbl$padj)[sel],
+     col = "red")            
 grid()
 ```
 
@@ -718,7 +720,7 @@ entrez_ids <- strsplit(msig_gsea$core_enrichment[[1]], "/")[[1]]
 
 res_tbl %>%
     mutate(inGO = ENTREZID %in% entrez_ids) %>%
-    arrange(inGO) %>% ## to plot inGO points last
+    arrange(inGO) %>% ## to plot inGO points last (on top)
     ggplot(aes(x = log2FoldChange,
                y = -log10(padj),
                colour = inGO)) +

@@ -180,8 +180,10 @@ mod2
 
 which corresponds to the following model
 
-```{r, echo = FALSE, results = "asis", include = FALSE}
+```{r, echo = FALSE, results = "asis", eval = FALSE, include = FALSE}
+## this has been used to generate the equation below 
 equatiomatic::extract_eq(mod2, wrap = TRUE, terms_per_line = 4)
+## modified \alpha into \beta_{0} manually
 ```
 
 $$
@@ -443,7 +445,7 @@ summary(lm(expression ~ condition * cell_type, data = x_i))
 ```
 
 - If we look at gene 5, we see that we miss out several significant
-  effects if we use the simpler model, without interactions.
+  effects if we use the simpler model, without interaction.
 
 
 ```{r}
@@ -453,8 +455,19 @@ summary(lm(expression ~ condition * cell_type, data = x_i))
 ```
 
 In high throughput experiments, where we test tens of thousands of
-genes, we can't explore each gene separately with a different
-model. The same model is applied to all genes and the significance of
-coefficient(s) of interest are considered.
+genes, we can't explore each gene separately with multiple models. The
+same model is applied to all genes and the significance of
+coefficient(s) of interest is/are considered.
 
-Solving this dilema isn't a statistical issue, but a scientific question.
+Solving this dilema isn't a statistical but a scientific question. You
+will have to define the hypothesis that underlies the
+experiment[^hypo]. It there are reasons to believe that and
+interaction effect is relevant, then the more complex model it
+appropriate. If no such interaction is expected, then testing for it
+penalises the power of the tests.
+
+[^hypo]: before even generating any data.
+
+Accumulating models and tests isn't necessarily a solution either, as
+this leads to the accumulation of tests that would require additional
+adjustment for multiple testing.
