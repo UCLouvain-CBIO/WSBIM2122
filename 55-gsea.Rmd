@@ -695,13 +695,36 @@ Another useful visualisation, that links the enrichment results back
 to the whole set of results is to highlight the genes in a particular
 set of interest on the volcano plot.
 
-
 ```{r}
 plot(res_tbl$log2FoldChange, -log10(res_tbl$padj),
      col = ifelse(res_tbl$ENTREZID %in% GO_0005925$ENTREZID,
                   "red", "black"))
 grid()
 ```
+
+`r msmbstyle::question_begin()`
+
+Extract the Entrez ids from the top hit in the `msig_gsea` results
+above (available in `core_enrichment`) and visualise the results on a
+volcano plot.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+```{r}
+entrez_ids <- strsplit(msig_gsea$core_enrichment[[1]], "/")[[1]]
+
+res_tbl %>%
+    mutate(inGO = ENTREZID %in% entrez_ids) %>%
+    ggplot(aes(x = log2FoldChange,
+               y = -log10(padj),
+               colour = inGO)) +
+    geom_point()
+```
+
+`r msmbstyle::solution_end()`
 
 ## Discussion
 

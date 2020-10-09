@@ -727,7 +727,7 @@ the lowest padjusted value.
 the function `counts()`. Compare with baseMean values.
 
 3. Extract the ß coefficient of these 5 "best genes" from the GLM
-using the function `coefficient()`. Compare with log2FoldChange values.
+using the function `coefficients()`. Compare with log2FoldChange values.
 
 4. Using the function `counts()`, evaluate the mean expression levels
 of these 5 "best genes" in mock cells. Compare with ß coefficients.
@@ -762,7 +762,7 @@ rowMeans(counts(dds[best_genes], normalize = TRUE))
 ```
 
 3. Extract the ß coefficient of these 5 "best genes" from the GLM
-using the function `coefficient()`. Compare with log2FoldChange values.
+using the function `coefficients()`. Compare with log2FoldChange values.
 
 ```{r}
 coefficients(dds[best_genes])
