@@ -1114,7 +1114,11 @@ Below, we query the Biomart service to extract the gene names
 (that we will need in the next chapter) and join these to our result
 data.
 
-```{r}
+```{r, echo = FALSE}
+ensembl_to_geneName <- readRDS(file = "./data/ensembl_to_geneName.rds")
+```
+
+```{r, eval = FALSE}
 library("biomaRt")
 library("org.Hs.eg.db")
 

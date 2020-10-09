@@ -101,10 +101,10 @@ junction (HAJ).
 ```{r go.db1}
 library("GO.db")
 library("org.Hs.eg.db")
-GO_0005925 <- select(org.Hs.eg.db,
-                     keys = "GO:0005925",
-                     columns = c("ENTREZID", "SYMBOL"),
-                     keytype = "GO") %>%
+GO_0005925 <- AnnotationDbi::select(org.Hs.eg.db,
+                                    keys = "GO:0005925",
+                                    columns = c("ENTREZID", "SYMBOL"),
+                                    keytype = "GO") %>%
     as_tibble %>%
     filter(!duplicated(ENTREZID))
 GO_0005925
@@ -686,7 +686,22 @@ msig_gsea
 
 ## Visualisation of enrichment analyses
 
-- include volcano plots with geneset genes
+The `clusterProfiler` documentation provides a chapter on the
+[visualization of functional enrichment
+results](http://yulab-smu.top/clusterProfiler-book/chapter12.html).
+
+
+Another useful visualisation, that links the enrichment results back
+to the whole set of results is to highlight the genes in a particular
+set of interest on the volcano plot.
+
+
+```{r}
+plot(res_tbl$log2FoldChange, -log10(res_tbl$padj),
+     col = ifelse(res_tbl$ENTREZID %in% GO_0005925$ENTREZID,
+                  "red", "black"))
+grid()
+```
 
 ## Discussion
 
