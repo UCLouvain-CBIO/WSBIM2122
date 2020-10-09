@@ -1057,8 +1057,8 @@ res_tbl %>%
 2. Compare counts with previous counts plots (counts of genes with
    lowest pvalues).  what is the most striking?
 
-3. Using dispersions() function, compare dispersion values for both
-   group of genes
+3. Using the `dispersions()` function, compare dispersion values for
+   both group of genes
 
 `r msmbstyle::question_end()`
 
