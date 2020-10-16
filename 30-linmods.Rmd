@@ -181,7 +181,7 @@ mod2
 which corresponds to the following model
 
 ```{r, echo = FALSE, results = "asis", eval = FALSE, include = FALSE}
-## this has been used to generate the equation below 
+## this has been used to generate the equation below
 equatiomatic::extract_eq(mod2, wrap = TRUE, terms_per_line = 4)
 ## modified \alpha into \beta_{0} manually
 ```
@@ -432,10 +432,7 @@ ID variable in the first example. Other cases aren't that clear.
 
 - If we return to the previous example for gene 3, we see that in both
   cases, we obtain significant results for the cell type coefficient,
-  albeit with a much smaller p-value in the simpler model. This is due
-  to the cost of using a more complex model and reducing the degrees
-  of freedom that affect the calculation of the statistics.
-
+  albeit with a much smaller p-value in the simpler model.
 
 
 ```{r}
@@ -444,8 +441,17 @@ summary(lm(expression ~ condition + cell_type, data = x_i))
 summary(lm(expression ~ condition * cell_type, data = x_i))
 ```
 
+This is partly due to the cost of using a more complex model and
+reducing the degrees of freedom that affect the calculation of the
+statistics, and that the question asked is slighly different. The
+coefficient `cell_typeB` in model without interaction tests for
+differences in cell types by taking into account that there are two
+types. In the model with interaction, the test focuses in the cell
+type effect in the reference condition only.
+
 - If we look at gene 5, we see that we miss out several significant
-  effects if we use the simpler model, without interaction.
+  effects if we use the simpler model, without interaction, because
+  the simpler model doesn't ask the right question.
 
 
 ```{r}
@@ -461,12 +467,15 @@ coefficient(s) of interest is/are considered.
 
 Solving this dilema isn't a statistical but a scientific question. You
 will have to define the hypothesis that underlies the
-experiment[^hypo]. It there are reasons to believe that and
-interaction effect is relevant, then the more complex model it
+experiment[^hypo]. If there are reasons to believe that an interaction
+effect is relevant (i.e. there are different effects in the two cell
+types), then the more complex model (with an interaction) it
 appropriate. If no such interaction is expected, then testing for it
-penalises the power of the tests.
+penalises your analysis. In other words it isn't the complexity of the
+model that makes its quality, but its appropriateness for the studied
+design/effect.
 
-[^hypo]: before even generating any data.
+[^hypo]: ideally even before generating any data.
 
 Accumulating models and tests isn't necessarily a solution either, as
 this leads to the accumulation of tests that would require additional

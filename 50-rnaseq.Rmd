@@ -120,9 +120,9 @@ as it is less influenced by extreme values.
 **Step 2**: For every gene in every sample, ratios of
 counts/pseudo-reference sample are calculated.
 
-**Step 3**: The median value of all ratios for a given sample is taken as
-the size factor for that sample. Importantly, the method is based on
-the assumption that the majority of genes are not differentially
+**Step 3**: The median value of all ratios for a given sample is taken
+as the scale factor for that sample. Importantly, the method is based
+on the assumption that the majority of genes are not differentially
 expressed, which implies that rare genes that are really up-regulated
 or down-regulated should not influence the median. Furthermore, the
 median is calculated skipping genes with a geometric mean of
