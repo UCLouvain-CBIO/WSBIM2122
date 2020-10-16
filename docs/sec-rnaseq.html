@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-10-09" />
+<meta name="date" content="2020-10-16" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -186,7 +186,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Let's try to understand what is behind this formula.</p>
 <p><strong>Step 1</strong>: DESeq2 creates a pseudo-reference sample by calculating a row-wise geometric mean (for each gene). Geometric mean is used instead of classical mean because it uses log values. It is hence more robust as it is less influenced by extreme values.</p>
 <p><strong>Step 2</strong>: For every gene in every sample, ratios of counts/pseudo-reference sample are calculated.</p>
-<p><strong>Step 3</strong>: The median value of all ratios for a given sample is taken as the size factor for that sample. Importantly, the method is based on the assumption that the majority of genes are not differentially expressed, which implies that rare genes that are really up-regulated or down-regulated should not influence the median. Furthermore, the median is calculated skipping genes with a geometric mean of zero. This will hence automatically eliminate genes expressed in some samples but not in others and will help to focus the scaling factor on housekeeping genes.</p>
+<p><strong>Step 3</strong>: The median value of all ratios for a given sample is taken as the scale factor for that sample. Importantly, the method is based on the assumption that the majority of genes are not differentially expressed, which implies that rare genes that are really up-regulated or down-regulated should not influence the median. Furthermore, the median is calculated skipping genes with a geometric mean of zero. This will hence automatically eliminate genes expressed in some samples but not in others and will help to focus the scaling factor on housekeeping genes.</p>
 <p><strong>Step 4</strong>: DESeq2 calculates the normalised counts using the scaling factor. This is performed by dividing each raw count values in a given sample by that sample’s scaling factor.</p>
 <p><img src="figs/SF_steps.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
@@ -954,7 +954,7 @@ ensembl_to_geneName &lt;-<span class="st"> </span><span class="kw">getBM</span>(
 <a href="sec-gsea.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-10-09
+2020-10-16
 </p>
 </div>
 </div>

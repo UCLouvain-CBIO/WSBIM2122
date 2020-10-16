@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-10-09" />
+<meta name="date" content="2020-10-16" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -473,8 +473,8 @@ coefs_id</code></pre></div>
 <h2>
 <span class="header-section-number">3.5</span> Interactions between variables</h2>
 <p>Consider the following design: two genotypes of plants, wild type and a mutant that shows some resistance to drought, that are grown, collected and analysed by RNA sequencing under normal, humid and dry conditions. The researchers that set up this experiment expect that the two genotypes will produce, for some key genes, opposite responses in the extreme conditions: that the expression of some genes will increase in the mutant under dry conditions while it will decrease under humid conditions.</p>
-<div id="htmlwidget-ababd3fc62624b0aa2b6" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ababd3fc62624b0aa2b6">{"x":{"filter":"none","data":[[1,2,3,4,5,6,7,8,9,10,11,12],["WT","WT","WT","WT","WT","WT","MT","MT","MT","MT","MT","MT"],["normal","dry","humid","normal","dry","humid","normal","dry","humid","normal","dry","humid"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>sample<\/th>\n      <th>genotype<\/th>\n      <th>condition<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Such situation require a new model formula syntax, that</p>
+<div id="htmlwidget-1b11318e6d1af0bb3955" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1b11318e6d1af0bb3955">{"x":{"filter":"none","data":[[1,2,3,4,5,6,7,8,9,10,11,12],["WT","WT","WT","WT","WT","WT","MT","MT","MT","MT","MT","MT"],["normal","dry","humid","normal","dry","humid","normal","dry","humid","normal","dry","humid"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>sample<\/th>\n      <th>genotype<\/th>\n      <th>condition<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Such situation require a new model formula syntax, that</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">~</span><span class="st"> </span>genotype <span class="op">*</span><span class="st"> </span>condition</code></pre></div>
 <p>which is equivalent to</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">~</span><span class="st"> </span>genotype <span class="op">+</span><span class="st"> </span>condition <span class="op">+</span><span class="st"> </span>genotype <span class="op">*</span><span class="st"> </span>condition</code></pre></div>
@@ -768,7 +768,7 @@ x_i</code></pre></div>
 <span class="header-section-number">3.7</span> Which model to use?</h2>
 <p>The same experimental design can be analysed using different models. Some are clearly not appropriate, such as the omission of the ID variable in the first example. Other cases aren't that clear.</p>
 <ul>
-<li>If we return to the previous example for gene 3, we see that in both cases, we obtain significant results for the cell type coefficient, albeit with a much smaller p-value in the simpler model. This is due to the cost of using a more complex model and reducing the degrees of freedom that affect the calculation of the statistics.</li>
+<li>If we return to the previous example for gene 3, we see that in both cases, we obtain significant results for the cell type coefficient, albeit with a much smaller p-value in the simpler model.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x_i &lt;-<span class="st"> </span><span class="kw">filter</span>(x, rowname <span class="op">==</span><span class="st"> "gene_3"</span>)
 <span class="kw">summary</span>(<span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition <span class="op">+</span><span class="st"> </span>cell_type, <span class="dt">data =</span> x_i))</code></pre></div>
@@ -812,8 +812,9 @@ x_i</code></pre></div>
 ## Residual standard error: 0.8489 on 8 degrees of freedom
 ## Multiple R-squared:  0.7019, Adjusted R-squared:  0.5901 
 ## F-statistic: 6.278 on 3 and 8 DF,  p-value: 0.01696</code></pre>
+<p>The questions asked is slighly different. The coefficient <code>cell_typeB</code> in the model without interaction tests for shared differences in the two cell types by taking into account that there are two conditions. In the model with interaction, the test focuses in the cell type effect in the reference condition only.</p>
 <ul>
-<li>If we look at gene 5, we see that we miss out several significant effects if we use the simpler model, without interaction.</li>
+<li>If we look at gene 5, we see that we miss out several significant effects if we use the simpler model, without interaction, because the simpler model doesn't ask the right question.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x_i &lt;-<span class="st"> </span><span class="kw">filter</span>(x, rowname <span class="op">==</span><span class="st"> "gene_5"</span>)
 <span class="kw">summary</span>(<span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition <span class="op">+</span><span class="st"> </span>cell_type, <span class="dt">data =</span> x_i))</code></pre></div>
@@ -857,8 +858,8 @@ x_i</code></pre></div>
 ## Residual standard error: 0.4806 on 8 degrees of freedom
 ## Multiple R-squared:  0.7094, Adjusted R-squared:  0.6005 
 ## F-statistic: 6.511 on 3 and 8 DF,  p-value: 0.01536</code></pre>
-<p>In high throughput experiments, where we test tens of thousands of genes, we can't explore each gene separately with multiple models. The same model is applied to all genes and the significance of coefficient(s) of interest is/are considered.</p>
-<p>Solving this dilema isn't a statistical but a scientific question. You will have to define the hypothesis that underlies the experiment<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> before even generating any data.</span>. It there are reasons to believe that and interaction effect is relevant, then the more complex model it appropriate. If no such interaction is expected, then testing for it penalises the power of the tests.</p>
+<p>In high throughput experiments, where we test tens of thousands of genes, we thus can't explore each gene separately with multiple models. The same model is applied to all genes and the significance of coefficient(s) of interest is/are considered.</p>
+<p>Solving this dilema isn't a statistical but a scientific question. You will have to define the hypothesis that underlies the experiment<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> ideally even before generating any data.</span>. If there are reasons to believe that an interaction effect is relevant (i.e. there are different effects in the two cell types), then the more complex model (with an interaction) is appropriate. If no such interaction is expected, then testing for it penalises your analysis. In other words it isn't the complexity of the model that makes its quality, but its appropriateness for the studied design/effect.</p>
 <p>Accumulating models and tests isn't necessarily a solution either, as this leads to the accumulation of tests that would require additional adjustment for multiple testing.</p>
 
 </div>
@@ -869,7 +870,7 @@ x_i</code></pre></div>
 <a href="sec-hts.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-10-09
+2020-10-16
 </p>
 </div>
 </div>

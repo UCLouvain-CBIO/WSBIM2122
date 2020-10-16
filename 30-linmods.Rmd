@@ -441,13 +441,11 @@ summary(lm(expression ~ condition + cell_type, data = x_i))
 summary(lm(expression ~ condition * cell_type, data = x_i))
 ```
 
-This is partly due to the cost of using a more complex model and
-reducing the degrees of freedom that affect the calculation of the
-statistics, and that the question asked is slighly different. The
-coefficient `cell_typeB` in model without interaction tests for
-differences in cell types by taking into account that there are two
-types. In the model with interaction, the test focuses in the cell
-type effect in the reference condition only.
+The questions asked is slighly different. The coefficient `cell_typeB`
+in the model without interaction tests for shared differences in the
+two cell types by taking into account that there are two
+conditions. In the model with interaction, the test focuses in the
+cell type effect in the reference condition only.
 
 - If we look at gene 5, we see that we miss out several significant
   effects if we use the simpler model, without interaction, because
@@ -461,15 +459,15 @@ summary(lm(expression ~ condition * cell_type, data = x_i))
 ```
 
 In high throughput experiments, where we test tens of thousands of
-genes, we can't explore each gene separately with multiple models. The
-same model is applied to all genes and the significance of
+genes, we thus can't explore each gene separately with multiple
+models. The same model is applied to all genes and the significance of
 coefficient(s) of interest is/are considered.
 
 Solving this dilema isn't a statistical but a scientific question. You
 will have to define the hypothesis that underlies the
 experiment[^hypo]. If there are reasons to believe that an interaction
 effect is relevant (i.e. there are different effects in the two cell
-types), then the more complex model (with an interaction) it
+types), then the more complex model (with an interaction) is
 appropriate. If no such interaction is expected, then testing for it
 penalises your analysis. In other words it isn't the complexity of the
 model that makes its quality, but its appropriateness for the studied
