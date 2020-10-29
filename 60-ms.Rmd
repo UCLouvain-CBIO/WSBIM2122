@@ -4,6 +4,8 @@
 library("Spectra")
 library("magrittr")
 library("ggplot2")
+library("joinSpectraData")
+library("PSM")
 ```
 
 Proteins as the functional units in all living organisms, and they are
@@ -43,13 +45,16 @@ package. Identification data will be handled by the
 
 
 ```{r, eval = FALSE}
-BiocManager::install("Spectra")
 BiocManager::install("msdata")
+BiocManager::install("RforMassSpectrometry/Spectra")
 BiocManager::install("RforMassSpectrometry/PSM")
+BiocManager::install("lgatto/joinSpectraData")
 ```
 
-```{r, message = FALSE}
-library("Spectra")
+The `joinSpectraData` is also (temporarily) needed.
+
+```{r, eval = FALSE}
+BiocManager::install("lgatto/joinSpectraData")
 ```
 
 ## How does mass spectrometry work?
@@ -154,6 +159,7 @@ language. These two formats, as well as others, can be read into R as
 `Spectra` objects:
 
 ```{r Spectra}
+library("Spectra")
 ms <- Spectra(f)
 ms
 ```
@@ -351,15 +357,20 @@ data.frame(id) %>%
 Before proceeding, we want to only focus on relevant peptides. The
 `filterPSMs()` function will remove decoy peptides, only keep PSMs of
 rank 1 (i.e. the best respective matches), and remove peptides that
-match multiple proteins.
+match multiple proteins[^noteID].
+
+[^noteID]: A more rigorous processing of these identifications would
+    be required, for instance a way to evalutation the false discovery
+    rate in these hits (which we know from above is very high). The 
+	`r BiocStyle::Biocpkg("MSnID")` is a highly recommended.
 
 
 ```{r}
 id <- filterPSMs(id)
 ```
 
-For simplicity, we are going to ignore the location of the peptide
-modifications by removing the `modLocation` column.
+For simplicity, we are also going to ignore the location of the
+peptide modifications by removing the `modLocation` column.
 
 ```{r}
 id$modLocation <- NULL
@@ -367,8 +378,15 @@ id <- unique(id)
 ```
 
 Now that we have matching raw data (the `ms` variable) and
-identification data (the `id` variable), it is possible to join the
-latter to the former's spectra data:
+identification data (the `id` variable), it is possible to
+join[^joinSpectraData] the latter to the former's spectra data:
+
+
+[^joinSpectraData]: The `joinSpectraData()` function is available in
+    the `joinSpectraData` package, that can be installed with
+    `BiocManager::install("lgatto/joinSpectraData")`. This function
+    will be included in the `Spectra` package.
+
 
 ```{r joinSpectraData}
 ms <- joinSpectraData(ms, id,
@@ -382,22 +400,32 @@ the calculated peptide fragment.
 
 `r msmbstyle::question_begin()`
 
-Choose an MS2 spectrum that has an `MS.GF.RawScore` greater than 100
-and visualise it with its fragment ions using the
-`plotSpectraWithFragments()` function, passing the `Spectra` object
-containing the selected spectrum and its sequence.
+- Choose two MS2 spectra that have an `MS.GF.RawScore` greater than
+  100 and are matched to the same peptide sequence.
+
+- Then visualise them annotating their fragment ion with its fragment
+  ions by passing the `addFragments` function to `plotSpectra`'s
+  `labels` argument.
 
 `r msmbstyle::question_end()`
 
 
 `r msmbstyle::solution_begin()`
 
-```{r, eval = FALSE}
-which(ms2$MS.GF.RawScore > 100)
-i <- 4325
-plotSpectraWithFragments(ms2[i],
-                         ms2$sequence[i],
-                         labelPos = 3)
+```{r, fig.height = 9, fig.width = 6, message = FALSE}
+seq <- as_tibble(spectraData(ms)) %>%
+    filter(`MS.GF.RawScore` > 100) %>%
+    group_by(sequence) %>%
+    summarise(n = n()) %>%
+    filter(n == 2) %>%
+    head(1) %>%
+    pull(sequence)
+
+i <- which(ms$sequence == seq)
+
+plotSpectra(ms[i], labels = addFragments,
+            labelPos = 3, labelCol = "orange",
+            main = ms[i]$sequence)
 ```
 
 `r msmbstyle::solution_end()`

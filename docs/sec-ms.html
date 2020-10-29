@@ -159,10 +159,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p class="caption marginnote">-->Figure 7.1: The <code>Spectra</code> package.<!--</p>--> <!--</div>--></span>
 </p>
 <p>We are going to use the Bioconductor <span class="citation">(Huber et al. <label for="tufte-mn-15" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-15" class="margin-toggle">2015<span class="marginnote">Huber, W, V J Carey, R Gentleman, S Anders, M Carlson, B S Carvalho, H C Bravo, et al. 2015. “Orchestrating High-Throughput Genomic Analysis with Bioconductor.” <em>Nat Methods</em> 12 (2): 115–21. doi:<a href="https://doi.org/10.1038/nmeth.3252">10.1038/nmeth.3252</a>.</span>)</span> <a href="https://rformassspectrometry.github.io/Spectra/articles/Spectra.html"><code>Spectra</code> package</a>, which can be install with the <code>BiocManager</code> package, available from CRAN. We will also make use of some test data from the <code>msdata</code> package. Identification data will be handled by the <a href="https://rformassspectrometry.github.io/PSM/"><code>PSM</code></a> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"Spectra"</span>)
-BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"msdata"</span>)
-BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"RforMassSpectrometry/PSM"</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"Spectra"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"msdata"</span>)
+BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"RforMassSpectrometry/Spectra"</span>)
+BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"RforMassSpectrometry/PSM"</span>)
+BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"lgatto/joinSpectraData"</span>)</code></pre></div>
+<p>The <code>joinSpectraData</code> is also (temporarily) needed.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"lgatto/joinSpectraData"</span>)</code></pre></div>
 </div>
 <div id="how-does-mass-spectrometry-work" class="section level2">
 <h2>
@@ -222,7 +224,8 @@ Figure 7.6: MS1 spectra (blue) over retention time (left). MS2 spectra (pink) in
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">basename</span>(f &lt;-<span class="st"> </span>msdata<span class="op">::</span><span class="kw">proteomics</span>(<span class="dt">pattern =</span> <span class="st">"2014"</span>, <span class="dt">full.names =</span> <span class="ot">TRUE</span>))</code></pre></div>
 <pre><code>## [1] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML.gz"</code></pre>
 <p>There exist a set of community-maintained file formats for mass spectrometry data. The most widely used formats are <code>mzML</code> and <code>mzXML</code>, both relying on the <a href="https://www.w3schools.com/xml/default.asp">XML</a> markup language. These two formats, as well as others, can be read into R as <code>Spectra</code> objects:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ms &lt;-<span class="st"> </span><span class="kw">Spectra</span>(f)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"Spectra"</span>)
+ms &lt;-<span class="st"> </span><span class="kw">Spectra</span>(f)
 ms</code></pre></div>
 <pre><code>## MSn data (Spectra) with 7534 spectra in a MsBackendMzR backend:
 ##        msLevel     rtime scanIndex
@@ -545,17 +548,17 @@ Figure 7.8: Peptide fragmentation.
 </p>
 </div>
 </div>
-<p>Before proceeding, we want to only focus on relevant peptides. The <code>filterPSMs()</code> function will remove decoy peptides, only keep PSMs of rank 1 (i.e. the best respective matches), and remove peptides that match multiple proteins.</p>
+<p>Before proceeding, we want to only focus on relevant peptides. The <code>filterPSMs()</code> function will remove decoy peptides, only keep PSMs of rank 1 (i.e. the best respective matches), and remove peptides that match multiple proteins<label for="tufte-sn-16" class="margin-toggle sidenote-number">16</label><input type="checkbox" id="tufte-sn-16" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">16</span> A more rigorous processing of these identifications would be required, for instance a way to evalutation the false discovery rate in these hits (which we know from above is very high). The <em><a href="https://bioconductor.org/packages/3.11/MSnID">MSnID</a></em> is a highly recommended.</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id &lt;-<span class="st"> </span><span class="kw">filterPSMs</span>(id)</code></pre></div>
 <pre><code>## Starting with 5802 PSMs:</code></pre>
 <pre><code>##  removed 2896 decoy hits</code></pre>
 <pre><code>##  removed 155 PSMs with rank &gt; 1</code></pre>
 <pre><code>##  removed 85 non-proteotypic peptides</code></pre>
 <pre><code>## 2666 PSMs left.</code></pre>
-<p>For simplicity, we are going to ignore the location of the peptide modifications by removing the <code>modLocation</code> column.</p>
+<p>For simplicity, we are also going to ignore the location of the peptide modifications by removing the <code>modLocation</code> column.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id<span class="op">$</span>modLocation &lt;-<span class="st"> </span><span class="ot">NULL</span>
 id &lt;-<span class="st"> </span><span class="kw">unique</span>(id)</code></pre></div>
-<p>Now that we have matching raw data (the <code>ms</code> variable) and identification data (the <code>id</code> variable), it is possible to join the latter to the former's spectra data:</p>
+<p>Now that we have matching raw data (the <code>ms</code> variable) and identification data (the <code>id</code> variable), it is possible to join<label for="tufte-sn-17" class="margin-toggle sidenote-number">17</label><input type="checkbox" id="tufte-sn-17" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">17</span> The <code>joinSpectraData()</code> function is available in the <code>joinSpectraData</code> package, that can be installed with <code>BiocManager::install("lgatto/joinSpectraData")</code>. This function will be included in the <code>Spectra</code> package.</span> the latter to the former's spectra data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ms &lt;-<span class="st"> </span><span class="kw">joinSpectraData</span>(ms, id,
                       <span class="dt">by.x =</span> <span class="st">"spectrumId"</span>,
                       <span class="dt">by.y =</span> <span class="st">"spectrumID"</span>)</code></pre></div>
@@ -586,7 +589,10 @@ id &lt;-<span class="st"> </span><span class="kw">unique</span>(id)</code></pre>
 ► Question
 </p>
 <div class="question-body">
-<p>Choose an MS2 spectrum that has an <code>MS.GF.RawScore</code> greater than 100 and visualise it with its fragment ions using the <code>plotSpectraWithFragments()</code> function, passing the <code>Spectra</code> object containing the selected spectrum and its sequence.</p>
+<ul>
+<li><p>Choose two MS2 spectra that have an <code>MS.GF.RawScore</code> greater than 100 and are matched to the same peptide sequence.</p></li>
+<li><p>Then visualise them annotating their fragment ion with its fragment ions by passing the <code>addFragments</code> function to <code>plotSpectra</code>'s <code>labels</code> argument.</p></li>
+</ul>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -597,11 +603,20 @@ id &lt;-<span class="st"> </span><span class="kw">unique</span>(id)</code></pre>
 ► Solution<span id="sol-start-23" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-23', 'sol-start-23')"></span>
 </p>
 <div id="sol-body-23" class="solution-body" style="display: none;">
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">which</span>(ms2<span class="op">$</span>MS.GF.RawScore <span class="op">&gt;</span><span class="st"> </span><span class="dv">100</span>)
-i &lt;-<span class="st"> </span><span class="dv">4325</span>
-<span class="kw">plotSpectraWithFragments</span>(ms2[i],
-                         ms2<span class="op">$</span>sequence[i],
-                         <span class="dt">labelPos =</span> <span class="dv">3</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">seq &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(<span class="kw">spectraData</span>(ms)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(<span class="st">`</span><span class="dt">MS.GF.RawScore</span><span class="st">`</span> <span class="op">&gt;</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(sequence) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(n <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">head</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">pull</span>(sequence)
+
+i &lt;-<span class="st"> </span><span class="kw">which</span>(ms<span class="op">$</span>sequence <span class="op">==</span><span class="st"> </span>seq)
+
+<span class="kw">plotSpectra</span>(ms[i], <span class="dt">labels =</span> addFragments,
+            <span class="dt">labelPos =</span> <span class="dv">3</span>, <span class="dt">labelCol =</span> <span class="st">"orange"</span>,
+            <span class="dt">main =</span> ms[i]<span class="op">$</span>sequence)</code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-144-1.png" width="576"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
