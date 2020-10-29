@@ -1,6 +1,6 @@
 # Mass spectrometry {#sec:ms}
 
-```{r, message = FALSE}
+```{r, message = FALSE, echo = FALSE}
 library("Spectra")
 library("magrittr")
 library("ggplot2")
@@ -277,7 +277,8 @@ knitr::include_graphics("figs/frag.png")
 ```
 
 It is thus possible to calculate the expected set of fagment peaks for
-a given peptide, such as *THSQEEMQHMQR* below.
+a given peptide, such as *THSQEEMQHMQR* below and match these
+theoretical fragments to those observed in MS2 spectra.
 
 
 ```{r, message = FALSE}
@@ -285,9 +286,8 @@ library("PSM")
 calculateFragments("THSQEEMQHMQR")
 ```
 
-In a full experiment, all possible peptides from the known (or
-relevant) proteome of interest (such as databases that can be
-downloaded from the [UniProt
+In a full experiment, all possible peptides from the proteome of
+interest (such as databases that can be downloaded from the [UniProt
 site](https://www.uniprot.org/)[^uniprot]) are compared to the
 millions of observed spectra.
 
@@ -299,7 +299,6 @@ The matching between millions of observed and possible spectra causes
 real challenges due to the large search space and the risk of false
 positives. See [@Kall:2008] for further reading.
 
-
 ### Handling identification results
 
 Identification results are also stored in an XML-based file format,
@@ -310,6 +309,7 @@ available in the `msdata` package and load its content into R with the
 ```{r readPSMs}
 basename(idf <- msdata::ident(full.names = TRUE))
 id <- readPSMs(idf)
+head(id)
 ```
 
 `r msmbstyle::question_begin()`
@@ -348,12 +348,23 @@ data.frame(id) %>%
 `r msmbstyle::solution_end()`
 
 
+Before proceeding, we want to only focus on relevant peptides. The
+`filterPSMs()` function will remove decoy peptides, only keep PSMs of
+rank 1 (i.e. the best respective matches), and remove peptides that
+match multiple proteins.
+
+
 ```{r}
 id <- filterPSMs(id)
+```
+
+For simplicity, we are going to ignore the location of the peptide
+modifications by removing the `modLocation` column.
+
+```{r}
 id$modLocation <- NULL
 id <- unique(id)
 ```
-
 
 Now that we have matching raw data (the `ms` variable) and
 identification data (the `id` variable), it is possible to join the

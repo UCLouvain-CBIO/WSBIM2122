@@ -146,9 +146,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <html><body><div id="sec:ms" class="section level1">
 <h1>
 <span class="header-section-number">Chapter 7</span> Mass spectrometry</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"Spectra"</span>)
-<span class="kw">library</span>(<span class="st">"magrittr"</span>)
-<span class="kw">library</span>(<span class="st">"ggplot2"</span>)</code></pre></div>
 <p>Proteins as the functional units in all living organisms, and they are highly dynamic. The caterpillar and the resulting butterfly have the same genome. The complement of all the expressed proteins, termed the proteome is however very different.</p>
 <p>There are different modalities of the proteome that are of interest. In addition to the presence or amount of protein in a biological samples, it is also important to study the interactions between proteins forming protein-protein complexes, the presence of post-transcriptional modification (such as, for example, phosphorylations), the rate at which proteins are produced and degraded, or where the proteins reside inside a cell.</p>
 <p>The technique of choice to study proteins in a high throughput way is <em>mass spectrometry</em>.</p>
@@ -336,7 +333,7 @@ Figure 7.8: Peptide fragmentation.
 </p>
 <img src="figs/frag.png" alt="Peptide fragmentation." width="80%">
 </div>
-<p>It is thus possible to calculate the expected set of fagment peaks for a given peptide, such as <em>THSQEEMQHMQR</em> below.</p>
+<p>It is thus possible to calculate the expected set of fagment peaks for a given peptide, such as <em>THSQEEMQHMQR</em> below and match these theoretical fragments to those observed in MS2 spectra.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"PSM"</span>)
 <span class="kw">calculateFragments</span>(<span class="st">"THSQEEMQHMQR"</span>)</code></pre></div>
 <pre><code>##           mz  ion type pos z         seq
@@ -398,7 +395,7 @@ Figure 7.8: Peptide fragmentation.
 ## 56 1199.4932  y9*   y*   9 1   QEEMQHMQR
 ## 57 1286.5252 y10*   y*  10 1  SQEEMQHMQR
 ## 58 1423.5842 y11*   y*  11 1 HSQEEMQHMQR</code></pre>
-<p>In a full experiment, all possible peptides from the known (or relevant) proteome of interest (such as databases that can be downloaded from the <a href="https://www.uniprot.org/">UniProt site</a><label for="tufte-sn-15" class="margin-toggle sidenote-number">15</label><input type="checkbox" id="tufte-sn-15" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">15</span> The Universal Protein Resource (UniProt) is a freely and accessible comprehensive resource for protein sequence and annotation data.</span>) are compared to the millions of observed spectra.</p>
+<p>In a full experiment, all possible peptides from the proteome of interest (such as databases that can be downloaded from the <a href="https://www.uniprot.org/">UniProt site</a><label for="tufte-sn-15" class="margin-toggle sidenote-number">15</label><input type="checkbox" id="tufte-sn-15" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">15</span> The Universal Protein Resource (UniProt) is a freely and accessible comprehensive resource for protein sequence and annotation data.</span>) are compared to the millions of observed spectra.</p>
 <p>The matching between millions of observed and possible spectra causes real challenges due to the large search space and the risk of false positives. See <span class="citation">(Käll et al. <label for="tufte-mn-16" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-16" class="margin-toggle">2008<span class="marginnote">Käll, L, J D Storey, M J MacCoss, and W S Noble. 2008. “Posterior Error Probabilities and False Discovery Rates: Two Sides of the Same Coin.” <em>J Proteome Res</em> 7 (1): 40–44. doi:<a href="https://doi.org/10.1021/pr700739d">10.1021/pr700739d</a>.</span>)</span> for further reading.</p>
 <div id="handling-identification-results" class="section level3">
 <h3>
@@ -406,7 +403,97 @@ Figure 7.8: Peptide fragmentation.
 <p>Identification results are also stored in an XML-based file format, called <code>mzIdentML</code> (or <code>mzId</code> for short). Below, we access such a file available in the <code>msdata</code> package and load its content into R with the <code>PSMs::readPSMs()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">basename</span>(idf &lt;-<span class="st"> </span>msdata<span class="op">::</span><span class="kw">ident</span>(<span class="dt">full.names =</span> <span class="ot">TRUE</span>))</code></pre></div>
 <pre><code>## [1] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id &lt;-<span class="st"> </span><span class="kw">readPSMs</span>(idf)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id &lt;-<span class="st"> </span><span class="kw">readPSMs</span>(idf)
+<span class="kw">head</span>(id)</code></pre></div>
+<pre><code>## DataFrame with 6 rows and 33 columns
+##                    sequence                                    spectrumID
+##                 &lt;character&gt;                                   &lt;character&gt;
+## 1              RQCRTDFLNYLR controllerType=0 controllerNumber=1 scan=2949
+## 2    ESVALADQVTCVDWRNRKATKK controllerType=0 controllerNumber=1 scan=6534
+## 3              KELLCLAMQIIR controllerType=0 controllerNumber=1 scan=5674
+## 4    QRMARTSDKQQSIRFLERLCGR controllerType=0 controllerNumber=1 scan=4782
+## 5  KDEGSTEPLKVVRDMTDAICMLLR controllerType=0 controllerNumber=1 scan=5839
+## 6 DGGPAIYGHERVGRNAKKFKCLKFR controllerType=0 controllerNumber=1 scan=6118
+##   chargeState      rank passThreshold experimentalMassToCharge
+##     &lt;integer&gt; &lt;integer&gt;     &lt;logical&gt;                &lt;numeric&gt;
+## 1           3         1          TRUE                  548.286
+## 2           2         1          TRUE                 1288.153
+## 3           2         1          TRUE                  744.411
+## 4           3         1          TRUE                  913.164
+## 5           3         1          TRUE                  926.810
+## 6           3         1          TRUE                  969.194
+##   calculatedMassToCharge    modNum   isDecoy        post         pre     start
+##                &lt;numeric&gt; &lt;integer&gt; &lt;logical&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt;
+## 1                547.947         1     FALSE           V           R       574
+## 2               1288.174         1     FALSE           G           R        69
+## 3                744.425         1      TRUE           Q           R       131
+## 4                912.813         1     FALSE           D           R       182
+## 5                926.471         1      TRUE           R           R       135
+## 6                968.856         1     FALSE           S           K       310
+##         end DatabaseAccess DBseqLength DatabaseSeq
+##   &lt;integer&gt;    &lt;character&gt;   &lt;integer&gt; &lt;character&gt;
+## 1       585        ECA2006        1295            
+## 2        90        ECA1676         110            
+## 3       142    XXX_ECA2855         157            
+## 4       203        ECA3009         437            
+## 5       158    XXX_ECA0048         501            
+## 6       334        ECA1420         477            
+##                                          DatabaseDescription scan.number.s.
+##                                                  &lt;character&gt;      &lt;numeric&gt;
+## 1                             ECA2006 ATP-dependent helicase           2949
+## 2                 ECA1676 putative growth inhibitory protein           6534
+## 3                                                                      5674
+## 4                ECA3009 putative coproporphyrinogen oxidase           4782
+## 5                                                                      5839
+## 6 ECA1420 undecaprenyl-phosphate galactosephosphotransferase           6118
+##   acquisitionNum
+##        &lt;numeric&gt;
+## 1           2949
+## 2           6534
+## 3           5674
+## 4           4782
+## 5           5839
+## 6           6118
+##                                                          spectrumFile
+##                                                           &lt;character&gt;
+## 1 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML
+## 2 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML
+## 3 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML
+## 4 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML
+## 5 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML
+## 6 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML
+##                                                                idFile
+##                                                           &lt;character&gt;
+## 1 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid
+## 2 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid
+## 3 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid
+## 4 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid
+## 5 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid
+## 6 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid
+##   MS.GF.RawScore MS.GF.DeNovoScore MS.GF.SpecEValue MS.GF.EValue MS.GF.QValue
+##        &lt;numeric&gt;         &lt;numeric&gt;        &lt;numeric&gt;    &lt;numeric&gt;    &lt;numeric&gt;
+## 1             10               101      4.61712e-08     0.132198     0.525424
+## 2             12               121      7.25588e-08     0.208748     0.610390
+## 3              8                74      9.34102e-08     0.267453     0.625000
+## 4             -5               160      1.27073e-07     0.365583     0.716981
+## 5              8               241      1.31824e-07     0.379461     0.736364
+## 6              7               214      1.72203e-07     0.495817     0.837037
+##   MS.GF.PepQValue         modName   modMass modLocation subOriginalResidue
+##         &lt;numeric&gt;     &lt;character&gt; &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;
+## 1        0.549020 Carbamidomethyl   57.0215           3                 NA
+## 2        0.623188 Carbamidomethyl   57.0215          11                 NA
+## 3        0.636364 Carbamidomethyl   57.0215           5                 NA
+## 4        0.724490 Carbamidomethyl   57.0215          20                 NA
+## 5        0.745098 Carbamidomethyl   57.0215          20                 NA
+## 6        0.856000 Carbamidomethyl   57.0215          21                 NA
+##   subReplacementResidue subLocation
+##             &lt;character&gt;   &lt;integer&gt;
+## 1                    NA          NA
+## 2                    NA          NA
+## 3                    NA          NA
+## 4                    NA          NA
+## 5                    NA          NA
+## 6                    NA          NA</code></pre>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -458,12 +545,14 @@ Figure 7.8: Peptide fragmentation.
 </p>
 </div>
 </div>
+<p>Before proceeding, we want to only focus on relevant peptides. The <code>filterPSMs()</code> function will remove decoy peptides, only keep PSMs of rank 1 (i.e. the best respective matches), and remove peptides that match multiple proteins.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id &lt;-<span class="st"> </span><span class="kw">filterPSMs</span>(id)</code></pre></div>
 <pre><code>## Starting with 5802 PSMs:</code></pre>
 <pre><code>##  removed 2896 decoy hits</code></pre>
 <pre><code>##  removed 155 PSMs with rank &gt; 1</code></pre>
 <pre><code>##  removed 85 non-proteotypic peptides</code></pre>
 <pre><code>## 2666 PSMs left.</code></pre>
+<p>For simplicity, we are going to ignore the location of the peptide modifications by removing the <code>modLocation</code> column.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id<span class="op">$</span>modLocation &lt;-<span class="st"> </span><span class="ot">NULL</span>
 id &lt;-<span class="st"> </span><span class="kw">unique</span>(id)</code></pre></div>
 <p>Now that we have matching raw data (the <code>ms</code> variable) and identification data (the <code>id</code> variable), it is possible to join the latter to the former's spectra data:</p>
