@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-10-16" />
+<meta name="date" content="2020-10-29" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -47,10 +47,12 @@ if(f.classList.contains('fa-plus-square')) {
 
 }
 </script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
 <script src="libs/jquery-1.12.4/jquery.min.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.15/datatables.js"></script>
+<script src="libs/datatables-binding-0.16/datatables.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
@@ -121,7 +123,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <a href="sec-hts.html"><span class="toc-section-number">4</span> High throughput sequencing</a>
 <a href="sec-rnaseq.html"><span class="toc-section-number">5</span> Differential expression analysis</a>
 <a id="active-page" href="sec-gsea.html"><span class="toc-section-number">6</span> Enrichment analyses</a><ul class="toc-sections">
-<li class="toc"><a href="#introduction"> Introduction</a></li>
+<li class="toc"><a href="#introduction-1"> Introduction</a></li>
 <li class="toc"><a href="#gene-sets"> Gene sets</a></li>
 <li class="toc"><a href="#over-representation-analysis-ora"> Over representation analysis (ORA)</a></li>
 <li class="toc"><a href="#gene-set-enrichment-analysis-gsea"> Gene set enrichment analysis (GSEA)</a></li>
@@ -154,7 +156,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Understanding a gene set enrichment analysis.</li>
 <li>Application of the <em><a href="https://bioconductor.org/packages/3.11/clusterProfiler">clusterProfiler</a></em> package.</li>
 </ul>
-<div id="introduction" class="section level2">
+<div id="introduction-1" class="section level2">
 <h2>
 <span class="header-section-number">6.1</span> Introduction</h2>
 <ul>
@@ -501,12 +503,12 @@ dds_tmp<span class="op">$</span>Condition &lt;-<span class="st"> </span>dds_tmp<
 <pre><code>## DataFrame with 6 rows and 4 columns
 ##                Cell        Type Condition sizeFactor
 ##         &lt;character&gt; &lt;character&gt;  &lt;factor&gt;  &lt;numeric&gt;
-## sample1       Cell1  Epithelial      KD     0.726883
+## sample1       Cell1  Epithelial      mock   0.726883
 ## sample2       Cell1  Epithelial      mock   1.308664
-## sample3       Cell1  Epithelial      mock   1.077368
+## sample3       Cell1  Epithelial      KD     1.077368
 ## sample4       Cell1  Epithelial      KD     0.966025
-## sample5       Cell1  Epithelial      mock   1.042111
-## sample6       Cell1  Epithelial      KD     1.012664</code></pre>
+## sample5       Cell1  Epithelial      KD     1.042111
+## sample6       Cell1  Epithelial      mock   1.012664</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_tmp &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds_tmp) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">results</span>(<span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span>
@@ -523,22 +525,22 @@ res_tmp &lt;-<span class="st"> </span>res_tmp <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">mutate</span>(<span class="dt">score =</span> <span class="kw">cumsum</span>(score))
 
 res_tmp</code></pre></div>
-<pre><code>## # A tibble: 19,092 x 5
+<pre><code>## # A tibble: 19,094 x 5
 ##    ENSEMBL          ENTREZID  padj inGO  score
 ##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
-##  1 ENSG00000223972     84771 0.986 FALSE    -1
-##  2 ENSG00000223972    727856 0.986 FALSE    -2
-##  3 ENSG00000223972 100287102 0.986 FALSE    -3
-##  4 ENSG00000223972 100287596 0.986 FALSE    -4
-##  5 ENSG00000223972 102725121 0.986 FALSE    -5
-##  6 ENSG00000227232    653635 0.986 FALSE    -6
-##  7 ENSG00000278267 102466751 0.986 FALSE    -7
-##  8 ENSG00000279457 102723897 0.986 FALSE    -8
-##  9 ENSG00000230021 101928626 0.986 FALSE    -9
-## 10 ENSG00000237491 105378580 0.986 FALSE   -10
-## # … with 19,082 more rows</code></pre>
+##  1 ENSG00000223972     84771 0.998 FALSE    -1
+##  2 ENSG00000223972    727856 0.998 FALSE    -2
+##  3 ENSG00000223972 100287102 0.998 FALSE    -3
+##  4 ENSG00000223972 100287596 0.998 FALSE    -4
+##  5 ENSG00000223972 102725121 0.998 FALSE    -5
+##  6 ENSG00000227232    653635 0.998 FALSE    -6
+##  7 ENSG00000278267 102466751 0.998 FALSE    -7
+##  8 ENSG00000279457 102723897 0.998 FALSE    -8
+##  9 ENSG00000230021 101928626 0.998 FALSE    -9
+## 10 ENSG00000237491 105378580 0.998 FALSE   -10
+## # … with 19,084 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">max</span>(res_tmp<span class="op">$</span>score)</code></pre></div>
-<pre><code>## [1] 716.2121</code></pre>
+<pre><code>## [1] 514.1061</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(res_tmp<span class="op">$</span>score, <span class="dt">type =</span> <span class="st">"l"</span>)</code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-119-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests for all the genes need to be recomputer at each permutation. In addition, for experiments with limited number of samples, the number of permutations would be limited.</p>
@@ -953,7 +955,7 @@ res_tbl <span class="op">%&gt;%</span>
 <a href="sec-ms.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-10-16
+2020-10-29
 </p>
 </div>
 </div>
