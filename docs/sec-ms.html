@@ -146,6 +146,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <html><body><div id="sec:ms" class="section level1">
 <h1>
 <span class="header-section-number">Chapter 7</span> Mass spectrometry</h1>
+<p>The <strong>objectives</strong> of this chapter it to learn how mass spectrometry works and how mass spectrometry data is structured. At the end, students should be familiar with</p>
+<ul>
+<li>Acquisition of spectra over retention time</li>
+<li>Spectra and chromatograms</li>
+<li>MS1 and MS2 spectra and their relation</li>
+<li>Precursor and fragment ions</li>
+<li>Peptide-spectrum matching</li>
+<li>An understanding of the various MS1, MS2, labelled and label-free quantitative approaches.</li>
+</ul>
 <p>Proteins as the functional units in all living organisms, and they are highly dynamic. The caterpillar and the resulting butterfly have the same genome. The complement of all the expressed proteins, termed the proteome is however very different.</p>
 <p>There are different modalities of the proteome that are of interest. In addition to the presence or amount of protein in a biological samples, it is also important to study the interactions between proteins forming protein-protein complexes, the presence of post-transcriptional modification (such as, for example, phosphorylations), the rate at which proteins are produced and degraded, or where the proteins reside inside a cell.</p>
 <p>The technique of choice to study proteins in a high throughput way is <em>mass spectrometry</em>.</p>
@@ -160,6 +169,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </p>
 <p>We are going to use the Bioconductor <span class="citation">(Huber et al. <label for="tufte-mn-15" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-15" class="margin-toggle">2015<span class="marginnote">Huber, W, V J Carey, R Gentleman, S Anders, M Carlson, B S Carvalho, H C Bravo, et al. 2015. “Orchestrating High-Throughput Genomic Analysis with Bioconductor.” <em>Nat Methods</em> 12 (2): 115–21. doi:<a href="https://doi.org/10.1038/nmeth.3252">10.1038/nmeth.3252</a>.</span>)</span> <a href="https://rformassspectrometry.github.io/Spectra/articles/Spectra.html"><code>Spectra</code> package</a>, which can be install with the <code>BiocManager</code> package, available from CRAN. We will also make use of some test data from the <code>msdata</code> package. Identification data will be handled by the <a href="https://rformassspectrometry.github.io/PSM/"><code>PSM</code></a> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"msdata"</span>)
+BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"lgatto/ProtGenerics"</span>)
 BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"RforMassSpectrometry/Spectra"</span>)
 BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"RforMassSpectrometry/PSM"</span>)</code></pre></div>
 <p>The <code>joinSpectraData</code> is also (temporarily) needed.</p>
@@ -547,7 +557,7 @@ Figure 7.8: Peptide fragmentation.
 </p>
 </div>
 </div>
-<p>Before proceeding, we want to only focus on relevant peptides. The <code>filterPSMs()</code> function will remove decoy peptides, only keep PSMs of rank 1 (i.e. the best respective matches), and remove peptides that match multiple proteins<label for="tufte-sn-16" class="margin-toggle sidenote-number">16</label><input type="checkbox" id="tufte-sn-16" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">16</span> A more rigorous processing of these identifications would be required, for instance a way to evalutation the false discovery rate in these hits (which we know from above is very high). The <em><a href="https://bioconductor.org/packages/3.11/MSnID">MSnID</a></em> is a highly recommended.</span>.</p>
+<p>Before proceeding, we want to only focus on relevant peptides. The <code>filterPSMs()</code> function will remove decoy peptides, only keep PSMs of rank 1 (i.e. the best respective matches), and remove peptides that match multiple proteins<label for="tufte-sn-16" class="margin-toggle sidenote-number">16</label><input type="checkbox" id="tufte-sn-16" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">16</span> A more rigorous processing of these identifications would be required, for instance a way to evalutation the false discovery rate in these hits (which we know from above is very high). The <em><a href="https://bioconductor.org/packages/3.11/MSnID">MSnID</a></em> is highly recommended.</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id &lt;-<span class="st"> </span><span class="kw">filterPSMs</span>(id)</code></pre></div>
 <pre><code>## Starting with 5802 PSMs:</code></pre>
 <pre><code>##  removed 2896 decoy hits</code></pre>
@@ -615,27 +625,24 @@ i &lt;-<span class="st"> </span><span class="kw">which</span>(ms<span class="op"
 <span class="kw">plotSpectra</span>(ms[i], <span class="dt">labels =</span> addFragments,
             <span class="dt">labelPos =</span> <span class="dv">3</span>, <span class="dt">labelCol =</span> <span class="st">"orange"</span>,
             <span class="dt">main =</span> ms[i]<span class="op">$</span>sequence)</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-144-1.png" width="672"></p>
+<div class="figure">
+<span id="fig:unnamed-chunk-144"></span>
+<p class="caption marginnote shownote">
+Figure 7.9: Two MS2 spectra that were matched to the <code>TKGLNVMQNLLTAHPDVQAVFAQNDEMALGALR</code> peptide.
+</p>
+<img src="WSBIM2122_files/figure-html/unnamed-chunk-144-1.png" alt="Two MS2 spectra that were matched to the `TKGLNVMQNLLTAHPDVQAVFAQNDEMALGALR` peptide." width="672">
+</div>
 <p>For a more direct comparision, the two spectra can also be represented on the same graph pointing upwards and downwards:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotSpectraMirror</span>(ms[i[<span class="dv">1</span>]], ms[i[<span class="dv">2</span>]],
                   <span class="dt">labels =</span> addFragments,
                   <span class="dt">labelPos =</span> <span class="dv">3</span>, <span class="dt">labelCol =</span> <span class="st">"orange"</span>)</code></pre></div>
-<pre><code>## Warning in plot.window(xlim = xlim, ylim = ylim, ...): "labelCol" is not a
-## graphical parameter</code></pre>
-<pre><code>## Warning in axis(side = 1, ...): "labelCol" is not a graphical parameter</code></pre>
-<pre><code>## Warning in axis(side = 2, ...): "labelCol" is not a graphical parameter</code></pre>
-<pre><code>## Warning in box(...): "labelCol" is not a graphical parameter</code></pre>
-<pre><code>## Warning in title(main = main, xlab = xlab, ylab = ylab, ...): "labelCol" is not
-## a graphical parameter</code></pre>
-<pre><code>## Warning in plot.xy(xy.coords(x_data[idx, "mz"], x_data[idx, "intensity"]), :
-## "labelCol" is not a graphical parameter</code></pre>
-<pre><code>## Warning in plot.xy(xy.coords(x_data[idx, "mz"], x_data[idx, "intensity"]), :
-## "labelCol" is not a graphical parameter</code></pre>
-<pre><code>## Warning in plot.xy(xy.coords(y_data[idx, "mz"], -y_data[idx, "intensity"]), :
-## "labelCol" is not a graphical parameter</code></pre>
-<pre><code>## Warning in plot.xy(xy.coords(y_data[idx, "mz"], -y_data[idx, "intensity"]), :
-## "labelCol" is not a graphical parameter</code></pre>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-145-1.png" width="672"></p>
+<div class="figure">
+<span id="fig:unnamed-chunk-145"></span>
+<p class="caption marginnote shownote">
+Figure 7.10: Mirror representation of to matches to the <code>TKGLNVMQNLLTAHPDVQAVFAQNDEMALGALR</code> peptide.
+</p>
+<img src="WSBIM2122_files/figure-html/unnamed-chunk-145-1.png" alt="Mirror representation of to matches to the `TKGLNVMQNLLTAHPDVQAVFAQNDEMALGALR` peptide." width="672">
+</div>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -674,7 +681,7 @@ i &lt;-<span class="st"> </span><span class="kw">which</span>(ms<span class="op"
 <div class="figure">
 <span id="fig:sc"></span>
 <p class="caption marginnote shownote">
-Figure 7.9: Spectral counting. Figure from the <code>Pbase</code> package.
+Figure 7.11: Spectral counting. Figure from the <code>Pbase</code> package.
 </p>
 <img src="figs/pbase.png" alt="Spectral counting. Figure from the `Pbase` package." width="75%">
 </div>
@@ -686,7 +693,7 @@ Figure 7.9: Spectral counting. Figure from the <code>Pbase</code> package.
 <div class="figure">
 <span id="fig:itraq"></span>
 <p class="caption marginnote shownote">
-Figure 7.10: iTRAQ 4-plex isobaric tagging. Tandem Mass Tags (TMT) offer up to 16 tags.
+Figure 7.12: iTRAQ 4-plex isobaric tagging. Tandem Mass Tags (TMT) offer up to 16 tags.
 </p>
 <img src="figs/itraq.png" alt="iTRAQ 4-plex isobaric tagging. Tandem Mass Tags (TMT) offer up to 16 tags." width="75%">
 </div>
@@ -698,7 +705,7 @@ Figure 7.10: iTRAQ 4-plex isobaric tagging. Tandem Mass Tags (TMT) offer up to 1
 <div class="figure">
 <span id="fig:lf"></span>
 <p class="caption marginnote shownote">
-Figure 7.11: Label-free quantitation. Figure credit <a href="https://github.com/jorainer/">Johannes Rainer</a>.
+Figure 7.13: Label-free quantitation. Figure credit <a href="https://github.com/jorainer/">Johannes Rainer</a>.
 </p>
 <img src="figs/chrompeaks.png" alt="Label-free quantitation. Figure credit [Johannes Rainer](https://github.com/jorainer/)." width="75%">
 </div>
@@ -710,11 +717,12 @@ Figure 7.11: Label-free quantitation. Figure credit <a href="https://github.com/
 <div class="figure">
 <span id="fig:silab"></span>
 <p class="caption marginnote shownote">
-Figure 7.12: Silac quantitation. Figure credit Wikimedia Commons.
+Figure 7.14: Silac quantitation. Figure credit Wikimedia Commons.
 </p>
 <img src="figs/Silac.png" alt="Silac quantitation. Figure credit Wikimedia Commons." width="75%">
 </div>
-<p>These different quantitation techniques come with their respective and distinct challenges, such as large quantities of raw data processing, data transformation and normalisation, and different underlying statistical models for the quantitative data (count data for spectral counting, continuous data for the others).</p>
+<p>These different quantitation techniques come with their respective benefits and distinct challenges, such as large quantities of raw data processing, data transformation and normalisation, missing values, and different underlying statistical models for the quantitative data (count data for spectral counting, continuous data for the others).</p>
+<p>The next chapter will focus on the handling and processing of quantitative proteomics data.</p>
 
 </div>
 </div>

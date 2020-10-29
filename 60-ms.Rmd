@@ -1,5 +1,18 @@
 # Mass spectrometry {#sec:ms}
 
+The **objectives** of this chapter it to learn how mass spectrometry
+works and how mass spectrometry data is structured. At the end,
+students should be familiar with
+
+- Acquisition of spectra over retention time
+- Spectra and chromatograms
+- MS1 and MS2 spectra and their relation
+- Precursor and fragment ions
+- Peptide-spectrum matching
+- An understanding of the various MS1, MS2, labelled and label-free
+  quantitative approaches.
+
+
 ```{r, message = FALSE, echo = FALSE}
 library("Spectra")
 library("magrittr")
@@ -46,6 +59,7 @@ package. Identification data will be handled by the
 
 ```{r, eval = FALSE}
 BiocManager::install("msdata")
+BiocManager::install("lgatto/ProtGenerics")
 BiocManager::install("RforMassSpectrometry/Spectra")
 BiocManager::install("RforMassSpectrometry/PSM")
 ```
@@ -361,7 +375,7 @@ match multiple proteins[^noteID].
 [^noteID]: A more rigorous processing of these identifications would
     be required, for instance a way to evalutation the false discovery
     rate in these hits (which we know from above is very high). The 
-	`r BiocStyle::Biocpkg("MSnID")` is a highly recommended.
+	`r BiocStyle::Biocpkg("MSnID")` is highly recommended.
 
 
 ```{r}
@@ -411,7 +425,7 @@ the calculated peptide fragment.
 
 `r msmbstyle::solution_begin()`
 
-```{r, fig.height = 9, fig.width = 7, message = FALSE}
+```{r, fig.height = 9, fig.width = 7, message = FALSE, fig.cap = "Two MS2 spectra that were matched to the `TKGLNVMQNLLTAHPDVQAVFAQNDEMALGALR` peptide."}
 seq <- as_tibble(spectraData(ms)) %>%
     filter(`MS.GF.RawScore` > 100) %>%
     group_by(sequence) %>%
@@ -431,7 +445,7 @@ For a more direct comparision, the two spectra can also be represented
 on the same graph pointing upwards and downwards:
 
 
-```{r, fig.height = 4, fig.width = 7, message = FALSE}
+```{r, fig.height = 5, fig.width = 7, message = FALSE, warning = FALSE, fig.cap = "Mirror representation of to matches to the `TKGLNVMQNLLTAHPDVQAVFAQNDEMALGALR` peptide."}
 plotSpectraMirror(ms[i[1]], ms[i[2]],
                   labels = addFragments,
                   labelPos = 3, labelCol = "orange")
@@ -519,8 +533,11 @@ peaks can be used to calculate peptide and protein fold-changes.
 knitr::include_graphics("./figs/Silac.png")
 ```
 
-These different quantitation techniques come with their respective and
-distinct challenges, such as large quantities of raw data processing,
-data transformation and normalisation, and different underlying
-statistical models for the quantitative data (count data for spectral
-counting, continuous data for the others).
+These different quantitation techniques come with their respective
+benefits and distinct challenges, such as large quantities of raw data
+processing, data transformation and normalisation, missing values, and
+different underlying statistical models for the quantitative data
+(count data for spectral counting, continuous data for the others).
+
+The next chapter will focus on the handling and processing of
+quantitative proteomics data.
