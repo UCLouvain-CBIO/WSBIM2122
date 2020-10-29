@@ -48,7 +48,6 @@ package. Identification data will be handled by the
 BiocManager::install("msdata")
 BiocManager::install("RforMassSpectrometry/Spectra")
 BiocManager::install("RforMassSpectrometry/PSM")
-BiocManager::install("lgatto/joinSpectraData")
 ```
 
 The `joinSpectraData` is also (temporarily) needed.
@@ -412,7 +411,7 @@ the calculated peptide fragment.
 
 `r msmbstyle::solution_begin()`
 
-```{r, fig.height = 9, fig.width = 6, message = FALSE}
+```{r, fig.height = 9, fig.width = 7, message = FALSE}
 seq <- as_tibble(spectraData(ms)) %>%
     filter(`MS.GF.RawScore` > 100) %>%
     group_by(sequence) %>%
@@ -426,6 +425,16 @@ i <- which(ms$sequence == seq)
 plotSpectra(ms[i], labels = addFragments,
             labelPos = 3, labelCol = "orange",
             main = ms[i]$sequence)
+```
+
+For a more direct comparision, the two spectra can also be represented
+on the same graph pointing upwards and downwards:
+
+
+```{r, fig.height = 4, fig.width = 7, message = FALSE}
+plotSpectraMirror(ms[i[1]], ms[i[2]],
+                  labels = addFragments,
+                  labelPos = 3, labelCol = "orange")
 ```
 
 `r msmbstyle::solution_end()`

@@ -161,8 +161,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>We are going to use the Bioconductor <span class="citation">(Huber et al. <label for="tufte-mn-15" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-15" class="margin-toggle">2015<span class="marginnote">Huber, W, V J Carey, R Gentleman, S Anders, M Carlson, B S Carvalho, H C Bravo, et al. 2015. “Orchestrating High-Throughput Genomic Analysis with Bioconductor.” <em>Nat Methods</em> 12 (2): 115–21. doi:<a href="https://doi.org/10.1038/nmeth.3252">10.1038/nmeth.3252</a>.</span>)</span> <a href="https://rformassspectrometry.github.io/Spectra/articles/Spectra.html"><code>Spectra</code> package</a>, which can be install with the <code>BiocManager</code> package, available from CRAN. We will also make use of some test data from the <code>msdata</code> package. Identification data will be handled by the <a href="https://rformassspectrometry.github.io/PSM/"><code>PSM</code></a> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"msdata"</span>)
 BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"RforMassSpectrometry/Spectra"</span>)
-BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"RforMassSpectrometry/PSM"</span>)
-BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"lgatto/joinSpectraData"</span>)</code></pre></div>
+BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"RforMassSpectrometry/PSM"</span>)</code></pre></div>
 <p>The <code>joinSpectraData</code> is also (temporarily) needed.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"lgatto/joinSpectraData"</span>)</code></pre></div>
 </div>
@@ -616,7 +615,27 @@ i &lt;-<span class="st"> </span><span class="kw">which</span>(ms<span class="op"
 <span class="kw">plotSpectra</span>(ms[i], <span class="dt">labels =</span> addFragments,
             <span class="dt">labelPos =</span> <span class="dv">3</span>, <span class="dt">labelCol =</span> <span class="st">"orange"</span>,
             <span class="dt">main =</span> ms[i]<span class="op">$</span>sequence)</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-144-1.png" width="576"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-144-1.png" width="672"></p>
+<p>For a more direct comparision, the two spectra can also be represented on the same graph pointing upwards and downwards:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotSpectraMirror</span>(ms[i[<span class="dv">1</span>]], ms[i[<span class="dv">2</span>]],
+                  <span class="dt">labels =</span> addFragments,
+                  <span class="dt">labelPos =</span> <span class="dv">3</span>, <span class="dt">labelCol =</span> <span class="st">"orange"</span>)</code></pre></div>
+<pre><code>## Warning in plot.window(xlim = xlim, ylim = ylim, ...): "labelCol" is not a
+## graphical parameter</code></pre>
+<pre><code>## Warning in axis(side = 1, ...): "labelCol" is not a graphical parameter</code></pre>
+<pre><code>## Warning in axis(side = 2, ...): "labelCol" is not a graphical parameter</code></pre>
+<pre><code>## Warning in box(...): "labelCol" is not a graphical parameter</code></pre>
+<pre><code>## Warning in title(main = main, xlab = xlab, ylab = ylab, ...): "labelCol" is not
+## a graphical parameter</code></pre>
+<pre><code>## Warning in plot.xy(xy.coords(x_data[idx, "mz"], x_data[idx, "intensity"]), :
+## "labelCol" is not a graphical parameter</code></pre>
+<pre><code>## Warning in plot.xy(xy.coords(x_data[idx, "mz"], x_data[idx, "intensity"]), :
+## "labelCol" is not a graphical parameter</code></pre>
+<pre><code>## Warning in plot.xy(xy.coords(y_data[idx, "mz"], -y_data[idx, "intensity"]), :
+## "labelCol" is not a graphical parameter</code></pre>
+<pre><code>## Warning in plot.xy(xy.coords(y_data[idx, "mz"], -y_data[idx, "intensity"]), :
+## "labelCol" is not a graphical parameter</code></pre>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-145-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
