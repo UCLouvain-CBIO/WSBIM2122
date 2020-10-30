@@ -202,7 +202,8 @@ following questions:
 - How many MS levels are there in this run? You can use the
   `msLevel()` accessor to get the MS level of all the scans.
 - How many spectra of each MS level are there?
-- For how long was acquition time? Use the `rtime()` accessor to 
+- For how long was the data acquired? Use the `rtime()` accessor to
+  obtain the retention times.
 - Which MS2 spectrum has the highest precursor intensity? The
   precursor intensities can be retrieved with the
   `precursorIntensity()` function.
