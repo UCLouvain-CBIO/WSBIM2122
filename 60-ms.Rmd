@@ -14,6 +14,7 @@ students should be familiar with
 
 
 ```{r, message = FALSE, echo = FALSE}
+library("tidyverse")
 library("Spectra")
 library("magrittr")
 library("ggplot2")
