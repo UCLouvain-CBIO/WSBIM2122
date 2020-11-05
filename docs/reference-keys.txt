@@ -108,6 +108,7 @@ introduction-2
 qfeatures
 feature-aggregation
 subsetting-and-filtering
+the-cptac-data
 sec:ccl
 sec:anx
 available-platforms

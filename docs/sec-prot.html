@@ -129,6 +129,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="toc"><a href="#qfeatures"> QFeatures</a></li>
 <li class="toc"><a href="#feature-aggregation"> Feature aggregation</a></li>
 <li class="toc"><a href="#subsetting-and-filtering"> Subsetting and filtering</a></li>
+<li class="toc"><a href="#the-cptac-data"> The CPTAC data</a></li>
 </ul>
 <a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
 <a href="sec-anx.html"><span class="toc-section-number">10</span> Annex</a>
@@ -429,6 +430,81 @@ feat1</code></pre></div>
 </div>
 </div>
 <p>You can refer the the <a href="https://rformassspectrometry.github.io/QFeatures/articles/QFeatures.html"><em>Quantitative features for mass spectrometry data</em></a> vignette and the <code>QFeature</code> <a href="https://rformassspectrometry.github.io/QFeatures/reference/QFeatures-class.html">manual page</a> for more details about the class.</p>
+</div>
+<div id="the-cptac-data" class="section level2">
+<h2>
+<span class="header-section-number">8.5</span> The CPTAC data</h2>
+<p>We are going to use a subset of the CPTAC study 6 containing conditions A and B <span class="citation">(Paulovich et al. <label for="tufte-mn-18" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-18" class="margin-toggle">2010<span class="marginnote">Paulovich, Amanda G, Dean Billheimer, Amy-Joan L Ham, Lorenzo Vega-Montoto, Paul A Rudnick, David L Tabb, Pei Wang, et al. 2010. “Interlaboratory Study Characterizing a Yeast Performance Standard for Benchmarking LC-MS Platform Performance.” <em>Mol. Cell. Proteomics</em> 9 (2): 242–54.</span>)</span>. The peptide-level data, as processed by MaxQuant <span class="citation">(Cox and Mann <label for="tufte-mn-19" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-19" class="margin-toggle">2008<span class="marginnote">Cox, J, and M Mann. 2008. “MaxQuant Enables High Peptide Identification Rates, Individualized P.p.b.-range Mass Accuracies and Proteome-Wide Protein Quantification.” <em>Nat Biotechnol</em> 26 (12): 1367–72. doi:<a href="https://doi.org/10.1038/nbt.1511">10.1038/nbt.1511</a>.</span>)</span> is available in the <code>msdata</code> package:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">basename</span>(f &lt;-<span class="st"> </span>msdata<span class="op">::</span><span class="kw">quant</span>(<span class="dt">pattern =</span> <span class="st">"cptac"</span>, <span class="dt">full.names =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>## [1] "cptac_a_b_peptides.txt"</code></pre>
+<p>From the names of the columns, we see that the quantitative columns, starting with <code>"Intensity."</code> (note the dot!) are at positions 56 to 61.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(<span class="kw">read.delim</span>(f))</code></pre></div>
+<pre><code>##  [1] "Sequence"                 "N.term.cleavage.window"  
+##  [3] "C.term.cleavage.window"   "Amino.acid.before"       
+##  [5] "First.amino.acid"         "Second.amino.acid"       
+##  [7] "Second.last.amino.acid"   "Last.amino.acid"         
+##  [9] "Amino.acid.after"         "A.Count"                 
+## [11] "R.Count"                  "N.Count"                 
+## [13] "D.Count"                  "C.Count"                 
+## [15] "Q.Count"                  "E.Count"                 
+## [17] "G.Count"                  "H.Count"                 
+## [19] "I.Count"                  "L.Count"                 
+## [21] "K.Count"                  "M.Count"                 
+## [23] "F.Count"                  "P.Count"                 
+## [25] "S.Count"                  "T.Count"                 
+## [27] "W.Count"                  "Y.Count"                 
+## [29] "V.Count"                  "U.Count"                 
+## [31] "Length"                   "Missed.cleavages"        
+## [33] "Mass"                     "Proteins"                
+## [35] "Leading.razor.protein"    "Start.position"          
+## [37] "End.position"             "Unique..Groups."         
+## [39] "Unique..Proteins."        "Charges"                 
+## [41] "PEP"                      "Score"                   
+## [43] "Identification.type.6A_7" "Identification.type.6A_8"
+## [45] "Identification.type.6A_9" "Identification.type.6B_7"
+## [47] "Identification.type.6B_8" "Identification.type.6B_9"
+## [49] "Experiment.6A_7"          "Experiment.6A_8"         
+## [51] "Experiment.6A_9"          "Experiment.6B_7"         
+## [53] "Experiment.6B_8"          "Experiment.6B_9"         
+## [55] "Intensity"                "Intensity.6A_7"          
+## [57] "Intensity.6A_8"           "Intensity.6A_9"          
+## [59] "Intensity.6B_7"           "Intensity.6B_8"          
+## [61] "Intensity.6B_9"           "Reverse"                 
+## [63] "Potential.contaminant"    "id"                      
+## [65] "Protein.group.IDs"        "Mod..peptide.IDs"        
+## [67] "Evidence.IDs"             "MS.MS.IDs"               
+## [69] "Best.MS.MS"               "Oxidation..M..site.IDs"  
+## [71] "MS.MS.Count"</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(i &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">"Intensity</span><span class="ch">\\</span><span class="st">."</span>, <span class="kw">names</span>(<span class="kw">read.delim</span>(f))))</code></pre></div>
+<pre><code>## [1] 56 57 58 59 60 61</code></pre>
+<p>We now read these data using the <code>readSummarizedExperiment</code> function. This peptide-level expression data will be imported into R as an instance of class <code>SummarizedExperiment</code>. We also use the <code>fnames</code> argument to set the row-names of the <code>peptides</code> assay to the peptide sequences and specify that the file is a tab-separated table.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cptac_se &lt;-<span class="st"> </span><span class="kw">readSummarizedExperiment</span>(f, <span class="dt">ecol =</span> i, <span class="dt">fnames =</span> <span class="st">"Sequence"</span>, <span class="dt">sep =</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)
+cptac_se</code></pre></div>
+<pre><code>## class: SummarizedExperiment 
+## dim: 11466 6 
+## metadata(0):
+## assays(1): ''
+## rownames(11466): AAAAGAGGAGDSGDAVTK AAAALAGGK ... YYTVFDRDNNR
+##   YYTVFDRDNNRVGFAEAAR
+## rowData names(65): Sequence N.term.cleavage.window ...
+##   Oxidation..M..site.IDs MS.MS.Count
+## colnames(6): Intensity.6A_7 Intensity.6A_8 ... Intensity.6B_8
+##   Intensity.6B_9
+## colData names(0):</code></pre>
+<p>Before proceeding, we are going to clean up the sample names and annotate the experiment:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(cptac_se) &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">"I.+</span><span class="ch">\\</span><span class="st">."</span>, <span class="st">""</span>, <span class="kw">colnames</span>(cptac_se))
+cptac_se<span class="op">$</span>group &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">"_[7-9]"</span>, <span class="st">""</span>, <span class="kw">colnames</span>(cptac_se))
+cptac_se<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">"^.+_"</span>, <span class="st">""</span>, <span class="kw">colnames</span>(cptac_se))
+<span class="kw">colData</span>(cptac_se)</code></pre></div>
+<pre><code>## DataFrame with 6 rows and 2 columns
+##            group          id
+##      &lt;character&gt; &lt;character&gt;
+## 6A_7          6A           7
+## 6A_8          6A           8
+## 6A_9          6A           9
+## 6B_7          6B           7
+## 6B_8          6B           8
+## 6B_9          6B           9</code></pre>
 
 </div>
 </div></body></html>
