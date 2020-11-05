@@ -128,6 +128,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="toc"><a href="#introduction-2"> Introduction</a></li>
 <li class="toc"><a href="#qfeatures"> QFeatures</a></li>
 <li class="toc"><a href="#feature-aggregation"> Feature aggregation</a></li>
+<li class="toc"><a href="#subsetting-and-filtering"> Subsetting and filtering</a></li>
 </ul>
 <a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
 <a href="sec-anx.html"><span class="toc-section-number">10</span> Annex</a>
@@ -372,6 +373,56 @@ feat1</code></pre></div>
 <pre><code>##        S1   S2
 ## ProtA 3.5 13.5
 ## ProtB 8.5 18.5</code></pre>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="subsetting-and-filtering" class="section level2">
+<h2>
+<span class="header-section-number">8.4</span> Subsetting and filtering</h2>
+<p>The link between the assays becomes apparent when we now subset the assays for protein A as shown below or using the <code>subsetByFeature()</code> function. This creates a new instance of class <code>QFeatures</code> containing assays with the expression data for protein, its peptides and their PSMs.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">feat1[<span class="st">"ProtA"</span>, , ]</code></pre></div>
+<pre><code>## An instance of class QFeatures containing 3 assays:
+##  [1] psms: SummarizedExperiment with 6 rows and 2 columns 
+##  [2] peptides: SummarizedExperiment with 2 rows and 2 columns 
+##  [3] proteins: SummarizedExperiment with 1 rows and 2 columns</code></pre>
+<p>The <code>filterFeatures()</code> function can be used to filter rows the assays composing a <code>QFeatures</code> object using the row data variables. We can for example retain rows that have a <code>pval</code> &lt; 0.05, which would only keep rows in the <code>psms</code> assay because the <code>pval</code> is only relevant for that assay.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filterFeatures</span>(feat1, <span class="op">~</span><span class="st"> </span>pval <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)</code></pre></div>
+<pre><code>## harmonizing input:
+##   removing 4 sampleMap rows not in names(experiments)</code></pre>
+<pre><code>## An instance of class QFeatures containing 1 assays:
+##  [1] psms: SummarizedExperiment with 4 rows and 2 columns</code></pre>
+<p>On the other hand, if we filter assay rows for those that localise to the mitochondrion, we retain the relevant protein, peptides and PSMs.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filterFeatures</span>(feat1, <span class="op">~</span><span class="st"> </span>location <span class="op">==</span><span class="st"> "Mitochondrion"</span>)</code></pre></div>
+<pre><code>## An instance of class QFeatures containing 3 assays:
+##  [1] psms: SummarizedExperiment with 6 rows and 2 columns 
+##  [2] peptides: SummarizedExperiment with 2 rows and 2 columns 
+##  [3] proteins: SummarizedExperiment with 1 rows and 2 columns</code></pre>
+<div class="question">
+<p class="question-begin">
+► Question
+</p>
+<div class="question-body">
+<ul>
+<li>Filter rows that do not localise to the mitochondrion.</li>
+</ul>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-27" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-27', 'sol-start-27')"></span>
+</p>
+<div id="sol-body-27" class="solution-body" style="display: none;">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filterFeatures</span>(feat1, <span class="op">~</span><span class="st"> </span>location <span class="op">!=</span><span class="st"> "Mitochondrion"</span>)</code></pre></div>
+<pre><code>## An instance of class QFeatures containing 3 assays:
+##  [1] psms: SummarizedExperiment with 4 rows and 2 columns 
+##  [2] peptides: SummarizedExperiment with 1 rows and 2 columns 
+##  [3] proteins: SummarizedExperiment with 1 rows and 2 columns</code></pre>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
