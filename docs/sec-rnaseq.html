@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-10-30" />
+<meta name="date" content="2020-11-05" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -908,7 +908,7 @@ dds_bis &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds[keep, ])
 <div id="querying-the-biomart-service" class="section level3">
 <h3>
 <span class="header-section-number">5.2.12</span> Querying the Biomart service</h3>
-<p>The result table only uses Ensembl gene IDs, but gene names may be more informative. Bioconductor's <em><a href="https://bioconductor.org/packages/3.11/biomaRt">biomaRt</a></em> package can help with mapping various ID schemes to each other.</p>
+<p>The result table only uses Ensembl gene IDs, but gene names may be more informative. Bioconductor's <em><a href="https://bioconductor.org/packages/3.12/biomaRt">biomaRt</a></em> package can help with mapping various ID schemes to each other.</p>
 <p>Below, we query the Biomart service to extract the gene names (<code>enternal_gene_name</code>) and ENTREZ gene identifiers (<code>entrezgene_id</code>) (that we will need in the next chapter) and join these to our result data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"biomaRt"</span>)
 <span class="kw">library</span>(<span class="st">"org.Hs.eg.db"</span>)
@@ -956,7 +956,7 @@ ensembl_to_geneName &lt;-<span class="st"> </span><span class="kw">getBM</span>(
 <a href="sec-gsea.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-10-30
+2020-11-05
 </p>
 </div>
 </div>

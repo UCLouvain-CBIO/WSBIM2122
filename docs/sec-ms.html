@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-10-30" />
+<meta name="date" content="2020-11-05" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -417,87 +417,63 @@ Figure 7.8: Peptide fragmentation.
 <pre><code>## [1] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id &lt;-<span class="st"> </span><span class="kw">readPSMs</span>(idf)
 <span class="kw">head</span>(id)</code></pre></div>
-<pre><code>## DataFrame with 6 rows and 33 columns
-##                    sequence                                    spectrumID
-##                 &lt;character&gt;                                   &lt;character&gt;
-## 1              RQCRTDFLNYLR controllerType=0 controllerNumber=1 scan=2949
-## 2    ESVALADQVTCVDWRNRKATKK controllerType=0 controllerNumber=1 scan=6534
-## 3              KELLCLAMQIIR controllerType=0 controllerNumber=1 scan=5674
-## 4    QRMARTSDKQQSIRFLERLCGR controllerType=0 controllerNumber=1 scan=4782
-## 5  KDEGSTEPLKVVRDMTDAICMLLR controllerType=0 controllerNumber=1 scan=5839
-## 6 DGGPAIYGHERVGRNAKKFKCLKFR controllerType=0 controllerNumber=1 scan=6118
-##   chargeState      rank passThreshold experimentalMassToCharge
-##     &lt;integer&gt; &lt;integer&gt;     &lt;logical&gt;                &lt;numeric&gt;
-## 1           3         1          TRUE                  548.286
-## 2           2         1          TRUE                 1288.153
-## 3           2         1          TRUE                  744.411
-## 4           3         1          TRUE                  913.164
-## 5           3         1          TRUE                  926.810
-## 6           3         1          TRUE                  969.194
-##   calculatedMassToCharge    modNum   isDecoy        post         pre     start
-##                &lt;numeric&gt; &lt;integer&gt; &lt;logical&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt;
-## 1                547.947         1     FALSE           V           R       574
-## 2               1288.174         1     FALSE           G           R        69
-## 3                744.425         1      TRUE           Q           R       131
-## 4                912.813         1     FALSE           D           R       182
-## 5                926.471         1      TRUE           R           R       135
-## 6                968.856         1     FALSE           S           K       310
-##         end DatabaseAccess DBseqLength DatabaseSeq
-##   &lt;integer&gt;    &lt;character&gt;   &lt;integer&gt; &lt;character&gt;
-## 1       585        ECA2006        1295            
-## 2        90        ECA1676         110            
-## 3       142    XXX_ECA2855         157            
-## 4       203        ECA3009         437            
-## 5       158    XXX_ECA0048         501            
-## 6       334        ECA1420         477            
-##                                          DatabaseDescription scan.number.s.
-##                                                  &lt;character&gt;      &lt;numeric&gt;
-## 1                             ECA2006 ATP-dependent helicase           2949
-## 2                 ECA1676 putative growth inhibitory protein           6534
-## 3                                                                      5674
-## 4                ECA3009 putative coproporphyrinogen oxidase           4782
-## 5                                                                      5839
-## 6 ECA1420 undecaprenyl-phosphate galactosephosphotransferase           6118
-##   acquisitionNum
-##        &lt;numeric&gt;
-## 1           2949
-## 2           6534
-## 3           5674
-## 4           4782
-## 5           5839
-## 6           6118
-##                                                          spectrumFile
-##                                                           &lt;character&gt;
-## 1 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML
-## 2 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML
-## 3 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML
-## 4 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML
-## 5 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML
-## 6 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML
-##                                                                idFile
-##                                                           &lt;character&gt;
-## 1 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid
-## 2 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid
-## 3 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid
-## 4 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid
-## 5 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid
-## 6 TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid
-##   MS.GF.RawScore MS.GF.DeNovoScore MS.GF.SpecEValue MS.GF.EValue MS.GF.QValue
-##        &lt;numeric&gt;         &lt;numeric&gt;        &lt;numeric&gt;    &lt;numeric&gt;    &lt;numeric&gt;
-## 1             10               101      4.61712e-08     0.132198     0.525424
-## 2             12               121      7.25588e-08     0.208748     0.610390
-## 3              8                74      9.34102e-08     0.267453     0.625000
-## 4             -5               160      1.27073e-07     0.365583     0.716981
-## 5              8               241      1.31824e-07     0.379461     0.736364
-## 6              7               214      1.72203e-07     0.495817     0.837037
-##   MS.GF.PepQValue         modName   modMass modLocation subOriginalResidue
-##         &lt;numeric&gt;     &lt;character&gt; &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;
-## 1        0.549020 Carbamidomethyl   57.0215           3                 NA
-## 2        0.623188 Carbamidomethyl   57.0215          11                 NA
-## 3        0.636364 Carbamidomethyl   57.0215           5                 NA
-## 4        0.724490 Carbamidomethyl   57.0215          20                 NA
-## 5        0.745098 Carbamidomethyl   57.0215          20                 NA
-## 6        0.856000 Carbamidomethyl   57.0215          21                 NA
+<pre><code>## DataFrame with 6 rows and 35 columns
+##                 sequence             spectrumID chargeState      rank
+##              &lt;character&gt;            &lt;character&gt;   &lt;integer&gt; &lt;integer&gt;
+## 1           RQCRTDFLNYLR controllerType=0 con..           3         1
+## 2 ESVALADQVTCVDWRNRKATKK controllerType=0 con..           2         1
+## 3           KELLCLAMQIIR controllerType=0 con..           2         1
+## 4 QRMARTSDKQQSIRFLERLCGR controllerType=0 con..           3         1
+## 5 KDEGSTEPLKVVRDMTDAIC.. controllerType=0 con..           3         1
+## 6 DGGPAIYGHERVGRNAKKFK.. controllerType=0 con..           3         1
+##   passThreshold experimentalMassToCharge calculatedMassToCharge  peptideRef
+##       &lt;logical&gt;                &lt;numeric&gt;              &lt;numeric&gt; &lt;character&gt;
+## 1          TRUE                  548.286                547.947       Pep77
+## 2          TRUE                 1288.153               1288.174      Pep108
+## 3          TRUE                  744.411                744.425      Pep136
+## 4          TRUE                  913.164                912.813      Pep163
+## 5          TRUE                  926.810                926.471      Pep169
+## 6          TRUE                  969.194                968.856      Pep206
+##      modNum   isDecoy        post         pre     start       end
+##   &lt;integer&gt; &lt;logical&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;integer&gt;
+## 1         1     FALSE           V           R       574       585
+## 2         1     FALSE           G           R        69        90
+## 3         1      TRUE           Q           R       131       142
+## 4         1     FALSE           D           R       182       203
+## 5         1      TRUE           R           R       135       158
+## 6         1     FALSE           S           K       310       334
+##   DatabaseAccess DBseqLength DatabaseSeq    DatabaseDescription scan.number.s.
+##      &lt;character&gt;   &lt;integer&gt; &lt;character&gt;            &lt;character&gt;      &lt;numeric&gt;
+## 1        ECA2006        1295             ECA2006 ATP-dependen..           2949
+## 2        ECA1676         110             ECA1676 putative gro..           6534
+## 3    XXX_ECA2855         157                                              5674
+## 4        ECA3009         437             ECA3009 putative cop..           4782
+## 5    XXX_ECA0048         501                                              5839
+## 6        ECA1420         477             ECA1420 undecaprenyl..           6118
+##   acquisitionNum           spectrumFile                 idFile MS.GF.RawScore
+##        &lt;numeric&gt;            &lt;character&gt;            &lt;character&gt;      &lt;numeric&gt;
+## 1           2949 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..             10
+## 2           6534 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..             12
+## 3           5674 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..              8
+## 4           4782 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..             -5
+## 5           5839 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..              8
+## 6           6118 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..              7
+##   MS.GF.DeNovoScore MS.GF.SpecEValue MS.GF.EValue MS.GF.QValue MS.GF.PepQValue
+##           &lt;numeric&gt;        &lt;numeric&gt;    &lt;numeric&gt;    &lt;numeric&gt;       &lt;numeric&gt;
+## 1               101      4.61712e-08     0.132198     0.525424        0.549020
+## 2               121      7.25588e-08     0.208748     0.610390        0.623188
+## 3                74      9.34102e-08     0.267453     0.625000        0.636364
+## 4               160      1.27073e-07     0.365583     0.716981        0.724490
+## 5               241      1.31824e-07     0.379461     0.736364        0.745098
+## 6               214      1.72203e-07     0.495817     0.837037        0.856000
+##   modPeptideRef         modName   modMass modLocation subOriginalResidue
+##     &lt;character&gt;     &lt;character&gt; &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;
+## 1         Pep77 Carbamidomethyl   57.0215           3                 NA
+## 2        Pep108 Carbamidomethyl   57.0215          11                 NA
+## 3        Pep136 Carbamidomethyl   57.0215           5                 NA
+## 4        Pep163 Carbamidomethyl   57.0215          20                 NA
+## 5        Pep169 Carbamidomethyl   57.0215          20                 NA
+## 6        Pep206 Carbamidomethyl   57.0215          21                 NA
 ##   subReplacementResidue subLocation
 ##             &lt;character&gt;   &lt;integer&gt;
 ## 1                    NA          NA
@@ -557,7 +533,7 @@ Figure 7.8: Peptide fragmentation.
 </p>
 </div>
 </div>
-<p>Before proceeding, we want to only focus on relevant peptides. The <code>filterPSMs()</code> function will remove decoy peptides, only keep PSMs of rank 1 (i.e. the best respective matches), and remove peptides that match multiple proteins<label for="tufte-sn-16" class="margin-toggle sidenote-number">16</label><input type="checkbox" id="tufte-sn-16" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">16</span> A more rigorous processing of these identifications would be required, for instance a way to evalutation the false discovery rate in these hits (which we know from above is very high). The <em><a href="https://bioconductor.org/packages/3.11/MSnID">MSnID</a></em> is highly recommended.</span>.</p>
+<p>Before proceeding, we want to only focus on relevant peptides. The <code>filterPSMs()</code> function will remove decoy peptides, only keep PSMs of rank 1 (i.e. the best respective matches), and remove peptides that match multiple proteins<label for="tufte-sn-16" class="margin-toggle sidenote-number">16</label><input type="checkbox" id="tufte-sn-16" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">16</span> A more rigorous processing of these identifications would be required, for instance a way to evalutation the false discovery rate in these hits (which we know from above is very high). The <em><a href="https://bioconductor.org/packages/3.12/MSnID">MSnID</a></em> is highly recommended.</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id &lt;-<span class="st"> </span><span class="kw">filterPSMs</span>(id)</code></pre></div>
 <pre><code>## Starting with 5802 PSMs:</code></pre>
 <pre><code>##  removed 2896 decoy hits</code></pre>
@@ -570,25 +546,23 @@ id &lt;-<span class="st"> </span><span class="kw">unique</span>(id)</code></pre>
 <p>Now that we have matching raw data (the <code>ms</code> variable) and identification data (the <code>id</code> variable), it is possible to join<label for="tufte-sn-17" class="margin-toggle sidenote-number">17</label><input type="checkbox" id="tufte-sn-17" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">17</span> The <code>joinSpectraData()</code> function is available in the <code>joinSpectraData</code> package, that can be installed with <code>BiocManager::install("lgatto/joinSpectraData")</code>. This function will be included in the <code>Spectra</code> package.</span> the latter to the former's spectra data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ms &lt;-<span class="st"> </span><span class="kw">joinSpectraData</span>(ms, id,
                       <span class="dt">by.x =</span> <span class="st">"spectrumId"</span>,
-                      <span class="dt">by.y =</span> <span class="st">"spectrumID"</span>)</code></pre></div>
-<pre><code>## Merging by 'spectrumId' and 'spectrumID'.</code></pre>
-<pre><code>## Matching by 'spectrumId'.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ms</code></pre></div>
+                      <span class="dt">by.y =</span> <span class="st">"spectrumID"</span>)
+ms</code></pre></div>
 <pre><code>## MSn data (Spectra) with 7534 spectra in a MsBackendMzR backend:
 ##        msLevel     rtime scanIndex
 ##      &lt;integer&gt; &lt;numeric&gt; &lt;integer&gt;
-## 1            2   1899.43      3078
-## 2            2   1962.60      3250
-## 3            2   2019.48      3406
-## 4            2   2020.64      3410
-## 5            2   2022.01      3413
+## 1            1    0.4584         1
+## 2            1    0.9725         2
+## 3            1    1.8524         3
+## 4            1    2.7424         4
+## 5            1    3.6124         5
 ## ...        ...       ...       ...
-## 7530         2   3591.18      7508
-## 7531         2   3031.53      6119
-## 7532         2   3535.79      7375
-## 7533         2   3524.18      7349
-## 7534         2   3399.42      7050
-##  ... 65 more variables/columns.
+## 7530         2   3600.47      7530
+## 7531         2   3600.83      7531
+## 7532         2   3601.18      7532
+## 7533         2   3601.57      7533
+## 7534         2   3601.98      7534
+##  ... 66 more variables/columns.
 ## 
 ## file(s):
 ## TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML.gz</code></pre>
@@ -733,7 +707,7 @@ Figure 7.14: Silac quantitation. Figure credit Wikimedia Commons.
 <a href="sec-prot.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-10-30
+2020-11-05
 </p>
 </div>
 </div>

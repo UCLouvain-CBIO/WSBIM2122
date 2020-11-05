@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-10-30" />
+<meta name="date" content="2020-11-05" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -124,7 +124,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <a href="sec-rnaseq.html"><span class="toc-section-number">5</span> Differential expression analysis</a>
 <a href="sec-gsea.html"><span class="toc-section-number">6</span> Enrichment analyses</a>
 <a href="sec-ms.html"><span class="toc-section-number">7</span> Mass spectrometry</a>
-<a id="active-page" href="sec-prot.html"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
+<a id="active-page" href="sec-prot.html"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a><ul class="toc-sections">
+<li class="toc"><a href="#introduction-2"> Introduction</a></li>
+<li class="toc"><a href="#qfeatures"> QFeatures</a></li>
+<li class="toc"><a href="#feature-aggregation"> Feature aggregation</a></li>
+</ul>
 <a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
 <a href="sec-anx.html"><span class="toc-section-number">10</span> Annex</a>
 <a href="sec-si.html"><span class="toc-section-number">11</span> Session information</a>
@@ -140,7 +144,242 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <html><body><div id="sec:prot" class="section level1">
 <h1>
 <span class="header-section-number">Chapter 8</span> Quantitative proteomics data analysis</h1>
+<p><strong>Learning Objectives</strong></p>
+<p>The goals of this chapter are to provide a real-life example of step-by-step quantitative proteomics data analysis.</p>
+<div id="introduction-2" class="section level2">
+<h2>
+<span class="header-section-number">8.1</span> Introduction</h2>
+<p>Mass spectrometry-based quantitative proteomics data can be representated as a matrix of quantitative values for features (PSMs, peptides, proteins) arranged along the rows, measured for a set of samples, arranged along the columns. The is a common representation for any quantitative data set. As already done in <a href="https://uclouvain-cbio.github.io/WSBIM2122/sec-rnaseq.html#running-deseq2">this</a> and <a href="https://uclouvain-cbio.github.io/WSBIM1322/sec-obj.html#examples-from-the-bioconductor-project">previous</a> course, we will be using the <code>SummarizedExperiment</code> class:</p>
+<div class="figure">
+<span id="fig:sefig"></span>
+<p class="caption marginnote shownote">
+Figure 8.1: Schematic representation of the anatomy if a <code>SummarizedExperiment</code> object. (Figure taken from the <code>SummarizedExperiment</code> package vignette.)
+</p>
+<img src="figs/SE.svg" alt="Schematic representation of the anatomy if a `SummarizedExperiment` object. (Figure taken from the `SummarizedExperiment` package vignette.)">
+</div>
+<ul>
+<li>The sample (columns) metadata can be access with the <code>colData()</code> function.</li>
+<li>The features (rows) metadata can be access with the <code>rowData()</code> column.</li>
+<li>If the features represent ranges along genomic coordinates, these can be accessed with <code>rowRanges()</code>
+</li>
+<li>Additional metadata describing the overall experiment can be accessed with <code>metadata()</code>.</li>
+<li>The quantiative data can be accessed with <code>assay()</code>.</li>
+<li>
+<code>assays()</code> returns a list of matrix-like assays.</li>
+</ul>
+</div>
+<div id="qfeatures" class="section level2">
+<h2>
+<span class="header-section-number">8.2</span> QFeatures</h2>
+<p>As we have already discussed in the previous chapter, even though mass spectrometers acquire data for spectra/peptides, the biological entity of remains the protein. As part of the data processing, we are thus required to <strong>aggregate</strong> low-level quantitative features into higher level data.</p>
+<div class="figure">
+<span id="fig:featuresplot"></span>
+<p class="caption marginnote shownote">
+Figure 8.2: Conceptual representation of a <code>QFeatures</code> object and the aggregative relation between different assays.
+</p>
+<img src="WSBIM2122_files/figure-html/featuresplot-1.png" alt="Conceptual representation of a `QFeatures` object and the aggregative relation between different assays." width="672">
+</div>
+<p>We are going to start to familiarise ourselves with the <code>QFeatures</code> class implemented in the <a href="https://rformassspectrometry.github.io/QFeatures/articles/QFeatures.html"><code>QFeatures</code> package</a>. Let's start by loading the <code>tidyvers</code> and <code>QFeaures</code> packages.</p>
+<p>
+<span class="marginnote shownote"> <!--
+<div class="figure">--> <img id="fig:sticker2" src="figs/QFeatures.png" alt="The `QFeatures` package." width="50%"><!--
+<p class="caption marginnote">-->Figure 8.3: The <code>QFeatures</code> package.<!--</p>--> <!--</div>--></span>
+</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"tidyverse"</span>)
+<span class="kw">library</span>(<span class="st">"QFeatures"</span>)</code></pre></div>
+<p>Next, we load the <code>feat1</code> test data, which is composed of single <em>assay</em> of class <code>SummarizedExperiment</code> composed of 10 rows and 2 columns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(feat1)
+feat1</code></pre></div>
+<pre><code>## An instance of class QFeatures containing 1 assays:
+##  [1] psms: SummarizedExperiment with 10 rows and 2 columns</code></pre>
+<div class="question">
+<p class="question-begin">
+► Question
+</p>
+<div class="question-body">
+<p>Perform the following to familiarise yourselves with the <code>QFeatures</code> class:</p>
+<ul>
+<li><p>Extract the sample metadata using the <code>colData()</code> accessor (like you have previously done with <code>SummarizedExperiment</code> objects).</p></li>
+<li><p>Extract the first (and only) assay composing this <code>QFeaures</code> data using the <code>[[</code> operator (as you have done to extract elements of a list) by using the assay's index or name.</p></li>
+<li><p>Extract the <code>psms</code> assay's row data and quantitative values.</p></li>
+</ul>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-24" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-24', 'sol-start-24')"></span>
+</p>
+<div id="sol-body-24" class="solution-body" style="display: none;">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colData</span>(feat1)</code></pre></div>
+<pre><code>## DataFrame with 2 rows and 1 column
+##        Group
+##    &lt;integer&gt;
+## S1         1
+## S2         2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">feat1[[<span class="dv">1</span>]]</code></pre></div>
+<pre><code>## class: SummarizedExperiment 
+## dim: 10 2 
+## metadata(0):
+## assays(1): ''
+## rownames(10): PSM1 PSM2 ... PSM9 PSM10
+## rowData names(5): Sequence Protein Var location pval
+## colnames(2): S1 S2
+## colData names(0):</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">feat1[[<span class="st">"psms"</span>]]</code></pre></div>
+<pre><code>## class: SummarizedExperiment 
+## dim: 10 2 
+## metadata(0):
+## assays(1): ''
+## rownames(10): PSM1 PSM2 ... PSM9 PSM10
+## rowData names(5): Sequence Protein Var location pval
+## colnames(2): S1 S2
+## colData names(0):</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">assay</span>(feat1[[<span class="dv">1</span>]])</code></pre></div>
+<pre><code>##       S1 S2
+## PSM1   1 11
+## PSM2   2 12
+## PSM3   3 13
+## PSM4   4 14
+## PSM5   5 15
+## PSM6   6 16
+## PSM7   7 17
+## PSM8   8 18
+## PSM9   9 19
+## PSM10 10 20</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rowData</span>(feat1[[<span class="dv">1</span>]])</code></pre></div>
+<pre><code>## DataFrame with 10 rows and 5 columns
+##            Sequence     Protein       Var      location      pval
+##         &lt;character&gt; &lt;character&gt; &lt;integer&gt;   &lt;character&gt; &lt;numeric&gt;
+## PSM1       SYGFNAAR       ProtA         1 Mitochondr...     0.084
+## PSM2       SYGFNAAR       ProtA         2 Mitochondr...     0.077
+## PSM3       SYGFNAAR       ProtA         3 Mitochondr...     0.063
+## PSM4       ELGNDAYK       ProtA         4 Mitochondr...     0.073
+## PSM5       ELGNDAYK       ProtA         5 Mitochondr...     0.012
+## PSM6       ELGNDAYK       ProtA         6 Mitochondr...     0.011
+## PSM7  IAEESNFPFI...       ProtB         7       unknown     0.075
+## PSM8  IAEESNFPFI...       ProtB         8       unknown     0.038
+## PSM9  IAEESNFPFI...       ProtB         9       unknown     0.028
+## PSM10 IAEESNFPFI...       ProtB        10       unknown     0.097</code></pre>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="feature-aggregation" class="section level2">
+<h2>
+<span class="header-section-number">8.3</span> Feature aggregation</h2>
+<p>The central functionality of the <code>QFeatures</code> infrastructure is the aggregation of features into higher-level features while retaining the link between the different levels. This can be done with the <a href="https://rformassspectrometry.github.io/QFeatures/reference/QFeatures-aggregate.html"><code>aggregateFeatures()</code> function</a>.</p>
+<p>The call below will</p>
+<ul>
+<li>operate on the <code>psms</code> assay of the <code>feat1</code> objects;</li>
+<li>aggregate the rows the assay following the grouping defined in the <code>peptides</code> row data variables;</li>
+<li>perform aggregation using the <code>colMeans()</code> function;</li>
+<li>create a new assay named <code>peptides</code> and add it to the <code>feat1</code> object.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">feat1 &lt;-<span class="st"> </span><span class="kw">aggregateFeatures</span>(feat1, <span class="dt">i =</span> <span class="st">"psms"</span>,
+                           <span class="dt">fcol =</span> <span class="st">"Sequence"</span>,
+                           <span class="dt">name =</span> <span class="st">"peptides"</span>,
+                           <span class="dt">fun =</span> colMeans)
+feat1</code></pre></div>
+<pre><code>## An instance of class QFeatures containing 2 assays:
+##  [1] psms: SummarizedExperiment with 10 rows and 2 columns 
+##  [2] peptides: SummarizedExperiment with 3 rows and 2 columns</code></pre>
+<div class="question">
+<p class="question-begin">
+► Question
+</p>
+<div class="question-body">
+<ul>
+<li>Convince yourself that you inderstand the effect of feature aggregation.</li>
+<li>Repeat the calculations manually.</li>
+<li>Observe the content of the new assay's row data.</li>
+</ul>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-25" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-25', 'sol-start-25')"></span>
+</p>
+<div id="sol-body-25" class="solution-body" style="display: none;">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## SYGFNAAR 
+<span class="kw">colMeans</span>(<span class="kw">assay</span>(feat1[[<span class="dv">1</span>]])[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, ])</code></pre></div>
+<pre><code>## S1 S2 
+##  2 12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">assay</span>(feat1[[<span class="dv">2</span>]])[<span class="st">"SYGFNAAR"</span>, ]</code></pre></div>
+<pre><code>## S1 S2 
+##  2 12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## ELGNDAYK
+<span class="kw">colMeans</span>(<span class="kw">assay</span>(feat1[[<span class="dv">1</span>]])[<span class="dv">4</span><span class="op">:</span><span class="dv">6</span>, ])</code></pre></div>
+<pre><code>## S1 S2 
+##  5 15</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">assay</span>(feat1[[<span class="dv">2</span>]])[<span class="st">"ELGNDAYK"</span>, ]</code></pre></div>
+<pre><code>## S1 S2 
+##  5 15</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## IAEESNFPFIK
+<span class="kw">colMeans</span>(<span class="kw">assay</span>(feat1[[<span class="dv">1</span>]])[<span class="dv">7</span><span class="op">:</span><span class="dv">10</span>, ])</code></pre></div>
+<pre><code>##   S1   S2 
+##  8.5 18.5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">assay</span>(feat1[[<span class="dv">2</span>]])[<span class="st">"IAEESNFPFIK"</span>, ]</code></pre></div>
+<pre><code>##   S1   S2 
+##  8.5 18.5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rowData</span>(feat1[[<span class="dv">2</span>]])</code></pre></div>
+<pre><code>## DataFrame with 3 rows and 4 columns
+##                  Sequence     Protein      location        .n
+##               &lt;character&gt; &lt;character&gt;   &lt;character&gt; &lt;integer&gt;
+## ELGNDAYK         ELGNDAYK       ProtA Mitochondr...         3
+## IAEESNFPFIK IAEESNFPFI...       ProtB       unknown         4
+## SYGFNAAR         SYGFNAAR       ProtA Mitochondr...         3</code></pre>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="question">
+<p class="question-begin">
+► Question
+</p>
+<div class="question-body">
+<ul>
+<li>Aggregate the peptide-level data into a new protein-level assay using the <code>colMedians()</code> aggregation function.</li>
+</ul>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-26" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-26', 'sol-start-26')"></span>
+</p>
+<div id="sol-body-26" class="solution-body" style="display: none;">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">feat1 &lt;-<span class="st"> </span><span class="kw">aggregateFeatures</span>(feat1, <span class="dt">i =</span> <span class="st">"peptides"</span>,
+                           <span class="dt">fcol =</span> <span class="st">"Protein"</span>,
+                           <span class="dt">name =</span> <span class="st">"proteins"</span>,
+                           <span class="dt">fun =</span> colMedians)
+feat1</code></pre></div>
+<pre><code>## An instance of class QFeatures containing 3 assays:
+##  [1] psms: SummarizedExperiment with 10 rows and 2 columns 
+##  [2] peptides: SummarizedExperiment with 3 rows and 2 columns 
+##  [3] proteins: SummarizedExperiment with 2 rows and 2 columns</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">assay</span>(feat1[[<span class="st">"proteins"</span>]])</code></pre></div>
+<pre><code>##        S1   S2
+## ProtA 3.5 13.5
+## ProtB 8.5 18.5</code></pre>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>You can refer the the <a href="https://rformassspectrometry.github.io/QFeatures/articles/QFeatures.html"><em>Quantitative features for mass spectrometry data</em></a> vignette and the <code>QFeature</code> <a href="https://rformassspectrometry.github.io/QFeatures/reference/QFeatures-class.html">manual page</a> for more details about the class.</p>
 
+</div>
 </div></body></html>
 
 <p style="text-align: center;">
@@ -148,7 +387,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <a href="sec-ccl.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-10-30
+2020-11-05
 </p>
 </div>
 </div>
