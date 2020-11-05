@@ -332,3 +332,63 @@ cptac_se$group <- sub("_[7-9]", "", colnames(cptac_se))
 cptac_se$id <- sub("^.+_", "", colnames(cptac_se))
 colData(cptac_se)
 ```
+
+## Missing values
+
+
+Missing values can be highly frequent in proteomics. These exist two
+reasons supporting the existence of missing values, namely biological
+or technical.
+
+1. Values that are missing due to the absence (or extremely low
+   contentration) of a protein are observed for biological reasons,
+   and their pattern **aren't random**. A protein missing in due to
+   the suppression of its expression will not be missing at random: it
+   will be missing in the group in which it was suppressed, and be
+   present in the group where it is expressed.
+
+2. Due to it's data-dependent acquisition, mass spectrometry isn't
+   capable to assaying all peptides in a sample. Peptides that are
+   less abundant than some of their co-eluting ions, peptides that do
+   not ionise well or peptides that do not get identified might be
+   sporadically missing in the final quantitation table, despite their
+   presence in the biological samples. Their absence patterns are
+   **random** in such cases.
+   
+Often, third party software that produce quantiative data use zeros
+instead of properly reporting missing values. We can use the
+`zeroIsNA()` function to replace the `0` by `NA` values in our
+`cptac_se` object and then explore the missing data patterns across
+columns and rows.
+
+
+```{r}
+cptac_se <- zeroIsNA(cptac_se)
+nNA(cptac_se)
+```
+
+`r msmbstyle::question_begin()`
+
+- Explore the number or proportion of missing values across peptides
+  and samples of the `cptac_se` data.
+
+- Remove row that have *too many* missing values. You can do this by
+  hand or using the `filterNA()` function.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+```{r}
+barplot(nNA(cptac_se)$nNAcols$pNA)
+
+table(nNA(cptac_se)$nNArows$nNA)
+```
+
+```{r}
+## remove rows that have 4 or more NAs out of 6 
+cptac_se <- filterNA(cptac_se, pNA = 4/6)
+```
+
+`r msmbstyle::solution_end()`

@@ -130,6 +130,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="toc"><a href="#feature-aggregation"> Feature aggregation</a></li>
 <li class="toc"><a href="#subsetting-and-filtering"> Subsetting and filtering</a></li>
 <li class="toc"><a href="#the-cptac-data"> The CPTAC data</a></li>
+<li class="toc"><a href="#missing-values"> Missing values</a></li>
 </ul>
 <a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
 <a href="sec-anx.html"><span class="toc-section-number">10</span> Annex</a>
@@ -505,6 +506,82 @@ cptac_se<span class="op">$</span>id &lt;-<span class="st"> </span><span class="k
 ## 6B_7          6B           7
 ## 6B_8          6B           8
 ## 6B_9          6B           9</code></pre>
+</div>
+<div id="missing-values" class="section level2">
+<h2>
+<span class="header-section-number">8.6</span> Missing values</h2>
+<p>Missing values can be highly frequent in proteomics. These exist two reasons supporting the existence of missing values, namely biological or technical.</p>
+<ol style="list-style-type: decimal">
+<li><p>Values that are missing due to the absence (or extremely low contentration) of a protein are observed for biological reasons, and their pattern <strong>aren't random</strong>. A protein missing in due to the suppression of its expression will not be missing at random: it will be missing in the group in which it was suppressed, and be present in the group where it is expressed.</p></li>
+<li><p>Due to it's data-dependent acquisition, mass spectrometry isn't capable to assaying all peptides in a sample. Peptides that are less abundant than some of their co-eluting ions, peptides that do not ionise well or peptides that do not get identified might be sporadically missing in the final quantitation table, despite their presence in the biological samples. Their absence patterns are <strong>random</strong> in such cases.</p></li>
+</ol>
+<p>Often, third party software that produce quantiative data use zeros instead of properly reporting missing values. We can use the <code>zeroIsNA()</code> function to replace the <code>0</code> by <code>NA</code> values in our <code>cptac_se</code> object and then explore the missing data patterns across columns and rows.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cptac_se &lt;-<span class="st"> </span><span class="kw">zeroIsNA</span>(cptac_se)
+<span class="kw">nNA</span>(cptac_se)</code></pre></div>
+<pre><code>## $nNA
+## DataFrame with 1 row and 2 columns
+##         nNA       pNA
+##   &lt;integer&gt; &lt;numeric&gt;
+## 1     31130   45.2497
+## 
+## $nNArows
+## DataFrame with 11466 rows and 3 columns
+##                name       nNA       pNA
+##         &lt;character&gt; &lt;integer&gt; &lt;numeric&gt;
+## 1     AAAAGAGGAG...         4   66.6667
+## 2         AAAALAGGK         0    0.0000
+## 3        AAAALAGGKK         0    0.0000
+## 4     AAADALSDLE...         0    0.0000
+## 5     AAADALSDLE...         0    0.0000
+## ...             ...       ...       ...
+## 11462 YYSIYDLGNN...         6  100.0000
+## 11463 YYTFNGPNYN...         3   50.0000
+## 11464    YYTITEVATR         4   66.6667
+## 11465 YYTVFDRDNN...         6  100.0000
+## 11466 YYTVFDRDNN...         6  100.0000
+## 
+## $nNAcols
+## DataFrame with 6 rows and 3 columns
+##          name       nNA       pNA
+##   &lt;character&gt; &lt;integer&gt; &lt;numeric&gt;
+## 1        6A_7      4743   41.3658
+## 2        6A_8      5483   47.8196
+## 3        6A_9      5320   46.3980
+## 4        6B_7      4721   41.1739
+## 5        6B_8      5563   48.5174
+## 6        6B_9      5300   46.2236</code></pre>
+<div class="question">
+<p class="question-begin">
+► Question
+</p>
+<div class="question-body">
+<ul>
+<li><p>Explore the number or proportion of missing values across peptides and samples of the <code>cptac_se</code> data.</p></li>
+<li><p>Remove row that have <em>too many</em> missing values. You can do this by hand or using the <code>filterNA()</code> function.</p></li>
+</ul>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-28" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-28', 'sol-start-28')"></span>
+</p>
+<div id="sol-body-28" class="solution-body" style="display: none;">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">nNA</span>(cptac_se)<span class="op">$</span>nNAcols<span class="op">$</span>pNA)</code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-162-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(<span class="kw">nNA</span>(cptac_se)<span class="op">$</span>nNArows<span class="op">$</span>nNA)</code></pre></div>
+<pre><code>## 
+##    0    1    2    3    4    5    6 
+## 4059  990  884  717  934  807 3075</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## remove rows that have 4 or more NAs out of 6 
+cptac_se &lt;-<span class="st"> </span><span class="kw">filterNA</span>(cptac_se, <span class="dt">pNA =</span> <span class="dv">4</span><span class="op">/</span><span class="dv">6</span>)</code></pre></div>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
 
 </div>
 </div></body></html>
