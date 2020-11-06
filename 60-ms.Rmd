@@ -18,7 +18,6 @@ library("tidyverse")
 library("Spectra")
 library("magrittr")
 library("ggplot2")
-library("joinSpectraData")
 library("PSM")
 ```
 
@@ -63,12 +62,6 @@ BiocManager::install("msdata")
 BiocManager::install("lgatto/ProtGenerics")
 BiocManager::install("RforMassSpectrometry/Spectra")
 BiocManager::install("RforMassSpectrometry/PSM")
-```
-
-The `joinSpectraData` is also (temporarily) needed.
-
-```{r, eval = FALSE}
-BiocManager::install("lgatto/joinSpectraData")
 ```
 
 ## How does mass spectrometry work?
@@ -181,7 +174,7 @@ ms
 Once a `Spectra` object has been created, it can be queried and
 manipulated using a whole set of accessor functions, documented in the
 [`Spectra`-class
-documentation](https://rformassspectrometry.github.io/Spectra/reference/Spectra.html). 
+documentation](https://rformassspectrometry.github.io/Spectra/reference/Spectra.html).
 
 `Spectra` objects can be subset with the `[` operator. In addition to
 the raw data (the M/Z and intensity values) that compose the
@@ -260,7 +253,7 @@ abline(v = rtime(ms)[2807], col = "red")
 2. The `filterPrecursorScan()` function can be used to retains parent
    (MS1) and children scans (MS2) of a scan, as defined by its
    acquisition number.
-   
+
 
 ```{r}
 ms_2 <- filterPrecursorScan(ms, 2807)
@@ -376,8 +369,8 @@ match multiple proteins[^noteID].
 
 [^noteID]: A more rigorous processing of these identifications would
     be required, for instance a way to evalutation the false discovery
-    rate in these hits (which we know from above is very high). The 
-	`r BiocStyle::Biocpkg("MSnID")` is highly recommended.
+    rate in these hits (which we know from above is very high). The
+    `r BiocStyle::Biocpkg("MSnID")` is highly recommended.
 
 
 ```{r}
@@ -393,14 +386,8 @@ id <- unique(id)
 ```
 
 Now that we have matching raw data (the `ms` variable) and
-identification data (the `id` variable), it is possible to
-join[^joinSpectraData] the latter to the former's spectra data:
-
-
-[^joinSpectraData]: The `joinSpectraData()` function is available in
-    the `joinSpectraData` package, that can be installed with
-    `BiocManager::install("lgatto/joinSpectraData")`. This function
-    will be included in the `Spectra` package.
+identification data (the `id` variable), it is possible to join the
+latter to the former's spectra data:
 
 
 ```{r joinSpectraData}
@@ -411,7 +398,7 @@ ms
 ```
 
 We are going to conlude this part by annotating an MS2 spectrum with
-the calculated peptide fragment. 
+the calculated peptide fragment.
 
 `r msmbstyle::question_begin()`
 

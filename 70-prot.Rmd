@@ -135,7 +135,7 @@ Perform the following to familiarise yourselves with the `QFeatures` class:
 - Extract the first (and only) assay composing this `QFeaures` data
   using the `[[` operator (as you have done to extract elements of a
   list) by using the assay's index or name.
-  
+
 - Extract the `psms` assay's row data and quantitative values.
 
 `r msmbstyle::question_end()`
@@ -199,10 +199,10 @@ feat1
 `r msmbstyle::solution_begin()`
 
 ```{r}
-## SYGFNAAR 
+## SYGFNAAR
 colMeans(assay(feat1[[1]])[1:3, ])
 assay(feat1[[2]])["SYGFNAAR", ]
-    
+
 ## ELGNDAYK
 colMeans(assay(feat1[[1]])[4:6, ])
 assay(feat1[[2]])["ELGNDAYK", ]
@@ -290,6 +290,20 @@ vignette and the `QFeature` [manual
 page](https://rformassspectrometry.github.io/QFeatures/reference/QFeatures-class.html)
 for more details about the class.
 
+## Analysis pipeline
+
+Quantitative proteomics data processing is composed of the following
+steps:
+
+- Data import
+- Exploratory data analysis (PCA)
+- Missing data management (filtering and/or imputation)
+- Data cleaning
+- Transformation and normalisation
+- Aggregation
+- Downstream analysis
+
+
 ## The CPTAC data
 
 The CPTAC spike-in study 6 [@Paulovich:2010] combines the Sigma UPS1
@@ -342,7 +356,7 @@ cptac_se$id <- sub("^.+_", "", colnames(cptac_se))
 colData(cptac_se)
 ```
 
-Let's also keep only a subset of 
+Let's also keep only a subset of
 
 ```{r}
 keep_var <- c("Sequence", "Proteins", "Leading.razor.protein", "PEP",
@@ -371,7 +385,7 @@ or technical.
    sporadically missing in the final quantitation table, despite their
    presence in the biological samples. Their absence patterns are
    **random** in such cases.
-   
+
 Often, third party software that produce quantiative data use zeros
 instead of properly reporting missing values. We can use the
 `zeroIsNA()` function to replace the `0` by `NA` values in our
@@ -387,16 +401,16 @@ nNA(cptac_se)
 ```{r, echo = FALSE, fig.cap = "Distribution of missing value (white). Peptides row with more missing values are moved towards the top of the figure."}
 .image2 <- function (x, yticks = 10,
                      x.cex.axis = 0.75,
-                     y.cex.axis = 0.75, 
+                     y.cex.axis = 0.75,
                      xlab = "Samples",
                      ylab = "Features", ...) {
     nc <- ncol(x)
     nr <- nrow(x)
     lab <- colnames(x)
-    if (is.null(lab)) 
+    if (is.null(lab))
         lab <- 1:nc
     graphics::image(t(x), xlab = xlab, ylab = ylab,
-                    xaxt = "n", 
+                    xaxt = "n",
                     yaxt = "n", ...)
     axis(1, seq(0, 1, 1/(nc - 1)), labels = lab, cex.axis = x.cex.axis)
     yticks <- seq(0, 1, 1/(yticks - 1)) * nr
@@ -432,7 +446,7 @@ table(nNA(cptac_se)$nNArows$nNA)
 ```
 
 ```{r}
-## remove rows that have 4 or more NAs out of 6 
+## remove rows that have 4 or more NAs out of 6
 cptac_se <- filterNA(cptac_se, pNA = 4/6)
 ```
 
@@ -555,7 +569,7 @@ contaminant hits.
 cptac <-
     cptac %>%
     filterFeatures(~ Reverse != "+") %>%
-    filterFeatures(~ Potential.contaminant != "+") 
+    filterFeatures(~ Potential.contaminant != "+")
 ```
 
 `r msmbstyle::solution_end()`
@@ -595,7 +609,7 @@ cptac <-
     aggregateFeatures(cptac,
                       "lognorm_peptides",
                       name = "proteins_med",
-                      fcol = "Leading.razor.protein", 
+                      fcol = "Leading.razor.protein",
                       fun = colMedians,
                       na.rm = TRUE)
 ```
@@ -623,14 +637,14 @@ pca_pep <-
     prcomp(scale = TRUE, center = TRUE) %>%
     fviz_pca_ind(habillage = cptac$condition, title = "Peptides")
 
-pca_prot <- 
+pca_prot <-
     cptac[["proteins_med"]] %>%
     filterNA() %>%
     assay() %>%
     t() %>%
     prcomp() %>%
     fviz_pca_ind(habillage = cptac$condition,
-                 title = "Proteins (median aggregation)") 
+                 title = "Proteins (median aggregation)")
 
 ```
 
@@ -661,7 +675,7 @@ longFormat(cptac["P02787ups|TRFE_HUMAN_UPS", ,
     mutate(condition = ifelse(grepl("A", colname), "A", "B")) %>%
     ggplot(aes(x = colname, y = value, colour = rowname, shape = condition)) +
     geom_point(size = 3) +
-    geom_line(aes(group = rowname)) + 
+    geom_line(aes(group = rowname)) +
     facet_grid(~ assay) +
     ggtitle("P02787ups|TRFE_HUMAN_UPS")
 ```
@@ -670,7 +684,7 @@ longFormat(cptac["P02787ups|TRFE_HUMAN_UPS", ,
 
 
 Below, we are going to perform our statistical analysis on the protein
-data. 
+data.
 
 
 ```{r}
@@ -680,7 +694,7 @@ colData(prots) <- colData(cptac)
 
 We have seen in chapter \@ref(sec:linmod) how to use linear models and
 have applied the same prinicples in chapter \@ref(sec:rnaseq) on count
-data (based on a negative binomial distribution). 
+data (based on a negative binomial distribution).
 The `r BiocStyle::Biocpkg("limma")` package is the precursor package that
 enables the consistent application of linear models to normalliy
 distributed omics data in general, and microarrays in
@@ -716,7 +730,7 @@ res <-
     topTable(fit, coef = "prots$condition6B", number = Inf) %>%
     rownames_to_column("protein") %>%
     as_tibble() %>%
-    mutate(TP = grepl("ups", protein))    
+    mutate(TP = grepl("ups", protein))
 ```
 
 `r msmbstyle::question_begin()`
@@ -742,7 +756,7 @@ assay(prots[na_coefs, ])
 vp <-
     res %>%
     ggplot(aes(x = logFC, y = -log10(adj.P.Val))) +
-    geom_point(aes(colour = TP)) + 
+    geom_point(aes(colour = TP)) +
     ggplot2::geom_vline(xintercept = c(-1, 1)) +
     ggplot2::geom_hline(yintercept = -log10(0.05)) +
     scale_color_manual(values = c("black","red"))
@@ -761,11 +775,11 @@ below shows, it is possible to substantially improve these results.
 
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Aggregation using robust summarisation."}
-cptac <- 
+cptac <-
     aggregateFeatures(cptac,
                       "lognorm_peptides",
                       name = "proteins_rob",
-                      fcol = "Leading.razor.protein", 
+                      fcol = "Leading.razor.protein",
                       fun = MsCoreUtils::robustSummary,
                       na.rm = TRUE)
 
@@ -781,10 +795,10 @@ topTable(fit, coef = "prots$condition6B", number = Inf) %>%
     as_tibble() %>%
     mutate(TP = grepl("ups", protein)) %>%
     ggplot(aes(x = logFC, y = -log10(adj.P.Val))) +
-    geom_point(aes(colour = TP)) + 
+    geom_point(aes(colour = TP)) +
     ggplot2::geom_vline(xintercept = c(-1, 1)) +
     ggplot2::geom_hline(yintercept = -log10(0.05)) +
-    scale_color_manual(values = c("black","red"))    
+    scale_color_manual(values = c("black","red"))
 ```
 
 ## Project
@@ -816,7 +830,5 @@ The full design is shown below and is available [here](./datac/ptac_coldata.csv)
 cd <- data.frame(colData(cptac2))
 cd$previous <- "new"
 cd[colnames(cptac_se), "previous"] <- ""
-DT::datatable(cd,
-              rownames = TRUE,
-              options = list(pageLength = 27))
+knitr::kable(cd, rownames = TRUE)
 ```
