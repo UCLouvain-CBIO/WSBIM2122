@@ -113,6 +113,7 @@ knitr::include_graphics("figs/QFeatures.png")
 ```{r, message = FALSE}
 library("tidyverse")
 library("QFeatures")
+library("limma")
 ```
 
 Next, we load the `feat1` test data, which is composed of single
@@ -299,7 +300,7 @@ different instruments in different labs. We are going to start with a
 subset of the CPTAC study 6 containing conditions A and B for a single
 lab.
 
-```{r cptac, echo = FALSE, fig.cap = "The CPTAC spike-in study design."}
+```{r cptac, echo = FALSE, fig.cap = "The CPTAC spike-in study design (credit Lieven Clement, statOmics, Ghent University).", out.width='70%', fig.align='center'}
 knitr::include_graphics("./figs/cptac.png")
 ```
 
@@ -548,7 +549,7 @@ cptac <- normalize(cptac, i = "log_peptides",
                    name = "lognorm_peptides", method = "quantiles")
 ```
 
-```{r, fig.cap = "Three peptide level assays: raw data, log transformed and normalised.", fig.width = 15, fig.height = 5}
+```{r, fig.cap = "Three peptide level assays: raw data, log transformed and normalised.", fig.width = 15, fig.height = 5, fig.fullwidth = TRUE}
 par(mfrow = c(1, 3))
 limma::plotDensities(assay(cptac[["peptides"]]))
 limma::plotDensities(assay(cptac[["log_peptides"]]))
@@ -605,7 +606,7 @@ pca_prot <-
 
 ```
 
-```{r, fig.width = 12, fig.height = 6, fig.cap = "Peptide and protein level PCA analyses."}
+```{r, fig.fullwidth = TRUE, fig.width = 12, fig.height = 6, fig.cap = "Peptide and protein level PCA analyses."}
 pca_pep + pca_prot
 ```
 
@@ -625,14 +626,14 @@ and row data in a long format, that can be directly reused by the
 tidyverse tools.
 
 
-```{r, warning = FALSE, fig.width = 12, fig.height = 6, fig.cap = "Peptide and protein expression profile."}
+```{r, message = FALSE, warning = FALSE, fig.width = 12, fig.height = 6, fig.cap = "Peptide and protein expression profile.", fig.fullwidth = TRUE}
 longFormat(cptac["P02787ups|TRFE_HUMAN_UPS", ,
                  c("lognorm_peptides", "proteins_med")]) %>%
     as_tibble() %>%
     mutate(condition = ifelse(grepl("A", colname), "A", "B")) %>%
     ggplot(aes(x = colname, y = value, colour = rowname, shape = condition)) +
     geom_point(size = 3) +
-    geom_line(aes(condition = rowname)) + 
+    geom_line(aes(group = rowname)) + 
     facet_grid(~ assay) +
     ggtitle("P02787ups|TRFE_HUMAN_UPS")
 ```
@@ -690,6 +691,25 @@ res <-
     mutate(TP = grepl("ups", protein))    
 ```
 
+`r msmbstyle::question_begin()`
+
+Note the warning about partial `NA` coefficients for 23 probes. Where
+could these come from?
+
+`r msmbstyle::question_ens()`
+
+`r msmbstyle::solution_begin()`
+
+```{r}
+na_coefs <-
+    filter(res, is.na(t)) %>%
+    pull(protein)
+assay(prots[na_coefs, ])
+```
+
+`r msmbstyle::solution_end()`
+
+
 ```{r}
 vp <-
     res %>%
@@ -743,7 +763,7 @@ topTable(fit, coef = "prots$condition6B", number = Inf) %>%
 
 You are provided with the [larger CPTAC
 data](./data/cptac_a_b_c_peptides.txt) including a third condition
-(namely C) and a two lab, tallying now 27 samples.
+(namely C) and a two additional lab, tallying now 27 samples.
 
 ```{r, echo = FALSE}
 f <- "./data/cptac_a_b_c_peptides.txt"
@@ -762,7 +782,7 @@ cptac2$lab <- rep(rep(c("LTQ-Orbitrap_86",
 write.csv(colData(cptac2), file = "./data/cptac_coldata.csv")
 knitr::kable(table(colData(cptac2)[, -1]))
 ```
-The full design is shown below and is available [here](./datac/ptac_coldata.csv)
+The full design is shown below and is available [here](./datac/ptac_coldata.csv).
 
 ```{r, echo=FALSE}
 cd <- data.frame(colData(cptac2))
