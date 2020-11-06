@@ -176,8 +176,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"lgatto/ProtGenerics"</span>)
 BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"RforMassSpectrometry/Spectra"</span>)
 BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"RforMassSpectrometry/PSM"</span>)</code></pre></div>
-<p>The <code>joinSpectraData</code> is also (temporarily) needed.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"lgatto/joinSpectraData"</span>)</code></pre></div>
 </div>
 <div id="how-does-mass-spectrometry-work" class="section level2">
 <h2>
@@ -261,7 +259,7 @@ ms</code></pre></div>
 <p>Once a <code>Spectra</code> object has been created, it can be queried and manipulated using a whole set of accessor functions, documented in the <a href="https://rformassspectrometry.github.io/Spectra/reference/Spectra.html"><code>Spectra</code>-class documentation</a>.</p>
 <p><code>Spectra</code> objects can be subset with the <code>[</code> operator. In addition to the raw data (the M/Z and intensity values) that compose the individual scans, the annotation of each spectrum is available as a single and large table called <em>spectraData</em>, composed of a set of <em>spectraVariables</em> columns.</p>
 <div class="figure fullwidth">
-<span id="fig:unnamed-chunk-133"></span>
+<span id="fig:unnamed-chunk-132"></span>
 <img src="figs/spectra-schematics.png" alt="Schematic representation of what is referred to by MS data: a collection of spectra and a table containing spectrum-level annotations." width="1060"><p class="caption marginnote shownote">
 Figure 7.7: Schematic representation of what is referred to by MS data: a collection of spectra and a table containing spectrum-level annotations.
 </p>
@@ -315,7 +313,7 @@ Figure 7.7: Schematic representation of what is referred to by MS data: a collec
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with</span>(<span class="kw">spectraData</span>(<span class="kw">filterMsLevel</span>(ms, <span class="dv">1</span>)),
      <span class="kw">plot</span>(rtime, totIonCurrent, <span class="dt">type =</span> <span class="st">"l"</span>))
 <span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">rtime</span>(ms)[<span class="dv">2807</span>], <span class="dt">col =</span> <span class="st">"red"</span>)</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-135-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-134-1.png" width="672"></p>
 <ol start="2" style="list-style-type: decimal">
 <li>The <code>filterPrecursorScan()</code> function can be used to retains parent (MS1) and children scans (MS2) of a scan, as defined by its acquisition number.</li>
 </ol>
@@ -323,15 +321,15 @@ Figure 7.7: Schematic representation of what is referred to by MS data: a collec
 <span class="kw">plotSpectra</span>(ms[<span class="dv">2807</span>], <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">400</span>, <span class="dv">1000</span>))
 <span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">precursorMz</span>(ms_<span class="dv">2</span>)[<span class="op">-</span><span class="dv">1</span>], <span class="dt">col =</span> <span class="st">"grey"</span>)
 <span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">precursorMz</span>(ms_<span class="dv">2</span>)[<span class="dv">2</span>], <span class="dt">col =</span> <span class="st">"red"</span>)</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-136-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-135-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotSpectra</span>(ms[<span class="dv">2807</span>], <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="fl">521.2</span>, <span class="fl">522.5</span>), <span class="dt">type =</span> <span class="st">"l"</span>)
 <span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">precursorMz</span>(ms_<span class="dv">2</span>)[<span class="dv">2</span>], <span class="dt">col =</span> <span class="st">"red"</span>)</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-137-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-136-1.png" width="672"></p>
 <ol start="3" style="list-style-type: decimal">
 <li>The <code>plotSpectra()</code> function is used to plot all 10 MS2 spectra in one call.</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotSpectra</span>(ms_<span class="dv">2</span>[<span class="op">-</span><span class="dv">1</span>])</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-138-1.png" width="768"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-137-1.png" width="768"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -531,7 +529,7 @@ Figure 7.8: Peptide fragmentation.
 <span class="kw">data.frame</span>(id) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> MS.GF.RawScore, <span class="dt">colour =</span> isDecoy)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_density</span>()</code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-141-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-140-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -547,7 +545,7 @@ Figure 7.8: Peptide fragmentation.
 <p>For simplicity, we are also going to ignore the location of the peptide modifications by removing the <code>modLocation</code> column.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id<span class="op">$</span>modLocation &lt;-<span class="st"> </span><span class="ot">NULL</span>
 id &lt;-<span class="st"> </span><span class="kw">unique</span>(id)</code></pre></div>
-<p>Now that we have matching raw data (the <code>ms</code> variable) and identification data (the <code>id</code> variable), it is possible to join<label for="tufte-sn-17" class="margin-toggle sidenote-number">17</label><input type="checkbox" id="tufte-sn-17" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">17</span> The <code>joinSpectraData()</code> function is available in the <code>joinSpectraData</code> package, that can be installed with <code>BiocManager::install("lgatto/joinSpectraData")</code>. This function will be included in the <code>Spectra</code> package.</span> the latter to the former's spectra data:</p>
+<p>Now that we have matching raw data (the <code>ms</code> variable) and identification data (the <code>id</code> variable), it is possible to join the latter to the former's spectra data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ms &lt;-<span class="st"> </span><span class="kw">joinSpectraData</span>(ms, id,
                       <span class="dt">by.x =</span> <span class="st">"spectrumId"</span>,
                       <span class="dt">by.y =</span> <span class="st">"spectrumID"</span>)
@@ -604,22 +602,22 @@ i &lt;-<span class="st"> </span><span class="kw">which</span>(ms<span class="op"
             <span class="dt">labelPos =</span> <span class="dv">3</span>, <span class="dt">labelCol =</span> <span class="st">"orange"</span>,
             <span class="dt">main =</span> ms[i]<span class="op">$</span>sequence)</code></pre></div>
 <div class="figure">
-<span id="fig:unnamed-chunk-144"></span>
+<span id="fig:unnamed-chunk-143"></span>
 <p class="caption marginnote shownote">
 Figure 7.9: Two MS2 spectra that were matched to the <code>TKGLNVMQNLLTAHPDVQAVFAQNDEMALGALR</code> peptide.
 </p>
-<img src="WSBIM2122_files/figure-html/unnamed-chunk-144-1.png" alt="Two MS2 spectra that were matched to the `TKGLNVMQNLLTAHPDVQAVFAQNDEMALGALR` peptide." width="672">
+<img src="WSBIM2122_files/figure-html/unnamed-chunk-143-1.png" alt="Two MS2 spectra that were matched to the `TKGLNVMQNLLTAHPDVQAVFAQNDEMALGALR` peptide." width="672">
 </div>
 <p>For a more direct comparision, the two spectra can also be represented on the same graph pointing upwards and downwards:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotSpectraMirror</span>(ms[i[<span class="dv">1</span>]], ms[i[<span class="dv">2</span>]],
                   <span class="dt">labels =</span> addFragments,
                   <span class="dt">labelPos =</span> <span class="dv">3</span>, <span class="dt">labelCol =</span> <span class="st">"orange"</span>)</code></pre></div>
 <div class="figure">
-<span id="fig:unnamed-chunk-145"></span>
+<span id="fig:unnamed-chunk-144"></span>
 <p class="caption marginnote shownote">
 Figure 7.10: Mirror representation of to matches to the <code>TKGLNVMQNLLTAHPDVQAVFAQNDEMALGALR</code> peptide.
 </p>
-<img src="WSBIM2122_files/figure-html/unnamed-chunk-145-1.png" alt="Mirror representation of to matches to the `TKGLNVMQNLLTAHPDVQAVFAQNDEMALGALR` peptide." width="672">
+<img src="WSBIM2122_files/figure-html/unnamed-chunk-144-1.png" alt="Mirror representation of to matches to the `TKGLNVMQNLLTAHPDVQAVFAQNDEMALGALR` peptide." width="672">
 </div>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
