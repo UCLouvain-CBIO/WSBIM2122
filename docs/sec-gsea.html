@@ -507,12 +507,12 @@ dds_tmp<span class="op">$</span>Condition &lt;-<span class="st"> </span>dds_tmp<
 <pre><code>## DataFrame with 6 rows and 4 columns
 ##                Cell        Type Condition sizeFactor
 ##         &lt;character&gt; &lt;character&gt;  &lt;factor&gt;  &lt;numeric&gt;
-## sample1       Cell1  Epithelial      KD     0.726883
-## sample2       Cell1  Epithelial      mock   1.308664
-## sample3       Cell1  Epithelial      KD     1.077368
-## sample4       Cell1  Epithelial      KD     0.966025
-## sample5       Cell1  Epithelial      mock   1.042111
-## sample6       Cell1  Epithelial      mock   1.012664</code></pre>
+## sample1       Cell1  Epithelial      mock   0.726883
+## sample2       Cell1  Epithelial      KD     1.308664
+## sample3       Cell1  Epithelial      mock   1.077368
+## sample4       Cell1  Epithelial      mock   0.966025
+## sample5       Cell1  Epithelial      KD     1.042111
+## sample6       Cell1  Epithelial      KD     1.012664</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_tmp &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds_tmp) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">results</span>(<span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">as_tibble</span>(<span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span>
