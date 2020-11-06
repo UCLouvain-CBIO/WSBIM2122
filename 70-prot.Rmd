@@ -824,7 +824,7 @@ cptac2$lab <- rep(rep(c("LTQ-Orbitrap_86",
 write.csv(colData(cptac2), file = "./data/cptac_coldata.csv")
 knitr::kable(table(colData(cptac2)[, -1]))
 ```
-The full design is shown below and is available [here](./datac/cptac_coldata.csv).
+The full design is shown below and is available [here](./data/cptac_coldata.csv).
 
 ```{r, echo=FALSE}
 cd <- data.frame(colData(cptac2))
