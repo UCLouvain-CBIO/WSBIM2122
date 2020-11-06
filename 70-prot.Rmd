@@ -384,6 +384,34 @@ cptac_se <- zeroIsNA(cptac_se)
 nNA(cptac_se)
 ```
 
+```{r, echo = FALSE, fig.cap = "Distribution of missing value (white). Peptides row with more missing values are moved towards the top of the figure."}
+.image2 <- function (x, yticks = 10,
+                     x.cex.axis = 0.75,
+                     y.cex.axis = 0.75, 
+                     xlab = "Samples",
+                     ylab = "Features", ...) {
+    nc <- ncol(x)
+    nr <- nrow(x)
+    lab <- colnames(x)
+    if (is.null(lab)) 
+        lab <- 1:nc
+    graphics::image(t(x), xlab = xlab, ylab = ylab,
+                    xaxt = "n", 
+                    yaxt = "n", ...)
+    axis(1, seq(0, 1, 1/(nc - 1)), labels = lab, cex.axis = x.cex.axis)
+    yticks <- seq(0, 1, 1/(yticks - 1)) * nr
+    axis(2, seq(0, 1, 1/(length(yticks) - 1)),
+         labels = round(yticks, 0),
+         cex.axis = y.cex.axis)
+    invisible(NULL)
+}
+.x <- is.na(assay(cptac_se))
+o <- order(rowSums(.x))
+.image2(.x[o, ],
+        col = c("black", "white"),
+        ylab = "Peptides")
+```
+
 `r msmbstyle::question_begin()`
 
 - Explore the number or proportion of missing values across peptides
@@ -696,7 +724,7 @@ res <-
 Note the warning about partial `NA` coefficients for 23 probes. Where
 could these come from?
 
-`r msmbstyle::question_ens()`
+`r msmbstyle::question_end()`
 
 `r msmbstyle::solution_begin()`
 
