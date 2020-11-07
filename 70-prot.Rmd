@@ -770,9 +770,17 @@ ggplotly(vp)
 
 Using the pipeline described above, we would would identify a single
 differentially expressed protein at an 5 percent FDR but miss out the
-other `r sum(res$TP) - 1` expected spike-in proteins. As the figure
-below shows, it is possible to substantially improve these results.
+other `r sum(res$TP) - 1` expected spike-in proteins. 
 
+We can assess our results in terms of true/false postitves/negatives:
+
+- True positives: `r nrow(filter(res, adj.P.Val < 0.05 & TP))`
+- False positives: `r nrow(filter(res, adj.P.Val < 0.05 & !TP))`
+- True negatives: `r nrow(filter(res, adj.P.Val > 0.05 & !TP))`
+- False negatives: `r nrow(filter(res, adj.P.Val > 0.05 & TP))`
+
+
+As below shows, it is possible to substantially improve these results.
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Aggregation using robust summarisation."}
 cptac <-
@@ -790,16 +798,23 @@ design <- model.matrix(~ prots$condition)
 fit <- lmFit(assay(prots), design)
 fit <- eBayes(fit)
 
-topTable(fit, coef = "prots$condition6B", number = Inf) %>%
+res <- topTable(fit, coef = "prots$condition6B", number = Inf) %>%
     rownames_to_column("protein") %>%
     as_tibble() %>%
-    mutate(TP = grepl("ups", protein)) %>%
+    mutate(TP = grepl("ups", protein))
+
+res %>%
     ggplot(aes(x = logFC, y = -log10(adj.P.Val))) +
     geom_point(aes(colour = TP)) +
     ggplot2::geom_vline(xintercept = c(-1, 1)) +
     ggplot2::geom_hline(yintercept = -log10(0.05)) +
     scale_color_manual(values = c("black","red"))
 ```
+
+- True positives: `r nrow(filter(res, adj.P.Val < 0.05 & TP))`
+- False positives: `r nrow(filter(res, adj.P.Val < 0.05 & !TP))`
+- True negatives: `r nrow(filter(res, adj.P.Val > 0.05 & !TP))`
+- False negatives: `r nrow(filter(res, adj.P.Val > 0.05 & TP))`
 
 ## Project
 
