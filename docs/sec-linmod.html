@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-11-18" />
+<meta name="date" content="2020-11-28" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -479,8 +479,8 @@ coefs_id</code></pre></div>
 <h2>
 <span class="header-section-number">3.5</span> Interactions between variables</h2>
 <p>Consider the following design: two genotypes of plants, wild type and a mutant that shows some resistance to drought, that are grown, collected and analysed by RNA sequencing under normal, humid and dry conditions. The researchers that set up this experiment expect that the two genotypes will produce, for some key genes, opposite responses in the extreme conditions: that the expression of some genes will increase in the mutant under dry conditions while it will decrease under humid conditions.</p>
-<div id="htmlwidget-1c8cf4710968535884e0" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1c8cf4710968535884e0">{"x":{"filter":"none","data":[[1,2,3,4,5,6,7,8,9,10,11,12],["WT","WT","WT","WT","WT","WT","MT","MT","MT","MT","MT","MT"],["normal","dry","humid","normal","dry","humid","normal","dry","humid","normal","dry","humid"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>sample<\/th>\n      <th>genotype<\/th>\n      <th>condition<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Such situation require a new model formula syntax, that</p>
+<div id="htmlwidget-9905a0444a63ed21dedb" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9905a0444a63ed21dedb">{"x":{"filter":"none","data":[[1,2,3,4,5,6,7,8,9,10,11,12],["WT","WT","WT","WT","WT","WT","MT","MT","MT","MT","MT","MT"],["normal","dry","humid","normal","dry","humid","normal","dry","humid","normal","dry","humid"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>sample<\/th>\n      <th>genotype<\/th>\n      <th>condition<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Such situation require a new model formula syntax, that</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">~</span><span class="st"> </span>genotype <span class="op">*</span><span class="st"> </span>condition</code></pre></div>
 <p>which is equivalent to</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">~</span><span class="st"> </span>genotype <span class="op">+</span><span class="st"> </span>condition <span class="op">+</span><span class="st"> </span>genotype <span class="op">*</span><span class="st"> </span>condition</code></pre></div>
@@ -876,7 +876,7 @@ x_i</code></pre></div>
 <a href="sec-hts.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-11-18
+2020-11-28
 </p>
 </div>
 </div>
