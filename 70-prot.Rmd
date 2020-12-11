@@ -780,7 +780,7 @@ We can assess our results in terms of true/false postitves/negatives:
 - False negatives: `r nrow(filter(res, adj.P.Val > 0.05 & TP))`
 
 
-As below shows, it is possible to substantially improve these results
+As shown below, it is possible to substantially improve these results
 using robust summarisation, i.e robust regression with M-estimation
 using Huber weights, as described in section 2.7 in [@Sticker:2019].
 
