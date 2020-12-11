@@ -35,10 +35,10 @@ knitr::include_graphics("./figs/SE.svg")
 ## QFeatures
 
 As we have already discussed in the previous chapter, even though mass
-spectrometers acquire data for spectra/peptides, the biological entity
-of remains the protein. As part of the data processing, we are thus
-required to **aggregate** low-level quantitative features into higher
-level data.
+spectrometers acquire data for spectra/peptides, the biological
+entities of interest remain the proteins. As part of the data
+processing, we are thus required to **aggregate** low-level
+quantitative features into higher level data.
 
 
 ```{r featuresplot, fig.cap = "Conceptual representation of a `QFeatures` object and the aggregative relation between different assays.", echo = FALSE}
@@ -104,7 +104,7 @@ segments(8, 15, 9, 12, lty = "dashed")
 We are going to start to familiarise ourselves with the `QFeatures`
 class implemented in the [`QFeatures`
 package](https://rformassspectrometry.github.io/QFeatures/articles/QFeatures.html). Let's
-start by loading the `tidyvers` and `QFeaures` packages.
+start by loading the `tidyverse` and `QFeatures` packages.
 
 ```{r sticker2, fig.cap = "The `QFeatures` package.", out.width = '50%', fig.margin=TRUE, echo=FALSE}
 knitr::include_graphics("figs/QFeatures.png")
@@ -188,7 +188,7 @@ feat1
 
 `r msmbstyle::question_begin()`
 
-- Convince yourself that you inderstand the effect of feature
+- Convince yourself that you understand the effect of feature
   aggregation.
 - Repeat the calculations manually.
 - Observe the content of the new assay's row data.
@@ -284,7 +284,7 @@ filterFeatures(feat1, ~ location != "Mitochondrion")
 
 `r msmbstyle::solution_end()`
 
-You can refer the the [*Quantitative features for mass spectrometry
+You can refer to the [*Quantitative features for mass spectrometry
 data*](https://rformassspectrometry.github.io/QFeatures/articles/QFeatures.html)
 vignette and the `QFeature` [manual
 page](https://rformassspectrometry.github.io/QFeatures/reference/QFeatures-class.html)
@@ -770,7 +770,7 @@ ggplotly(vp)
 
 Using the pipeline described above, we would would identify a single
 differentially expressed protein at an 5 percent FDR but miss out the
-other `r sum(res$TP) - 1` expected spike-in proteins. 
+other `r sum(res$TP) - 1` expected spike-in proteins.
 
 We can assess our results in terms of true/false postitves/negatives:
 
