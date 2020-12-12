@@ -112,6 +112,7 @@ knitr::include_graphics("figs/QFeatures.png")
 
 ```{r, message = FALSE}
 library("tidyverse")
+library("ggplot2")
 library("QFeatures")
 library("limma")
 ```
@@ -757,8 +758,8 @@ vp <-
     res %>%
     ggplot(aes(x = logFC, y = -log10(adj.P.Val))) +
     geom_point(aes(colour = TP)) +
-    ggplot2::geom_vline(xintercept = c(-1, 1)) +
-    ggplot2::geom_hline(yintercept = -log10(0.05)) +
+    geom_vline(xintercept = c(-1, 1)) +
+    geom_hline(yintercept = -log10(0.05)) +
     scale_color_manual(values = c("black","red"))
 ```
 
@@ -808,8 +809,8 @@ res <- topTable(fit, coef = "prots$condition6B", number = Inf) %>%
 res %>%
     ggplot(aes(x = logFC, y = -log10(adj.P.Val))) +
     geom_point(aes(colour = TP)) +
-    ggplot2::geom_vline(xintercept = c(-1, 1)) +
-    ggplot2::geom_hline(yintercept = -log10(0.05)) +
+    geom_vline(xintercept = c(-1, 1)) +
+    geom_hline(yintercept = -log10(0.05)) +
     scale_color_manual(values = c("black","red"))
 ```
 

@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-12-11" />
+<meta name="date" content="2020-12-12" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -507,11 +507,11 @@ dds_tmp<span class="op">$</span>Condition &lt;-<span class="st"> </span>dds_tmp<
 <pre><code>## DataFrame with 6 rows and 4 columns
 ##                Cell        Type Condition sizeFactor
 ##         &lt;character&gt; &lt;character&gt;  &lt;factor&gt;  &lt;numeric&gt;
-## sample1       Cell1  Epithelial      KD     0.726883
-## sample2       Cell1  Epithelial      mock   1.308664
+## sample1       Cell1  Epithelial      mock   0.726883
+## sample2       Cell1  Epithelial      KD     1.308664
 ## sample3       Cell1  Epithelial      KD     1.077368
-## sample4       Cell1  Epithelial      mock   0.966025
-## sample5       Cell1  Epithelial      KD     1.042111
+## sample4       Cell1  Epithelial      KD     0.966025
+## sample5       Cell1  Epithelial      mock   1.042111
 ## sample6       Cell1  Epithelial      mock   1.012664</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res_tmp &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds_tmp) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">results</span>(<span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>) <span class="op">%&gt;%</span>
@@ -529,22 +529,22 @@ res_tmp &lt;-<span class="st"> </span>res_tmp <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">mutate</span>(<span class="dt">score =</span> <span class="kw">cumsum</span>(score))
 
 res_tmp</code></pre></div>
-<pre><code>## # A tibble: 19,092 x 5
+<pre><code>## # A tibble: 19,093 x 5
 ##    ENSEMBL          ENTREZID  padj inGO  score
 ##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
-##  1 ENSG00000223972     84771  1.00 FALSE    -1
-##  2 ENSG00000223972    727856  1.00 FALSE    -2
-##  3 ENSG00000223972 100287102  1.00 FALSE    -3
-##  4 ENSG00000223972 100287596  1.00 FALSE    -4
-##  5 ENSG00000223972 102725121  1.00 FALSE    -5
-##  6 ENSG00000227232    653635  1.00 FALSE    -6
-##  7 ENSG00000278267 102466751  1.00 FALSE    -7
-##  8 ENSG00000279457 102723897  1.00 FALSE    -8
-##  9 ENSG00000230021 101928626  1.00 FALSE    -9
-## 10 ENSG00000237491 105378580  1.00 FALSE   -10
-## # … with 19,082 more rows</code></pre>
+##  1 ENSG00000223972     84771 0.999 FALSE    -1
+##  2 ENSG00000223972    727856 0.999 FALSE    -2
+##  3 ENSG00000223972 100287102 0.999 FALSE    -3
+##  4 ENSG00000223972 100287596 0.999 FALSE    -4
+##  5 ENSG00000223972 102725121 0.999 FALSE    -5
+##  6 ENSG00000227232    653635 0.999 FALSE    -6
+##  7 ENSG00000278267 102466751 0.999 FALSE    -7
+##  8 ENSG00000279457 102723897 0.999 FALSE    -8
+##  9 ENSG00000230021 101928626 0.999 FALSE    -9
+## 10 ENSG00000237491 105378580 0.999 FALSE   -10
+## # … with 19,083 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">max</span>(res_tmp<span class="op">$</span>score)</code></pre></div>
-<pre><code>## [1] 412.3333</code></pre>
+<pre><code>## [1] 357.3901</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(res_tmp<span class="op">$</span>score, <span class="dt">type =</span> <span class="st">"l"</span>)</code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-119-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests for all the genes need to be recomputer at each permutation. In addition, for experiments with limited number of samples, the number of permutations would be limited.</p>
@@ -960,7 +960,7 @@ res_tbl <span class="op">%&gt;%</span>
 <a href="sec-ms.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-12-11
+2020-12-12
 </p>
 </div>
 </div>
