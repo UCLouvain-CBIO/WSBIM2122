@@ -17,7 +17,7 @@ and
 [previous](https://uclouvain-cbio.github.io/WSBIM1322/sec-obj.html#examples-from-the-bioconductor-project)
 course, we will be using the `SummarizedExperiment` class:
 
-```{r sefig, echo = FALSE, fig.cap = "Schematic representation of the anatomy if a `SummarizedExperiment` object. (Figure taken from the `SummarizedExperiment` package vignette.)"}
+```{r sefig, echo = FALSE, fig.cap = "Schematic representation of the anatomy of a `SummarizedExperiment` object. (Figure taken from the `SummarizedExperiment` package vignette.)"}
 knitr::include_graphics("./figs/SE.svg")
 ```
 
