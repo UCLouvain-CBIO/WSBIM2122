@@ -121,7 +121,7 @@ Each entry in a fastq file consists of 4 lines:
   [ASCII characters](https://theasciicode.com.ar) to represent the
   numerical quality scores.  Each character is assigned a quality
   score between 0 and 40. Quality scores represent the probability
-  that the corresponding nucleotide call is incorrect.
+  that the corresponding nucleotide call is correct.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%'}
 knitr::include_graphics("figs/phred_score.png")

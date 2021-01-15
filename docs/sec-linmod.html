@@ -14,14 +14,14 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-09-24" />
+<meta name="date" content="2020-12-13" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   TeX: { equationNumbers: { autoNumber: "AMS" } }
 });
 </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
@@ -47,80 +47,60 @@ if(f.classList.contains('fa-plus-square')) {
 
 }
 </script>
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
 <script src="libs/jquery-1.12.4/jquery.min.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.15/datatables.js"></script>
+<script src="libs/datatables-binding-0.16/datatables.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 
@@ -150,10 +130,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="toc"><a href="#model-generalisation"> Model generalisation</a></li>
 <li class="toc"><a href="#interactions-between-variables"> Interactions between variables</a></li>
 <li class="toc"><a href="#exercise"> Exercise</a></li>
+<li class="toc"><a href="#which-model-to-use"> Which model to use?</a></li>
 </ul>
 <a href="sec-hts.html"><span class="toc-section-number">4</span> High throughput sequencing</a>
 <a href="sec-rnaseq.html"><span class="toc-section-number">5</span> Differential expression analysis</a>
-<a href="sec-gsea.html"><span class="toc-section-number">6</span> Gene set enrichment analysis</a>
+<a href="sec-gsea.html"><span class="toc-section-number">6</span> Enrichment analyses</a>
 <a href="sec-ms.html"><span class="toc-section-number">7</span> Mass spectrometry</a>
 <a href="sec-prot.html"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
 <a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
@@ -171,9 +152,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <html><body><div id="sec:linmod" class="section level1">
 <h1>
 <span class="header-section-number">Chapter 3</span> Linear models</h1>
-<p>The objective of this chapter is to provide students with an intuitive
-understanding of how linear models are used in significance testing,
-and more specifically</p>
+<p>The objective of this chapter is to provide students with an intuitive understanding of how linear models are used in significance testing, and more specifically</p>
 <ul>
 <li>show how linear models are equivalent to a t-test</li>
 <li>demonstrate their flexibility.</li>
@@ -186,13 +165,10 @@ and more specifically</p>
 ► Question
 </p>
 <div class="question-body">
-<p>Load the <code>gexp</code> data from the <code>rWSBIM2122</code> package (version &gt;= 0.2.2)
-as show below. It provides the log2 expression of a single gene of
-interest measured in two groups, namely 1 and 2. Ignore the <code>ID</code>
-column for now.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="kw">library</span>(rWSBIM2122)</a>
-<a class="sourceLine" id="cb54-2" data-line-number="2"><span class="kw">data</span>(gexp)</a>
-<a class="sourceLine" id="cb54-3" data-line-number="3">gexp</a></code></pre></div>
+<p>Load the <code>gexp</code> data from the <code>rWSBIM2122</code> package (version &gt;= 0.2.2) as show below. It provides the log2 expression of a single gene of interest measured in two groups, namely 1 and 2. Ignore the <code>ID</code> column for now.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rWSBIM2122)
+<span class="kw">data</span>(gexp)
+gexp</code></pre></div>
 <pre><code>##    expression group ID
 ## 1         2.7     1  1
 ## 2         0.4     1  2
@@ -214,9 +190,7 @@ column for now.</p>
 ## 18        3.6     2  8
 ## 19        6.6     2  9
 ## 20        5.4     2 10</code></pre>
-<p>Using a t-test, compare the expression in groups 1 and 2. In
-particular, report the mean expression of each group, the log2
-fold-change, the associated p-value and visualise the data.</p>
+<p>Using a t-test, compare the expression in groups 1 and 2. In particular, report the mean expression of each group, the log2 fold-change, the associated p-value and visualise the data.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -227,9 +201,9 @@ fold-change, the associated p-value and visualise the data.</p>
 ► Solution<span id="sol-start-1" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-1', 'sol-start-1')"></span>
 </p>
 <div id="sol-body-1" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">t.test</span>(expression <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> gexp)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(expression <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> gexp)</code></pre></div>
 <pre><code>## 
-## 	Welch Two Sample t-test
+##  Welch Two Sample t-test
 ## 
 ## data:  expression by group
 ## t = -1.8608, df = 17.776, p-value = 0.07939
@@ -239,10 +213,10 @@ fold-change, the associated p-value and visualise the data.</p>
 ## sample estimates:
 ## mean in group 1 mean in group 2 
 ##            2.75            4.33</code></pre>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"ggplot2"</span>)</a>
-<a class="sourceLine" id="cb58-2" data-line-number="2">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gexp, <span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> expression)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb58-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>()</a>
-<a class="sourceLine" id="cb58-4" data-line-number="4">p</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"ggplot2"</span>)
+p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gexp, <span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> expression)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_jitter</span>()
+p</code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/gexp_vis1-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -253,21 +227,16 @@ fold-change, the associated p-value and visualise the data.</p>
 <div id="the-linear-model-equivalence" class="section level2">
 <h2>
 <span class="header-section-number">3.2</span> The linear model equivalence</h2>
-<p>Let’s now use linear regression and the <code>lm()</code> function to model the
-expression in groups 1 and 2:</p>
-<p><span class="math display">\[y = \beta_0 + \beta_1 \times x + \epsilon\]</span></p>
-<p>where <span class="math inline">\(y\)</span> is the expression we want to model and <span class="math inline">\(x\)</span> represents the
-two groups that are generally encoded as 0 and 1. The expression above
-translates as follows:</p>
+<p>Let's now use linear regression and the <code>lm()</code> function to model the expression in groups 1 and 2:</p>
+<p><span class="math display">\[expression = \beta_0 + \beta_1 \times x + \epsilon\]</span></p>
+<p>where <span class="math inline">\(y\)</span> is the expression we want to model and <span class="math inline">\(x\)</span> represents the two groups that are generally encoded as 0 and 1. The expression above translates as follows:</p>
 <ul>
-<li>the expression in group 1 (i.e. when <span class="math inline">\(x = 0\)</span>) is equal to <span class="math inline">\(\beta_0\)</span>
-(the average expression of group 1);</li>
-<li>the expression in group 2 (i.e. when <span class="math inline">\(x = 1\)</span>) is equal to
-<span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> (the difference between group 1 and group 2).</li>
+<li>the expression in group 1 (i.e. when <span class="math inline">\(x = 0\)</span>) is equal to <span class="math inline">\(\beta_0\)</span> (the average expression of group 1);</li>
+<li>the expression in group 2 (i.e. when <span class="math inline">\(x = 1\)</span>) is equal to <span class="math inline">\(\beta_0\)</span> + <span class="math inline">\(\beta_1\)</span> (the difference between group 1 and group 2).</li>
 </ul>
 <p>We model this with</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> gexp)</a>
-<a class="sourceLine" id="cb59-2" data-line-number="2">mod1</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod1 &lt;-<span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> gexp)
+mod1</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = expression ~ group, data = gexp)
@@ -278,23 +247,19 @@ translates as follows:</p>
 <p>An indeed, we see that</p>
 <ol style="list-style-type: decimal">
 <li>the intercept corresponds to the mean in group 1, and</li>
-<li>the slope (<code>group2</code> coefficient) of the model corresponds to the
-log2 fold-change and that, as expected, the mean of group 2 is
-<em>intercept + slope</em>.</li>
+<li>the slope (<code>group2</code> coefficient) of the model corresponds to the log2 fold-change and that, as expected, the mean of group 2 is <em>intercept + slope</em>.</li>
 </ol>
 <p>We can visualise this linear model with:</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1">p  <span class="op">+</span></a>
-<a class="sourceLine" id="cb61-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">y =</span> <span class="kw">c</span>(<span class="fl">2.75</span>, <span class="fl">4.33</span>)),</a>
-<a class="sourceLine" id="cb61-3" data-line-number="3">               <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y),</a>
-<a class="sourceLine" id="cb61-4" data-line-number="4">               <span class="dt">colour =</span> <span class="st">"red"</span>, <span class="dt">size =</span> <span class="dv">5</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb61-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="kw">coefficients</span>(mod1)[<span class="dv">1</span>] <span class="op">-</span><span class="st"> </span><span class="kw">coefficients</span>(mod1)[<span class="dv">2</span>],</a>
-<a class="sourceLine" id="cb61-6" data-line-number="6">                <span class="dt">slope =</span> <span class="kw">coefficients</span>(mod1)[<span class="dv">2</span>])</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p  <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">y =</span> <span class="kw">c</span>(<span class="fl">2.75</span>, <span class="fl">4.33</span>)),
+               <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y),
+               <span class="dt">colour =</span> <span class="st">"red"</span>, <span class="dt">size =</span> <span class="dv">5</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="kw">coefficients</span>(mod1)[<span class="dv">1</span>] <span class="op">-</span><span class="st"> </span><span class="kw">coefficients</span>(mod1)[<span class="dv">2</span>],
+                <span class="dt">slope =</span> <span class="kw">coefficients</span>(mod1)[<span class="dv">2</span>])</code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
-<p>Note that above, we need to subtract the slope from the intercept when
-plotting the linear model because groups 1 and 2 are encoded as 0 and
-1 in the model, but plotted as 1 and 2 on the figure.</p>
+<p>Note that above, we need to subtract the slope from the intercept when plotting the linear model because groups 1 and 2 are encoded as 0 and 1 in the model, but plotted as 1 and 2 on the figure.</p>
 <p>We can also extract the p-value associated with the coefficients:</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="kw">summary</span>(mod1)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mod1)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = expression ~ group, data = gexp)
@@ -311,13 +276,11 @@ plotting the linear model because groups 1 and 2 are encoded as 0 and
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 1.899 on 18 degrees of freedom
-## Multiple R-squared:  0.1613,	Adjusted R-squared:  0.1147 
+## Multiple R-squared:  0.1613, Adjusted R-squared:  0.1147 
 ## F-statistic: 3.463 on 1 and 18 DF,  p-value: 0.07919</code></pre>
 <p>that are computer as</p>
 <p><span class="math display">\[t_{score} = \frac{\beta_i - 0}{SE_{\beta_i}}\]</span></p>
-<p>that has a t-distribution with n − 2 degrees of freedom if the null
-hypothesis is true. We use a t-test that tests whether the slope is
-different from 0:</p>
+<p>that has a t-distribution with n − 2 degrees of freedom if the null hypothesis is true. We use a t-test that tests whether the slope is different from 0:</p>
 <ul>
 <li>
 <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\beta_i = 0\)</span>
@@ -326,12 +289,10 @@ different from 0:</p>
 <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\beta_i \neq 0\)</span>
 </li>
 </ul>
-<p>The p-values for the slope <span class="math inline">\(\beta_1\)</span> is slightly different due to the
-homoscedasticity assumption that wasn’t set in the t-test, which we
-can repeat:</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw">t.test</span>(expression <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> gexp, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p>The p-values for the slope <span class="math inline">\(\beta_1\)</span> is slightly different due to the homoscedasticity assumption that wasn't set in the t-test, which we can repeat:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(expression <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> gexp, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
-## 	Two Sample t-test
+##  Two Sample t-test
 ## 
 ## data:  expression by group
 ## t = -1.8608, df = 18, p-value = 0.07919
@@ -350,15 +311,9 @@ can repeat:</p>
 ► Question
 </p>
 <div class="question-body">
-<p>The <code>ID</code> variable in the <code>gexp</code> data provides the unique sample
-identifier: it is the sample in which an expression of 2.7 was
-measured in group 1 and 3.9 in group 2.</p>
-<p>Repeat the test comparing the gene expression between group 1 and
-group 2 using a <em>paired</em> t-test. Report the mean expression of each
-group, the log2 fold-change, the associated p-value and visualise the
-data.</p>
-<p>Compare the p-values obtained in the paired and unpaired designs and
-explain the differences.</p>
+<p>The <code>ID</code> variable in the <code>gexp</code> data provides the unique sample identifier: it is the sample in which an expression of 2.7 was measured in group 1 and 3.9 in group 2.</p>
+<p>Repeat the test comparing the gene expression between group 1 and group 2 using a <em>paired</em> t-test. Report the mean expression of each group, the log2 fold-change, the associated p-value and visualise the data.</p>
+<p>Compare the p-values obtained in the paired and unpaired designs and explain the differences.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -369,9 +324,9 @@ explain the differences.</p>
 ► Solution<span id="sol-start-2" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-2', 'sol-start-2')"></span>
 </p>
 <div id="sol-body-2" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="kw">t.test</span>(expression <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> gexp, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(expression <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> gexp, <span class="dt">paired =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
-## 	Paired t-test
+##  Paired t-test
 ## 
 ## data:  expression by group
 ## t = -4.0621, df = 9, p-value = 0.002833
@@ -381,35 +336,28 @@ explain the differences.</p>
 ## sample estimates:
 ## mean of the differences 
 ##                   -1.58</code></pre>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1">gexp2 &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">full_join</span>(gexp[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, ], gexp[<span class="dv">11</span><span class="op">:</span><span class="dv">20</span>, ],</a>
-<a class="sourceLine" id="cb68-2" data-line-number="2">                          <span class="dt">by =</span> <span class="st">"ID"</span>, <span class="dt">suffix =</span> <span class="kw">c</span>(<span class="st">"_1"</span>, <span class="st">"_2"</span>))</a>
-<a class="sourceLine" id="cb68-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb68-4" data-line-number="4"><span class="kw">ggplot</span>(gexp, <span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> expression)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-6" data-line-number="6"><span class="st">    </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> ID), <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb68-7" data-line-number="7"><span class="st">    </span><span class="kw">geom_segment</span>(<span class="dt">data =</span> gexp2,</a>
-<a class="sourceLine" id="cb68-8" data-line-number="8">                 <span class="kw">aes</span>(<span class="dt">x =</span> group_<span class="dv">1</span>, <span class="dt">xend =</span> group_<span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb68-9" data-line-number="9">                     <span class="dt">y =</span> expression_<span class="dv">1</span>, <span class="dt">yend =</span> expression_<span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb68-10" data-line-number="10">                     <span class="dt">colour =</span> <span class="kw">factor</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gexp2 &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">full_join</span>(gexp[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, ], gexp[<span class="dv">11</span><span class="op">:</span><span class="dv">20</span>, ],
+                          <span class="dt">by =</span> <span class="st">"ID"</span>, <span class="dt">suffix =</span> <span class="kw">c</span>(<span class="st">"_1"</span>, <span class="st">"_2"</span>))
+
+<span class="kw">ggplot</span>(gexp, <span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> expression)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> ID), <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_segment</span>(<span class="dt">data =</span> gexp2,
+                 <span class="kw">aes</span>(<span class="dt">x =</span> group_<span class="dv">1</span>, <span class="dt">xend =</span> group_<span class="dv">2</span>,
+                     <span class="dt">y =</span> expression_<span class="dv">1</span>, <span class="dt">yend =</span> expression_<span class="dv">2</span>,
+                     <span class="dt">colour =</span> ID))</code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/gexp_vis2-1.png" width="672"></p>
-<p>In the unpaired design, the variances in groups 1 and 2 are
-3.2 and
-4.01 respectively,
-and do not take into account the paired relation between
-samples. Using a paired design allows for a smaller estimation of the
-observed variability, leading to a greater t statistic and a smaller
-p-value.</p>
+<p>In the unpaired design, the variances in groups 1 and 2 are 3.2 and 4.01 respectively, and do not take into account the paired relation between samples. Using a paired design allows for a smaller estimation of the observed variability, leading to a greater t statistic and a smaller p-value.</p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
-<p>This comparison can be replicated using a linar model</p>
-<p><span class="math display">\[y = \beta_0 + \beta_1 \times group + \beta_2 \times ID + \epsilon\]</span></p>
-<p>where the <span class="math inline">\(\beta_2\)</span> coefficient will encode the relation between pairs
-of individuals. We model this with</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1">mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>group <span class="op">+</span><span class="st"> </span>ID, <span class="dt">data =</span> gexp)</a>
-<a class="sourceLine" id="cb69-2" data-line-number="2">mod2</a></code></pre></div>
+<p>This comparison can be replicated using a linar model<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> See below for the exact equation.</span></p>
+<p><span class="math display">\[y = \beta_0 + \beta_1 \times group + \beta_i \times ID + \epsilon\]</span></p>
+<p>where the <span class="math inline">\(\beta_i\)</span> coefficients will encode the relation between pairs of individuals. We model this with</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod2 &lt;-<span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>group <span class="op">+</span><span class="st"> </span>ID, <span class="dt">data =</span> gexp)
+mod2</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = expression ~ group + ID, data = gexp)
@@ -419,19 +367,23 @@ of individuals. We model this with</p>
 ##        2.51         1.58        -1.70        -0.85        -1.85        -1.40  
 ##         ID6          ID7          ID8          ID9         ID10  
 ##        2.60         3.30        -0.10         1.00         1.40</code></pre>
-<p>The <code>group2</code> coefficient still corresponds to the fold-change between
-the two groups. The coefficients <code>ID2</code> to <code>ID10</code> correspond to the
-respective differences between the average expression of <code>ID1</code> and
-<code>ID2</code> to <code>ID10</code>.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1">avg_id &lt;-<span class="st"> </span>(gexp2<span class="op">$</span>expression_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>gexp2<span class="op">$</span>expression_<span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb71-2" data-line-number="2">coefs_id &lt;-<span class="st"> </span>avg_id[<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span><span class="st"> </span>avg_id[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb71-3" data-line-number="3"><span class="kw">names</span>(coefs_id) &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">"ID"</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb71-4" data-line-number="4">coefs_id</a></code></pre></div>
+<p>which corresponds to the following model</p>
+<p><span class="math display">\[
+\begin{aligned}
+    \operatorname{expression} &amp;= \beta_{0} + \beta_{1}(\operatorname{group}_{\operatorname{2}}) + \beta_{2}(\operatorname{ID}_{\operatorname{2}}) + \beta_{3}(\operatorname{ID}_{\operatorname{3}})\ + \\
+    &amp;\quad \beta_{4}(\operatorname{ID}_{\operatorname{4}}) + \beta_{5}(\operatorname{ID}_{\operatorname{5}}) + \beta_{6}(\operatorname{ID}_{\operatorname{6}}) + \beta_{7}(\operatorname{ID}_{\operatorname{7}})\ + \\
+    &amp;\quad \beta_{8}(\operatorname{ID}_{\operatorname{8}}) + \beta_{9}(\operatorname{ID}_{\operatorname{9}}) + \beta_{10}(\operatorname{ID}_{\operatorname{10}}) + \epsilon
+\end{aligned}
+\]</span></p>
+<p>The <code>group2</code> coefficient still corresponds to the fold-change between the two groups. The coefficients <code>ID2</code> to <code>ID10</code> correspond to the respective differences between the average expression of <code>ID1</code> and <code>ID2</code> to <code>ID10</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">avg_id &lt;-<span class="st"> </span>(gexp2<span class="op">$</span>expression_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>gexp2<span class="op">$</span>expression_<span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span>
+coefs_id &lt;-<span class="st"> </span>avg_id[<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span><span class="st"> </span>avg_id[<span class="dv">1</span>]
+<span class="kw">names</span>(coefs_id) &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">"ID"</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">10</span>)
+coefs_id</code></pre></div>
 <pre><code>##   ID2   ID3   ID4   ID5   ID6   ID7   ID8   ID9  ID10 
 ## -1.70 -0.85 -1.85 -1.40  2.60  3.30 -0.10  1.00  1.40</code></pre>
-<p>As above, a summary of the model will give us the statistical
-significance for the different coefficients.</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="kw">summary</span>(mod2)</a></code></pre></div>
+<p>As above, a summary of the model will give us the statistical significance for the different coefficients.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mod2)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = expression ~ group + ID, data = gexp)
@@ -457,7 +409,7 @@ significance for the different coefficients.</p>
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.8697 on 9 degrees of freedom
-## Multiple R-squared:  0.912,	Adjusted R-squared:  0.8142 
+## Multiple R-squared:  0.912,  Adjusted R-squared:  0.8142 
 ## F-statistic: 9.328 on 10 and 9 DF,  p-value: 0.001254</code></pre>
 <div class="question">
 <p class="question-begin">
@@ -475,13 +427,8 @@ significance for the different coefficients.</p>
 ► Solution<span id="sol-start-3" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-3', 'sol-start-3')"></span>
 </p>
 <div id="sol-body-3" class="solution-body" style="display: none;">
-<p>We see that the <code>group2</code> coefficient, that tests the difference
-between the two groups is now significant. It is identical to the
-paired t-test above.</p>
-<p>The respective ID coefficients compare the average expression in these
-IDs against the average expression of ID1. We can indeed see that ID6
-and ID7, that have significant coefficients, are the most different
-from ID1.</p>
+<p>We see that the <code>group2</code> coefficient, that tests the difference between the two groups is now significant. It is identical to the paired t-test above.</p>
+<p>The respective ID coefficients compare the average expression in these IDs against the average expression of ID1. We can indeed see that ID6 and ID7, that have significant coefficients, are the most different from ID1.</p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -491,21 +438,15 @@ from ID1.</p>
 <div id="model-generalisation" class="section level2">
 <h2>
 <span class="header-section-number">3.4</span> Model generalisation</h2>
-<p>In the example above, we had two variables that influenced the gene
-expression, namely the group and the specific individual and we ended
-up with a model that included both of these<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> We will drop the left-hand side term of our formula, setting
-it by default as the quantiative expression data.</span>:</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="op">~</span><span class="st"> </span>group <span class="op">+</span><span class="st"> </span>ID</a></code></pre></div>
-<p>Any additional variables could be added to the model if deemed
-necessary.</p>
+<p>In the example above, we had two variables that influenced the gene expression, namely the group and the specific individual and we ended up with a model that included both of these<label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> We will drop the left-hand side term of our formula, setting it by default as the quantiative expression data.</span>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">~</span><span class="st"> </span>group <span class="op">+</span><span class="st"> </span>ID</code></pre></div>
+<p>Any additional variables could be added to the model if deemed necessary.</p>
 <div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
-<p>We have measured the gene expression in cell lines U2OS and Jurkat
-(defined as variable <code>cell_line</code>), each in the presence of drug A or B
-(defined as variable <code>drug</code>). How would you define the model formula?</p>
+<p>We have measured the gene expression in cell lines U2OS and Jurkat (defined as variable <code>cell_line</code>), each in the presence of drug A or B (defined as variable <code>drug</code>). How would you define the model formula?</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -516,11 +457,7 @@ necessary.</p>
 ► Question
 </p>
 <div class="question-body">
-<p>As above, we have measured the gene expression in cell lines U2OS and
-Jurkat (defined as variable <code>cell_line</code>), each in the presence of drug
-A or B (defined as variable <code>drug</code>). This time however, two operators
-(defined as variable <code>operator</code>) have shared the work. How would you
-define the model formula?</p>
+<p>As above, we have measured the gene expression in cell lines U2OS and Jurkat (defined as variable <code>cell_line</code>), each in the presence of drug A or B (defined as variable <code>drug</code>). This time however, two operators (defined as variable <code>operator</code>) have shared the work. How would you define the model formula?</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -531,11 +468,7 @@ define the model formula?</p>
 ► Question
 </p>
 <div class="question-body">
-<p>We have measured the gene expression in cell lines U2OS and Jurkat
-(defined as variable <code>cell_line</code>), each in the presence of drug A, B
-or C (defined as variable <code>drug</code>). How would you define the model
-formula? Which coefficient would you include in the hypothesis test to
-assess the drug effect?</p>
+<p>We have measured the gene expression in cell lines U2OS and Jurkat (defined as variable <code>cell_line</code>), each in the presence of drug A, B or C (defined as variable <code>drug</code>). How would you define the model formula? Which coefficient would you include in the hypothesis test to assess the drug effect?</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -545,21 +478,13 @@ assess the drug effect?</p>
 <div id="interactions-between-variables" class="section level2">
 <h2>
 <span class="header-section-number">3.5</span> Interactions between variables</h2>
-<p>Consider the following design: two genotypes of plants, wild type and
-a mutant that shows some resistance to drought, that are grown,
-collected and analysed by RNA sequencing under normal, humid and dry
-conditions. The researchers that set up this experiment expect that
-the two genotypes will produce, for some key genes, opposite responses
-in the extreme conditions: that the expression of some genes will
-increase in the mutant under dry conditions while it will decrease
-under humid conditions.</p>
-<div id="htmlwidget-07844f9733c3e3349ec3" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-07844f9733c3e3349ec3">{"x":{"filter":"none","data":[[1,2,3,4,5,6,7,8,9,10,11,12],["WT","WT","WT","WT","WT","WT","MT","MT","MT","MT","MT","MT"],["normal","dry","humid","normal","dry","humid","normal","dry","humid","normal","dry","humid"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>sample<\/th>\n      <th>genotype<\/th>\n      <th>condition<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Such situation require a new model formula syntax, that</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="op">~</span><span class="st"> </span>genotype<span class="op">*</span>condition</a></code></pre></div>
+<p>Consider the following design: two genotypes of plants, wild type and a mutant that shows some resistance to drought, that are grown, collected and analysed by RNA sequencing under normal, humid and dry conditions. The researchers that set up this experiment expect that the two genotypes will produce, for some key genes, opposite responses in the extreme conditions: that the expression of some genes will increase in the mutant under dry conditions while it will decrease under humid conditions.</p>
+<div id="htmlwidget-fdfb721fa21a90331903" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fdfb721fa21a90331903">{"x":{"filter":"none","data":[[1,2,3,4,5,6,7,8,9,10,11,12],["WT","WT","WT","WT","WT","WT","MT","MT","MT","MT","MT","MT"],["normal","dry","humid","normal","dry","humid","normal","dry","humid","normal","dry","humid"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>sample<\/th>\n      <th>genotype<\/th>\n      <th>condition<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Such situation require a new model formula syntax, that</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">~</span><span class="st"> </span>genotype <span class="op">*</span><span class="st"> </span>condition</code></pre></div>
 <p>which is equivalent to</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="op">~</span><span class="st"> </span>genotype <span class="op">+</span><span class="st"> </span>condition <span class="op">+</span><span class="st"> </span>genotype<span class="op">*</span>condition</a></code></pre></div>
-<p>Here, coefficients are estimated for <code>genotype</code>, <code>condition</code> and the
-<strong>interaction</strong> between the two.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">~</span><span class="st"> </span>genotype <span class="op">+</span><span class="st"> </span>condition <span class="op">+</span><span class="st"> </span>genotype <span class="op">*</span><span class="st"> </span>condition</code></pre></div>
+<p>Here, coefficients are estimated for <code>genotype</code>, <code>condition</code> and the <strong>interaction</strong> between the two.</p>
 </div>
 <div id="exercise" class="section level2">
 <h2>
@@ -569,14 +494,9 @@ under humid conditions.</p>
 ► Question
 </p>
 <div class="question-body">
-<p>Load the <code>lmdata</code> data available in the <code>rWSBIM2122</code> package (version
-0.2.2 or later), which provides a factorial design (2 factors,
-<code>condition</code> and <code>cell_type</code> with 2 levels each) with gene expression
-for 5 genes and 12 samples.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw">data</span>(lmdata, <span class="dt">package =</span> <span class="st">"rWSBIM2122"</span>)</a></code></pre></div>
-<p>Analyse each gene with a linear model, defining an appropriate model
-formula, and interpret the results for each gene. You can visualise
-the data to help with the interpretation.</p>
+<p>Load the <code>lmdata</code> data available in the <code>rWSBIM2122</code> package (version 0.2.2 or later), which provides a factorial design (2 factors, <code>condition</code> and <code>cell_type</code> with 2 levels each) with gene expression for 5 genes and 12 samples.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(lmdata, <span class="dt">package =</span> <span class="st">"rWSBIM2122"</span>)</code></pre></div>
+<p>Analyse each gene with a linear model, defining an appropriate model formula, and interpret the results for each gene. You can visualise the data to help with the interpretation.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -587,17 +507,17 @@ the data to help with the interpretation.</p>
 ► Solution<span id="sol-start-4" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-4', 'sol-start-4')"></span>
 </p>
 <div id="sol-body-4" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"tidyverse"</span>)</a>
-<a class="sourceLine" id="cb79-2" data-line-number="2"><span class="co">## Prepare the data</span></a>
-<a class="sourceLine" id="cb79-3" data-line-number="3">x &lt;-</a>
-<a class="sourceLine" id="cb79-4" data-line-number="4"><span class="st">    </span><span class="kw">data.frame</span>(lmdata) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb79-5" data-line-number="5"><span class="st">    </span><span class="kw">rownames_to_column</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb79-6" data-line-number="6"><span class="st">    </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"sample"</span>, <span class="dt">values_to =</span> <span class="st">"expression"</span>, <span class="op">-</span>rowname) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb79-7" data-line-number="7"><span class="st">    </span><span class="kw">full_join</span>(lmannot) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb79-8" data-line-number="8"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">sample =</span> <span class="kw">sub</span>(<span class="st">"sample_"</span>, <span class="st">""</span>, sample))</a></code></pre></div>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1"><span class="co">## Analyse gene 1</span></a>
-<a class="sourceLine" id="cb80-2" data-line-number="2">x_i &lt;-<span class="st"> </span><span class="kw">filter</span>(x, rowname <span class="op">==</span><span class="st"> "gene_1"</span>)</a>
-<a class="sourceLine" id="cb80-3" data-line-number="3">x_i</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"tidyverse"</span>)
+## Prepare the data
+x &lt;-
+<span class="st">    </span><span class="kw">data.frame</span>(lmdata) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">rownames_to_column</span>() <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"sample"</span>, <span class="dt">values_to =</span> <span class="st">"expression"</span>, <span class="op">-</span>rowname) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">full_join</span>(lmannot) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">sample =</span> <span class="kw">sub</span>(<span class="st">"sample_"</span>, <span class="st">""</span>, sample))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Analyse gene 1
+x_i &lt;-<span class="st"> </span><span class="kw">filter</span>(x, rowname <span class="op">==</span><span class="st"> "gene_1"</span>)
+x_i</code></pre></div>
 <pre><code>## # A tibble: 12 x 5
 ##    rowname sample expression condition cell_type
 ##    &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
@@ -613,8 +533,8 @@ the data to help with the interpretation.</p>
 ## 10 gene_1  10           4.55 cond      B        
 ## 11 gene_1  11           6.22 cond      A        
 ## 12 gene_1  12           5.36 cond      B</code></pre>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1">mod_i &lt;-<span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition<span class="op">*</span>cell_type, <span class="dt">data =</span> x_i)</a>
-<a class="sourceLine" id="cb82-2" data-line-number="2"><span class="kw">summary</span>(mod_i)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod_i &lt;-<span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition <span class="op">*</span><span class="st"> </span>cell_type, <span class="dt">data =</span> x_i)
+<span class="kw">summary</span>(mod_i)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = expression ~ condition * cell_type, data = x_i)
@@ -633,16 +553,16 @@ the data to help with the interpretation.</p>
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.9811 on 8 degrees of freedom
-## Multiple R-squared:  0.1824,	Adjusted R-squared:  -0.1242 
+## Multiple R-squared:  0.1824, Adjusted R-squared:  -0.1242 
 ## F-statistic: 0.595 on 3 and 8 DF,  p-value: 0.6357</code></pre>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1"><span class="kw">ggplot</span>(x_i, <span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> expression,</a>
-<a class="sourceLine" id="cb84-2" data-line-number="2">                <span class="dt">colour =</span> condition,</a>
-<a class="sourceLine" id="cb84-3" data-line-number="3">                <span class="dt">shape =</span> cell_type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb84-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-16-1.png" width="672"></p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1"><span class="co">## Analyse gene 2</span></a>
-<a class="sourceLine" id="cb85-2" data-line-number="2">x_i &lt;-<span class="st"> </span><span class="kw">filter</span>(x, rowname <span class="op">==</span><span class="st"> "gene_2"</span>)</a>
-<a class="sourceLine" id="cb85-3" data-line-number="3">x_i</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(x_i, <span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> expression,
+                <span class="dt">colour =</span> condition,
+                <span class="dt">shape =</span> cell_type)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Analyse gene 2
+x_i &lt;-<span class="st"> </span><span class="kw">filter</span>(x, rowname <span class="op">==</span><span class="st"> "gene_2"</span>)
+x_i</code></pre></div>
 <pre><code>## # A tibble: 12 x 5
 ##    rowname sample expression condition cell_type
 ##    &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
@@ -658,8 +578,8 @@ the data to help with the interpretation.</p>
 ## 10 gene_2  10           3.78 cond      B        
 ## 11 gene_2  11           2.97 cond      A        
 ## 12 gene_2  12           3.27 cond      B</code></pre>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1">mod_i &lt;-<span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition<span class="op">*</span>cell_type, <span class="dt">data =</span> x_i)</a>
-<a class="sourceLine" id="cb87-2" data-line-number="2"><span class="kw">summary</span>(mod_i)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod_i &lt;-<span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition <span class="op">*</span><span class="st"> </span>cell_type, <span class="dt">data =</span> x_i)
+<span class="kw">summary</span>(mod_i)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = expression ~ condition * cell_type, data = x_i)
@@ -678,15 +598,15 @@ the data to help with the interpretation.</p>
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.6528 on 8 degrees of freedom
-## Multiple R-squared:  0.8448,	Adjusted R-squared:  0.7866 
+## Multiple R-squared:  0.8448, Adjusted R-squared:  0.7866 
 ## F-statistic: 14.52 on 3 and 8 DF,  p-value: 0.001335</code></pre>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw">ggplot</span>(x_i, <span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> expression, <span class="dt">colour =</span> cell_type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb89-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb89-3" data-line-number="3"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>condition)</a></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1"><span class="co">## Analyse gene 3</span></a>
-<a class="sourceLine" id="cb90-2" data-line-number="2">x_i &lt;-<span class="st"> </span><span class="kw">filter</span>(x, rowname <span class="op">==</span><span class="st"> "gene_3"</span>)</a>
-<a class="sourceLine" id="cb90-3" data-line-number="3">x_i</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(x_i, <span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> expression, <span class="dt">colour =</span> cell_type)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>condition)</code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-18-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Analyse gene 3
+x_i &lt;-<span class="st"> </span><span class="kw">filter</span>(x, rowname <span class="op">==</span><span class="st"> "gene_3"</span>)
+x_i</code></pre></div>
 <pre><code>## # A tibble: 12 x 5
 ##    rowname sample expression condition cell_type
 ##    &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
@@ -702,8 +622,8 @@ the data to help with the interpretation.</p>
 ## 10 gene_3  10           5.88 cond      B        
 ## 11 gene_3  11           3.41 cond      A        
 ## 12 gene_3  12           5.69 cond      B</code></pre>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1">mod_i &lt;-<span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition<span class="op">*</span>cell_type, <span class="dt">data =</span> x_i)</a>
-<a class="sourceLine" id="cb92-2" data-line-number="2"><span class="kw">summary</span>(mod_i)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod_i &lt;-<span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition <span class="op">*</span><span class="st"> </span>cell_type, <span class="dt">data =</span> x_i)
+<span class="kw">summary</span>(mod_i)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = expression ~ condition * cell_type, data = x_i)
@@ -722,15 +642,15 @@ the data to help with the interpretation.</p>
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.8489 on 8 degrees of freedom
-## Multiple R-squared:  0.7019,	Adjusted R-squared:  0.5901 
+## Multiple R-squared:  0.7019, Adjusted R-squared:  0.5901 
 ## F-statistic: 6.278 on 3 and 8 DF,  p-value: 0.01696</code></pre>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1"><span class="kw">ggplot</span>(x_i, <span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> expression, <span class="dt">colour =</span> condition)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb94-3" data-line-number="3"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>cell_type)</a></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-18-1.png" width="672"></p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1"><span class="co">## Analyse gene 4</span></a>
-<a class="sourceLine" id="cb95-2" data-line-number="2">x_i &lt;-<span class="st"> </span><span class="kw">filter</span>(x, rowname <span class="op">==</span><span class="st"> "gene_4"</span>)</a>
-<a class="sourceLine" id="cb95-3" data-line-number="3">x_i</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(x_i, <span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> expression, <span class="dt">colour =</span> condition)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>cell_type)</code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-19-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Analyse gene 4
+x_i &lt;-<span class="st"> </span><span class="kw">filter</span>(x, rowname <span class="op">==</span><span class="st"> "gene_4"</span>)
+x_i</code></pre></div>
 <pre><code>## # A tibble: 12 x 5
 ##    rowname sample expression condition cell_type
 ##    &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
@@ -746,8 +666,8 @@ the data to help with the interpretation.</p>
 ## 10 gene_4  10           3.75 cond      B        
 ## 11 gene_4  11           5.19 cond      A        
 ## 12 gene_4  12           5.07 cond      B</code></pre>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1">mod_i &lt;-<span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition<span class="op">*</span>cell_type, <span class="dt">data =</span> x_i)</a>
-<a class="sourceLine" id="cb97-2" data-line-number="2"><span class="kw">summary</span>(mod_i)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod_i &lt;-<span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition <span class="op">*</span><span class="st"> </span>cell_type, <span class="dt">data =</span> x_i)
+<span class="kw">summary</span>(mod_i)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = expression ~ condition * cell_type, data = x_i)
@@ -766,16 +686,16 @@ the data to help with the interpretation.</p>
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 2.246 on 8 degrees of freedom
-## Multiple R-squared:  0.02982,	Adjusted R-squared:  -0.334 
+## Multiple R-squared:  0.02982,    Adjusted R-squared:  -0.334 
 ## F-statistic: 0.08197 on 3 and 8 DF,  p-value: 0.968</code></pre>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1"><span class="kw">ggplot</span>(x_i, <span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> expression,</a>
-<a class="sourceLine" id="cb99-2" data-line-number="2">                <span class="dt">colour =</span> condition,</a>
-<a class="sourceLine" id="cb99-3" data-line-number="3">                <span class="dt">shape =</span> cell_type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb99-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-19-1.png" width="672"></p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1"><span class="co">## Analyse gene 5</span></a>
-<a class="sourceLine" id="cb100-2" data-line-number="2">x_i &lt;-<span class="st"> </span><span class="kw">filter</span>(x, rowname <span class="op">==</span><span class="st"> "gene_5"</span>)</a>
-<a class="sourceLine" id="cb100-3" data-line-number="3">x_i</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(x_i, <span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> expression,
+                <span class="dt">colour =</span> condition,
+                <span class="dt">shape =</span> cell_type)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-20-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Analyse gene 5
+x_i &lt;-<span class="st"> </span><span class="kw">filter</span>(x, rowname <span class="op">==</span><span class="st"> "gene_5"</span>)
+x_i</code></pre></div>
 <pre><code>## # A tibble: 12 x 5
 ##    rowname sample expression condition cell_type
 ##    &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
@@ -791,8 +711,8 @@ the data to help with the interpretation.</p>
 ## 10 gene_5  10           5.43 cond      B        
 ## 11 gene_5  11           4.87 cond      A        
 ## 12 gene_5  12           5.54 cond      B</code></pre>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1">mod_i &lt;-<span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition<span class="op">*</span>cell_type, <span class="dt">data =</span> x_i)</a>
-<a class="sourceLine" id="cb102-2" data-line-number="2"><span class="kw">summary</span>(mod_i)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod_i &lt;-<span class="st"> </span><span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition <span class="op">*</span><span class="st"> </span>cell_type, <span class="dt">data =</span> x_i)
+<span class="kw">summary</span>(mod_i)</code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = expression ~ condition * cell_type, data = x_i)
@@ -811,9 +731,9 @@ the data to help with the interpretation.</p>
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.4806 on 8 degrees of freedom
-## Multiple R-squared:  0.7094,	Adjusted R-squared:  0.6005 
+## Multiple R-squared:  0.7094, Adjusted R-squared:  0.6005 
 ## F-statistic: 6.511 on 3 and 8 DF,  p-value: 0.01536</code></pre>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="kw">group_by</span>(x_i, cell_type, condition) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(expression))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(x_i, cell_type, condition) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(expression))</code></pre></div>
 <pre><code>## `summarise()` regrouping output by 'cell_type' (override with `.groups` argument)</code></pre>
 <pre><code>## # A tibble: 4 x 3
 ## # Groups:   cell_type [2]
@@ -823,31 +743,130 @@ the data to help with the interpretation.</p>
 ## 2 A         ctrl       5.94
 ## 3 B         cond       5.73
 ## 4 B         ctrl       4.72</code></pre>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1"><span class="kw">group_by</span>(x_i, cell_type) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(expression))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(x_i, cell_type) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(expression))</code></pre></div>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre><code>## # A tibble: 2 x 2
 ##   cell_type  mean
 ##   &lt;chr&gt;     &lt;dbl&gt;
 ## 1 A          5.24
 ## 2 B          5.22</code></pre>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1"><span class="kw">group_by</span>(x_i, condition) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(expression))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(x_i, condition) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(expression))</code></pre></div>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre><code>## # A tibble: 2 x 2
 ##   condition  mean
 ##   &lt;chr&gt;     &lt;dbl&gt;
 ## 1 cond       5.13
 ## 2 ctrl       5.33</code></pre>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1"><span class="kw">ggplot</span>(x_i, <span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> expression,</a>
-<a class="sourceLine" id="cb113-2" data-line-number="2">                <span class="dt">colour =</span> condition,</a>
-<a class="sourceLine" id="cb113-3" data-line-number="3">                <span class="dt">shape =</span> cell_type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb113-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb113-5" data-line-number="5"><span class="st">    </span><span class="kw">facet_grid</span>(cell_type <span class="op">~</span><span class="st"> </span>condition)</a></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-20-1.png" width="672"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(x_i, <span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> expression,
+                <span class="dt">colour =</span> condition,
+                <span class="dt">shape =</span> cell_type)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_grid</span>(cell_type <span class="op">~</span><span class="st"> </span>condition)</code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
+</div>
+<div id="which-model-to-use" class="section level2">
+<h2>
+<span class="header-section-number">3.7</span> Which model to use?</h2>
+<p>The same experimental design can be analysed using different models. Some are clearly not appropriate, such as the omission of the ID variable in the first example. Other cases aren't that clear.</p>
+<ul>
+<li>If we return to the previous example for gene 3, we see that in both cases, we obtain significant results for the cell type coefficient, albeit with a much smaller p-value in the simpler model.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x_i &lt;-<span class="st"> </span><span class="kw">filter</span>(x, rowname <span class="op">==</span><span class="st"> "gene_3"</span>)
+<span class="kw">summary</span>(<span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition <span class="op">+</span><span class="st"> </span>cell_type, <span class="dt">data =</span> x_i))</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = expression ~ condition + cell_type, data = x_i)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.59493 -0.22101  0.07057  0.31352  1.34557 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     3.3586     0.4002   8.393 1.51e-05 ***
+## conditionctrl  -0.5142     0.4621  -1.113  0.29460    
+## cell_typeB      2.0639     0.4621   4.466  0.00156 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.8004 on 9 degrees of freedom
+## Multiple R-squared:  0.7019, Adjusted R-squared:  0.6356 
+## F-statistic: 10.59 on 2 and 9 DF,  p-value: 0.004314</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition <span class="op">*</span><span class="st"> </span>cell_type, <span class="dt">data =</span> x_i))</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = expression ~ condition * cell_type, data = x_i)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.59352 -0.22242  0.07198  0.31211  1.34698 
+## 
+## Coefficients:
+##                           Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)               3.357193   0.490117   6.850 0.000131 ***
+## conditionctrl            -0.511427   0.693130  -0.738 0.481685    
+## cell_typeB                2.066707   0.693130   2.982 0.017555 *  
+## conditionctrl:cell_typeB -0.005643   0.980234  -0.006 0.995547    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.8489 on 8 degrees of freedom
+## Multiple R-squared:  0.7019, Adjusted R-squared:  0.5901 
+## F-statistic: 6.278 on 3 and 8 DF,  p-value: 0.01696</code></pre>
+<p>The questions asked is slighly different. The coefficient <code>cell_typeB</code> in the model without interaction tests for shared differences in the two cell types by taking into account that there are two conditions. In the model with interaction, the test focuses in the cell type effect in the reference condition only.</p>
+<ul>
+<li>If we look at gene 5, we see that we miss out several significant effects if we use the simpler model, without interaction, because the simpler model doesn't ask the right question.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x_i &lt;-<span class="st"> </span><span class="kw">filter</span>(x, rowname <span class="op">==</span><span class="st"> "gene_5"</span>)
+<span class="kw">summary</span>(<span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition <span class="op">+</span><span class="st"> </span>cell_type, <span class="dt">data =</span> x_i))</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = expression ~ condition + cell_type, data = x_i)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.18410 -0.48934  0.01912  0.41084  1.22438 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    5.13882    0.41636  12.342 6.06e-07 ***
+## conditionctrl  0.19913    0.48077   0.414    0.688    
+## cell_typeB    -0.01715    0.48077  -0.036    0.972    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.8327 on 9 degrees of freedom
+## Multiple R-squared:  0.01884,    Adjusted R-squared:  -0.1992 
+## F-statistic: 0.08641 on 2 and 9 DF,  p-value: 0.918</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">lm</span>(expression <span class="op">~</span><span class="st"> </span>condition <span class="op">*</span><span class="st"> </span>cell_type, <span class="dt">data =</span> x_i))</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = expression ~ condition * cell_type, data = x_i)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.57907 -0.32745 -0.03921  0.36578  0.61935 
+## 
+## Coefficients:
+##                          Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                4.5338     0.2775  16.338 1.98e-07 ***
+## conditionctrl              1.4092     0.3924   3.591  0.00708 ** 
+## cell_typeB                 1.1929     0.3924   3.040  0.01607 *  
+## conditionctrl:cell_typeB  -2.4201     0.5550  -4.361  0.00241 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.4806 on 8 degrees of freedom
+## Multiple R-squared:  0.7094, Adjusted R-squared:  0.6005 
+## F-statistic: 6.511 on 3 and 8 DF,  p-value: 0.01536</code></pre>
+<p>In high throughput experiments, where we test tens of thousands of genes, we thus can't explore each gene separately with multiple models. The same model is applied to all genes and the significance of coefficient(s) of interest is/are considered.</p>
+<p>Solving this dilema isn't a statistical but a scientific question. You will have to define the hypothesis that underlies the experiment<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> ideally even before generating any data.</span>. If there are reasons to believe that an interaction effect is relevant (i.e. there are different effects in the two cell types), then the more complex model (with an interaction) is appropriate. If no such interaction is expected, then testing for it penalises your analysis. In other words it isn't the complexity of the model that makes its quality, but its appropriateness for the studied design/effect.</p>
+<p>Accumulating models and tests isn't necessarily a solution either, as this leads to the accumulation of tests that would require additional adjustment for multiple testing.</p>
 
 </div>
 </div></body></html>
@@ -857,7 +876,7 @@ the data to help with the interpretation.</p>
 <a href="sec-hts.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-09-24
+2020-12-13
 </p>
 </div>
 </div>

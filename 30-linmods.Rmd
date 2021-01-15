@@ -50,7 +50,7 @@ p
 Let's now use linear regression and the `lm()` function to model the
 expression in groups 1 and 2:
 
-$$y = \beta_0 + \beta_1 \times x + \epsilon$$
+$$expression = \beta_0 + \beta_1 \times x + \epsilon$$
 
 where $y$ is the expression we want to model and $x$ represents the
 two groups that are generally encoded as 0 and 1. The expression above
@@ -151,7 +151,7 @@ ggplot(gexp, aes(x = group, y = expression)) +
     geom_segment(data = gexp2,
                  aes(x = group_1, xend = group_2,
                      y = expression_1, yend = expression_2,
-                     colour = factor(1:10)))
+                     colour = ID))
 ```
 
 In the unpaired design, the variances in groups 1 and 2 are
@@ -164,17 +164,35 @@ p-value.
 
 `r msmbstyle::solution_end()`
 
-This comparison can be replicated using a linar model
+This comparison can be replicated using a linar model[^mod2]
 
-$$y = \beta_0 + \beta_1 \times group + \beta_2 \times ID + \epsilon$$
+[^mod2]: See below for the exact equation.
 
-where the $\beta_2$ coefficient will encode the relation between pairs
-of individuals. We model this with
+$$y = \beta_0 + \beta_1 \times group + \beta_i \times ID + \epsilon$$
+
+where the $\beta_i$ coefficients will encode the relation between
+pairs of individuals. We model this with
 
 ```{r mod2}
 mod2 <- lm(expression ~ group + ID, data = gexp)
 mod2
 ```
+
+which corresponds to the following model
+
+```{r, echo = FALSE, results = "asis", eval = FALSE, include = FALSE}
+## this has been used to generate the equation below
+equatiomatic::extract_eq(mod2, wrap = TRUE, terms_per_line = 4)
+## modified \alpha into \beta_{0} manually
+```
+
+$$
+\begin{aligned}
+    \operatorname{expression} &= \beta_{0} + \beta_{1}(\operatorname{group}_{\operatorname{2}}) + \beta_{2}(\operatorname{ID}_{\operatorname{2}}) + \beta_{3}(\operatorname{ID}_{\operatorname{3}})\ + \\
+    &\quad \beta_{4}(\operatorname{ID}_{\operatorname{4}}) + \beta_{5}(\operatorname{ID}_{\operatorname{5}}) + \beta_{6}(\operatorname{ID}_{\operatorname{6}}) + \beta_{7}(\operatorname{ID}_{\operatorname{7}})\ + \\
+    &\quad \beta_{8}(\operatorname{ID}_{\operatorname{8}}) + \beta_{9}(\operatorname{ID}_{\operatorname{9}}) + \beta_{10}(\operatorname{ID}_{\operatorname{10}}) + \epsilon
+\end{aligned}
+$$
 
 The `group2` coefficient still corresponds to the fold-change between
 the two groups. The coefficients `ID2` to `ID10` correspond to the
@@ -289,13 +307,13 @@ DT::datatable(des, rownames = FALSE,
 Such situation require a new model formula syntax, that
 
 ```{r, eval = FALSE}
-~ genotype*condition
+~ genotype * condition
 ```
 
 which is equivalent to
 
 ```{r, eval = FALSE}
-~ genotype + condition + genotype*condition
+~ genotype + condition + genotype * condition
 ```
 
 Here, coefficients are estimated for `genotype`, `condition` and the
@@ -338,7 +356,7 @@ x <-
 ## Analyse gene 1
 x_i <- filter(x, rowname == "gene_1")
 x_i
-mod_i <- lm(expression ~ condition*cell_type, data = x_i)
+mod_i <- lm(expression ~ condition * cell_type, data = x_i)
 summary(mod_i)
 
 ggplot(x_i, aes(x = sample, y = expression,
@@ -351,7 +369,7 @@ ggplot(x_i, aes(x = sample, y = expression,
 ## Analyse gene 2
 x_i <- filter(x, rowname == "gene_2")
 x_i
-mod_i <- lm(expression ~ condition*cell_type, data = x_i)
+mod_i <- lm(expression ~ condition * cell_type, data = x_i)
 summary(mod_i)
 
 ggplot(x_i, aes(x = sample, y = expression, colour = cell_type)) +
@@ -363,7 +381,7 @@ ggplot(x_i, aes(x = sample, y = expression, colour = cell_type)) +
 ## Analyse gene 3
 x_i <- filter(x, rowname == "gene_3")
 x_i
-mod_i <- lm(expression ~ condition*cell_type, data = x_i)
+mod_i <- lm(expression ~ condition * cell_type, data = x_i)
 summary(mod_i)
 
 ggplot(x_i, aes(x = sample, y = expression, colour = condition)) +
@@ -375,7 +393,7 @@ ggplot(x_i, aes(x = sample, y = expression, colour = condition)) +
 ## Analyse gene 4
 x_i <- filter(x, rowname == "gene_4")
 x_i
-mod_i <- lm(expression ~ condition*cell_type, data = x_i)
+mod_i <- lm(expression ~ condition * cell_type, data = x_i)
 summary(mod_i)
 
 ggplot(x_i, aes(x = sample, y = expression,
@@ -389,7 +407,7 @@ ggplot(x_i, aes(x = sample, y = expression,
 ## Analyse gene 5
 x_i <- filter(x, rowname == "gene_5")
 x_i
-mod_i <- lm(expression ~ condition*cell_type, data = x_i)
+mod_i <- lm(expression ~ condition * cell_type, data = x_i)
 summary(mod_i)
 
 group_by(x_i, cell_type, condition) %>% summarise(mean = mean(expression))
@@ -404,3 +422,59 @@ ggplot(x_i, aes(x = sample, y = expression,
 ```
 
 `r msmbstyle::solution_end()`
+
+
+## Which model to use?
+
+The same experimental design can be analysed using different
+models. Some are clearly not appropriate, such as the omission of the
+ID variable in the first example. Other cases aren't that clear.
+
+- If we return to the previous example for gene 3, we see that in both
+  cases, we obtain significant results for the cell type coefficient,
+  albeit with a much smaller p-value in the simpler model.
+
+
+```{r}
+x_i <- filter(x, rowname == "gene_3")
+summary(lm(expression ~ condition + cell_type, data = x_i))
+summary(lm(expression ~ condition * cell_type, data = x_i))
+```
+
+The questions asked is slighly different. The coefficient `cell_typeB`
+in the model without interaction tests for shared differences in the
+two cell types by taking into account that there are two
+conditions. In the model with interaction, the test focuses in the
+cell type effect in the reference condition only.
+
+- If we look at gene 5, we see that we miss out several significant
+  effects if we use the simpler model, without interaction, because
+  the simpler model doesn't ask the right question.
+
+
+```{r}
+x_i <- filter(x, rowname == "gene_5")
+summary(lm(expression ~ condition + cell_type, data = x_i))
+summary(lm(expression ~ condition * cell_type, data = x_i))
+```
+
+In high throughput experiments, where we test tens of thousands of
+genes, we thus can't explore each gene separately with multiple
+models. The same model is applied to all genes and the significance of
+coefficient(s) of interest is/are considered.
+
+Solving this dilema isn't a statistical but a scientific question. You
+will have to define the hypothesis that underlies the
+experiment[^hypo]. If there are reasons to believe that an interaction
+effect is relevant (i.e. there are different effects in the two cell
+types), then the more complex model (with an interaction) is
+appropriate. If no such interaction is expected, then testing for it
+penalises your analysis. In other words it isn't the complexity of the
+model that makes its quality, but its appropriateness for the studied
+design/effect.
+
+[^hypo]: ideally even before generating any data.
+
+Accumulating models and tests isn't necessarily a solution either, as
+this leads to the accumulation of tests that would require additional
+adjustment for multiple testing.

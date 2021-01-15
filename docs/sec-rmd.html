@@ -14,14 +14,14 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-09-24" />
+<meta name="date" content="2020-12-13" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   TeX: { equationNumbers: { autoNumber: "AMS" } }
 });
 </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
@@ -47,80 +47,60 @@ if(f.classList.contains('fa-plus-square')) {
 
 }
 </script>
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
 <script src="libs/jquery-1.12.4/jquery.min.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.15/datatables.js"></script>
+<script src="libs/datatables-binding-0.16/datatables.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 
@@ -148,12 +128,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="toc"><a href="#caching"> Caching</a></li>
 <li class="toc"><a href="#writing-slides-in-rmarkdown"> Writing slides in Rmarkdown</a></li>
 <li class="toc"><a href="#citations"> Citations</a></li>
-<li class="toc"><a href="#references"> References</a></li>
+<li class="toc"><a href="#references-1"> References</a></li>
 </ul>
 <a href="sec-linmod.html"><span class="toc-section-number">3</span> Linear models</a>
 <a href="sec-hts.html"><span class="toc-section-number">4</span> High throughput sequencing</a>
 <a href="sec-rnaseq.html"><span class="toc-section-number">5</span> Differential expression analysis</a>
-<a href="sec-gsea.html"><span class="toc-section-number">6</span> Gene set enrichment analysis</a>
+<a href="sec-gsea.html"><span class="toc-section-number">6</span> Enrichment analyses</a>
 <a href="sec-ms.html"><span class="toc-section-number">7</span> Mass spectrometry</a>
 <a href="sec-prot.html"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
 <a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
@@ -171,17 +151,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <html><body><div id="sec:rmd" class="section level1">
 <h1>
 <span class="header-section-number">Chapter 2</span> R markdown</h1>
-<p>We have already seen how to implement <a href="https://uclouvain-cbio.github.io/WSBIM1207/sec-rr.html">reproducible
-report</a> using
-the
-<a href="https://uclouvain-cbio.github.io/WSBIM1207/sec-rr.html#knitr-and-rmarkdown">Rmarkdown</a>
-<a href="http://rmarkdown.rstudio.com/">package</a> in the WSBIM1207 cours.</p>
+<p>We have already seen how to implement <a href="https://uclouvain-cbio.github.io/WSBIM1207/sec-rr.html">reproducible report</a> using the <a href="https://uclouvain-cbio.github.io/WSBIM1207/sec-rr.html#knitr-and-rmarkdown">Rmarkdown</a> <a href="http://rmarkdown.rstudio.com/">package</a> in the WSBIM1207 cours.</p>
 <p>Here, we are going to see a few additional capabilities</p>
 <div id="knitting-from-within-r" class="section level2">
 <h2>
 <span class="header-section-number">2.1</span> Knitting from within R</h2>
-<p>When compiling Rmd documents with many code chunks, it becomes
-difficult to quickly locate bugs in case of errors:</p>
+<p>When compiling Rmd documents with many code chunks, it becomes difficult to quickly locate bugs in case of errors:</p>
 <pre><code>label: unnamed-chunk-67
   |...........................................................           |  85%
    inline R code fragments
@@ -205,9 +180,7 @@ label: unnamed-chunk-70
 label: unnamed-chunk-71
 
    inline R code fragments</code></pre>
-<p>It is recommended to <strong>uniquely</strong> name each code chunk. These labels
-are then reported in the knitting progress output, and it becomes
-trivial to identify the code chunk that produces the error.</p>
+<p>It is recommended to <strong>uniquely</strong> name each code chunk. These labels are then reported in the knitting progress output, and it becomes trivial to identify the code chunk that produces the error.</p>
 <pre><code>label: si
   |....................................................................  |  98%
   ordinary text without R code
@@ -234,62 +207,44 @@ List of 1
 <div id="knitting-from-within-r-1" class="section level2">
 <h2>
 <span class="header-section-number">2.2</span> Knitting from within R</h2>
-<p>There will be cases when the <code>Knit</code> button in RStudio will not be
-available. A typical example is when you use R on a server through the
-terminal. In such cases, you can directly use the
-<code>rmarkdown::render()</code> function:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">rmarkdown<span class="op">::</span><span class="kw">render</span>(<span class="st">"report.Rmd"</span>)</a></code></pre></div>
-<p>It is also possibly to define the output format, which will override
-the output format defined in the header:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw">library</span>(<span class="st">"rmarkdown"</span>)</a>
-<a class="sourceLine" id="cb46-2" data-line-number="2"><span class="kw">render</span>(<span class="st">"report.Rmd"</span>, <span class="dt">output_format =</span> <span class="kw">pdf_document</span>())</a>
-<a class="sourceLine" id="cb46-3" data-line-number="3"><span class="kw">render</span>(<span class="st">"report.Rmd"</span>, <span class="dt">output_format =</span> <span class="kw">html_document</span>())</a></code></pre></div>
-<p>Note that the <code>pdf_document()</code> and <code>html_document()</code> functions are
-also defined in the <code>rmarkdown</code> package. Make sure to either load the
-package or prefix it all functions.</p>
+<p>There will be cases when the <code>Knit</code> button in RStudio will not be available. A typical example is when you use R on a server through the terminal. In such cases, you can directly use the <code>rmarkdown::render()</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rmarkdown<span class="op">::</span><span class="kw">render</span>(<span class="st">"report.Rmd"</span>)</code></pre></div>
+<p>It is also possibly to define the output format, which will override the output format defined in the header:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"rmarkdown"</span>)
+<span class="kw">render</span>(<span class="st">"report.Rmd"</span>, <span class="dt">output_format =</span> <span class="kw">pdf_document</span>())
+<span class="kw">render</span>(<span class="st">"report.Rmd"</span>, <span class="dt">output_format =</span> <span class="kw">html_document</span>())</code></pre></div>
+<p>Note that the <code>pdf_document()</code> and <code>html_document()</code> functions are also defined in the <code>rmarkdown</code> package. Make sure to either load the package or prefix it all functions.</p>
 </div>
 <div id="caching" class="section level2">
 <h2>
 <span class="header-section-number">2.3</span> Caching</h2>
-<p>Caching refers to the general technique of storing a result once its
-computed so that next time, one the result is needed, it can be read
-back instead of repeating the computation. This is useful when the
-computation take much more time that reading the results from disk.</p>
-<p>In Rmarkdown, this can be done by setting the <code>cache</code> option to <code>TRUE</code>
-in the code chunk header:</p>
+<p>Caching refers to the general technique of storing a result once its computed so that next time, one the result is needed, it can be read back instead of repeating the computation. This is useful when the computation take much more time that reading the results from disk.</p>
+<p>In Rmarkdown, this can be done by setting the <code>cache</code> option to <code>TRUE</code> in the code chunk header:</p>
 <pre><code>```{r long_computation, cache=TRUE}
 res &lt;- long_computation()
 ```</code></pre>
-<p>This can be easily be tested by simulating a long computation with the <code>Sys.sleep(time)</code>
-function, where <code>time</code> is the time interval to suspend execution for, in seconds.</p>
+<p>This can be easily be tested by simulating a long computation with the <code>Sys.sleep(time)</code> function, where <code>time</code> is the time interval to suspend execution for, in seconds.</p>
 <div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
 <ul>
-<li><p>Create a new <code>Rmd</code> document with a single code chunk calling
-<code>Sys.sleep(5)</code>. Compile it twice and compare the compilation times.</p></li>
-<li><p>The <code>system.time()</code> function can be used to measure the time to run
-a fonction in R. Instead of manually comparing the compilation
-timings, wrap a call to <code>render()</code> in <code>system.time()</code> to let R
-record the compilation timings. Hint: you can set <code>render(quiet = TRUE)</code> to remove the knitting messages.</p></li>
+<li><p>Create a new <code>Rmd</code> document with a single code chunk calling <code>Sys.sleep(5)</code>. Compile it twice and compare the compilation times.</p></li>
+<li><p>The <code>system.time()</code> function can be used to measure the time to run a fonction in R. Instead of manually comparing the compilation timings, wrap a call to <code>render()</code> in <code>system.time()</code> to let R record the compilation timings. Hint: you can set <code>render(quiet =   TRUE)</code> to remove the knitting messages.</p></li>
 </ul>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
-<p>Once you code chunk is cached, it will never be executed unless the
-content of the code chunk is modified. In such a case, the code will
-be executed again and the new results will be stored.</p>
+<p>Once you code chunk is cached, it will never be executed unless the content of the code chunk is modified. In such a case, the code will be executed again and the new results will be stored.</p>
 <div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
-<p>Modifiy the content of the cached code chunk and re-render the Rmd
-file to confirm that the chunk is executed.</p>
+<p>Modifiy the content of the cached code chunk and re-render the Rmd file to confirm that the chunk is executed.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -299,16 +254,8 @@ file to confirm that the chunk is executed.</p>
 <div id="writing-slides-in-rmarkdown" class="section level2">
 <h2>
 <span class="header-section-number">2.4</span> Writing slides in Rmarkdown</h2>
-<p>So far, we have used Rmarkdown to produce documents, in pdf or in
-html. Rmarkdown can be used to produce various types of documents
-using different templates. In particular, when generating slides for a
-presentation about data analysis, it might be convenient to use and
-Rmd template to make sure that all figures and results presented are
-genuine, and can readily be reproduced.</p>
-<p>Producing other types of document is only a matter of installing the
-appropriate template and defining the type of document in the Rmd
-header. In RStudio, this is simply a matter of choosing a template
-from the list of pre-installed ones when creation a new Rmd document:</p>
+<p>So far, we have used Rmarkdown to produce documents, in pdf or in html. Rmarkdown can be used to produce various types of documents using different templates. In particular, when generating slides for a presentation about data analysis, it might be convenient to use and Rmd template to make sure that all figures and results presented are genuine, and can readily be reproduced.</p>
+<p>Producing other types of document is only a matter of installing the appropriate template and defining the type of document in the Rmd header. In RStudio, this is simply a matter of choosing a template from the list of pre-installed ones when creation a new Rmd document:</p>
 <div class="figure" style="text-align: center">
 <span id="fig:unnamed-chunk-4"></span>
 <p class="caption marginnote shownote">
@@ -316,19 +263,13 @@ Figure 2.1: Choosing and Rmd template.
 </p>
 <img src="figs/rmd_template.png" alt="Choosing and Rmd template." width="80%">
 </div>
-<p>For the slides, choose the
-<a href="https://bookdown.org/yihui/rmarkdown/xaringan.html"><code>xaringan</code></a>
-template called <em>Ninja Presentation</em>.</p>
+<p>For the slides, choose the <a href="https://bookdown.org/yihui/rmarkdown/xaringan.html"><code>xaringan</code></a> template called <em>Ninja Presentation</em>.</p>
 <div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
-<p>Create a new <code>xaringan</code> slide deck, compile it and go through the
-slides to learn about its capabilities. You can also consult the
-<a href="https://bookdown.org/yihui/rmarkdown/xaringan.html"><code>xaringan</code>
-chapter</a> in the <em>R
-Markdown: The Definitive Guide</em> book.</p>
+<p>Create a new <code>xaringan</code> slide deck, compile it and go through the slides to learn about its capabilities. You can also consult the <a href="https://bookdown.org/yihui/rmarkdown/xaringan.html"><code>xaringan</code> chapter</a> in the <em>R Markdown: The Definitive Guide</em> book.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -338,14 +279,8 @@ Markdown: The Definitive Guide</em> book.</p>
 <div id="citations" class="section level2">
 <h2>
 <span class="header-section-number">2.5</span> Citations</h2>
-<p>One important aspect of writing scientific documents is to cite one’s
-sources. The packages and papers that one reads and cites as part of a
-scientific report, paper or thesis quickly becomes too large to manage
-manually. It is therefore recommeded to use store references in a
-unique file, ideally managed by a dedicated software.</p>
-<p>In markdown, that file type is often a BibTex file (extension <code>.bib</code>)
-that contain a set of entries such as these ones for R itself, the
-<code>dplyr</code> package, or the <code>DESeq</code> paper (see chapter <a href="sec-rnaseq.html#sec:rnaseq">5</a>).</p>
+<p>One important aspect of writing scientific documents is to cite one's sources. The packages and papers that one reads and cites as part of a scientific report, paper or thesis quickly becomes too large to manage manually. It is therefore recommeded to use store references in a unique file, ideally managed by a dedicated software.</p>
+<p>In markdown, that file type is often a BibTex file (extension <code>.bib</code>) that contain a set of entries such as these ones for R itself, the <code>dplyr</code> package, or the <code>DESeq</code> paper (see chapter <a href="sec-rnaseq.html#sec:rnaseq">5</a>).</p>
 <pre><code>@Manual{R-base,
   title = {R: A Language and Environment for Statistical
            Computing},
@@ -375,32 +310,25 @@ that contain a set of entries such as these ones for R itself, the
   issue = {12},
   pages = {550},
 }</code></pre>
-<p>If the above entries are stored in the file <code>refs.bib</code>, then you’ll
-need to define that file in the Rmd header as</p>
+<p>If the above entries are stored in the file <code>refs.bib</code>, then you'll need to define that file in the Rmd header as</p>
 <pre><code>---
 bibliography: references.bib
 ---</code></pre>
-<p>and then cite each reference using the unique keys with <code>@R-base</code> or
-<code>[@R-base]</code> to put the citation between parenthesis. To cite multiple
-entries, separate these by semicolons,
-e.g. <code>[@R-base;@dplyr;@Love:2014]</code>.</p>
-<p>When compiled, the bibliography will be inserted at the end of the
-document under the section <em>References</em>.</p>
+<p>and then cite each reference using the unique keys with <code>@R-base</code> or <code>[@R-base]</code> to put the citation between parenthesis. To cite multiple entries, separate these by semicolons, e.g. <code>[@R-base;@dplyr;@Love:2014]</code>.</p>
+<p>When compiled, the bibliography will be inserted at the end of the document under the section <em>References</em>.</p>
 <div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
-<p>Create a simple markdown file and a BibTex file using the references
-above and cite them.</p>
+<p>Create a simple markdown file and a BibTex file using the references above and cite them.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
-<p>A useful function to get the BibTex entries of R packages or their
-associated scientific papers is to use the <code>citation()</code> function:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">citation</span>()</a></code></pre></div>
+<p>A useful function to get the BibTex entries of R packages or their associated scientific papers is to use the <code>citation()</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">citation</span>()</code></pre></div>
 <pre><code>## 
 ## To cite R in publications use:
 ## 
@@ -422,13 +350,14 @@ associated scientific papers is to use the <code>citation()</code> function:</p>
 ## We have invested a lot of time and effort in creating R, please cite it
 ## when using it for data analysis. See also 'citation("pkgname")' for
 ## citing R packages.</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="kw">citation</span>(<span class="dt">package =</span> <span class="st">"SummarizedExperiment"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">citation</span>(<span class="dt">package =</span> <span class="st">"SummarizedExperiment"</span>)</code></pre></div>
 <pre><code>## 
 ## To cite package 'SummarizedExperiment' in publications use:
 ## 
 ##   Martin Morgan, Valerie Obenchain, Jim Hester and Hervé Pagès (2020).
 ##   SummarizedExperiment: SummarizedExperiment container. R package
-##   version 1.18.2.
+##   version 1.20.0.
+##   https://bioconductor.org/packages/SummarizedExperiment
 ## 
 ## A BibTeX entry for LaTeX users is
 ## 
@@ -436,7 +365,8 @@ associated scientific papers is to use the <code>citation()</code> function:</p>
 ##     title = {SummarizedExperiment: SummarizedExperiment container},
 ##     author = {Martin Morgan and Valerie Obenchain and Jim Hester and Hervé Pagès},
 ##     year = {2020},
-##     note = {R package version 1.18.2},
+##     note = {R package version 1.20.0},
+##     url = {https://bioconductor.org/packages/SummarizedExperiment},
 ##   }
 ## 
 ## ATTENTION: This citation information has been auto-generated from the
@@ -448,16 +378,12 @@ associated scientific papers is to use the <code>citation()</code> function:</p>
 <li><a href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html#Bibliographies" class="uri">https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html#Bibliographies</a></li>
 </ul>
 </div>
-<div id="references" class="section level2">
+<div id="references-1" class="section level2">
 <h2>
 <span class="header-section-number">2.6</span> References</h2>
 <ul>
-<li><p><a href="https://bookdown.org/yihui/rmarkdown">R Markdown: The Definitive
-Guide</a>, Yihui Xie,
-J. J. Allaire, Garrett Grolemund.</p></li>
-<li><p><a href="https://bookdown.org/yihui/rmarkdown-cookbook/">R Markdown
-Cookbook</a>, Yihui
-Xie, Christophe Dervieux, Emily Riederer.</p></li>
+<li><p><a href="https://bookdown.org/yihui/rmarkdown">R Markdown: The Definitive Guide</a>, Yihui Xie, J. J. Allaire, Garrett Grolemund.</p></li>
+<li><p><a href="https://bookdown.org/yihui/rmarkdown-cookbook/">R Markdown Cookbook</a>, Yihui Xie, Christophe Dervieux, Emily Riederer.</p></li>
 </ul>
 </div>
 </div></body></html>
@@ -467,7 +393,7 @@ Xie, Christophe Dervieux, Emily Riederer.</p></li>
 <a href="sec-linmod.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-09-24
+2020-12-13
 </p>
 </div>
 </div>
