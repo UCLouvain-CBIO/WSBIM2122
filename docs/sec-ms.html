@@ -14,19 +14,20 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2020-12-13" />
+<meta name="date" content="2021-03-08" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   TeX: { equationNumbers: { autoNumber: "AMS" } }
 });
 </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
 <title>Chapter 7 Mass spectrometry | Omics Data Analysis</title>
 
+<script src="libs/header-attrs-2.6.6/header-attrs.js"></script>
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
@@ -47,62 +48,130 @@ if(f.classList.contains('fa-plus-square')) {
 
 }
 </script>
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
-<script src="libs/jquery-1.12.4/jquery.min.js"></script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.16/datatables.js"></script>
+<script src="libs/datatables-binding-0.17/datatables.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
-<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -147,40 +216,69 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec:ms" class="section level1">
+<html><body><div id="sec:ms" class="section level1" number="7">
 <h1>
 <span class="header-section-number">Chapter 7</span> Mass spectrometry</h1>
-<p>The <strong>objectives</strong> of this chapter it to learn how mass spectrometry works and how mass spectrometry data is structured. At the end, students should be familiar with</p>
+<p>The <strong>objectives</strong> of this chapter it to learn how mass spectrometry
+works and how mass spectrometry data is structured. At the end,
+students should be familiar with</p>
 <ul>
 <li>Acquisition of spectra over retention time</li>
 <li>Spectra and chromatograms</li>
 <li>MS1 and MS2 spectra and their relation</li>
 <li>Precursor and fragment ions</li>
 <li>Peptide-spectrum matching</li>
-<li>An understanding of the various MS1, MS2, labelled and label-free quantitative approaches.</li>
+<li>An understanding of the various MS1, MS2, labelled and label-free
+quantitative approaches.</li>
 </ul>
-<p>Proteins as the functional units in all living organisms, and they are highly dynamic. The caterpillar and the resulting butterfly have the same genome. The complement of all the expressed proteins, termed the proteome is however very different.</p>
-<p>There are different modalities of the proteome that are of interest. In addition to the presence or amount of protein in a biological samples, it is also important to study the interactions between proteins forming protein-protein complexes, the presence of post-transcriptional modification (such as, for example, phosphorylations), the rate at which proteins are produced and degraded, or where the proteins reside inside a cell.</p>
-<p>The technique of choice to study proteins in a high throughput way is <em>mass spectrometry</em>.</p>
-<p><em>A beginner's guide to mass spectrometry–based proteomics</em> <span class="citation">(Sinha and Mann <label for="tufte-mn-14" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-14" class="margin-toggle">2020<span class="marginnote">Sinha, Ankit, and Matthias Mann. 2020. “A beginner’s guide to mass spectrometry–based proteomics.” <em>The Biochemist</em>, September. doi:<a href="https://doi.org/10.1042/BIO20200057">10.1042/BIO20200057</a>.</span>)</span> is an approachable introduction to sample preparation, mass spectrometry and data analysis.</p>
-<div id="setup-1" class="section level2">
+<p>Proteins as the functional units in all living organisms, and they are
+highly dynamic. The caterpillar and the resulting butterfly have the
+same genome. The complement of all the expressed proteins, termed the
+proteome is however very different.</p>
+<p>There are different modalities of the proteome that are of
+interest. In addition to the presence or amount of protein in a
+biological samples, it is also important to study the interactions
+between proteins forming protein-protein complexes, the presence of
+post-transcriptional modification (such as, for example,
+phosphorylations), the rate at which proteins are produced and
+degraded, or where the proteins reside inside a cell.</p>
+<p>The technique of choice to study proteins in a high throughput way is
+<em>mass spectrometry</em>.</p>
+<p><em>A beginner’s guide to mass spectrometry–based proteomics</em>
+<span class="citation">(<label for="tufte-mn-16" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-16" class="margin-toggle">Sinha and Mann 2020<span class="marginnote">Sinha, Ankit, and Matthias Mann. 2020. <span>“<span class="nocase">A beginner’s guide to mass spectrometry–based proteomics</span>.”</span> <em>The Biochemist</em>, September. <a href="https://doi.org/10.1042/BIO20200057">https://doi.org/10.1042/BIO20200057</a>.</span>)</span> is an approachable introduction to sample preparation,
+mass spectrometry and data analysis.</p>
+<div id="setup-1" class="section level2" number="7.1">
 <h2>
-<span class="header-section-number">7.1</span> Setup</h2>
+<span class="header-section-number">7.1</span> Setup<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('setup-1')" onmouseout="reset_tooltip('setup-1-tooltip')"><span class="tooltiptext" id="setup-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
 <p>
-<span class="marginnote shownote"> <!--
-<div class="figure">--> <img id="fig:sticker" src="figs/Spectra.png" alt="The `Spectra` package." width="50%"><!--
-<p class="caption marginnote">-->Figure 7.1: The <code>Spectra</code> package.<!--</p>--> <!--</div>--></span>
+<span class="marginnote shownote">
+<!--
+<div class="figure">--><span id="fig:sticker"></span>
+<img src="figs/Spectra.png" alt="The `Spectra` package." width="50%"><!--
+<p class="caption marginnote">-->Figure 7.1: The <code>Spectra</code> package.<!--</p>-->
+<!--</div>--></span>
 </p>
-<p>We are going to use the Bioconductor <span class="citation">(Huber et al. <label for="tufte-mn-15" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-15" class="margin-toggle">2015<span class="marginnote">Huber, W, V J Carey, R Gentleman, S Anders, M Carlson, B S Carvalho, H C Bravo, et al. 2015. “Orchestrating High-Throughput Genomic Analysis with Bioconductor.” <em>Nat Methods</em> 12 (2): 115–21. doi:<a href="https://doi.org/10.1038/nmeth.3252">10.1038/nmeth.3252</a>.</span>)</span> <a href="https://rformassspectrometry.github.io/Spectra/articles/Spectra.html"><code>Spectra</code> package</a>, which can be install with the <code>BiocManager</code> package, available from CRAN. We will also make use of some test data from the <code>msdata</code> package. Identification data will be handled by the <a href="https://rformassspectrometry.github.io/PSM/"><code>PSM</code></a> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"msdata"</span>)
-BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"lgatto/ProtGenerics"</span>)
-BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"RforMassSpectrometry/Spectra"</span>)
-BiocManager<span class="op">::</span><span class="kw">install</span>(<span class="st">"RforMassSpectrometry/PSM"</span>)</code></pre></div>
+<p>We are going to use the Bioconductor <span class="citation">(<label for="tufte-mn-17" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-17" class="margin-toggle">Huber et al. 2015<span class="marginnote">Huber, W, V J Carey, R Gentleman, S Anders, M Carlson, B S Carvalho, H C Bravo, et al. 2015. <span>“Orchestrating High-Throughput Genomic Analysis with <span>Bioconductor</span>.”</span> <em>Nat Methods</em> 12 (2): 115–21. <a href="https://doi.org/10.1038/nmeth.3252">https://doi.org/10.1038/nmeth.3252</a>.</span>)</span> <a href="https://rformassspectrometry.github.io/Spectra/articles/Spectra.html"><code>Spectra</code>
+package</a>,
+which can be install with the <code>BiocManager</code> package, available from
+CRAN. We will also make use of some test data from the <code>msdata</code>
+package. Identification data will be handled by the
+<a href="https://rformassspectrometry.github.io/PSM/"><code>PSM</code></a> package.</p>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="sec-ms.html#cb323-1" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"msdata"</span>)</span>
+<span id="cb323-2"><a href="sec-ms.html#cb323-2" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"lgatto/ProtGenerics"</span>)</span>
+<span id="cb323-3"><a href="sec-ms.html#cb323-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"RforMassSpectrometry/Spectra"</span>)</span>
+<span id="cb323-4"><a href="sec-ms.html#cb323-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"RforMassSpectrometry/PSM"</span>)</span></code></pre></div>
 </div>
-<div id="how-does-mass-spectrometry-work" class="section level2">
+<div id="how-does-mass-spectrometry-work" class="section level2" number="7.2">
 <h2>
-<span class="header-section-number">7.2</span> How does mass spectrometry work?</h2>
-<p>Mass spectrometry (MS) is a technology that <em>separates</em> charged molecules (ions) based on their mass to charge ratio (M/Z). It is often coupled to chromatography (liquid LC, but can also be gas-based GC). The time an analytes takes to elute from the chromatography column is the <em>retention time</em>.</p>
+<span class="header-section-number">7.2</span> How does mass spectrometry work?<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('how-does-mass-spectrometry-work')" onmouseout="reset_tooltip('how-does-mass-spectrometry-work-tooltip')"><span class="tooltiptext" id="how-does-mass-spectrometry-work-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Mass spectrometry (MS) is a technology that <em>separates</em> charged
+molecules (ions) based on their mass to charge ratio (M/Z). It is
+often coupled to chromatography (liquid LC, but can also be gas-based
+GC). The time an analytes takes to elute from the chromatography
+column is the <em>retention time</em>.</p>
 <div class="figure">
 <span id="fig:chrom"></span>
 <p class="caption marginnote shownote">
@@ -190,13 +288,36 @@ Figure 7.2: A chromatogram, illustrating the total amount of analytes over the r
 </div>
 <p>An mass spectrometer is composed of three components:</p>
 <ol style="list-style-type: decimal">
-<li>The <em>source</em>, that ionises the molecules: examples are Matrix-assisted laser desorption/ionisation (MALDI) or electrospray ionisation. (ESI)</li>
+<li>The <em>source</em>, that ionises the molecules: examples are Matrix-assisted
+laser desorption/ionisation (MALDI) or electrospray ionisation.
+(ESI)</li>
 <li>The <em>analyser</em>, that separates the ions: Time of flight (TOF) or Orbitrap.</li>
 <li>The <em>detector</em> that quantifies the ions.</li>
 </ol>
-<p>When using mass spectrometry for proteomics, the proteins are first digested with a protease such as trypsin. In mass shotgun proteomics, the analytes assayed in the mass spectrometer are peptides.</p>
-<p>Often, ions are subjected to more than a single MS round. After a first round of separation, the peaks in the spectra, called MS1 spectra, represent peptides. At this stage, the only information we possess about these peptides are their retention time and their mass-to-charge (we can also infer their charge be inspecting their isotopic envelope, i.e the peaks of the individual isotopes, see below), which is not enough to infer their identify (i.e. their sequence).</p>
-<p>In MSMS (or MS2), the settings of the mass spectrometer are set automatically to select a certain number of MS1 peaks (for example 20). Once a narrow M/Z range has been selected (corresponding to one high-intensity peak, a peptide, and some background noise), it is fragmented (using for example collision-induced dissociation (CID), higher energy collisional dissociation (HCD) or electron-transfer dissociation (ETD)). The fragment ions are then themselves separated in the analyser to produce a MS2 spectrum. The unique fragment ion pattern can then be used to infer the peptide sequence using de novo sequencing (when the spectrum is of high enough quality) of using a search engine such as, for example Mascot, MSGF+, ..., that will match the observed, experimental spectrum to theoratical spectra (see details below).</p>
+<p>When using mass spectrometry for proteomics, the proteins are first
+digested with a protease such as trypsin. In mass shotgun proteomics,
+the analytes assayed in the mass spectrometer are peptides.</p>
+<p>Often, ions are subjected to more than a single MS round. After a
+first round of separation, the peaks in the spectra, called MS1
+spectra, represent peptides. At this stage, the only information we
+possess about these peptides are their retention time and their
+mass-to-charge (we can also infer their charge be inspecting their
+isotopic envelope, i.e the peaks of the individual isotopes, see
+below), which is not enough to infer their identify (i.e. their
+sequence).</p>
+<p>In MSMS (or MS2), the settings of the mass spectrometer are set
+automatically to select a certain number of MS1 peaks (for example
+20). Once a narrow M/Z range has been selected (corresponding to one
+high-intensity peak, a peptide, and some background noise), it is
+fragmented (using for example collision-induced dissociation (CID),
+higher energy collisional dissociation (HCD) or electron-transfer
+dissociation (ETD)). The fragment ions are then themselves separated
+in the analyser to produce a MS2 spectrum. The unique fragment ion
+pattern can then be used to infer the peptide sequence using de novo
+sequencing (when the spectrum is of high enough quality) of using a
+search engine such as, for example Mascot, MSGF+, …, that will match
+the observed, experimental spectrum to theoratical spectra (see
+details below).</p>
 <div class="figure">
 <span id="fig:ms2"></span>
 <p class="caption marginnote shownote">
@@ -204,7 +325,10 @@ Figure 7.3: Schematics of a mass spectrometer and two rounds of MS.
 </p>
 <img src="figs/SchematicMS2.png" alt="Schematics of a mass spectrometer and two rounds of MS." width="100%">
 </div>
-<p>The animation below show how 25 ions different ions (i.e. having different M/Z values) are separated throughout the MS analysis and are eventually detected (i.e. quantified). The final frame shows the hypothetical spectrum.</p>
+<p>The animation below show how 25 ions different ions (i.e. having
+different M/Z values) are separated throughout the MS analysis and are
+eventually detected (i.e. quantified). The final frame shows the
+hypothetical spectrum.</p>
 <div class="figure">
 <span id="fig:mstut"></span>
 <p class="caption marginnote shownote">
@@ -212,7 +336,13 @@ Figure 7.4: Separation and detection of ions in a mass spectrometer.
 </p>
 <img src="figs/mstut.gif" alt="Separation and detection of ions in a mass spectrometer." width="80%">
 </div>
-<p>The figures below illustrate the two rounds of MS. The spectrum on the left is an MS1 spectrum acquired after 21 minutes and 3 seconds of elution. 10 peaks, highlited by dotted vertical lines, were selected for MS2 analysis. The peak at M/Z 460.79 (488.8) is highlighted by a red (orange) vertical line on the MS1 spectrum and the fragment spectra are shown on the MS2 spectrum on the top (bottom) right figure.</p>
+<p>The figures below illustrate the two rounds of MS. The spectrum on the
+left is an MS1 spectrum acquired after 21 minutes and 3 seconds of
+elution. 10 peaks, highlited by dotted vertical lines, were selected
+for MS2 analysis. The peak at M/Z 460.79 (488.8) is highlighted by a
+red (orange) vertical line on the MS1 spectrum and the fragment
+spectra are shown on the MS2 spectrum on the top (bottom) right
+figure.</p>
 <div class="figure">
 <span id="fig:ms"></span>
 <p class="caption marginnote shownote">
@@ -220,7 +350,10 @@ Figure 7.5: Parent ions in the MS1 spectrum (left) and two sected fragment ions 
 </p>
 <img src="figs/MS1-MS2-spectra.png" alt="Parent ions in the MS1 spectrum (left) and two sected fragment ions MS2 spectra (right)." width="100%">
 </div>
-<p>The figures below represent the 3 dimensions of MS data: a set of spectra (M/Z and intensity) of retention time, as well as the interleaved nature of MS1 and MS2 (and there could be more levels) data.</p>
+<p>The figures below represent the 3 dimensions of MS data: a set of
+spectra (M/Z and intensity) of retention time, as well as the
+interleaved nature of MS1 and MS2 (and there could be more levels)
+data.</p>
 <div class="figure fullwidth">
 <span id="fig:ms1s"></span>
 <img src="figs/ms3D.png" alt="MS1 spectra (blue) over retention time (left). MS2 spectra (pink) interleaved between two MS1 spectra (right)," width="90%"><p class="caption marginnote shownote">
@@ -228,16 +361,24 @@ Figure 7.6: MS1 spectra (blue) over retention time (left). MS2 spectra (pink) in
 </p>
 </div>
 </div>
-<div id="reading-and-accessing-ms-data" class="section level2">
+<div id="reading-and-accessing-ms-data" class="section level2" number="7.3">
 <h2>
-<span class="header-section-number">7.3</span> Reading and accessing MS data</h2>
-<p>Let's start by accessing an MS raw data file from the <code>msdata</code> package. The <code>proteomics()</code> function checks the package content for a file matching the <code>"2014"</code> pattern and returns its full name.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">basename</span>(f &lt;-<span class="st"> </span>msdata<span class="op">::</span><span class="kw">proteomics</span>(<span class="dt">pattern =</span> <span class="st">"2014"</span>, <span class="dt">full.names =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<span class="header-section-number">7.3</span> Reading and accessing MS data<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('reading-and-accessing-ms-data')" onmouseout="reset_tooltip('reading-and-accessing-ms-data-tooltip')"><span class="tooltiptext" id="reading-and-accessing-ms-data-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Let’s start by accessing an MS raw data file from the <code>msdata</code>
+package. The <code>proteomics()</code> function checks the package content for a
+file matching the <code>"2014"</code> pattern and returns its full name.</p>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="sec-ms.html#cb324-1" aria-hidden="true" tabindex="-1"></a><span class="fu">basename</span>(f <span class="ot">&lt;-</span> msdata<span class="sc">::</span><span class="fu">proteomics</span>(<span class="at">pattern =</span> <span class="st">"2014"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre><code>## [1] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML.gz"</code></pre>
-<p>There exist a set of community-maintained file formats for mass spectrometry data. The most widely used formats are <code>mzML</code> and <code>mzXML</code>, both relying on the <a href="https://www.w3schools.com/xml/default.asp">XML</a> markup language. These two formats, as well as others, can be read into R as <code>Spectra</code> objects:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"Spectra"</span>)
-ms &lt;-<span class="st"> </span><span class="kw">Spectra</span>(f)
-ms</code></pre></div>
+<p>There exist a set of community-maintained file formats for mass
+spectrometry data. The most widely used formats are <code>mzML</code> and
+<code>mzXML</code>, both relying on the
+<a href="https://www.w3schools.com/xml/default.asp">XML</a> markup
+language. These two formats, as well as others, can be read into R as
+<code>Spectra</code> objects:</p>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="sec-ms.html#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"Spectra"</span>)</span>
+<span id="cb326-2"><a href="sec-ms.html#cb326-2" aria-hidden="true" tabindex="-1"></a>ms <span class="ot">&lt;-</span> <span class="fu">Spectra</span>(f)</span>
+<span id="cb326-3"><a href="sec-ms.html#cb326-3" aria-hidden="true" tabindex="-1"></a>ms</span></code></pre></div>
 <pre><code>## MSn data (Spectra) with 7534 spectra in a MsBackendMzR backend:
 ##        msLevel     rtime scanIndex
 ##      &lt;integer&gt; &lt;numeric&gt; &lt;integer&gt;
@@ -256,8 +397,15 @@ ms</code></pre></div>
 ## 
 ## file(s):
 ## TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML.gz</code></pre>
-<p>Once a <code>Spectra</code> object has been created, it can be queried and manipulated using a whole set of accessor functions, documented in the <a href="https://rformassspectrometry.github.io/Spectra/reference/Spectra.html"><code>Spectra</code>-class documentation</a>.</p>
-<p><code>Spectra</code> objects can be subset with the <code>[</code> operator. In addition to the raw data (the M/Z and intensity values) that compose the individual scans, the annotation of each spectrum is available as a single and large table called <em>spectraData</em>, composed of a set of <em>spectraVariables</em> columns.</p>
+<p>Once a <code>Spectra</code> object has been created, it can be queried and
+manipulated using a whole set of accessor functions, documented in the
+<a href="https://rformassspectrometry.github.io/Spectra/reference/Spectra.html"><code>Spectra</code>-class
+documentation</a>.</p>
+<p><code>Spectra</code> objects can be subset with the <code>[</code> operator. In addition to
+the raw data (the M/Z and intensity values) that compose the
+individual scans, the annotation of each spectrum is available as a
+single and large table called <em>spectraData</em>, composed of a set of
+<em>spectraVariables</em> columns.</p>
 <div class="figure fullwidth">
 <span id="fig:unnamed-chunk-132"></span>
 <img src="figs/spectra-schematics.png" alt="Schematic representation of what is referred to by MS data: a collection of spectra and a table containing spectrum-level annotations." width="1060"><p class="caption marginnote shownote">
@@ -269,26 +417,43 @@ Figure 7.7: Schematic representation of what is referred to by MS data: a collec
 ► Question
 </p>
 <div class="question-body">
-<p>Create a <code>Spectra</code> object as described above and reply to the following questions:</p>
+<p>Create a <code>Spectra</code> object as described above and reply to the
+following questions:</p>
 <ul>
-<li>Use the <code>length()</code> function to check how many spectra have been acquired in this MS run?</li>
-<li>How many MS levels are there in this run? You can use the <code>msLevel()</code> accessor to get the MS level of all the scans.</li>
+<li>Use the <code>length()</code> function to check how many spectra have been
+acquired in this MS run?</li>
+<li>How many MS levels are there in this run? You can use the
+<code>msLevel()</code> accessor to get the MS level of all the scans.</li>
 <li>How many spectra of each MS level are there?</li>
-<li>For how long was the data acquired? Use the <code>rtime()</code> accessor to obtain the retention times.</li>
-<li>Which MS2 spectrum has the highest precursor intensity? The precursor intensities can be retrieved with the <code>precursorIntensity()</code> function.</li>
-<li>What is that's spectrum retention time and precuror M/Z? Use the <code>precursorMz()</code> and <code>rtime()</code> accessors.</li>
-<li>Visualise that spectrum using using the <code>plotSpectra()</code> function. Reproduce that figure youself by accessing the scan's raw data with the <code>intensity()</code> and <code>mz()</code> functions.</li>
+<li>For how long was the data acquired? Use the <code>rtime()</code> accessor to
+obtain the retention times.</li>
+<li>Which MS2 spectrum has the highest precursor intensity? The
+precursor intensities can be retrieved with the
+<code>precursorIntensity()</code> function.</li>
+<li>What is that’s spectrum retention time and precuror M/Z? Use the
+<code>precursorMz()</code> and <code>rtime()</code> accessors.</li>
+<li>Visualise that spectrum using using the <code>plotSpectra()</code>
+function. Reproduce that figure youself by accessing the scan’s raw
+data with the <code>intensity()</code> and <code>mz()</code> functions.</li>
 </ul>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
-<p>The figure below show is an illustration of how mass spectrometry works:</p>
+<p>The figure below show is an illustration of how mass spectrometry
+works:</p>
 <ol style="list-style-type: decimal">
-<li><p>The chromatogram at the top display to total ion current along the retention time. The vertical line identifies one scan in particular at retention time 1800.68 seconds (the 2807th scan).</p></li>
-<li><p>The spectra on the second line represent the full MS1 spectrum marked by the red line. The vertical lines identify the 10 precursor ions that where selected for MS2 analysis. The zoomed in on the right shows one specific precursor peak.</p></li>
-<li><p>The MS2 spectra displayed along the two rows at the bottom are those resulting from the fragmentation of the 10 precursor peaks identified by the vertical bars above.</p></li>
+<li><p>The chromatogram at the top display to total ion current along the
+retention time. The vertical line identifies one scan in particular
+at retention time 1800.68 seconds (the 2807th scan).</p></li>
+<li><p>The spectra on the second line represent the full MS1 spectrum
+marked by the red line. The vertical lines identify the 10
+precursor ions that where selected for MS2 analysis. The zoomed in
+on the right shows one specific precursor peak.</p></li>
+<li><p>The MS2 spectra displayed along the two rows at the bottom are
+those resulting from the fragmentation of the 10 precursor peaks
+identified by the vertical bars above.</p></li>
 </ol>
 <p><img src="figs/msvisfig.png" width="100%"></p>
 <div class="question">
@@ -302,33 +467,37 @@ Figure 7.7: Schematic representation of what is referred to by MS data: a collec
 </p>
 </div>
 </div>
-<div class="solution">
+<div class="msmb-solution">
 <p class="solution-begin">
 ► Solution<span id="sol-start-20" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-20', 'sol-start-20')"></span>
 </p>
 <div id="sol-body-20" class="solution-body" style="display: none;">
 <ol style="list-style-type: decimal">
-<li>The chromatogram can be created by extracting the <code>totIonCurrent</code> and <code>rtime</code> variables for all MS1 spectra:</li>
+<li>The chromatogram can be created by extracting the <code>totIonCurrent</code>
+and <code>rtime</code> variables for all MS1 spectra:</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with</span>(<span class="kw">spectraData</span>(<span class="kw">filterMsLevel</span>(ms, <span class="dv">1</span>)),
-     <span class="kw">plot</span>(rtime, totIonCurrent, <span class="dt">type =</span> <span class="st">"l"</span>))
-<span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">rtime</span>(ms)[<span class="dv">2807</span>], <span class="dt">col =</span> <span class="st">"red"</span>)</code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="sec-ms.html#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(<span class="fu">spectraData</span>(<span class="fu">filterMsLevel</span>(ms, <span class="dv">1</span>)),</span>
+<span id="cb328-2"><a href="sec-ms.html#cb328-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">plot</span>(rtime, totIonCurrent, <span class="at">type =</span> <span class="st">"l"</span>))</span>
+<span id="cb328-3"><a href="sec-ms.html#cb328-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">rtime</span>(ms)[<span class="dv">2807</span>], <span class="at">col =</span> <span class="st">"red"</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-134-1.png" width="672"></p>
 <ol start="2" style="list-style-type: decimal">
-<li>The <code>filterPrecursorScan()</code> function can be used to retains parent (MS1) and children scans (MS2) of a scan, as defined by its acquisition number.</li>
+<li>The <code>filterPrecursorScan()</code> function can be used to retains parent
+(MS1) and children scans (MS2) of a scan, as defined by its
+acquisition number.</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ms_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">filterPrecursorScan</span>(ms, <span class="dv">2807</span>)
-<span class="kw">plotSpectra</span>(ms[<span class="dv">2807</span>], <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">400</span>, <span class="dv">1000</span>))
-<span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">precursorMz</span>(ms_<span class="dv">2</span>)[<span class="op">-</span><span class="dv">1</span>], <span class="dt">col =</span> <span class="st">"grey"</span>)
-<span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">precursorMz</span>(ms_<span class="dv">2</span>)[<span class="dv">2</span>], <span class="dt">col =</span> <span class="st">"red"</span>)</code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="sec-ms.html#cb329-1" aria-hidden="true" tabindex="-1"></a>ms_2 <span class="ot">&lt;-</span> <span class="fu">filterPrecursorScan</span>(ms, <span class="dv">2807</span>)</span>
+<span id="cb329-2"><a href="sec-ms.html#cb329-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpectra</span>(ms[<span class="dv">2807</span>], <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">400</span>, <span class="dv">1000</span>))</span>
+<span id="cb329-3"><a href="sec-ms.html#cb329-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">precursorMz</span>(ms_2)[<span class="sc">-</span><span class="dv">1</span>], <span class="at">col =</span> <span class="st">"grey"</span>)</span>
+<span id="cb329-4"><a href="sec-ms.html#cb329-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">precursorMz</span>(ms_2)[<span class="dv">2</span>], <span class="at">col =</span> <span class="st">"red"</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-135-1.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotSpectra</span>(ms[<span class="dv">2807</span>], <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="fl">521.2</span>, <span class="fl">522.5</span>), <span class="dt">type =</span> <span class="st">"l"</span>)
-<span class="kw">abline</span>(<span class="dt">v =</span> <span class="kw">precursorMz</span>(ms_<span class="dv">2</span>)[<span class="dv">2</span>], <span class="dt">col =</span> <span class="st">"red"</span>)</code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="sec-ms.html#cb330-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpectra</span>(ms[<span class="dv">2807</span>], <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">521.2</span>, <span class="fl">522.5</span>), <span class="at">type =</span> <span class="st">"l"</span>)</span>
+<span id="cb330-2"><a href="sec-ms.html#cb330-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">precursorMz</span>(ms_2)[<span class="dv">2</span>], <span class="at">col =</span> <span class="st">"red"</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-136-1.png" width="672"></p>
 <ol start="3" style="list-style-type: decimal">
-<li>The <code>plotSpectra()</code> function is used to plot all 10 MS2 spectra in one call.</li>
+<li>The <code>plotSpectra()</code> function is used to plot all 10 MS2 spectra in
+one call.</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotSpectra</span>(ms_<span class="dv">2</span>[<span class="op">-</span><span class="dv">1</span>])</code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="sec-ms.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpectra</span>(ms_2[<span class="sc">-</span><span class="dv">1</span>])</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-137-1.png" width="768"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -336,10 +505,17 @@ Figure 7.7: Schematic representation of what is referred to by MS data: a collec
 </div>
 </div>
 </div>
-<div id="identification-matching-spectra-to-peptides" class="section level2">
+<div id="identification-matching-spectra-to-peptides" class="section level2" number="7.4">
 <h2>
-<span class="header-section-number">7.4</span> Identification: matching spectra to peptides</h2>
-<p>The raw data is still a long way of obtaining biologically relevant proteomics data. The first step is to identify the peptides that have been acquired in the MS. Peptide identification works by comparing expected and observed spectra. As shown below, when a precursor peptide ion is fragmented in a CID cell, it breaks at specific bonds, producing sets of peaks (<em>a</em>, <em>b</em>, <em>c</em> and <em>x</em>, <em>y</em>, <em>z</em>) that can be predicted.</p>
+<span class="header-section-number">7.4</span> Identification: matching spectra to peptides<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('identification-matching-spectra-to-peptides')" onmouseout="reset_tooltip('identification-matching-spectra-to-peptides-tooltip')"><span class="tooltiptext" id="identification-matching-spectra-to-peptides-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>The raw data is still a long way of obtaining biologically relevant
+proteomics data. The first step is to identify the peptides that have
+been acquired in the MS. Peptide identification works by comparing
+expected and observed spectra. As shown below, when a precursor
+peptide ion is fragmented in a CID cell, it breaks at specific bonds,
+producing sets of peaks (<em>a</em>, <em>b</em>, <em>c</em> and <em>x</em>, <em>y</em>, <em>z</em>) that can be
+predicted.</p>
 <div class="figure">
 <span id="fig:frag"></span>
 <p class="caption marginnote shownote">
@@ -347,143 +523,76 @@ Figure 7.8: Peptide fragmentation.
 </p>
 <img src="figs/frag.png" alt="Peptide fragmentation." width="80%">
 </div>
-<p>It is thus possible to calculate the expected set of fagment peaks for a given peptide, such as <em>THSQEEMQHMQR</em> below and match these theoretical fragments to those observed in MS2 spectra.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"PSM"</span>)
-<span class="kw">calculateFragments</span>(<span class="st">"THSQEEMQHMQR"</span>)</code></pre></div>
-<pre><code>##           mz  ion type pos z         seq
-## 1   102.0550   b1    b   1 1           T
-## 2   239.1139   b2    b   2 1          TH
-## 3   326.1459   b3    b   3 1         THS
-## 4   454.2045   b4    b   4 1        THSQ
-## 5   583.2471   b5    b   5 1       THSQE
-## 6   712.2897   b6    b   6 1      THSQEE
-## 7   843.3301   b7    b   7 1     THSQEEM
-## 8   971.3887   b8    b   8 1    THSQEEMQ
-## 9  1108.4476   b9    b   9 1   THSQEEMQH
-## 10 1239.4881  b10    b  10 1  THSQEEMQHM
-## 11 1367.5467  b11    b  11 1 THSQEEMQHMQ
-## 12  175.1190   y1    y   1 1           R
-## 13  303.1775   y2    y   2 1          QR
-## 14  434.2180   y3    y   3 1         MQR
-## 15  571.2769   y4    y   4 1        HMQR
-## 16  699.3355   y5    y   5 1       QHMQR
-## 17  830.3760   y6    y   6 1      MQHMQR
-## 18  959.4186   y7    y   7 1     EMQHMQR
-## 19 1088.4612   y8    y   8 1    EEMQHMQR
-## 20 1216.5198   y9    y   9 1   QEEMQHMQR
-## 21 1303.5518  y10    y  10 1  SQEEMQHMQR
-## 22 1440.6107  y11    y  11 1 HSQEEMQHMQR
-## 23  436.1939  b4_   b_   4 1        THSQ
-## 24  565.2365  b5_   b_   5 1       THSQE
-## 25  694.2791  b6_   b_   6 1      THSQEE
-## 26  825.3196  b7_   b_   7 1     THSQEEM
-## 27  953.3782  b8_   b_   8 1    THSQEEMQ
-## 28 1090.4371  b9_   b_   9 1   THSQEEMQH
-## 29 1221.4776 b10_   b_  10 1  THSQEEMQHM
-## 30 1349.5361 b11_   b_  11 1 THSQEEMQHMQ
-## 31  941.4080  y7_   y_   7 1     EMQHMQR
-## 32 1070.4506  y8_   y_   8 1    EEMQHMQR
-## 33 1422.6001 y11_   y_  11 1 HSQEEMQHMQR
-## 34  157.1084  y1_   y_   1 1           R
-## 35  285.1670  y2_   y_   2 1          QR
-## 36  416.2075  y3_   y_   3 1         MQR
-## 37  553.2664  y4_   y_   4 1        HMQR
-## 38  681.3249  y5_   y_   5 1       QHMQR
-## 39  812.3654  y6_   y_   6 1      MQHMQR
-## 40 1198.5092  y9_   y_   9 1   QEEMQHMQR
-## 41 1285.5412 y10_   y_  10 1  SQEEMQHMQR
-## 42  566.2205  b5*   b*   5 1       THSQE
-## 43  695.2631  b6*   b*   6 1      THSQEE
-## 44  826.3036  b7*   b*   7 1     THSQEEM
-## 45  954.3622  b8*   b*   8 1    THSQEEMQ
-## 46 1091.4211  b9*   b*   9 1   THSQEEMQH
-## 47 1222.4616 b10*   b*  10 1  THSQEEMQHM
-## 48 1350.5202 b11*   b*  11 1 THSQEEMQHMQ
-## 49  286.1510  y2*   y*   2 1          QR
-## 50  417.1915  y3*   y*   3 1         MQR
-## 51  554.2504  y4*   y*   4 1        HMQR
-## 52  682.3090  y5*   y*   5 1       QHMQR
-## 53  813.3495  y6*   y*   6 1      MQHMQR
-## 54  942.3920  y7*   y*   7 1     EMQHMQR
-## 55 1071.4346  y8*   y*   8 1    EEMQHMQR
-## 56 1199.4932  y9*   y*   9 1   QEEMQHMQR
-## 57 1286.5252 y10*   y*  10 1  SQEEMQHMQR
-## 58 1423.5842 y11*   y*  11 1 HSQEEMQHMQR</code></pre>
-<p>In a full experiment, all possible peptides from the proteome of interest (such as databases that can be downloaded from the <a href="https://www.uniprot.org/">UniProt site</a><label for="tufte-sn-15" class="margin-toggle sidenote-number">15</label><input type="checkbox" id="tufte-sn-15" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">15</span> The Universal Protein Resource (UniProt) is a freely and accessible comprehensive resource for protein sequence and annotation data.</span>) are compared to the millions of observed spectra.</p>
-<p>The matching between millions of observed and possible spectra causes real challenges due to the large search space and the risk of false positives. See <span class="citation">(Käll et al. <label for="tufte-mn-16" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-16" class="margin-toggle">2008<span class="marginnote">Käll, L, J D Storey, M J MacCoss, and W S Noble. 2008. “Posterior Error Probabilities and False Discovery Rates: Two Sides of the Same Coin.” <em>J Proteome Res</em> 7 (1): 40–44. doi:<a href="https://doi.org/10.1021/pr700739d">10.1021/pr700739d</a>.</span>)</span> for further reading.</p>
-<div id="handling-identification-results" class="section level3">
+<p>It is thus possible to calculate the expected set of fagment peaks for
+a given peptide, such as <em>THSQEEMQHMQR</em> below and match these
+theoretical fragments to those observed in MS2 spectra.</p>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="sec-ms.html#cb332-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"PSM"</span>)</span>
+<span id="cb332-2"><a href="sec-ms.html#cb332-2" aria-hidden="true" tabindex="-1"></a><span class="fu">calculateFragments</span>(<span class="st">"THSQEEMQHMQR"</span>)</span></code></pre></div>
+<pre><code>##           mz ion type pos z         seq
+## 1   102.0550  b1    b   1 1           T
+## 2   239.1139  b2    b   2 1          TH
+## 3   326.1459  b3    b   3 1         THS
+## 4   454.2045  b4    b   4 1        THSQ
+## 5   583.2471  b5    b   5 1       THSQE
+## 6   712.2897  b6    b   6 1      THSQEE
+## 7   843.3301  b7    b   7 1     THSQEEM
+## 8   971.3887  b8    b   8 1    THSQEEMQ
+## 9  1108.4476  b9    b   9 1   THSQEEMQH
+## 10 1239.4881 b10    b  10 1  THSQEEMQHM
+## 11 1367.5467 b11    b  11 1 THSQEEMQHMQ
+## 12  175.1190  y1    y   1 1           R
+## 13  303.1775  y2    y   2 1          QR
+## 14  434.2180  y3    y   3 1         MQR
+## 15  571.2769  y4    y   4 1        HMQR
+## 16  699.3355  y5    y   5 1       QHMQR
+##  [ reached 'max' / getOption("max.print") -- omitted 42 rows ]</code></pre>
+<p>In a full experiment, all possible peptides from the proteome of
+interest (such as databases that can be downloaded from the <a href="https://www.uniprot.org/">UniProt
+site</a><label for="tufte-sn-15" class="margin-toggle sidenote-number">15</label><input type="checkbox" id="tufte-sn-15" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">15</span> The Universal Protein Resource (UniProt) is a freely and
+accessible comprehensive resource for protein sequence and
+annotation data.</span>) are compared to the
+millions of observed spectra.</p>
+<p>The matching between millions of observed and possible spectra causes
+real challenges due to the large search space and the risk of false
+positives. See <span class="citation">(<label for="tufte-mn-18" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-18" class="margin-toggle">Käll et al. 2008<span class="marginnote">Käll, L, J D Storey, M J MacCoss, and W S Noble. 2008. <span>“Posterior Error Probabilities and False Discovery Rates: Two Sides of the Same Coin.”</span> <em>J Proteome Res</em> 7 (1): 40–44. <a href="https://doi.org/10.1021/pr700739d">https://doi.org/10.1021/pr700739d</a>.</span>)</span> for further reading.</p>
+<div id="handling-identification-results" class="section level3" number="7.4.1">
 <h3>
-<span class="header-section-number">7.4.1</span> Handling identification results</h3>
-<p>Identification results are also stored in an XML-based file format, called <code>mzIdentML</code> (or <code>mzId</code> for short). Below, we access such a file available in the <code>msdata</code> package and load its content into R with the <code>PSMs::readPSMs()</code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">basename</span>(idf &lt;-<span class="st"> </span>msdata<span class="op">::</span><span class="kw">ident</span>(<span class="dt">full.names =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<span class="header-section-number">7.4.1</span> Handling identification results<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('handling-identification-results')" onmouseout="reset_tooltip('handling-identification-results-tooltip')"><span class="tooltiptext" id="handling-identification-results-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Identification results are also stored in an XML-based file format,
+called <code>mzIdentML</code> (or <code>mzId</code> for short). Below, we access such a file
+available in the <code>msdata</code> package and load its content into R with the
+<code>PSMs::readPSMs()</code> function.</p>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="sec-ms.html#cb334-1" aria-hidden="true" tabindex="-1"></a><span class="fu">basename</span>(idf <span class="ot">&lt;-</span> msdata<span class="sc">::</span><span class="fu">ident</span>(<span class="at">full.names =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre><code>## [1] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id &lt;-<span class="st"> </span><span class="kw">readPSMs</span>(idf)
-<span class="kw">head</span>(id)</code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="sec-ms.html#cb336-1" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">readPSMs</span>(idf)</span>
+<span id="cb336-2"><a href="sec-ms.html#cb336-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(id)</span></code></pre></div>
 <pre><code>## DataFrame with 6 rows and 35 columns
 ##                 sequence             spectrumID chargeState      rank
 ##              &lt;character&gt;            &lt;character&gt;   &lt;integer&gt; &lt;integer&gt;
 ## 1           RQCRTDFLNYLR controllerType=0 con..           3         1
-## 2 ESVALADQVTCVDWRNRKATKK controllerType=0 con..           2         1
-## 3           KELLCLAMQIIR controllerType=0 con..           2         1
-## 4 QRMARTSDKQQSIRFLERLCGR controllerType=0 con..           3         1
-## 5 KDEGSTEPLKVVRDMTDAIC.. controllerType=0 con..           3         1
-## 6 DGGPAIYGHERVGRNAKKFK.. controllerType=0 con..           3         1
 ##   passThreshold experimentalMassToCharge calculatedMassToCharge  peptideRef
 ##       &lt;logical&gt;                &lt;numeric&gt;              &lt;numeric&gt; &lt;character&gt;
 ## 1          TRUE                  548.286                547.947       Pep77
-## 2          TRUE                 1288.153               1288.174      Pep108
-## 3          TRUE                  744.411                744.425      Pep136
-## 4          TRUE                  913.164                912.813      Pep163
-## 5          TRUE                  926.810                926.471      Pep169
-## 6          TRUE                  969.194                968.856      Pep206
 ##      modNum   isDecoy        post         pre     start       end
 ##   &lt;integer&gt; &lt;logical&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;integer&gt;
 ## 1         1     FALSE           V           R       574       585
-## 2         1     FALSE           G           R        69        90
-## 3         1      TRUE           Q           R       131       142
-## 4         1     FALSE           D           R       182       203
-## 5         1      TRUE           R           R       135       158
-## 6         1     FALSE           S           K       310       334
 ##   DatabaseAccess DBseqLength DatabaseSeq    DatabaseDescription scan.number.s.
 ##      &lt;character&gt;   &lt;integer&gt; &lt;character&gt;            &lt;character&gt;      &lt;numeric&gt;
 ## 1        ECA2006        1295             ECA2006 ATP-dependen..           2949
-## 2        ECA1676         110             ECA1676 putative gro..           6534
-## 3    XXX_ECA2855         157                                              5674
-## 4        ECA3009         437             ECA3009 putative cop..           4782
-## 5    XXX_ECA0048         501                                              5839
-## 6        ECA1420         477             ECA1420 undecaprenyl..           6118
 ##   acquisitionNum           spectrumFile                 idFile MS.GF.RawScore
 ##        &lt;numeric&gt;            &lt;character&gt;            &lt;character&gt;      &lt;numeric&gt;
 ## 1           2949 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..             10
-## 2           6534 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..             12
-## 3           5674 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..              8
-## 4           4782 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..             -5
-## 5           5839 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..              8
-## 6           6118 TMT_Erwinia_1uLSike_.. TMT_Erwinia_1uLSike_..              7
 ##   MS.GF.DeNovoScore MS.GF.SpecEValue MS.GF.EValue MS.GF.QValue MS.GF.PepQValue
 ##           &lt;numeric&gt;        &lt;numeric&gt;    &lt;numeric&gt;    &lt;numeric&gt;       &lt;numeric&gt;
 ## 1               101      4.61712e-08     0.132198     0.525424        0.549020
-## 2               121      7.25588e-08     0.208748     0.610390        0.623188
-## 3                74      9.34102e-08     0.267453     0.625000        0.636364
-## 4               160      1.27073e-07     0.365583     0.716981        0.724490
-## 5               241      1.31824e-07     0.379461     0.736364        0.745098
-## 6               214      1.72203e-07     0.495817     0.837037        0.856000
 ##   modPeptideRef         modName   modMass modLocation subOriginalResidue
 ##     &lt;character&gt;     &lt;character&gt; &lt;numeric&gt;   &lt;integer&gt;        &lt;character&gt;
 ## 1         Pep77 Carbamidomethyl   57.0215           3                 NA
-## 2        Pep108 Carbamidomethyl   57.0215          11                 NA
-## 3        Pep136 Carbamidomethyl   57.0215           5                 NA
-## 4        Pep163 Carbamidomethyl   57.0215          20                 NA
-## 5        Pep169 Carbamidomethyl   57.0215          20                 NA
-## 6        Pep206 Carbamidomethyl   57.0215          21                 NA
 ##   subReplacementResidue subLocation
 ##             &lt;character&gt;   &lt;integer&gt;
 ## 1                    NA          NA
-## 2                    NA          NA
-## 3                    NA          NA
-## 4                    NA          NA
-## 5                    NA          NA
-## 6                    NA          NA</code></pre>
+##  [ reached getOption("max.print") -- omitted 5 rows ]</code></pre>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -495,12 +604,12 @@ Figure 7.8: Peptide fragmentation.
 </p>
 </div>
 </div>
-<div class="solution">
+<div class="msmb-solution">
 <p class="solution-begin">
 ► Solution<span id="sol-start-21" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-21', 'sol-start-21')"></span>
 </p>
 <div id="sol-body-21" class="solution-body" style="display: none;">
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(id<span class="op">$</span>isDecoy)</code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="sec-ms.html#cb338-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(id<span class="sc">$</span>isDecoy)</span></code></pre></div>
 <pre><code>## 
 ## FALSE  TRUE 
 ##  2906  2896</code></pre>
@@ -514,42 +623,52 @@ Figure 7.8: Peptide fragmentation.
 ► Question
 </p>
 <div class="question-body">
-<p>Visualise the <code>MS.GF.RawScore</code> densitues for the real and decoy hits. Interprete the figures.</p>
+<p>Visualise the <code>MS.GF.RawScore</code> densitues for the real and decoy
+hits. Interprete the figures.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
-<div class="solution">
+<div class="msmb-solution">
 <p class="solution-begin">
 ► Solution<span id="sol-start-22" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-22', 'sol-start-22')"></span>
 </p>
 <div id="sol-body-22" class="solution-body" style="display: none;">
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"ggplot2"</span>)
-<span class="kw">data.frame</span>(id) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> MS.GF.RawScore, <span class="dt">colour =</span> isDecoy)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_density</span>()</code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="sec-ms.html#cb340-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb340-2"><a href="sec-ms.html#cb340-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(id) <span class="sc">%&gt;%</span></span>
+<span id="cb340-3"><a href="sec-ms.html#cb340-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> MS.GF.RawScore, <span class="at">colour =</span> isDecoy)) <span class="sc">+</span></span>
+<span id="cb340-4"><a href="sec-ms.html#cb340-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>()</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-140-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
-<p>Before proceeding, we want to only focus on relevant peptides. The <code>filterPSMs()</code> function will remove decoy peptides, only keep PSMs of rank 1 (i.e. the best respective matches), and remove peptides that match multiple proteins<label for="tufte-sn-16" class="margin-toggle sidenote-number">16</label><input type="checkbox" id="tufte-sn-16" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">16</span> A more rigorous processing of these identifications would be required, for instance a way to evalutation the false discovery rate in these hits (which we know from above is very high). The <em><a href="https://bioconductor.org/packages/3.12/MSnID">MSnID</a></em> is highly recommended.</span>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id &lt;-<span class="st"> </span><span class="kw">filterPSMs</span>(id)</code></pre></div>
+<p>Before proceeding, we want to only focus on relevant peptides. The
+<code>filterPSMs()</code> function will remove decoy peptides, only keep PSMs of
+rank 1 (i.e. the best respective matches), and remove peptides that
+match multiple proteins<label for="tufte-sn-16" class="margin-toggle sidenote-number">16</label><input type="checkbox" id="tufte-sn-16" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">16</span> A more rigorous processing of these identifications would
+be required, for instance a way to evalutation the false discovery
+rate in these hits (which we know from above is very high). The
+<em><a href="https://bioconductor.org/packages/3.12/MSnID">MSnID</a></em> is highly recommended.</span>.</p>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="sec-ms.html#cb341-1" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">filterPSMs</span>(id)</span></code></pre></div>
 <pre><code>## Starting with 5802 PSMs:</code></pre>
 <pre><code>##  removed 2896 decoy hits</code></pre>
 <pre><code>##  removed 155 PSMs with rank &gt; 1</code></pre>
 <pre><code>##  removed 85 non-proteotypic peptides</code></pre>
 <pre><code>## 2666 PSMs left.</code></pre>
-<p>For simplicity, we are also going to ignore the location of the peptide modifications by removing the <code>modLocation</code> column.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">id<span class="op">$</span>modLocation &lt;-<span class="st"> </span><span class="ot">NULL</span>
-id &lt;-<span class="st"> </span><span class="kw">unique</span>(id)</code></pre></div>
-<p>Now that we have matching raw data (the <code>ms</code> variable) and identification data (the <code>id</code> variable), it is possible to join the latter to the former's spectra data:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ms &lt;-<span class="st"> </span><span class="kw">joinSpectraData</span>(ms, id,
-                      <span class="dt">by.x =</span> <span class="st">"spectrumId"</span>,
-                      <span class="dt">by.y =</span> <span class="st">"spectrumID"</span>)
-ms</code></pre></div>
+<p>For simplicity, we are also going to ignore the location of the
+peptide modifications by removing the <code>modLocation</code> column.</p>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="sec-ms.html#cb347-1" aria-hidden="true" tabindex="-1"></a>id<span class="sc">$</span>modLocation <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb347-2"><a href="sec-ms.html#cb347-2" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">unique</span>(id)</span></code></pre></div>
+<p>Now that we have matching raw data (the <code>ms</code> variable) and
+identification data (the <code>id</code> variable), it is possible to join the
+latter to the former’s spectra data:</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="sec-ms.html#cb348-1" aria-hidden="true" tabindex="-1"></a>ms <span class="ot">&lt;-</span> <span class="fu">joinSpectraData</span>(ms, id,</span>
+<span id="cb348-2"><a href="sec-ms.html#cb348-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">by.x =</span> <span class="st">"spectrumId"</span>,</span>
+<span id="cb348-3"><a href="sec-ms.html#cb348-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">by.y =</span> <span class="st">"spectrumID"</span>)</span>
+<span id="cb348-4"><a href="sec-ms.html#cb348-4" aria-hidden="true" tabindex="-1"></a>ms</span></code></pre></div>
 <pre><code>## MSn data (Spectra) with 7534 spectra in a MsBackendMzR backend:
 ##        msLevel     rtime scanIndex
 ##      &lt;integer&gt; &lt;numeric&gt; &lt;integer&gt;
@@ -568,39 +687,43 @@ ms</code></pre></div>
 ## 
 ## file(s):
 ## TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML.gz</code></pre>
-<p>We are going to conlude this part by annotating an MS2 spectrum with the calculated peptide fragment.</p>
+<p>We are going to conlude this part by annotating an MS2 spectrum with
+the calculated peptide fragment.</p>
 <div class="question">
 <p class="question-begin">
 ► Question
 </p>
 <div class="question-body">
 <ul>
-<li><p>Choose two MS2 spectra that have an <code>MS.GF.RawScore</code> greater than 100 and are matched to the same peptide sequence.</p></li>
-<li><p>Then visualise them annotating their fragment ion with its fragment ions by passing the <code>addFragments</code> function to <code>plotSpectra</code>'s <code>labels</code> argument.</p></li>
+<li><p>Choose two MS2 spectra that have an <code>MS.GF.RawScore</code> greater than
+100 and are matched to the same peptide sequence.</p></li>
+<li><p>Then visualise them annotating their fragment ion with its fragment
+ions by passing the <code>addFragments</code> function to <code>plotSpectra</code>’s
+<code>labels</code> argument.</p></li>
 </ul>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
-<div class="solution">
+<div class="msmb-solution">
 <p class="solution-begin">
 ► Solution<span id="sol-start-23" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-23', 'sol-start-23')"></span>
 </p>
 <div id="sol-body-23" class="solution-body" style="display: none;">
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">seq &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(<span class="kw">spectraData</span>(ms)) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">filter</span>(<span class="st">`</span><span class="dt">MS.GF.RawScore</span><span class="st">`</span> <span class="op">&gt;</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">group_by</span>(sequence) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">filter</span>(n <span class="op">==</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">head</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">pull</span>(sequence)
-
-i &lt;-<span class="st"> </span><span class="kw">which</span>(ms<span class="op">$</span>sequence <span class="op">==</span><span class="st"> </span>seq)
-
-<span class="kw">plotSpectra</span>(ms[i], <span class="dt">labels =</span> addFragments,
-            <span class="dt">labelPos =</span> <span class="dv">3</span>, <span class="dt">labelCol =</span> <span class="st">"orange"</span>,
-            <span class="dt">main =</span> ms[i]<span class="op">$</span>sequence)</code></pre></div>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="sec-ms.html#cb350-1" aria-hidden="true" tabindex="-1"></a>seq <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">spectraData</span>(ms)) <span class="sc">%&gt;%</span></span>
+<span id="cb350-2"><a href="sec-ms.html#cb350-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="st">`</span><span class="at">MS.GF.RawScore</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb350-3"><a href="sec-ms.html#cb350-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sequence) <span class="sc">%&gt;%</span></span>
+<span id="cb350-4"><a href="sec-ms.html#cb350-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb350-5"><a href="sec-ms.html#cb350-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(n <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb350-6"><a href="sec-ms.html#cb350-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb350-7"><a href="sec-ms.html#cb350-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(sequence)</span>
+<span id="cb350-8"><a href="sec-ms.html#cb350-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb350-9"><a href="sec-ms.html#cb350-9" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="fu">which</span>(ms<span class="sc">$</span>sequence <span class="sc">==</span> seq)</span>
+<span id="cb350-10"><a href="sec-ms.html#cb350-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb350-11"><a href="sec-ms.html#cb350-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpectra</span>(ms[i], <span class="at">labels =</span> addFragments,</span>
+<span id="cb350-12"><a href="sec-ms.html#cb350-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">labelPos =</span> <span class="dv">3</span>, <span class="at">labelCol =</span> <span class="st">"orange"</span>,</span>
+<span id="cb350-13"><a href="sec-ms.html#cb350-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">main =</span> ms[i]<span class="sc">$</span>sequence)</span></code></pre></div>
 <div class="figure">
 <span id="fig:unnamed-chunk-143"></span>
 <p class="caption marginnote shownote">
@@ -608,10 +731,11 @@ Figure 7.9: Two MS2 spectra that were matched to the <code>TKGLNVMQNLLTAHPDVQAVF
 </p>
 <img src="WSBIM2122_files/figure-html/unnamed-chunk-143-1.png" alt="Two MS2 spectra that were matched to the `TKGLNVMQNLLTAHPDVQAVFAQNDEMALGALR` peptide." width="672">
 </div>
-<p>For a more direct comparision, the two spectra can also be represented on the same graph pointing upwards and downwards:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotSpectraMirror</span>(ms[i[<span class="dv">1</span>]], ms[i[<span class="dv">2</span>]],
-                  <span class="dt">labels =</span> addFragments,
-                  <span class="dt">labelPos =</span> <span class="dv">3</span>, <span class="dt">labelCol =</span> <span class="st">"orange"</span>)</code></pre></div>
+<p>For a more direct comparision, the two spectra can also be represented
+on the same graph pointing upwards and downwards:</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="sec-ms.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpectraMirror</span>(ms[i[<span class="dv">1</span>]], ms[i[<span class="dv">2</span>]],</span>
+<span id="cb351-2"><a href="sec-ms.html#cb351-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">labels =</span> addFragments,</span>
+<span id="cb351-3"><a href="sec-ms.html#cb351-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">labelPos =</span> <span class="dv">3</span>, <span class="at">labelCol =</span> <span class="st">"orange"</span>)</span></code></pre></div>
 <div class="figure">
 <span id="fig:unnamed-chunk-144"></span>
 <p class="caption marginnote shownote">
@@ -624,13 +748,24 @@ Figure 7.10: Mirror representation of to matches to the <code>TKGLNVMQNLLTAHPDVQ
 </p>
 </div>
 </div>
-<p>From the list of identified peptides, it is then necessary to infer the most provable proteins that were present in the biological sample. <strong>Protein inference</strong> is a difficult task, as peptides often match multiple proteins (either different isoforms or proteins stemming from different gene but with identical domains), which leads to the definition of protein groups, i.e. sets of proteins that can't be distinguished with the set of identified peptides at hand. See <span class="citation">(Nesvizhskii and Aebersold <label for="tufte-mn-17" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-17" class="margin-toggle">2005<span class="marginnote">Nesvizhskii, A I, and R Aebersold. 2005. “Interpretation of Shotgun Proteomic Data: The Protein Inference Problem.” <em>Mol Cell Proteomics</em> 4 (10): 1419–40. doi:<a href="https://doi.org/10.1074/mcp.R500012-MCP200">10.1074/mcp.R500012-MCP200</a>.</span>)</span> for further reading.</p>
+<p>From the list of identified peptides, it is then necessary to infer
+the most provable proteins that were present in the biological
+sample. <strong>Protein inference</strong> is a difficult task, as peptides often
+match multiple proteins (either different isoforms or proteins
+stemming from different gene but with identical domains), which leads
+to the definition of protein groups, i.e. sets of proteins that can’t
+be distinguished with the set of identified peptides at hand. See
+<span class="citation">(<label for="tufte-mn-19" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-19" class="margin-toggle">Nesvizhskii and Aebersold 2005<span class="marginnote">Nesvizhskii, A I, and R Aebersold. 2005. <span>“Interpretation of Shotgun Proteomic Data: The Protein Inference Problem.”</span> <em>Mol Cell Proteomics</em> 4 (10): 1419–40. <a href="https://doi.org/10.1074/mcp.R500012-MCP200">https://doi.org/10.1074/mcp.R500012-MCP200</a>.</span>)</span> for further reading.</p>
 </div>
 </div>
-<div id="quantitative-proteomics" class="section level2">
+<div id="quantitative-proteomics" class="section level2" number="7.5">
 <h2>
-<span class="header-section-number">7.5</span> Quantitative proteomics</h2>
-<p>The last step of MS data processing is to quantify peptide abundances in the biological samples. The table below summarises the different possibilites depending whether the proteins or peptides are labelled, and whether the quantitation is performed in MS1 or MS2.</p>
+<span class="header-section-number">7.5</span> Quantitative proteomics<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('quantitative-proteomics')" onmouseout="reset_tooltip('quantitative-proteomics-tooltip')"><span class="tooltiptext" id="quantitative-proteomics-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>The last step of MS data processing is to quantify peptide abundances
+in the biological samples. The table below summarises the different
+possibilites depending whether the proteins or peptides are labelled,
+and whether the quantitation is performed in MS1 or MS2.</p>
 <table>
 <thead><tr class="header">
 <th align="left"></th>
@@ -650,10 +785,12 @@ Figure 7.10: Mirror representation of to matches to the <code>TKGLNVMQNLLTAHPDVQ
 </tr>
 </tbody>
 </table>
-<div id="label-free-ms2-spectral-counting" class="section level3">
+<div id="label-free-ms2-spectral-counting" class="section level3" number="7.5.1">
 <h3>
-<span class="header-section-number">7.5.1</span> Label-free MS2: Spectral counting</h3>
-<p>In spectral counting, on simply counts the number of quantified peptides that are assigned to a protein.</p>
+<span class="header-section-number">7.5.1</span> Label-free MS2: Spectral counting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('label-free-ms2-spectral-counting')" onmouseout="reset_tooltip('label-free-ms2-spectral-counting-tooltip')"><span class="tooltiptext" id="label-free-ms2-spectral-counting-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>In spectral counting, on simply counts the number of quantified
+peptides that are assigned to a protein.</p>
 <div class="figure">
 <span id="fig:sc"></span>
 <p class="caption marginnote shownote">
@@ -662,10 +799,21 @@ Figure 7.11: Spectral counting. Figure from the <code>Pbase</code> package.
 <img src="figs/pbase.png" alt="Spectral counting. Figure from the `Pbase` package." width="75%">
 </div>
 </div>
-<div id="labelled-ms2-isobaric-tagging" class="section level3">
+<div id="labelled-ms2-isobaric-tagging" class="section level3" number="7.5.2">
 <h3>
-<span class="header-section-number">7.5.2</span> Labelled MS2: Isobaric tagging</h3>
-<p>Isobaric tagging refers to the labelling using isobaric tags, i.e. chemical tags that have the same mass and hence can't be distinguish by the spectrometer. The peptides of different samples (4, 6, 10, 11 or 16) are labelled with different tags and combined prior to mass spectrometry acquisition. Given that they are isobaric, all identical peptides, irrespective of the tag and this the sample of origin, are co-analysed, up to fragmentation prior to MS2 analysis. During fragmentation, the isobaric tags fall of, fragment themselves, and result in a set of sample specific peaks. These specific peaks can be used to infer sample-specific quantitation, while the rest of the MS2 spectrum is used for identification.</p>
+<span class="header-section-number">7.5.2</span> Labelled MS2: Isobaric tagging<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('labelled-ms2-isobaric-tagging')" onmouseout="reset_tooltip('labelled-ms2-isobaric-tagging-tooltip')"><span class="tooltiptext" id="labelled-ms2-isobaric-tagging-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Isobaric tagging refers to the labelling using isobaric tags,
+i.e. chemical tags that have the same mass and hence can’t be
+distinguish by the spectrometer. The peptides of different samples (4,
+6, 10, 11 or 16) are labelled with different tags and combined prior
+to mass spectrometry acquisition. Given that they are isobaric, all
+identical peptides, irrespective of the tag and this the sample of
+origin, are co-analysed, up to fragmentation prior to MS2
+analysis. During fragmentation, the isobaric tags fall of, fragment
+themselves, and result in a set of sample specific peaks. These
+specific peaks can be used to infer sample-specific quantitation,
+while the rest of the MS2 spectrum is used for identification.</p>
 <div class="figure">
 <span id="fig:itraq"></span>
 <p class="caption marginnote shownote">
@@ -674,10 +822,14 @@ Figure 7.12: iTRAQ 4-plex isobaric tagging. Tandem Mass Tags (TMT) offer up to 1
 <img src="figs/itraq.png" alt="iTRAQ 4-plex isobaric tagging. Tandem Mass Tags (TMT) offer up to 16 tags." width="75%">
 </div>
 </div>
-<div id="label-free-ms1-extracted-ion-chromatograms" class="section level3">
+<div id="label-free-ms1-extracted-ion-chromatograms" class="section level3" number="7.5.3">
 <h3>
-<span class="header-section-number">7.5.3</span> Label-free MS1: extracted ion chromatograms</h3>
-<p>In label-free quantitation, the precursor peaks that match an identified peptide are integrated of retention time and the area under that <em>extracted ion chromatogram</em> is used to quantify that peptide in that sample.</p>
+<span class="header-section-number">7.5.3</span> Label-free MS1: extracted ion chromatograms<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('label-free-ms1-extracted-ion-chromatograms')" onmouseout="reset_tooltip('label-free-ms1-extracted-ion-chromatograms-tooltip')"><span class="tooltiptext" id="label-free-ms1-extracted-ion-chromatograms-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>In label-free quantitation, the precursor peaks that match an
+identified peptide are integrated of retention time and the area under
+that <em>extracted ion chromatogram</em> is used to quantify that peptide in
+that sample.</p>
 <div class="figure">
 <span id="fig:lf"></span>
 <p class="caption marginnote shownote">
@@ -686,10 +838,18 @@ Figure 7.13: Label-free quantitation. Figure credit <a href="https://github.com/
 <img src="figs/chrompeaks.png" alt="Label-free quantitation. Figure credit [Johannes Rainer](https://github.com/jorainer/)." width="75%">
 </div>
 </div>
-<div id="labelled-ms1-silac" class="section level3">
+<div id="labelled-ms1-silac" class="section level3" number="7.5.4">
 <h3>
-<span class="header-section-number">7.5.4</span> Labelled MS1: SILAC</h3>
-<p>In SILAc quantitation, sample are grown in a medium that contains heavy amino acids (typically arginine and lysine). All proteins gown in this <em>heavy</em> growth medium contain the heavy form of these amino acids. Two samples, one grown in heavy medium, and one grown in normal (light) medium are then combined and analysed together. The heavy peptides precursor peaks are systematically shifted compared to the light ones, and the ratio between the height of a heavy and light peaks can be used to calculate peptide and protein fold-changes.</p>
+<span class="header-section-number">7.5.4</span> Labelled MS1: SILAC<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('labelled-ms1-silac')" onmouseout="reset_tooltip('labelled-ms1-silac-tooltip')"><span class="tooltiptext" id="labelled-ms1-silac-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>In SILAc quantitation, sample are grown in a medium that contains
+heavy amino acids (typically arginine and lysine). All proteins gown
+in this <em>heavy</em> growth medium contain the heavy form of these amino
+acids. Two samples, one grown in heavy medium, and one grown in normal
+(light) medium are then combined and analysed together. The heavy
+peptides precursor peaks are systematically shifted compared to the
+light ones, and the ratio between the height of a heavy and light
+peaks can be used to calculate peptide and protein fold-changes.</p>
 <div class="figure">
 <span id="fig:silab"></span>
 <p class="caption marginnote shownote">
@@ -697,8 +857,13 @@ Figure 7.14: Silac quantitation. Figure credit Wikimedia Commons.
 </p>
 <img src="figs/Silac.png" alt="Silac quantitation. Figure credit Wikimedia Commons." width="75%">
 </div>
-<p>These different quantitation techniques come with their respective benefits and distinct challenges, such as large quantities of raw data processing, data transformation and normalisation, missing values, and different underlying statistical models for the quantitative data (count data for spectral counting, continuous data for the others).</p>
-<p>The next chapter will focus on the handling and processing of quantitative proteomics data.</p>
+<p>These different quantitation techniques come with their respective
+benefits and distinct challenges, such as large quantities of raw data
+processing, data transformation and normalisation, missing values, and
+different underlying statistical models for the quantitative data
+(count data for spectral counting, continuous data for the others).</p>
+<p>The next chapter will focus on the handling and processing of
+quantitative proteomics data.</p>
 
 </div>
 </div>
@@ -709,7 +874,9 @@ Figure 7.14: Silac quantitation. Figure credit Wikimedia Commons.
 <a href="sec-prot.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2020-12-13
+2021-03-08
+ using 
+R version 4.0.3 Patched (2021-01-18 r79847)
 </p>
 </div>
 </div>

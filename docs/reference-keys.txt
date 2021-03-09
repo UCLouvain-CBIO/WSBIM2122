@@ -51,6 +51,7 @@ model-generalisation
 interactions-between-variables
 exercise
 which-model-to-use
+additional-reading
 sec:hts
 rna-seq-library-preparation
 sequencing

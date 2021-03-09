@@ -478,3 +478,14 @@ design/effect.
 Accumulating models and tests isn't necessarily a solution either, as
 this leads to the accumulation of tests that would require additional
 adjustment for multiple testing.
+
+## Additional reading
+
+
+We will be using linear models when analysing gene expression
+experiment, with concrete RNA sequencing example. The [*A guide to
+creating design matrices for gene expression
+experiments*](https://f1000research.com/articles/9-1444) paper
+[@Law:2020] is an excellent guide describing the basics of how to set
+up design and contrast matrices and great preparation to chapter
+\@ref(sec:rnaseq).
