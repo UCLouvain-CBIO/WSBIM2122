@@ -55,13 +55,12 @@ move around in your file system.
 
 ### How to access the shell {-}
 
-On a Mac or LiOn a Mac or Linux machine, you can access a shell
-through a program called Terminal, which is already available on your
-computer. If you're using Windows, you'll need to download a separate
-program to access the shell.nux machine, you can access a shell
-through a program called Terminal, which is already available on your
-computer. If you're using Windows, you can install a [Windows
-Subsystem for
+On a Mac or Linux machine, you can access a shell through a program
+called Terminal, which is already available on your computer. If
+you're using Windows, you'll need to download a separate program to
+access the shell.nux machine, you can access a shell through a program
+called Terminal, which is already available on your computer. If
+you're using Windows, you can install a [Windows Subsystem for
 Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10). We
 are going to the use RStudio Terminal.
 
