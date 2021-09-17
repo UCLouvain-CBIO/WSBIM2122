@@ -1,4 +1,4 @@
-# Mass spectrometry {#sec:ms}
+# Mass spectrometry {#sec-ms}
 
 The **objectives** of this chapter it to learn how mass spectrometry
 works and how mass spectrometry data is structured. At the end,

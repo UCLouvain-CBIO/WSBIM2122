@@ -51,8 +51,8 @@ number of students is known.
 Tentative schedule for the course.
 
 - Shell and Rmd
-- Linear models 
-- Project 1: lecture on HTS, RNA-Seq and 
+- Linear models
+- Project 1: lecture on HTS, RNA-Seq and
 - Project 1 (cont'd): Gene set enrichment
 - QA session for project 1
 - Project 1 presentations
@@ -117,7 +117,7 @@ interact with R and write scripts and reports. Both R and RStudio are
 easy to install and works on all major operating systems.
 
 Once R and RStudio are installed, a set of packages will need to be
-installed. See section \@ref(sec:setup2) for details.
+installed. See section \@ref(sec-setup2) for details.
 
 The `rWSBIM2122` package provides some pre-formatted data used in this
 course. It can be installed with

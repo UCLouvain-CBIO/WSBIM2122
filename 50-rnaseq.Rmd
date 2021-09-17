@@ -1,4 +1,4 @@
-# Differential expression analysis {#sec:rnaseq}
+# Differential expression analysis {#sec-rnaseq}
 
 **Learning Objectives**
 

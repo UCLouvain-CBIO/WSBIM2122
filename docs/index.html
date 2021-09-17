@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2021-03-08" />
+<meta name="date" content="2021-09-17" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -27,7 +27,7 @@ MathJax.Hub.Config({
 
 <title>Preamble | Omics Data Analysis</title>
 
-<script src="libs/header-attrs-2.6.6/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
@@ -67,16 +67,16 @@ function reset_tooltip(id) {
   tooltip.innerHTML = 'Copy link';
 }
 </script>
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.17/datatables.js"></script>
+<script src="libs/datatables-binding-0.19/datatables.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
-<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
@@ -274,8 +274,8 @@ and <a href="https://UCLouvain-CBIO.github.io/WSBIM1322">WSBIM1322</a>.</p>
 <div id="about-this-course-material" class="section level2 unnumbered">
 <h2>About this course material<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('about-this-course-material')" onmouseout="reset_tooltip('about-this-course-material-tooltip')"><span class="tooltiptext" id="about-this-course-material-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>This material is written in R markdown <span class="citation">(<label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle">Allaire et al. 2021<span class="marginnote">Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2021. <em>Rmarkdown: Dynamic Documents for r</em>. <a href="https://github.com/rstudio/rmarkdown">https://github.com/rstudio/rmarkdown</a>.</span>)</span> and compiled as a
-book using <code>knitr</code> <span class="citation">(<label for="tufte-mn-2" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle">Xie 2021b<span class="marginnote">Xie, Yihui. 2021b. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in r</em>. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.</span>)</span> <code>bookdown</code> <span class="citation">(<label for="tufte-mn-3" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-3" class="margin-toggle">Xie 2021a<span class="marginnote">Xie, Yihui. 2021a. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://github.com/rstudio/bookdown">https://github.com/rstudio/bookdown</a>.</span>)</span>. The source
+<p>This material is written in R markdown <span class="citation">(<label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle">Allaire et al. 2021<span class="marginnote">Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2021. <em>Rmarkdown: Dynamic Documents for r</em>. <a href="https://CRAN.R-project.org/package=rmarkdown">https://CRAN.R-project.org/package=rmarkdown</a>.</span>)</span> and compiled as a
+book using <code>knitr</code> <span class="citation">(<label for="tufte-mn-2" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle">Xie 2021b<span class="marginnote">Xie, Yihui. 2021b. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in r</em>. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.</span>)</span> <code>bookdown</code> <span class="citation">(<label for="tufte-mn-3" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-3" class="margin-toggle">Xie 2021a<span class="marginnote">Xie, Yihui. 2021a. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.</span>)</span>. The source
 code is publicly available in a Github repository
 <a href="https://github.com/uclouvain-cbio/WSBIM2122">https://github.com/uclouvain-cbio/WSBIM2122</a>
 and the compiled material can be read at <a href="http://bit.ly/WSBIM2122" class="uri">http://bit.ly/WSBIM2122</a>.</p>
@@ -312,13 +312,13 @@ We will also use the
 interact with R and write scripts and reports. Both R and RStudio are
 easy to install and works on all major operating systems.</p>
 <p>Once R and RStudio are installed, a set of packages will need to be
-installed. See section <a href="sec-si.html#sec:setup2">11.1</a> for details.</p>
+installed. See section <a href="sec-si.html#sec-setup2">11.1</a> for details.</p>
 <p>The <code>rWSBIM2122</code> package provides some pre-formatted data used in this
 course. It can be installed with</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"UCLouvain-CBIO/rWSBIM2122"</span>)</span></code></pre></div>
 <p>and then loaded with</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rWSBIM2122"</span>)</span></code></pre></div>
-<p>To build this book, you’ll need <code>bookdown</code> <span class="citation">(<label for="tufte-mn-4" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-4" class="margin-toggle">Xie 2021a<span class="marginnote">Xie, Yihui. 2021a. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://github.com/rstudio/bookdown">https://github.com/rstudio/bookdown</a>.</span>)</span> and a
+<p>To build this book, you’ll need <code>bookdown</code> <span class="citation">(<label for="tufte-mn-4" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-4" class="margin-toggle">Xie 2021a<span class="marginnote">Xie, Yihui. 2021a. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.</span>)</span> and a
 fork<label for="tufte-sn-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="tufte-sn-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> <a href="https://github.com/lgatto/msmbstyle" class="uri">https://github.com/lgatto/msmbstyle</a></span> of <a href="https://github.com/grimbough/msmbstyle/"><code>msmbstyle</code>
 style</a> <span class="citation">(<label for="tufte-mn-5" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-5" class="margin-toggle">Smith 2021<span class="marginnote">Smith, Mike. 2021. <em>Msmbstyle: MSMB Styles for r Markdown Documents</em>.</span>)</span>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="index.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"bookdown"</span>)</span>
@@ -333,9 +333,9 @@ style</a> <span class="citation">(<label for="tufte-mn-5" class="margin-toggle">
 <a href="sec-cli.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-03-08
+2021-09-17
  using 
-R version 4.0.3 Patched (2021-01-18 r79847)
+R version 4.1.0 (2021-05-18)
 </p>
 </div>
 </div>

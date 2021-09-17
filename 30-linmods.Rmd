@@ -1,4 +1,4 @@
-# Linear models {#sec:linmod}
+# Linear models {#sec-linmod}
 
 The objective of this chapter is to provide students with an intuitive
 understanding of how linear models are used in significance testing,

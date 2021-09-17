@@ -1,4 +1,4 @@
-# Quantitative proteomics data analysis {#sec:prot}
+# Quantitative proteomics data analysis {#sec-prot}
 
 **Learning Objectives**
 
@@ -693,8 +693,8 @@ prots <- cptac[["proteins_med"]]
 colData(prots) <- colData(cptac)
 ```
 
-We have seen in chapter \@ref(sec:linmod) how to use linear models and
-have applied the same prinicples in chapter \@ref(sec:rnaseq) on count
+We have seen in chapter \@ref(sec-linmod) how to use linear models and
+have applied the same prinicples in chapter \@ref(sec-rnaseq) on count
 data (based on a negative binomial distribution).
 The `r BiocStyle::Biocpkg("limma")` package is the precursor package that
 enables the consistent application of linear models to normalliy

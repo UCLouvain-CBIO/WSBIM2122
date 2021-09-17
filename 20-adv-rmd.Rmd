@@ -1,4 +1,4 @@
-# R markdown {#sec:rmd}
+# R markdown {#sec-rmd}
 
 We have already seen how to implement [reproducible
 report](https://uclouvain-cbio.github.io/WSBIM1207/sec-rr.html) using
@@ -52,7 +52,7 @@ label: si
   ordinary text without R code
 
   |..................................................................... |  98%
-label: pkgs (with options) 
+label: pkgs (with options)
 List of 4
  $ eval   : logi TRUE
  $ echo   : logi FALSE
@@ -63,17 +63,13 @@ List of 4
   ordinary text without R code
 
   |......................................................................|  99%
-label: setup (with options) 
+label: setup (with options)
 List of 1
  $ eval: logi FALSE
 
   |......................................................................| 100%
   ordinary text without R code
 ```
-
-
-
-## Knitting from within R
 
 There will be cases when the `Knit` button in RStudio will not be
 available. A typical example is when you use R on a server through the
@@ -95,7 +91,7 @@ render("report.Rmd", output_format = html_document())
 
 Note that the `pdf_document()` and `html_document()` functions are
 also defined in the `rmarkdown` package. Make sure to either load the
-package or prefix it all functions. 
+package or prefix it all functions.
 
 ## Caching
 
@@ -107,20 +103,20 @@ computation take much more time that reading the results from disk.
 In Rmarkdown, this can be done by setting the `cache` option to `TRUE`
 in the code chunk header:
 
-```` 
+````
 `r ''````{r long_computation, cache=TRUE}
 res <- long_computation()
 ```
 ````
 
-This can be easily be tested by simulating a long computation with the `Sys.sleep(time)` 
+This can be easily be tested by simulating a long computation with the `Sys.sleep(time)`
 function, where `time` is the time interval to suspend execution for, in seconds.
 
 `r msmbstyle::question_begin()`
 
 - Create a new `Rmd` document with a single code chunk calling
   `Sys.sleep(5)`. Compile it twice and compare the compilation times.
-  
+
 - The `system.time()` function can be used to measure the time to run
   a fonction in R. Instead of manually comparing the compilation
   timings, wrap a call to `render()` in `system.time()` to let R
@@ -151,7 +147,7 @@ genuine, and can readily be reproduced.
 
 Producing other types of document is only a matter of installing the
 appropriate template and defining the type of document in the Rmd
-header. In RStudio, this is simply a matter of choosing a template 
+header. In RStudio, this is simply a matter of choosing a template
 from the list of pre-installed ones when creation a new Rmd document:
 
 
@@ -173,7 +169,7 @@ Markdown: The Definitive Guide* book.
 
 `r msmbstyle::question_end()`
 
-## Citations 
+## Citations
 
 One important aspect of writing scientific documents is to cite one's
 sources. The packages and papers that one reads and cites as part of a
@@ -183,7 +179,7 @@ unique file, ideally managed by a dedicated software.
 
 In markdown, that file type is often a BibTex file (extension `.bib`)
 that contain a set of entries such as these ones for R itself, the
-`dplyr` package, or the `DESeq` paper (see chapter \@ref(sec:rnaseq)). 
+`dplyr` package, or the `DESeq` paper (see chapter \@ref(sec-rnaseq)).
 
 ```
 @Manual{R-base,
@@ -204,7 +200,7 @@ that contain a set of entries such as these ones for R itself, the
     note = {R package version 1.0.2},
     url = {https://CRAN.R-project.org/package=dplyr},
 }
-  
+
 @Article{Love:2014,
   title = {Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2},
   author = {Michael I. Love and Wolfgang Huber and Simon Anders},
@@ -218,7 +214,7 @@ that contain a set of entries such as these ones for R itself, the
 ```
 
 If the above entries are stored in the file `refs.bib`, then you'll
-need to define that file in the Rmd header as 
+need to define that file in the Rmd header as
 
 ```
 ---
@@ -249,7 +245,7 @@ citation()
 citation(package = "SummarizedExperiment")
 ```
 
-For more details about bibliographies and citations, see 
+For more details about bibliographies and citations, see
 
 - https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html
 - https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html#Bibliographies

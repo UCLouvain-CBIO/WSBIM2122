@@ -1,4 +1,4 @@
-# Enrichment analyses {#sec:gsea}
+# Enrichment analyses {#sec-gsea}
 
 ```{r, message = FALSE, echo = FALSE}
 library("GO.db")
@@ -700,7 +700,7 @@ sel <- res_tbl$ENTREZID %in% GO_0005925$ENTREZID
 plot(res_tbl$log2FoldChange, -log10(res_tbl$padj))
 points(res_tbl$log2FoldChange[sel],
      -log10(res_tbl$padj)[sel],
-     col = "red")            
+     col = "red")
 grid()
 ```
 

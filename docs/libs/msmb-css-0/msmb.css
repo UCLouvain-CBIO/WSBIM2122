@@ -33,7 +33,7 @@ body {
   color: red;
 }
 
-/* we can remove this eventually 
+/* we can remove this eventually
 its only here while we sort out the book*/
 .solution-body {
     font-weight: normal;
@@ -69,20 +69,20 @@ its only here while we sort out the book*/
 }
 
 .math {
-  font-size: 1.1rem; 
+  font-size: 1.1rem;
 }
 
 h1 {
-  color: #1881c2;
+  color: var(--main-bg-color);
   width: 55%;
-  border-bottom-color: #1881c2;
+  border-bottom-color: var(--main-bg-color);
   border-bottom-style: solid;
   padding-bottom: 0.5rem;
 }
 
 h2 {
-  color: #1881c2;
-  border-bottom-color: #1881c2;
+  color: var(--main-bg-color);
+  border-bottom-color: var(--main-bg-color);
   border-bottom-style: solid;
   width: 55%;
   padding-bottom: 0.5rem;
@@ -90,7 +90,7 @@ h2 {
   font-weight: bold;
 }
 
-.tooltip>.internal-link-btn { 
+.tooltip>.internal-link-btn {
   display: none;
   float: none;
   vertical-align: middle;
@@ -109,7 +109,7 @@ h3:hover>.tooltip>.internal-link-btn { display: inline }
 }
 
 h3 {
-  color: #1881c2;
+  color: var(--main-bg-color);
   font-size: 1.5rem;
 }
 
@@ -138,7 +138,7 @@ ul.navbar {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #1881c2;
+    background-color: var(--main-bg-color);
     top: 0;
 }
 
@@ -202,14 +202,14 @@ blockquote .marginnote, blockquote .sidenote {
 }
 
 .dropdown-content {
-    display: none; 
+    display: none;
     position: absolute;
     background-color: #f9f9f9;
     width: 27.5%;
     z-index: 1;
     margin-right: 140px;
     /*modify margin as window resized */
-    right: calc((87.5% - 1400px)/2); 
+    right: calc((87.5% - 1400px)/2);
     max-width: 440px;
     font-size: 1.2rem;
 }
@@ -244,10 +244,10 @@ when window exceeds 1615px */
     background-position-y: 0;
     text-shadow: none;
     background-size: 0;
-} 
+}
 
 #active-page {
-    background-color: #1881c2;
+    background-color: var(--main-bg-color);
     color: white;
 }
 
@@ -292,20 +292,42 @@ div.sourceCode {
     /*padding-left: 1%;*/
 }
 
+<<<<<<< HEAD
+/*
+changes to bookdown HTML render this
+obsolete for now
+=======
+>>>>>>> 1e790b0d671328315b5484018a6490a173f9ca93
 pre.sourceCode {
     width: auto;
 }
 
 pre {
+<<<<<<< HEAD
+  width: 56%;
+}
+*/
+
+pre {
+    width: auto;
+=======
     width: 56%;
+>>>>>>> 1e790b0d671328315b5484018a6490a173f9ca93
     padding-top: 2px;
     padding-bottom: 2px;
     /*padding-left: 1%;
     padding-right: 1%;*/
     background-color: #F7F7F7;
+<<<<<<< HEAD
+    margin-bottom: 10px;
+    margin-top: 3px;
+    margin-top: 4px;
+    overflow-x: scroll;
+=======
     margin-bottom: 4px;
-    margin-top: 4px; 
+    margin-top: 4px;
     overflow-x: auto;
+>>>>>>> 1e790b0d671328315b5484018a6490a173f9ca93
 }
 
 .build-date {
@@ -392,7 +414,7 @@ pre {
   opacity: 1;
 }
 
-.tooltip-eqn>.internal-link-eqn { 
+.tooltip-eqn>.internal-link-eqn {
   display: none;
   float: none;
   vertical-align: middle;
@@ -413,6 +435,16 @@ pre {
 
 @media (max-width: 760px) {
     body {
+<<<<<<< HEAD
+        padding-left: 0;
+        margin-left: 2%;
+        margin-right: 2%;
+        width: auto;
+    }
+    p {
+        width: auto;
+        font-size: 1.2em;
+=======
         padding-left: 0;
         margin-left: 2%;
         width: auto;
@@ -420,16 +452,23 @@ pre {
     p {
         width: auto;
         font-size: 1.2rem;
+>>>>>>> 1e790b0d671328315b5484018a6490a173f9ca93
     }
     .marginnote, .sidenote {
         left: 0;
     }
+<<<<<<< HEAD
+    .sourceCode {
+        display: inline-block;
+        width: 90%;
+=======
     div.sourceCode {
         display: inline-block;
         width: 100%;
     }
     pre {
       width: 100%;
+>>>>>>> 1e790b0d671328315b5484018a6490a173f9ca93
     }
     .title, .author, .dropdown {
         text-align: center;

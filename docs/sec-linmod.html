@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2021-03-08" />
+<meta name="date" content="2021-09-17" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -27,7 +27,7 @@ MathJax.Hub.Config({
 
 <title>Chapter 3 Linear models | Omics Data Analysis</title>
 
-<script src="libs/header-attrs-2.6.6/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
@@ -67,16 +67,16 @@ function reset_tooltip(id) {
   tooltip.innerHTML = 'Copy link';
 }
 </script>
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.17/datatables.js"></script>
+<script src="libs/datatables-binding-0.19/datatables.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
-<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
@@ -219,7 +219,7 @@ div.csl-indent {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec:linmod" class="section level1" number="3">
+<html><body><div id="sec-linmod" class="section level1" number="3">
 <h1>
 <span class="header-section-number">Chapter 3</span> Linear models</h1>
 <p>The objective of this chapter is to provide students with an intuitive
@@ -285,7 +285,7 @@ fold-change, the associated p-value and visualise the data.</p>
 ## 
 ## data:  expression by group
 ## t = -1.8608, df = 17.776, p-value = 0.07939
-## alternative hypothesis: true difference in means is not equal to 0
+## alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0
 ## 95 percent confidence interval:
 ##  -3.3654832  0.2054832
 ## sample estimates:
@@ -388,7 +388,7 @@ can repeat:</p>
 ## 
 ## data:  expression by group
 ## t = -1.8608, df = 18, p-value = 0.07919
-## alternative hypothesis: true difference in means is not equal to 0
+## alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0
 ## 95 percent confidence interval:
 ##  -3.363874  0.203874
 ## sample estimates:
@@ -617,8 +617,8 @@ the two genotypes will produce, for some key genes, opposite responses
 in the extreme conditions: that the expression of some genes will
 increase in the mutant under dry conditions while it will decrease
 under humid conditions.</p>
-<div id="htmlwidget-a6a46279b90b30b2fa16" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a6a46279b90b30b2fa16">{"x":{"filter":"none","data":[[1,2,3,4,5,6,7,8,9,10,11,12],["WT","WT","WT","WT","WT","WT","MT","MT","MT","MT","MT","MT"],["normal","dry","humid","normal","dry","humid","normal","dry","humid","normal","dry","humid"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>sample<\/th>\n      <th>genotype<\/th>\n      <th>condition<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Such situation require a new model formula syntax, that</p>
+<div id="htmlwidget-6a7aeca3a46b7d2c34f9" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6a7aeca3a46b7d2c34f9">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6,7,8,9,10,11,12],["WT","WT","WT","WT","WT","WT","MT","MT","MT","MT","MT","MT"],["normal","dry","humid","normal","dry","humid","normal","dry","humid","normal","dry","humid"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>sample<\/th>\n      <th>genotype<\/th>\n      <th>condition<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Such situation require a new model formula syntax, that</p>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="sec-linmod.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="sc">~</span> genotype <span class="sc">*</span> condition</span></code></pre></div>
 <p>which is equivalent to</p>
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="sec-linmod.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="sc">~</span> genotype <span class="sc">+</span> condition <span class="sc">+</span> genotype <span class="sc">*</span> condition</span></code></pre></div>
@@ -663,7 +663,7 @@ the data to help with the interpretation.</p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="sec-linmod.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Analyse gene 1</span></span>
 <span id="cb80-2"><a href="sec-linmod.html#cb80-2" aria-hidden="true" tabindex="-1"></a>x_i <span class="ot">&lt;-</span> <span class="fu">filter</span>(x, rowname <span class="sc">==</span> <span class="st">"gene_1"</span>)</span>
 <span id="cb80-3"><a href="sec-linmod.html#cb80-3" aria-hidden="true" tabindex="-1"></a>x_i</span></code></pre></div>
-<pre><code>## # A tibble: 12 x 5
+<pre><code>## # A tibble: 12 × 5
 ##    rowname sample expression condition cell_type
 ##    &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
 ##  1 gene_1  1            4.44 ctrl      A        
@@ -708,7 +708,7 @@ the data to help with the interpretation.</p>
 <div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="sec-linmod.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Analyse gene 2</span></span>
 <span id="cb85-2"><a href="sec-linmod.html#cb85-2" aria-hidden="true" tabindex="-1"></a>x_i <span class="ot">&lt;-</span> <span class="fu">filter</span>(x, rowname <span class="sc">==</span> <span class="st">"gene_2"</span>)</span>
 <span id="cb85-3"><a href="sec-linmod.html#cb85-3" aria-hidden="true" tabindex="-1"></a>x_i</span></code></pre></div>
-<pre><code>## # A tibble: 12 x 5
+<pre><code>## # A tibble: 12 × 5
 ##    rowname sample expression condition cell_type
 ##    &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
 ##  1 gene_2  1            6.16 ctrl      A        
@@ -752,7 +752,7 @@ the data to help with the interpretation.</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="sec-linmod.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Analyse gene 3</span></span>
 <span id="cb90-2"><a href="sec-linmod.html#cb90-2" aria-hidden="true" tabindex="-1"></a>x_i <span class="ot">&lt;-</span> <span class="fu">filter</span>(x, rowname <span class="sc">==</span> <span class="st">"gene_3"</span>)</span>
 <span id="cb90-3"><a href="sec-linmod.html#cb90-3" aria-hidden="true" tabindex="-1"></a>x_i</span></code></pre></div>
-<pre><code>## # A tibble: 12 x 5
+<pre><code>## # A tibble: 12 × 5
 ##    rowname sample expression condition cell_type
 ##    &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
 ##  1 gene_3  1            2.69 ctrl      A        
@@ -796,7 +796,7 @@ the data to help with the interpretation.</p>
 <div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="sec-linmod.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Analyse gene 4</span></span>
 <span id="cb95-2"><a href="sec-linmod.html#cb95-2" aria-hidden="true" tabindex="-1"></a>x_i <span class="ot">&lt;-</span> <span class="fu">filter</span>(x, rowname <span class="sc">==</span> <span class="st">"gene_4"</span>)</span>
 <span id="cb95-3"><a href="sec-linmod.html#cb95-3" aria-hidden="true" tabindex="-1"></a>x_i</span></code></pre></div>
-<pre><code>## # A tibble: 12 x 5
+<pre><code>## # A tibble: 12 × 5
 ##    rowname sample expression condition cell_type
 ##    &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
 ##  1 gene_4  1            7.11 ctrl      A        
@@ -841,7 +841,7 @@ the data to help with the interpretation.</p>
 <div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="sec-linmod.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Analyse gene 5</span></span>
 <span id="cb100-2"><a href="sec-linmod.html#cb100-2" aria-hidden="true" tabindex="-1"></a>x_i <span class="ot">&lt;-</span> <span class="fu">filter</span>(x, rowname <span class="sc">==</span> <span class="st">"gene_5"</span>)</span>
 <span id="cb100-3"><a href="sec-linmod.html#cb100-3" aria-hidden="true" tabindex="-1"></a>x_i</span></code></pre></div>
-<pre><code>## # A tibble: 12 x 5
+<pre><code>## # A tibble: 12 × 5
 ##    rowname sample expression condition cell_type
 ##    &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
 ##  1 gene_5  1            6.56 ctrl      A        
@@ -880,7 +880,7 @@ the data to help with the interpretation.</p>
 ## F-statistic: 6.511 on 3 and 8 DF,  p-value: 0.01536</code></pre>
 <div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="sec-linmod.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(x_i, cell_type, condition) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(expression))</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'cell_type'. You can override using the `.groups` argument.</code></pre>
-<pre><code>## # A tibble: 4 x 3
+<pre><code>## # A tibble: 4 × 3
 ## # Groups:   cell_type [2]
 ##   cell_type condition  mean
 ##   &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt;
@@ -889,15 +889,15 @@ the data to help with the interpretation.</p>
 ## 3 B         cond       5.73
 ## 4 B         ctrl       4.72</code></pre>
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="sec-linmod.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(x_i, cell_type) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(expression))</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 2
+<pre><code>## # A tibble: 2 × 2
 ##   cell_type  mean
-## * &lt;chr&gt;     &lt;dbl&gt;
+##   &lt;chr&gt;     &lt;dbl&gt;
 ## 1 A          5.24
 ## 2 B          5.22</code></pre>
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="sec-linmod.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(x_i, condition) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(expression))</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 2
+<pre><code>## # A tibble: 2 × 2
 ##   condition  mean
-## * &lt;chr&gt;     &lt;dbl&gt;
+##   &lt;chr&gt;     &lt;dbl&gt;
 ## 1 cond       5.13
 ## 2 ctrl       5.33</code></pre>
 <div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="sec-linmod.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(x_i, <span class="fu">aes</span>(<span class="at">x =</span> sample, <span class="at">y =</span> expression,</span>
@@ -1045,7 +1045,7 @@ creating design matrices for gene expression
 experiments</em></a> paper
 <span class="citation">(<label for="tufte-mn-7" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-7" class="margin-toggle">Law et al. 2020<span class="marginnote">Law, CW, K Zeglinski, X Dong, M Alhamdoosh, GK Smyth, and ME Ritchie. 2020. <span>“A Guide to Creating Design Matrices for Gene Expression Experiments [Version 1; Peer Review: 2 Approved].”</span> <em>F1000Research</em> 9 (1444). <a href="https://doi.org/10.12688/f1000research.27893.1">https://doi.org/10.12688/f1000research.27893.1</a>.</span>)</span> is an excellent guide describing the basics of how to set
 up design and contrast matrices and great preparation to chapter
-<a href="sec-rnaseq.html#sec:rnaseq">5</a>.</p>
+<a href="#sec:rnaseq"><strong>??</strong></a>.</p>
 
 </div>
 </div></body></html>
@@ -1055,9 +1055,9 @@ up design and contrast matrices and great preparation to chapter
 <a href="sec-hts.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-03-08
+2021-09-17
  using 
-R version 4.0.3 Patched (2021-01-18 r79847)
+R version 4.1.0 (2021-05-18)
 </p>
 </div>
 </div>

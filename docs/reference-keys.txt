@@ -28,7 +28,7 @@ fig:unnamed-chunk-174
 fig:unnamed-chunk-178
 fig:unnamed-chunk-179
 fig:unnamed-chunk-186
-sec:cli
+sec-cli
 introduction
 navigating-files-and-directories
 hidden-files-and-directories
@@ -36,14 +36,13 @@ working-with-files-and-directories
 data-analysis-in-the-shell
 writing-scripts
 references
-sec:rmd
+sec-rmd
 knitting-from-within-r
-knitting-from-within-r-1
 caching
 writing-slides-in-rmarkdown
 citations
 references-1
-sec:linmod
+sec-linmod
 starting-with-a-t-test
 the-linear-model-equivalence
 paired-t-test
@@ -52,7 +51,7 @@ interactions-between-variables
 exercise
 which-model-to-use
 additional-reading
-sec:hts
+sec-hts
 rna-seq-library-preparation
 sequencing
 fastq-files
@@ -61,7 +60,7 @@ quality-control
 alignment
 counting
 preparing-the-count-matrix
-sec:rnaseq
+sec-rnaseq
 theory-behind-deseq2
 normalisation
 count-modeling
@@ -83,7 +82,7 @@ ma-plot
 volcano-plot
 raw-counts-plots
 querying-the-biomart-service
-sec:gsea
+sec-gsea
 introduction-1
 gene-sets
 gene-ontology-go
@@ -100,7 +99,7 @@ using-kegg-sets
 using-msigdb-sets
 visualisation-of-enrichment-analyses
 discussion
-sec:ms
+sec-ms
 setup-1
 how-does-mass-spectrometry-work
 reading-and-accessing-ms-data
@@ -111,7 +110,7 @@ label-free-ms2-spectral-counting
 labelled-ms2-isobaric-tagging
 label-free-ms1-extracted-ion-chromatograms
 labelled-ms1-silac
-sec:prot
+sec-prot
 introduction-2
 qfeatures
 feature-aggregation
@@ -129,9 +128,9 @@ principal-component-analysis
 visualisation
 statistical-analysis
 project
-sec:ccl
-sec:anx
+sec-ccl
+sec-anx
 available-platforms
 project-reports
-sec:si
-sec:setup2
+sec-si
+sec-setup2

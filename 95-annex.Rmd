@@ -1,4 +1,4 @@
-# Annex {#sec:anx}
+# Annex {#sec-anx}
 
 
 ## Available platforms
@@ -15,7 +15,7 @@ during the presentations and final oral exam.
 ## Project reports
 
 The group projects constitute a significant part of the work and final
-grades. The reports will be written in Rmarkdown (see \@ref(sec:rmd)
+grades. The reports will be written in Rmarkdown (see \@ref(sec-rmd)
 and references therein) and compiled into a final pdf file. It should
 be structure as a scientific manuscript or thesis, including:
 
