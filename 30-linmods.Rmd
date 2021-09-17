@@ -488,4 +488,4 @@ creating design matrices for gene expression
 experiments*](https://f1000research.com/articles/9-1444) paper
 [@Law:2020] is an excellent guide describing the basics of how to set
 up design and contrast matrices and great preparation to chapter
-\@ref(sec:rnaseq).
+\@ref(sec-rnaseq).

@@ -681,12 +681,12 @@ adjusted p-value above) and compute a new GSEA score.</p>
 <pre><code>## DataFrame with 6 rows and 4 columns
 ##                Cell        Type Condition sizeFactor
 ##         &lt;character&gt; &lt;character&gt;  &lt;factor&gt;  &lt;numeric&gt;
-## sample1       Cell1  Epithelial      KD     0.726883
-## sample2       Cell1  Epithelial      mock   1.308664
-## sample3       Cell1  Epithelial      KD     1.077368
+## sample1       Cell1  Epithelial      mock   0.726883
+## sample2       Cell1  Epithelial      KD     1.308664
+## sample3       Cell1  Epithelial      mock   1.077368
 ## sample4       Cell1  Epithelial      mock   0.966025
 ## sample5       Cell1  Epithelial      KD     1.042111
-## sample6       Cell1  Epithelial      mock   1.012664</code></pre>
+## sample6       Cell1  Epithelial      KD     1.012664</code></pre>
 <div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="sec-gsea.html#cb288-1" aria-hidden="true" tabindex="-1"></a>res_tmp <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds_tmp) <span class="sc">%&gt;%</span></span>
 <span id="cb288-2"><a href="sec-gsea.html#cb288-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">results</span>(<span class="at">name =</span> <span class="st">"Condition_KD_vs_mock"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb288-3"><a href="sec-gsea.html#cb288-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="sc">%&gt;%</span></span>
@@ -703,22 +703,22 @@ adjusted p-value above) and compute a new GSEA score.</p>
 <span id="cb288-14"><a href="sec-gsea.html#cb288-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">score =</span> <span class="fu">cumsum</span>(score))</span>
 <span id="cb288-15"><a href="sec-gsea.html#cb288-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb288-16"><a href="sec-gsea.html#cb288-16" aria-hidden="true" tabindex="-1"></a>res_tmp</span></code></pre></div>
-<pre><code>## # A tibble: 19,092 × 5
+<pre><code>## # A tibble: 19,094 × 5
 ##    ENSEMBL          ENTREZID  padj inGO  score
 ##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
-##  1 ENSG00000223972     84771  1.00 FALSE    -1
-##  2 ENSG00000223972    727856  1.00 FALSE    -2
-##  3 ENSG00000223972 100287102  1.00 FALSE    -3
-##  4 ENSG00000223972 100287596  1.00 FALSE    -4
-##  5 ENSG00000223972 102725121  1.00 FALSE    -5
-##  6 ENSG00000227232    653635  1.00 FALSE    -6
-##  7 ENSG00000278267 102466751  1.00 FALSE    -7
-##  8 ENSG00000279457 102723897  1.00 FALSE    -8
-##  9 ENSG00000230021 101928626  1.00 FALSE    -9
-## 10 ENSG00000237491 105378580  1.00 FALSE   -10
-## # … with 19,082 more rows</code></pre>
+##  1 ENSG00000223972     84771 0.997 FALSE    -1
+##  2 ENSG00000223972    727856 0.997 FALSE    -2
+##  3 ENSG00000223972 100287102 0.997 FALSE    -3
+##  4 ENSG00000223972 100287596 0.997 FALSE    -4
+##  5 ENSG00000223972 102725121 0.997 FALSE    -5
+##  6 ENSG00000227232    653635 0.997 FALSE    -6
+##  7 ENSG00000278267 102466751 0.997 FALSE    -7
+##  8 ENSG00000279457 102723897 0.997 FALSE    -8
+##  9 ENSG00000230021 101928626 0.997 FALSE    -9
+## 10 ENSG00000237491 105378580 0.997 FALSE   -10
+## # … with 19,084 more rows</code></pre>
 <div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="sec-gsea.html#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(res_tmp<span class="sc">$</span>score)</span></code></pre></div>
-<pre><code>## [1] 469.8079</code></pre>
+<pre><code>## [1] 392.6897</code></pre>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="sec-gsea.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res_tmp<span class="sc">$</span>score, <span class="at">type =</span> <span class="st">"l"</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-119-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests
