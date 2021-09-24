@@ -50,7 +50,7 @@ p
 Let's now use linear regression and the `lm()` function to model the
 expression in groups 1 and 2:
 
-$$expression = \beta_0 + \beta_1 \times x + \epsilon$$
+$$y = \beta_0 + \beta_1 \times x + \epsilon$$
 
 where $y$ is the expression we want to model and $x$ represents the
 two groups that are generally encoded as 0 and 1. The expression above
@@ -168,7 +168,7 @@ This comparison can be replicated using a linar model[^mod2]
 
 [^mod2]: See below for the exact equation.
 
-$$y = \beta_0 + \beta_1 \times group + \beta_i \times ID + \epsilon$$
+$$y = \beta_0 + \beta_1 \times group + \beta_i \times ID_i + \epsilon$$
 
 where the $\beta_i$ coefficients will encode the relation between
 pairs of individuals. We model this with
@@ -304,7 +304,7 @@ DT::datatable(des, rownames = FALSE,
                   autoWidth = TRUE))
 ```
 
-Such situation require a new model formula syntax, that
+Such situation require a new model formula syntax
 
 ```{r, eval = FALSE}
 ~ genotype * condition
@@ -324,12 +324,14 @@ Here, coefficients are estimated for `genotype`, `condition` and the
 `r msmbstyle::question_begin()`
 
 Load the `lmdata` data available in the `rWSBIM2122` package (version
-0.2.2 or later), which provides a factorial design (2 factors,
-`condition` and `cell_type` with 2 levels each) with gene expression
-for 5 genes and 12 samples.
+0.2.2 or later), that provides two variables, `lmdata` and `lmannot`,
+describing a factorial design (2 factors, `condition` and `cell_type`
+with 2 levels each) with gene expression for 5 genes and 12 samples.
 
 ```{r}
 data(lmdata, package = "rWSBIM2122")
+lmdata
+lmannot
 ```
 
 Analyse each gene with a linear model, defining an appropriate model
