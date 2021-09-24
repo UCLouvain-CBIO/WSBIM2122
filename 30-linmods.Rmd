@@ -284,8 +284,8 @@ assess the drug effect?
 ## Interactions between variables
 
 
-Consider the following design: two genotypes of plants, wild type and
-a mutant that shows some resistance to drought, that are grown,
+Consider the following design: two plant genotypes, wild type and a
+mutant that shows some resistance to drought, that are grown,
 collected and analysed by RNA sequencing under normal, humid and dry
 conditions. The researchers that set up this experiment expect that
 the two genotypes will produce, for some key genes, opposite responses
