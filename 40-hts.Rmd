@@ -30,25 +30,43 @@ control, alignment and counting steps.
 The starting point of a RNAseq experiment is the cDNA library
 preparation.  RNA is first isolated from cells and purified to remove
 ribosomal RNA which constitute the majority of total RNA. This can be
-done by extracting poly(A) RNA or by depleting rRNA. In a classical
-RNA-seq library preparation, purified RNA is then fragmented, reverse
-transcribed and adapters are ligated to both extremities to allow for
-amplification.
-
-While simple, this approach loses the information about which DNA
-strand corresponds to the sense strand of RNA. This can be avoided by
-using a stranded protocol. In this case, dUTP are added during the 2nd
-strand cDNA synthesis and the newly synthetized cDNA strand is
-degradated after the ligation step. This allows to infer the
-transcript orientation as only the first cDNA strand is
-sequenced. Strand-specificity leads to lower number of ambiguous reads
-(overlapping multiple genes).
+done by extracting poly(A) RNA or by depleting rRNA. Purified RNA is then 
+fragmented, reverse transcribed and adapters are ligated to both extremities 
+to allow for amplification and sequencing.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%'}
-knitr::include_graphics("figs/library.png")
+knitr::include_graphics("figs/Unstranded_lib_prep.png")
 ```
 
+
+### Stranded versus unstranded libraries
+
+The library preparation presented above corresponds to an **unstranded protocol**.
+
+As both cDNA strands will be amplified for sequencing, about half of the 
+reads will be sequenced from the first cDNA strand, and half of the reads will 
+be sequenced from the second strand cDNA. But we won't know which strand was 
+sequenced! So we lose the information about the orientation of the transcript.
+
+This can be avoided by using a **stranded protocol**. 
+In this case, dUTPs are added during the 2nd strand cDNA synthesis and the 
+newly synthetized cDNA strand is degradated after the ligation step. 
+This allows to infer the transcript orientation because only the first cDNA strand 
+will be sequenced. Indeed, if the sequence of the read corresponds to the 
+the sense strand of DNA, it means that the gene was originally transcribed in a 
+sense orientation. On the contrary, if the read is complementary to the sense 
+strand of DNA, it means that it was originally transcribed in antisense. 
+
+
+```{r, echo=FALSE, fig.align='center', out.width='100%'}
+knitr::include_graphics("figs/stranded_vs_unstranded.png")
+```
+
+Strand-specificity leads to lower number of ambiguous reads.
+
 ## Sequencing
+
+### SE vs PE sequencing
 
 Once the library is ready, molecules from the library are sequenced in
 a high throughput manner to obtain short sequences from one end
@@ -60,6 +78,8 @@ repeat regions, resulting in less multimapping reads.
 ```{r, echo = FALSE, fig.align ='center', out.width = '100%'}
 knitr::include_graphics("figs/SE_vs_PE.png")
 ```
+
+### cluster amplification
 
 The sequencing is done by a cluster amplification process.
 
@@ -106,14 +126,18 @@ For a dynamic view of the cluster amplification process, watch the
 ## fastq files
 
 The sequence data generated from the sequencer are received in text
-files called fastq files.  For a single-end run, one fastq file is
+files called `fastq` files.  For a single-end run, one fastq file is
 created for each sample. For a paired-end run, two separated fastq
 files are generated, each containing sequences from one end.
 
 What does a FASTQ file look like?
 
-```{bash}
-head wsbim2122_data/RNAseq_pipeline/example.fastq
+```{r message=FALSE, warning=FALSE, include=FALSE}
+try(rWSBIM2122::prepare_shell())
+```
+
+```{r, echo = FALSE, fig.align ='center', out.width = '100%'}
+knitr::include_graphics("figs/fastq_first_lines.png")
 ```
 
 Each entry in a fastq file consists of 4 lines:
@@ -121,7 +145,7 @@ Each entry in a fastq file consists of 4 lines:
 - A sequence identifier (by convention preceded by '@') with
   information about the sequencing run
 - The sequence
-- The same sequence identifier preceded by '+'
+- A delimiter, always starting by the sign '+'
 - The base call quality scores. These are Phred scores, encoded using
   [ASCII characters](https://theasciicode.com.ar) to represent the
   numerical quality scores.  Each character is assigned a quality
@@ -134,7 +158,7 @@ knitr::include_graphics("figs/phred_score.png")
 
 `r msmbstyle::question_begin()`
 
-What do you think of the quality of the two sequences presented in the
+What do you think of the quality of the last sequence presented in the
 fastq file above?
 
 `r msmbstyle::question_end()`
@@ -203,6 +227,12 @@ divides the y-axis into very good quality scores (green), scores of
 reasonable quality (orange), and reads of poor quality (red).  Here
 the quality of reads is very good.
 
+This graph would for example represent low quality reads:
+
+```{r, echo=FALSE, fig.align='center', out.width='80%'}
+knitr::include_graphics("figs/fastqc_bad_fig1.png")
+```
+
 **2. Per tile sequence quality**:
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%'}
@@ -220,6 +250,12 @@ found around the edges, but hot spots can also occur in the middle
 (due to an air bubble for example), however these should represent
 only a small percentage of the total sequences.  In this example no
 tile shows poor quality.
+
+This graph would for example show some lower quality tiles:
+
+```{r, echo=FALSE, fig.align='center', out.width='80%'}
+knitr::include_graphics("figs/fastqc_bad_fig2.png")
+```
 
 
 **3. Per sequence quality scores**
@@ -249,20 +285,29 @@ biased selection of random primers, but doesn't represent any
 individually biased sequences.  This is a typical plot obtained for
 RNAseq reads.
 
+When Analysing DNA, the figure could look like this:
+
+```{r, echo=FALSE, fig.align='center', out.width='80%'}
+knitr::include_graphics("figs/fastqc_bad_fig4.png")
+```
+
 **5. Per sequence GC content**
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%'}
 knitr::include_graphics("figs/fastqc_fig5.png")
 ```
 
-It represents a density plot of average GC content in each of the
-reads.  This plot makes sense for whole genome shotgun sequencing, as
-the overall GC content should reflect the GC content of the underlying
-genome. A GC bias could indicate an overrepresented sequence
-contaminating the library.  For RNA sequencing, this plot makes less
-sense, as there may be a greater or lesser distribution of mean GC
-content among transcripts causing the observed plot to be wider or
-narrower than an ideal normal distribution.
+It gives the GC distribution across the reads.
+
+This plot makes more sense for whole genome shotgun sequencing, 
+as the overall GC content should reflect the GC content of the underlying genome.
+(Note that since the software doesn't know the the GC content of the genome, 
+the theorical distribution is calculated from the observed data).
+
+An unexpected distribution could indicate a contaminated library.
+
+For RNA sequencing, this plot makes less sense, as over-represented sequences 
+might generate an unexpected distribution.  
 
 **6. Per base N content**
 
@@ -292,14 +337,14 @@ Here we see that most reads are 150 pb long but some reads are shorter.
 knitr::include_graphics("figs/fastqc_fig8.png")
 ```
 
-It gives the distribution of duplicated sequences.  The blue line
+It gives the distribution of duplicated reads. The blue line
 corresponds to the percentage of duplicated reads among total number
 of reads.  The red line corresponds to the percentage of duplicated
 reads among total number of distinct reads.
 
-In a highly diverse library from whole genome shotgun sequencing, it
-is expected that nearly all reads will be unique, appearing only 1
-time in the sequence data.  A high level of duplication could indicate
+In a highly diverse library from whole genome shotgun sequencing, almost
+all the reads are expected to be unique, appearing only 1
+time in the sequence data. A high level of duplication could indicate
 biased PCR enrichment, or presence of contaminant.
 
 In contrast, in RNAseq, there will likely be some very highly abundant
@@ -327,6 +372,12 @@ knitr::include_graphics("figs/fastqc_fig10.png")
 
 This graph indicates if and where adapter sequences occur in the reads.
 
+If residual adapters were present we could see something like this:
+
+```{r, echo=FALSE, fig.align='center', out.width='80%'}
+knitr::include_graphics("figs/fastqc_bad_fig10.png")
+```
+
 `r msmbstyle::solution_end()`
 
 - **Trimmomatics**
@@ -345,15 +396,15 @@ sliding window, cutting when the average quality per base drops below
 20.
 
 ```
-$ java -jar trimmomatic-0.38.jar \
+$ java -jar trimmomatic.jar \
   PE \                                  # paired-end
   -threads 4 \                          # number of threads
   SampleName_1.fastq \                  # fastq file for fw reads
   SampleName_2.fastq  \                 # fastq file for rev reads
   SampleName_1_clean.fastq \            # clean fastq for fw reads
-  SampleName_1_unpaired.fastq \         # fastq for discared fw reads
+  SampleName_1_unpaired.fastq \         # fastq for unpaired remaining fw reads
   SampleName_2_clean.fastq \            # clean fastq for rev reads
-  SampleName_2_unpaired.fastq \         # fastq for discared rev reads
+  SampleName_2_unpaired.fastq \         # fastq for unpaired remaining rev reads
   ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 \  # cut adapter from the read.
   SLIDINGWINDOW:10:20                   # sliding window trimming
 ```
@@ -378,6 +429,10 @@ $ fastqc SampleName_1_clean.fastq
 `r msmbstyle::solution_end()`
 
 ## Alignment
+
+```{r, echo=FALSE, fig.align='center', out.width='20%'}
+knitr::include_graphics("figs/pipeline_mapping.png")
+```
 
 Next step is to map the reads to determine where in the genome the
 reads originated from.  Many different aligners are available such as
@@ -432,11 +487,12 @@ knitr::include_graphics("figs/hisat2_report.png")
 
 **SAM format**
 
-The [SAM](https://genome.sph.umich.edu/wiki/SAM) file, is a
-tab-delimited text file.  Each line corresponds to alignment
-information for a single read. Each line has 11 mandatories fields for
-essential mapping information and a variable number of other fields
-for aligner specific information. An example of few entries from a SAM
+The [SAM](https://genome.sph.umich.edu/wiki/SAM) format is a generic
+format for storing large nucleotide sequence alignments. 
+In a SAM file, each entry gives the alignment information for a single read. 
+Each entry has 11 mandatories fields for essential mapping information 
+and a variable number of other fields for aligner specific information. 
+An example of few entries from a SAM
 file is displayed below.
 
 ```{bash}
@@ -487,6 +543,13 @@ Alignements described in BAM files can easily be viewed using
 [IGV](https://software.broadinstitute.org/software/igv/) (Integrative Genomics Viewer),
 a very useful interactive tool for the visual exploration of genomic data.
 
+Visualising the alignments is not part of the processing pipeline 
+but sometimes it can be useful.. 
+
+```{r, echo = FALSE, fig.align = 'center', out.width = '60%', purl = TRUE}
+knitr::include_graphics("figs/pipeline_IGV.png")
+```
+
 IGV requires that BAM files have an associated index file[^Indexed_bam].
 Samtools can be used to index the BAM file. The following command would create
 the indexed SampleName.bam.bai file.
@@ -520,6 +583,10 @@ Loading a BAM file creates 3 associated tracks:
 
 ## Counting
 
+```{r, echo=FALSE, fig.align='center', out.width='20%'}
+knitr::include_graphics("figs/pipeline_counting.png")
+```
+
 Now comes the quantification step. It can be performed with several
 tools such as [htseq-count](https://pypi.org/project/HTSeq/) or
 [FeatureCounts](http://bioinf.wehi.edu.au/featureCounts/).  We will
@@ -535,6 +602,11 @@ from [Ensembl](http://www.ensembl.org/info/data/ftp/index.html) or
 from the [UCSC table
 browser](https://www.gencodegenes.org/human/). The first few lines of
 gtf annotation file for human genome assembly GRCh38 look like this:
+
+
+```{r, echo = FALSE, fig.align = 'center', out.width = '100%', purl = TRUE}
+knitr::include_graphics("figs/gtf_example.png")
+```
 
 ```{bash}
 head -n 20 wsbim2122_data/RNAseq_pipeline/Homo_sapiens.GRCh38.94.gtf
@@ -571,7 +643,7 @@ SampleName.bam              # bam file
 Here is an example of featurecounts output file. The last column gives
 the raw counts of each gene in that sample.
 
-```{r}
+```{r, message = FALSE}
 counts_result <- read_tsv(file = "wsbim2122_data/count_data/sample1_counts.tsv.gz")
 datatable(head(counts_result))
 ```
@@ -661,21 +733,19 @@ in the folder `wsbim_data/count_data/`. Use these files to create a count matrix
 
 ```{r, message = FALSE}
 samples <- list.files("wsbim2122_data/count_data/", pattern = "*tsv.gz")
+
 counts <- read_tsv(file = paste0("wsbim2122_data/count_data/", samples[1])) %>%
-  select(ends_with('.bam'))
+    select(Geneid, ends_with('.bam'))
+
 for (sample in samples[-1]){
   tmp <- read_tsv(file = paste0("wsbim2122_data/count_data/", sample)) %>%
     select(ends_with('.bam'))
   counts <- cbind(counts, tmp)
 }
+
 names(counts) <- sub(pattern = ".bam$", '', names(counts))
-names(counts) <- sub(pattern = '../processed_data/bam/', '', names(counts))
-
-Geneids <- read_tsv(file = paste0("wsbim2122_data/count_data/", samples[1])) %>%
-    dplyr::select(Geneid)
-rownames(counts) <- Geneids$Geneid
-
-head(counts)
+names(counts) <- sub(pattern = "../processed_data/bam/", '', names(counts))   
+head(counts) 
 ```
 
 `r msmbstyle::solution_end()`
