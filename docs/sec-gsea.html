@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-29" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -316,7 +316,7 @@ junction (HAJ).</code></pre>
 <span id="cb267-8"><a href="sec-gsea.html#cb267-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">duplicated</span>(ENTREZID))</span></code></pre></div>
 <pre><code>## 'select()' returned 1:many mapping between keys and columns</code></pre>
 <div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="sec-gsea.html#cb269-1" aria-hidden="true" tabindex="-1"></a>GO_0005925</span></code></pre></div>
-<pre><code>## # A tibble: 416 × 5
+<pre><code>## # A tibble: 418 × 5
 ##    GO         EVIDENCE ONTOLOGY ENTREZID SYMBOL
 ##    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt; 
 ##  1 GO:0005925 HDA      CC       60       ACTB  
@@ -329,9 +329,9 @@ junction (HAJ).</code></pre>
 ##  8 GO:0005925 HDA      CC       102      ADAM10
 ##  9 GO:0005925 HDA      CC       118      ADD1  
 ## 10 GO:0005925 HDA      CC       214      ALCAM 
-## # … with 406 more rows</code></pre>
-<p>We have 416 genes matching this GO term. There are
-thus 416 genes in the GO_0005925 GO set.</p>
+## # … with 408 more rows</code></pre>
+<p>We have 418 genes matching this GO term. There are
+thus 418 genes in the GO_0005925 GO set.</p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -363,7 +363,7 @@ continually during the cell-division cycle.</code></pre>
 <span id="cb272-6"><a href="sec-gsea.html#cb272-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">duplicated</span>(ENTREZID))</span></code></pre></div>
 <pre><code>## 'select()' returned 1:many mapping between keys and columns</code></pre>
 <div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="sec-gsea.html#cb274-1" aria-hidden="true" tabindex="-1"></a>GO_0005813</span></code></pre></div>
-<pre><code>## # A tibble: 520 × 5
+<pre><code>## # A tibble: 528 × 5
 ##    GO         EVIDENCE ONTOLOGY ENTREZID SYMBOL
 ##    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt; 
 ##  1 GO:0005813 IDA      CC       35       ACADS 
@@ -372,11 +372,11 @@ continually during the cell-division cycle.</code></pre>
 ##  4 GO:0005813 IDA      CC       402      ARL2  
 ##  5 GO:0005813 IDA      CC       403      ARL3  
 ##  6 GO:0005813 IDA      CC       468      ATF4  
-##  7 GO:0005813 IBA      CC       582      BBS1  
-##  8 GO:0005813 IDA      CC       585      BBS4  
-##  9 GO:0005813 IDA      CC       598      BCL2L1
-## 10 GO:0005813 IMP      CC       636      BICD1 
-## # … with 510 more rows</code></pre>
+##  7 GO:0005813 ISS      CC       472      ATM   
+##  8 GO:0005813 IBA      CC       582      BBS1  
+##  9 GO:0005813 IDA      CC       585      BBS4  
+## 10 GO:0005813 IDA      CC       598      BCL2L1
+## # … with 518 more rows</code></pre>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -558,7 +558,7 @@ and non-DE genes that are not in the set:</p>
 <span id="cb279-3"><a href="sec-gsea.html#cb279-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(cont_mat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"GO"</span>, <span class="st">"not_GO"</span>)</span>
 <span id="cb279-4"><a href="sec-gsea.html#cb279-4" aria-hidden="true" tabindex="-1"></a>cont_mat</span></code></pre></div>
 <pre><code>##         GO not_GO
-## DE     157   4027
+## DE     159   4025
 ## not_DE 207   9328</code></pre>
 <p>We can now apply a Fisher’s exact (or hypergeometric test) that will
 test whether we can identify a statistically enrichment of DE genes in
@@ -568,13 +568,13 @@ the GO category.</p>
 ##  Fisher's Exact Test for Count Data
 ## 
 ## data:  cont_mat
-## p-value = 1.686e-07
+## p-value = 8.024e-08
 ## alternative hypothesis: true odds ratio is greater than 1
 ## 95 percent confidence interval:
-##  1.462921      Inf
+##  1.483307      Inf
 ## sample estimates:
 ## odds ratio 
-##   1.756708</code></pre>
+##   1.779959</code></pre>
 <p>Note that we could keep the default <code>alternative = "two.sided"</code> to
 test to over or under representation.</p>
 <div class="question">
@@ -718,7 +718,7 @@ adjusted p-value above) and compute a new GSEA score.</p>
 ## 10 ENSG00000237491 105378580 0.998 FALSE   -10
 ## # … with 19,084 more rows</code></pre>
 <div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="sec-gsea.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(res_tmp<span class="sc">$</span>score)</span></code></pre></div>
-<pre><code>## [1] 476.3399</code></pre>
+<pre><code>## [1] 450.2892</code></pre>
 <div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="sec-gsea.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res_tmp<span class="sc">$</span>score, <span class="at">type =</span> <span class="st">"l"</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-119-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests
@@ -1195,7 +1195,7 @@ ordering criteria in GSEA) provide different results.</p>
 <a href="sec-ms.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-24
+2021-09-29
  using 
 R version 4.1.0 (2021-05-18)
 </p>
