@@ -283,15 +283,15 @@ assess the drug effect?
 
 ## Interactions between variables
 
-
 Consider the following design: two plant genotypes, wild type and a
 mutant that shows some resistance to drought, that are grown,
 collected and analysed by RNA sequencing under normal, humid and dry
 conditions. The researchers that set up this experiment expect that
-the two genotypes will produce, for some key genes, opposite responses
-in the extreme conditions: that the expression of some genes will
-increase in the mutant under dry conditions while it will decrease
-under humid conditions.
+the two genotypes will produce, for some key genes, different or even
+opposite responses in the extreme conditions: that the expression of
+some genes will increase in the mutant under dry conditions while they
+will decrease (or change to a lesser extend at least) under humid
+conditions.
 
 ```{r, echo = FALSE}
 des <- data.frame(sample = 1:12,
@@ -317,7 +317,9 @@ which is equivalent to
 ```
 
 Here, coefficients are estimated for `genotype`, `condition` and the
-**interaction** between the two.
+**interaction** between the two, and the model will test for
+differences in *condition* slopes between the different
+genotypes. These differences might even culminate in opposite signs.
 
 ## Exercise
 

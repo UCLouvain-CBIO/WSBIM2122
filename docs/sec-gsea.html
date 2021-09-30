@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2021-09-29" />
+<meta name="date" content="2021-09-30" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -683,10 +683,10 @@ adjusted p-value above) and compute a new GSEA score.</p>
 ##         &lt;character&gt; &lt;character&gt;  &lt;factor&gt;  &lt;numeric&gt;
 ## sample1       Cell1  Epithelial      mock   0.726883
 ## sample2       Cell1  Epithelial      mock   1.308664
-## sample3       Cell1  Epithelial      mock   1.077368
+## sample3       Cell1  Epithelial      KD     1.077368
 ## sample4       Cell1  Epithelial      KD     0.966025
 ## sample5       Cell1  Epithelial      KD     1.042111
-## sample6       Cell1  Epithelial      KD     1.012664</code></pre>
+## sample6       Cell1  Epithelial      mock   1.012664</code></pre>
 <div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="sec-gsea.html#cb285-1" aria-hidden="true" tabindex="-1"></a>res_tmp <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds_tmp) <span class="sc">%&gt;%</span></span>
 <span id="cb285-2"><a href="sec-gsea.html#cb285-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">results</span>(<span class="at">name =</span> <span class="st">"Condition_KD_vs_mock"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb285-3"><a href="sec-gsea.html#cb285-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="sc">%&gt;%</span></span>
@@ -703,22 +703,22 @@ adjusted p-value above) and compute a new GSEA score.</p>
 <span id="cb285-14"><a href="sec-gsea.html#cb285-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">score =</span> <span class="fu">cumsum</span>(score))</span>
 <span id="cb285-15"><a href="sec-gsea.html#cb285-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb285-16"><a href="sec-gsea.html#cb285-16" aria-hidden="true" tabindex="-1"></a>res_tmp</span></code></pre></div>
-<pre><code>## # A tibble: 13,704 × 5
-##    ENSEMBL         ENTREZID      padj inGO  score
-##    &lt;chr&gt;              &lt;int&gt;     &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
-##  1 ENSG00000101856    10857 1.37e-147 FALSE  -1  
-##  2 ENSG00000177494    79413 5.20e- 67 FALSE  -2  
-##  3 ENSG00000136159    55270 1.84e- 44 FALSE  -3  
-##  4 ENSG00000175315     1474 9.16e- 43 FALSE  -4  
-##  5 ENSG00000128245     7533 1.88e- 42 FALSE  -5  
-##  6 ENSG00000113272    54974 9.55e- 39 FALSE  -6  
-##  7 ENSG00000213853     2013 2.01e- 36 FALSE  -7  
-##  8 ENSG00000115107    55240 1.49e- 33 FALSE  -8  
-##  9 ENSG00000008513     6482 1.18e- 32 FALSE  -9  
-## 10 ENSG00000105855     3696 3.76e- 31 TRUE   27.4
-## # … with 13,694 more rows</code></pre>
+<pre><code>## # A tibble: 19,094 × 5
+##    ENSEMBL          ENTREZID  padj inGO  score
+##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
+##  1 ENSG00000223972     84771 0.998 FALSE    -1
+##  2 ENSG00000223972    727856 0.998 FALSE    -2
+##  3 ENSG00000223972 100287102 0.998 FALSE    -3
+##  4 ENSG00000223972 100287596 0.998 FALSE    -4
+##  5 ENSG00000223972 102725121 0.998 FALSE    -5
+##  6 ENSG00000227232    653635 0.998 FALSE    -6
+##  7 ENSG00000278267 102466751 0.998 FALSE    -7
+##  8 ENSG00000279457 102723897 0.998 FALSE    -8
+##  9 ENSG00000230021 101928626 0.998 FALSE    -9
+## 10 ENSG00000237491 105378580 0.998 FALSE   -10
+## # … with 19,084 more rows</code></pre>
 <div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="sec-gsea.html#cb287-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(res_tmp<span class="sc">$</span>score)</span></code></pre></div>
-<pre><code>## [1] 2130.066</code></pre>
+<pre><code>## [1] 450.2892</code></pre>
 <div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="sec-gsea.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res_tmp<span class="sc">$</span>score, <span class="at">type =</span> <span class="st">"l"</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-129-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests
@@ -821,7 +821,7 @@ significant (assuming we set an alpha of 0.05)?</p>
 </p>
 <div id="sol-body-17" class="solution-body" style="display: none;">
 <p>1 permutation score or more is enough to loose significativite, as a
-single value greater than 2173 produces a p-value
+single value greater than 2130 produces a p-value
 of 1/10 = 0.1.</p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -874,28 +874,29 @@ further exploration of the results.</p>
 <span id="cb300-7"><a href="sec-gsea.html#cb300-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">readable =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb300-8"><a href="sec-gsea.html#cb300-8" aria-hidden="true" tabindex="-1"></a>    as_tibble</span>
 <span id="cb300-9"><a href="sec-gsea.html#cb300-9" aria-hidden="true" tabindex="-1"></a>go_ora</span></code></pre></div>
-<pre><code>## # A tibble: 19 x 9
-##    ID     Description  GeneRatio BgRatio  pvalue p.adjust  qvalue geneID   Count
-##    &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt;
-##  1 GO:00… cytosolic r… 61/3838   99/120… 1.03e-9  7.04e-7 6.48e-7 RPL27/R…    61
-##  2 GO:00… cytosolic l… 38/3838   54/120… 7.21e-9  2.45e-6 2.26e-6 RPL27/R…    38
-##  3 GO:00… polysomal r… 24/3838   32/120… 6.82e-7  1.55e-4 1.42e-4 RPL38/R…    24
-##  4 GO:00… focal adhes… 159/3838  364/12… 1.17e-6  1.99e-4 1.83e-4 ITGB8/A…   159
-##  5 GO:00… cell-substr… 160/3838  368/12… 1.52e-6  2.07e-4 1.91e-4 ITGB8/A…   160
-##  6 GO:00… membrane ra… 102/3838  218/12… 2.67e-6  2.60e-4 2.39e-4 EMP2/SC…   102
-##  7 GO:00… membrane mi… 102/3838  218/12… 2.67e-6  2.60e-4 2.39e-4 EMP2/SC…   102
-##  8 GO:00… membrane re… 105/3838  227/12… 3.68e-6  3.13e-4 2.88e-4 EMP2/SC…   105
-##  9 GO:00… neuron to n… 109/3838  242/12… 1.09e-5  8.22e-4 7.56e-4 NETO2/M…   109
-## 10 GO:00… ribosomal s… 84/3838   178/12… 1.32e-5  9.00e-4 8.28e-4 DAP3/MR…    84
-## 11 GO:00… postsynapti… 104/3838  233/12… 2.73e-5  1.69e-3 1.56e-3 NETO2/M…   104
-## 12 GO:00… postsynapti… 100/3838  224/12… 3.84e-5  2.17e-3 2.00e-3 NETO2/M…   100
-## 13 GO:00… asymmetric … 101/3838  227/12… 4.15e-5  2.17e-3 2.00e-3 NETO2/M…   101
-## 14 GO:00… cell surface 171/3838  422/12… 9.09e-5  4.42e-3 4.06e-3 EMP2/IT…   171
-## 15 GO:00… ribosome     94/3838   216/12… 2.02e-4  9.15e-3 8.41e-3 DAP3/MR…    94
-## 16 GO:00… endosome me… 163/3838  410/12… 3.90e-4  1.66e-2 1.53e-2 STEAP3/…   163
-## 17 GO:00… cytosolic s… 24/3838   42/120… 6.29e-4  2.41e-2 2.22e-2 RPS24/R…    24
-## 18 GO:00… postsynapse  156/3838  394/12… 6.38e-4  2.41e-2 2.22e-2 NETO2/F…   156
-## 19 GO:00… large ribos… 52/3838   112/12… 8.85e-4  3.17e-2 2.92e-2 MRPL10/…    52</code></pre>
+<pre><code>## # A tibble: 20 × 9
+##    ID     Description  GeneRatio BgRatio   pvalue p.adjust  qvalue geneID  Count
+##    &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;int&gt;
+##  1 GO:00… cytosolic r… 59/3844   91/120… 1.01e-10  6.79e-8 6.24e-8 RPL27/…    59
+##  2 GO:00… cytosolic l… 37/3844   54/120… 3.53e- 8  1.18e-5 1.09e-5 RPL27/…    37
+##  3 GO:00… polysomal r… 23/3844   31/120… 1.62e- 6  2.06e-4 1.89e-4 RPL38/…    23
+##  4 GO:00… focal adhes… 159/3844  366/12… 1.73e- 6  2.06e-4 1.89e-4 ITGB8/…   159
+##  5 GO:00… ribosomal s… 84/3844   171/12… 1.81e- 6  2.06e-4 1.89e-4 DAP3/M…    84
+##  6 GO:00… cell-substr… 160/3844  369/12… 1.84e- 6  2.06e-4 1.89e-4 ITGB8/…   160
+##  7 GO:00… membrane ra… 102/3844  220/12… 4.42e- 6  3.70e-4 3.40e-4 EMP2/S…   102
+##  8 GO:00… membrane mi… 102/3844  220/12… 4.42e- 6  3.70e-4 3.40e-4 EMP2/S…   102
+##  9 GO:00… ribosome     94/3844   205/12… 1.79e- 5  1.34e-3 1.23e-3 DAP3/M…    94
+## 10 GO:00… neuron to n… 106/3844  239/12… 3.17e- 5  2.13e-3 1.96e-3 NETO2/…   106
+## 11 GO:00… cell surface 168/3844  415/12… 1.10e- 4  6.72e-3 6.18e-3 EMP2/I…   168
+## 12 GO:00… cytosolic s… 23/3844   37/120… 1.45e- 4  7.32e-3 6.73e-3 RPS24/…    23
+## 13 GO:00… postsynapti… 96/3844   220/12… 1.53e- 4  7.32e-3 6.73e-3 NETO2/…    96
+## 14 GO:00… postsynapti… 100/3844  231/12… 1.62e- 4  7.32e-3 6.73e-3 NETO2/…   100
+## 15 GO:00… asymmetric … 97/3844   223/12… 1.64e- 4  7.32e-3 6.73e-3 NETO2/…    97
+## 16 GO:00… postsynapse  157/3844  388/12… 1.87e- 4  7.85e-3 7.22e-3 NETO2/…   157
+## 17 GO:00… large ribos… 52/3844   109/12… 3.97e- 4  1.57e-2 1.44e-2 MRPL10…    52
+## 18 GO:00… small ribos… 34/3844   66/120… 7.14e- 4  2.66e-2 2.45e-2 DAP3/M…    34
+## 19 GO:00… endosome me… 165/3844  421/12… 7.78e- 4  2.75e-2 2.53e-2 STEAP3…   165
+## 20 GO:00… Golgi membr… 188/3844  487/12… 8.34e- 4  2.80e-2 2.57e-2 EMP2/S…   188</code></pre>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -928,20 +929,20 @@ fold-change or the (absolute value) test statistics.</p>
 <pre><code>## Warning in preparePathwaysAndStats(pathways, stats, minSize, maxSize, gseaParam, : There are ties in the preranked stats (0.62% of the list).
 ## The order of those tied genes will be arbitrary, which may produce unexpected results.</code></pre>
 <div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="sec-gsea.html#cb304-1" aria-hidden="true" tabindex="-1"></a>go_gsea</span></code></pre></div>
-<pre><code>## # A tibble: 530 x 11
-##    ID    Description setSize enrichmentScore   NES  pvalue p.adjust qvalues
-##    &lt;chr&gt; &lt;chr&gt;         &lt;int&gt;           &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-##  1 GO:0… epithelial…     423           0.468  1.37 4.02e-9  1.90e-5 1.46e-5
-##  2 GO:0… positive r…     498           0.452  1.33 8.85e-9  1.90e-5 1.46e-5
-##  3 GO:0… positive r…     493           0.450  1.33 1.05e-8  1.90e-5 1.46e-5
-##  4 GO:0… blood vess…     477           0.443  1.31 1.06e-7  1.44e-4 1.11e-4
-##  5 GO:0… positive r…     371           0.456  1.33 1.57e-7  1.70e-4 1.31e-4
-##  6 GO:0… negative r…     456           0.450  1.32 2.18e-7  1.97e-4 1.51e-4
-##  7 GO:0… negative r…     456           0.446  1.31 6.51e-7  4.88e-4 3.74e-4
-##  8 GO:0… blood vess…     418           0.448  1.31 7.19e-7  4.88e-4 3.74e-4
-##  9 GO:0… angiogenes…     356           0.453  1.32 1.65e-6  9.95e-4 7.63e-4
-## 10 GO:0… muscle cel…     134           0.526  1.50 1.91e-6  1.04e-3 7.94e-4
-## # … with 520 more rows, and 3 more variables: rank &lt;int&gt;, leading_edge &lt;chr&gt;,
+<pre><code>## # A tibble: 459 × 11
+##    ID         Description setSize enrichmentScore   NES  pvalue p.adjust qvalues
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;           &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+##  1 GO:0001944 vasculatur…     500           0.449  1.32 2.01e-8 0.000107 8.00e-5
+##  2 GO:0001568 blood vess…     475           0.450  1.32 6.97e-8 0.000167 1.25e-4
+##  3 GO:0008285 negative r…     460           0.446  1.31 1.25e-7 0.000167 1.25e-4
+##  4 GO:0030855 epithelial…     397           0.459  1.34 1.25e-7 0.000167 1.25e-4
+##  5 GO:0045596 negative r…     400           0.453  1.33 2.73e-7 0.000269 2.01e-4
+##  6 GO:0048514 blood vess…     423           0.452  1.33 3.07e-7 0.000269 2.01e-4
+##  7 GO:0033002 muscle cel…     143           0.527  1.50 3.54e-7 0.000269 2.01e-4
+##  8 GO:0043065 positive r…     381           0.451  1.32 5.92e-7 0.000393 2.94e-4
+##  9 GO:0043068 positive r…     389           0.452  1.33 9.16e-7 0.000512 3.83e-4
+## 10 GO:0030155 regulation…     476           0.439  1.29 1.04e-6 0.000512 3.83e-4
+## # … with 449 more rows, and 3 more variables: rank &lt;int&gt;, leading_edge &lt;chr&gt;,
 ## #   core_enrichment &lt;chr&gt;</code></pre>
 <div class="question">
 <p class="question-begin">
@@ -998,40 +999,41 @@ to each approach?</p>
 ## # … with 3 variables: ID &lt;chr&gt;, p.adjust.x &lt;dbl&gt;, p.adjust.y &lt;dbl&gt;</code></pre>
 <div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="sec-gsea.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ORA only</span></span>
 <span id="cb308-2"><a href="sec-gsea.html#cb308-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(go_cc, <span class="fu">is.na</span>(p.adjust.y))</span></code></pre></div>
-<pre><code>## # A tibble: 15 × 3
-##    ID          p.adjust.x p.adjust.y
-##    &lt;chr&gt;            &lt;dbl&gt;      &lt;dbl&gt;
-##  1 GO:0022626 0.000000704         NA
-##  2 GO:0022625 0.00000245          NA
-##  3 GO:0042788 0.000155            NA
-##  4 GO:0005925 0.000199            NA
-##  5 GO:0030055 0.000207            NA
-##  6 GO:0045121 0.000260            NA
-##  7 GO:0098857 0.000260            NA
-##  8 GO:0098589 0.000313            NA
-##  9 GO:0098984 0.000822            NA
-## 10 GO:0044391 0.000900            NA
-## 11 GO:0099572 0.00169             NA
-## 12 GO:0014069 0.00217             NA
-## 13 GO:0032279 0.00217             NA
-## 14 GO:0009986 0.00442             NA
-## 15 GO:0005840 0.00915             NA</code></pre>
+<pre><code>## # A tibble: 16 × 3
+##    ID           p.adjust.x p.adjust.y
+##    &lt;chr&gt;             &lt;dbl&gt;      &lt;dbl&gt;
+##  1 GO:0022626 0.0000000679         NA
+##  2 GO:0022625 0.0000118            NA
+##  3 GO:0042788 0.000206             NA
+##  4 GO:0005925 0.000206             NA
+##  5 GO:0044391 0.000206             NA
+##  6 GO:0030055 0.000206             NA
+##  7 GO:0045121 0.000370             NA
+##  8 GO:0098857 0.000370             NA
+##  9 GO:0005840 0.00134              NA
+## 10 GO:0098984 0.00213              NA
+## 11 GO:0009986 0.00672              NA
+## 12 GO:0022627 0.00732              NA
+## 13 GO:0014069 0.00732              NA
+## 14 GO:0099572 0.00732              NA
+## 15 GO:0032279 0.00732              NA
+## 16 GO:0098794 0.00785              NA</code></pre>
 <div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="sec-gsea.html#cb310-1" aria-hidden="true" tabindex="-1"></a><span class="do">## GSEA only</span></span>
 <span id="cb310-2"><a href="sec-gsea.html#cb310-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(go_cc, <span class="fu">is.na</span>(p.adjust.x))</span></code></pre></div>
-<pre><code>## # A tibble: 163 × 3
+<pre><code>## # A tibble: 143 × 3
 ##    ID         p.adjust.x p.adjust.y
 ##    &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;
-##  1 GO:0030855         NA  0.0000190
-##  2 GO:0043068         NA  0.0000190
-##  3 GO:0043065         NA  0.0000190
-##  4 GO:0001568         NA  0.000144 
-##  5 GO:0010720         NA  0.000170 
-##  6 GO:0008285         NA  0.000197 
-##  7 GO:0045596         NA  0.000488 
-##  8 GO:0048514         NA  0.000488 
-##  9 GO:0001525         NA  0.000995 
-## 10 GO:0033002         NA  0.00104  
-## # … with 153 more rows</code></pre>
+##  1 GO:0001944         NA   0.000107
+##  2 GO:0001568         NA   0.000167
+##  3 GO:0008285         NA   0.000167
+##  4 GO:0030855         NA   0.000167
+##  5 GO:0045596         NA   0.000269
+##  6 GO:0048514         NA   0.000269
+##  7 GO:0033002         NA   0.000269
+##  8 GO:0043065         NA   0.000393
+##  9 GO:0043068         NA   0.000512
+## 10 GO:0030155         NA   0.000512
+## # … with 133 more rows</code></pre>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -1103,23 +1105,23 @@ analyses on the MSigDB hallmark gene set.</p>
 <pre><code>## # A tibble: 17 × 11
 ##    ID       Description   setSize enrichmentScore   NES  pvalue p.adjust qvalues
 ##    &lt;chr&gt;    &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-##  1 HALLMAR… HALLMARK_EPI…     129           0.545  1.53 1.44e-7  7.22e-6 4.10e-6
-##  2 HALLMAR… HALLMARK_HYP…     164           0.503  1.42 3.18e-6  7.95e-5 4.52e-5
-##  3 HALLMAR… HALLMARK_MYC…      58           0.600  1.60 1.61e-5  2.64e-4 1.50e-4
-##  4 HALLMAR… HALLMARK_P53…     177           0.485  1.38 2.11e-5  2.64e-4 1.50e-4
-##  5 HALLMAR… HALLMARK_GLY…     175           0.471  1.34 9.98e-5  9.98e-4 5.67e-4
-##  6 HALLMAR… HALLMARK_TNF…     161           0.475  1.34 2.21e-4  1.84e-3 1.05e-3
-##  7 HALLMAR… HALLMARK_UV_…     122           0.486  1.36 3.44e-4  2.46e-3 1.40e-3
-##  8 HALLMAR… HALLMARK_EST…     152           0.465  1.31 5.45e-4  3.38e-3 1.92e-3
-##  9 HALLMAR… HALLMARK_KRA…     124           0.481  1.34 6.09e-4  3.38e-3 1.92e-3
-## 10 HALLMAR… HALLMARK_XEN…     134           0.472  1.32 9.48e-4  4.74e-3 2.69e-3
-## 11 HALLMAR… HALLMARK_ALL…     106           0.485  1.34 1.10e-3  4.98e-3 2.83e-3
-## 12 HALLMAR… HALLMARK_APO…     124           0.463  1.29 3.13e-3  1.29e-2 7.32e-3
-## 13 HALLMAR… HALLMARK_TGF…      50           0.526  1.38 3.35e-3  1.29e-2 7.32e-3
-## 14 HALLMAR… HALLMARK_MYO…     116           0.460  1.28 3.98e-3  1.42e-2 8.08e-3
-## 15 HALLMAR… HALLMARK_INF…     113           0.463  1.29 5.17e-3  1.72e-2 9.79e-3
-## 16 HALLMAR… HALLMARK_IL2…     147           0.440  1.24 5.54e-3  1.73e-2 9.84e-3
-## 17 HALLMAR… HALLMARK_EST…     159           0.430  1.22 8.29e-3  2.44e-2 1.39e-2
+##  1 HALLMAR… HALLMARK_EPI…     129           0.545  1.54 1.95e-7  9.75e-6 5.54e-6
+##  2 HALLMAR… HALLMARK_HYP…     164           0.503  1.44 3.18e-6  7.95e-5 4.52e-5
+##  3 HALLMAR… HALLMARK_MYC…      58           0.600  1.62 1.52e-5  2.54e-4 1.44e-4
+##  4 HALLMAR… HALLMARK_P53…     177           0.485  1.39 2.61e-5  3.26e-4 1.86e-4
+##  5 HALLMAR… HALLMARK_TNF…     161           0.475  1.36 1.69e-4  1.48e-3 8.43e-4
+##  6 HALLMAR… HALLMARK_GLY…     175           0.471  1.35 1.78e-4  1.48e-3 8.43e-4
+##  7 HALLMAR… HALLMARK_UV_…     122           0.486  1.37 4.08e-4  2.91e-3 1.66e-3
+##  8 HALLMAR… HALLMARK_EST…     152           0.465  1.33 5.63e-4  3.52e-3 2.00e-3
+##  9 HALLMAR… HALLMARK_KRA…     124           0.481  1.36 8.01e-4  4.31e-3 2.45e-3
+## 10 HALLMAR… HALLMARK_XEN…     134           0.472  1.34 9.02e-4  4.31e-3 2.45e-3
+## 11 HALLMAR… HALLMARK_ALL…     106           0.485  1.36 9.48e-4  4.31e-3 2.45e-3
+## 12 HALLMAR… HALLMARK_MYO…     116           0.460  1.30 3.53e-3  1.44e-2 8.21e-3
+## 13 HALLMAR… HALLMARK_APO…     124           0.463  1.31 3.76e-3  1.44e-2 8.21e-3
+## 14 HALLMAR… HALLMARK_INF…     113           0.463  1.30 4.42e-3  1.58e-2 8.98e-3
+## 15 HALLMAR… HALLMARK_TGF…      50           0.526  1.41 6.13e-3  2.04e-2 1.16e-2
+## 16 HALLMAR… HALLMARK_IL2…     147           0.440  1.25 8.15e-3  2.55e-2 1.45e-2
+## 17 HALLMAR… HALLMARK_EST…     159           0.430  1.23 1.46e-2  4.29e-2 2.44e-2
 ## # … with 3 more variables: rank &lt;int&gt;, leading_edge &lt;chr&gt;,
 ## #   core_enrichment &lt;chr&gt;</code></pre>
 </div>
@@ -1195,7 +1197,7 @@ ordering criteria in GSEA) provide different results.</p>
 <a href="sec-ms.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-29
+2021-09-30
  using 
 R version 4.1.0 (2021-05-18)
 </p>
