@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2021-09-24" />
+<meta name="date" content="2021-09-30" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -216,7 +216,7 @@ div.csl-indent {
 <h1>
 <span class="header-section-number">Chapter 11</span> Session information</h1>
 <p>The following packages have been used to generate this document.</p>
-<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="sec-si.html#cb454-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="sec-si.html#cb448-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
 <pre><code>## R version 4.1.0 (2021-05-18)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Manjaro Linux
@@ -243,15 +243,15 @@ div.csl-indent {
 ##  [5] QFeatures_1.3.7              MultiAssayExperiment_1.19.12
 ##  [7] PSM_0.3.0                    magrittr_2.0.1              
 ##  [9] Spectra_1.3.9                ProtGenerics_1.25.2         
-## [11] BiocParallel_1.27.9          msigdbr_7.4.1               
-## [13] clusterProfiler_4.1.4        GO.db_3.13.0                
-## [15] org.Hs.eg.db_3.13.0          AnnotationDbi_1.55.1        
+## [11] BiocParallel_1.27.10         msigdbr_7.4.1               
+## [13] clusterProfiler_4.1.4        GO.db_3.14.0                
+## [15] org.Hs.eg.db_3.14.0          AnnotationDbi_1.55.1        
 ## [17] biomaRt_2.49.4               patchwork_1.1.1             
 ## [19] DESeq2_1.33.4                SummarizedExperiment_1.23.4 
 ## [21] Biobase_2.53.0               MatrixGenerics_1.5.4        
 ## [23] matrixStats_0.61.0           GenomicRanges_1.45.0        
 ## [25] GenomeInfoDb_1.29.8          IRanges_2.27.2              
-## [27] S4Vectors_0.31.3             BiocGenerics_0.39.2         
+## [27] S4Vectors_0.31.4             BiocGenerics_0.39.2         
 ## [29] DT_0.19                      forcats_0.5.1               
 ## [31] stringr_1.4.0                dplyr_1.0.7                 
 ## [33] purrr_0.3.4                  readr_2.0.1                 
@@ -266,14 +266,14 @@ div.csl-indent {
 ##  [10] msdata_0.33.0           withr_2.4.2             colorspace_2.0-2       
 ##  [13] GOSemSim_2.19.1         filelock_1.0.2          highr_0.9              
 ##  [16] knitr_1.34              rstudioapi_0.13         ggsignif_0.6.3         
-##  [19] DOSE_3.19.3             labeling_0.4.2          GenomeInfoDbData_1.2.6 
+##  [19] DOSE_3.19.3             labeling_0.4.2          GenomeInfoDbData_1.2.7 
 ##  [22] polyclip_1.10-0         bit64_4.0.5             farver_2.1.0           
 ##  [25] downloader_0.4          vctrs_0.3.8             treeio_1.17.2          
 ##  [28] generics_0.1.0          xfun_0.26               BiocFileCache_2.1.1    
 ##  [31] R6_2.5.1                clue_0.3-59             graphlayouts_0.7.1     
 ##  [34] locfit_1.5-9.4          MsCoreUtils_1.5.0       AnnotationFilter_1.17.1
 ##  [37] bitops_1.0-7            cachem_1.0.6            fgsea_1.19.2           
-##  [40] gridGraphics_0.5-1      DelayedArray_0.19.3     assertthat_0.2.1       
+##  [40] gridGraphics_0.5-1      DelayedArray_0.19.4     assertthat_0.2.1       
 ##  [43] scales_1.1.1            vroom_1.5.5             ggraph_2.0.5           
 ##  [46] enrichplot_1.13.1       gtable_0.3.0            tidygraph_1.2.0        
 ##  [49] rlang_0.4.11            genefilter_1.75.1       mzR_2.27.1             
@@ -288,7 +288,7 @@ div.csl-indent {
 ##  [76] ggpubr_0.4.0            viridis_0.6.1           haven_2.4.3            
 ##  [79] ggrepel_0.9.1           cluster_2.1.2           fs_1.5.0               
 ##  [82] data.table_1.14.0       openxlsx_4.2.4          DO.db_2.9              
-##  [85] reprex_2.0.1            msmbstyle_0.0.19        hms_1.1.0              
+##  [85] reprex_2.0.1            msmbstyle_0.0.19        hms_1.1.1              
 ##  [88] evaluate_0.14           xtable_1.8-4            XML_3.99-0.8           
 ##  [91] rio_0.5.27              readxl_1.3.1            gridExtra_2.3          
 ##  [94] compiler_4.1.0          KernSmooth_2.23-20      ncdf4_1.17             
@@ -311,9 +311,9 @@ the following code:</p>
           "readr", "rWSBIM2122", "S4Vectors", "Spectra", "stats", "stats4",
           "stringr", "SummarizedExperiment", "tibble", "tidyr", "tidyverse",
           "utils")</code></pre>
-<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="sec-si.html#cb457-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"BiocManager"</span>))</span>
-<span id="cb457-2"><a href="sec-si.html#cb457-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
-<span id="cb457-3"><a href="sec-si.html#cb457-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(pkgs)</span></code></pre></div>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="sec-si.html#cb451-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"BiocManager"</span>))</span>
+<span id="cb451-2"><a href="sec-si.html#cb451-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb451-3"><a href="sec-si.html#cb451-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(pkgs)</span></code></pre></div>
 
 </div>
 </div></body></html>
@@ -322,7 +322,7 @@ the following code:</p>
 <a href="sec-anx.html"><button class="btn btn-default">Previous</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-24
+2021-09-30
  using 
 R version 4.1.0 (2021-05-18)
 </p>
