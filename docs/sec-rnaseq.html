@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2021-09-30" />
+<meta name="date" content="2021-10-07" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -639,7 +639,7 @@ accessed with <code>metadata()</code>.</li>
 </p>
 <div id="sol-body-9" class="solution-body" style="display: none;">
 <div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="sec-rnaseq.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(<span class="fu">assay</span>(dds)) <span class="sc">%&gt;%</span></span>
-<span id="cb159-2"><a href="sec-rnaseq.html#cb159-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(sample, <span class="at">value =</span> counts) <span class="sc">%&gt;%</span></span>
+<span id="cb159-2"><a href="sec-rnaseq.html#cb159-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"sample"</span>, <span class="at">values_to =</span> <span class="st">"counts"</span>, <span class="at">cols =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb159-3"><a href="sec-rnaseq.html#cb159-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log2</span>(counts <span class="sc">+</span> <span class="dv">1</span>), <span class="at">fill =</span> sample)) <span class="sc">+</span></span>
 <span id="cb159-4"><a href="sec-rnaseq.html#cb159-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
 <span id="cb159-5"><a href="sec-rnaseq.html#cb159-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> sample)</span></code></pre></div>
@@ -1227,9 +1227,9 @@ that they have small pvalues and large fold-changes.</p>
 <span id="cb244-9"><a href="sec-rnaseq.html#cb244-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-112-1.png" width="672"></p>
 </div>
-<div id="raw-counts-plots" class="section level3" number="5.2.11">
+<div id="count-plots" class="section level3" number="5.2.11">
 <h3>
-<span class="header-section-number">5.2.11</span> Raw counts plots<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('raw-counts-plots')" onmouseout="reset_tooltip('raw-counts-plots-tooltip')"><span class="tooltiptext" id="raw-counts-plots-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">5.2.11</span> Count plots<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('count-plots')" onmouseout="reset_tooltip('count-plots-tooltip')"><span class="tooltiptext" id="count-plots-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>It may be also useful to check the validity of the analysis by simply assessing the expression
 levels of the most highly differentially expressed genes.</p>
@@ -1239,8 +1239,8 @@ levels of the most highly differentially expressed genes.</p>
 <span id="cb245-4"><a href="sec-rnaseq.html#cb245-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb245-5"><a href="sec-rnaseq.html#cb245-5" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(<span class="fu">counts</span>(dds[best_genes<span class="sc">$</span>ENSEMBL, ], <span class="at">normalize =</span> <span class="cn">TRUE</span>),</span>
 <span id="cb245-6"><a href="sec-rnaseq.html#cb245-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb245-7"><a href="sec-rnaseq.html#cb245-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(sample, counts, <span class="sc">-</span>ENSEMBL) <span class="sc">%&gt;%</span></span>
-<span id="cb245-8"><a href="sec-rnaseq.html#cb245-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">as_tibble</span>(coldata, <span class="at">rownames =</span> <span class="st">"sample"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb245-7"><a href="sec-rnaseq.html#cb245-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"sample"</span>, <span class="at">values_to =</span> <span class="st">"counts"</span>, <span class="sc">-</span>ENSEMBL) <span class="sc">%&gt;%</span>  </span>
+<span id="cb245-8"><a href="sec-rnaseq.html#cb245-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">as_tibble</span>(coldata, <span class="at">rownames =</span> <span class="st">"sample"</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb245-9"><a href="sec-rnaseq.html#cb245-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sample, <span class="at">y =</span> counts, <span class="at">fill =</span> Condition)) <span class="sc">+</span></span>
 <span id="cb245-10"><a href="sec-rnaseq.html#cb245-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">color =</span> <span class="st">"gray30"</span>) <span class="sc">+</span></span>
 <span id="cb245-11"><a href="sec-rnaseq.html#cb245-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> ENSEMBL, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
@@ -1380,7 +1380,7 @@ next chapter.</p>
 <a href="sec-gsea.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-30
+2021-10-07
  using 
 R version 4.1.0 (2021-05-18)
 </p>

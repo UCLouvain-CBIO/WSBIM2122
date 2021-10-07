@@ -83,7 +83,7 @@ independent-filtering-exploration
 p-values-distribution
 ma-plot
 volcano-plot
-raw-counts-plots
+count-plots
 querying-the-biomart-service
 sec-gsea
 introduction-1

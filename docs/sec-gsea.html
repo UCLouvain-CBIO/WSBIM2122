@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2021-09-30" />
+<meta name="date" content="2021-10-07" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -682,8 +682,8 @@ adjusted p-value above) and compute a new GSEA score.</p>
 ##                Cell        Type Condition sizeFactor
 ##         &lt;character&gt; &lt;character&gt;  &lt;factor&gt;  &lt;numeric&gt;
 ## sample1       Cell1  Epithelial      mock   0.726883
-## sample2       Cell1  Epithelial      mock   1.308664
-## sample3       Cell1  Epithelial      KD     1.077368
+## sample2       Cell1  Epithelial      KD     1.308664
+## sample3       Cell1  Epithelial      mock   1.077368
 ## sample4       Cell1  Epithelial      KD     0.966025
 ## sample5       Cell1  Epithelial      KD     1.042111
 ## sample6       Cell1  Epithelial      mock   1.012664</code></pre>
@@ -706,19 +706,19 @@ adjusted p-value above) and compute a new GSEA score.</p>
 <pre><code>## # A tibble: 19,094 × 5
 ##    ENSEMBL          ENTREZID  padj inGO  score
 ##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
-##  1 ENSG00000223972     84771 0.998 FALSE    -1
-##  2 ENSG00000223972    727856 0.998 FALSE    -2
-##  3 ENSG00000223972 100287102 0.998 FALSE    -3
-##  4 ENSG00000223972 100287596 0.998 FALSE    -4
-##  5 ENSG00000223972 102725121 0.998 FALSE    -5
-##  6 ENSG00000227232    653635 0.998 FALSE    -6
-##  7 ENSG00000278267 102466751 0.998 FALSE    -7
-##  8 ENSG00000279457 102723897 0.998 FALSE    -8
-##  9 ENSG00000230021 101928626 0.998 FALSE    -9
-## 10 ENSG00000237491 105378580 0.998 FALSE   -10
+##  1 ENSG00000223972     84771  1.00 FALSE    -1
+##  2 ENSG00000223972    727856  1.00 FALSE    -2
+##  3 ENSG00000223972 100287102  1.00 FALSE    -3
+##  4 ENSG00000223972 100287596  1.00 FALSE    -4
+##  5 ENSG00000223972 102725121  1.00 FALSE    -5
+##  6 ENSG00000227232    653635  1.00 FALSE    -6
+##  7 ENSG00000278267 102466751  1.00 FALSE    -7
+##  8 ENSG00000279457 102723897  1.00 FALSE    -8
+##  9 ENSG00000230021 101928626  1.00 FALSE    -9
+## 10 ENSG00000237491 105378580  1.00 FALSE   -10
 ## # … with 19,084 more rows</code></pre>
 <div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="sec-gsea.html#cb287-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(res_tmp<span class="sc">$</span>score)</span></code></pre></div>
-<pre><code>## [1] 450.2892</code></pre>
+<pre><code>## [1] 445.0882</code></pre>
 <div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="sec-gsea.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res_tmp<span class="sc">$</span>score, <span class="at">type =</span> <span class="st">"l"</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-129-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests
@@ -929,20 +929,20 @@ fold-change or the (absolute value) test statistics.</p>
 <pre><code>## Warning in preparePathwaysAndStats(pathways, stats, minSize, maxSize, gseaParam, : There are ties in the preranked stats (0.62% of the list).
 ## The order of those tied genes will be arbitrary, which may produce unexpected results.</code></pre>
 <div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="sec-gsea.html#cb304-1" aria-hidden="true" tabindex="-1"></a>go_gsea</span></code></pre></div>
-<pre><code>## # A tibble: 459 × 11
+<pre><code>## # A tibble: 465 × 11
 ##    ID         Description setSize enrichmentScore   NES  pvalue p.adjust qvalues
 ##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;           &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-##  1 GO:0001944 vasculatur…     500           0.449  1.32 2.01e-8 0.000107 8.00e-5
-##  2 GO:0001568 blood vess…     475           0.450  1.32 6.97e-8 0.000167 1.25e-4
-##  3 GO:0008285 negative r…     460           0.446  1.31 1.25e-7 0.000167 1.25e-4
-##  4 GO:0030855 epithelial…     397           0.459  1.34 1.25e-7 0.000167 1.25e-4
-##  5 GO:0045596 negative r…     400           0.453  1.33 2.73e-7 0.000269 2.01e-4
-##  6 GO:0048514 blood vess…     423           0.452  1.33 3.07e-7 0.000269 2.01e-4
-##  7 GO:0033002 muscle cel…     143           0.527  1.50 3.54e-7 0.000269 2.01e-4
-##  8 GO:0043065 positive r…     381           0.451  1.32 5.92e-7 0.000393 2.94e-4
-##  9 GO:0043068 positive r…     389           0.452  1.33 9.16e-7 0.000512 3.83e-4
-## 10 GO:0030155 regulation…     476           0.439  1.29 1.04e-6 0.000512 3.83e-4
-## # … with 449 more rows, and 3 more variables: rank &lt;int&gt;, leading_edge &lt;chr&gt;,
+##  1 GO:0001944 vasculatur…     500           0.449  1.32 2.06e-8 0.000110 8.52e-5
+##  2 GO:0001568 blood vess…     475           0.450  1.32 4.25e-8 0.000113 8.78e-5
+##  3 GO:0030855 epithelial…     397           0.459  1.34 9.60e-8 0.000170 1.32e-4
+##  4 GO:0048514 blood vess…     423           0.452  1.33 1.61e-7 0.000214 1.66e-4
+##  5 GO:0033002 muscle cel…     143           0.527  1.49 4.30e-7 0.000403 3.13e-4
+##  6 GO:0045596 negative r…     400           0.453  1.32 4.56e-7 0.000403 3.13e-4
+##  7 GO:0001525 angiogenes…     359           0.457  1.33 5.49e-7 0.000416 3.23e-4
+##  8 GO:0008285 negative r…     460           0.446  1.31 6.26e-7 0.000416 3.23e-4
+##  9 GO:0030155 regulation…     476           0.439  1.29 1.02e-6 0.000601 4.67e-4
+## 10 GO:0048710 regulation…      15           0.819  1.94 1.63e-6 0.000683 5.30e-4
+## # … with 455 more rows, and 3 more variables: rank &lt;int&gt;, leading_edge &lt;chr&gt;,
 ## #   core_enrichment &lt;chr&gt;</code></pre>
 <div class="question">
 <p class="question-begin">
@@ -1020,20 +1020,20 @@ to each approach?</p>
 ## 16 GO:0098794 0.00785              NA</code></pre>
 <div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="sec-gsea.html#cb310-1" aria-hidden="true" tabindex="-1"></a><span class="do">## GSEA only</span></span>
 <span id="cb310-2"><a href="sec-gsea.html#cb310-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(go_cc, <span class="fu">is.na</span>(p.adjust.x))</span></code></pre></div>
-<pre><code>## # A tibble: 143 × 3
+<pre><code>## # A tibble: 139 × 3
 ##    ID         p.adjust.x p.adjust.y
 ##    &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;
-##  1 GO:0001944         NA   0.000107
-##  2 GO:0001568         NA   0.000167
-##  3 GO:0008285         NA   0.000167
-##  4 GO:0030855         NA   0.000167
-##  5 GO:0045596         NA   0.000269
-##  6 GO:0048514         NA   0.000269
-##  7 GO:0033002         NA   0.000269
-##  8 GO:0043065         NA   0.000393
-##  9 GO:0043068         NA   0.000512
-## 10 GO:0030155         NA   0.000512
-## # … with 133 more rows</code></pre>
+##  1 GO:0001944         NA   0.000110
+##  2 GO:0001568         NA   0.000113
+##  3 GO:0030855         NA   0.000170
+##  4 GO:0048514         NA   0.000214
+##  5 GO:0033002         NA   0.000403
+##  6 GO:0045596         NA   0.000403
+##  7 GO:0001525         NA   0.000416
+##  8 GO:0008285         NA   0.000416
+##  9 GO:0030155         NA   0.000601
+## 10 GO:0048710         NA   0.000683
+## # … with 129 more rows</code></pre>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -1105,23 +1105,23 @@ analyses on the MSigDB hallmark gene set.</p>
 <pre><code>## # A tibble: 17 × 11
 ##    ID       Description   setSize enrichmentScore   NES  pvalue p.adjust qvalues
 ##    &lt;chr&gt;    &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-##  1 HALLMAR… HALLMARK_EPI…     129           0.545  1.54 1.95e-7  9.75e-6 5.54e-6
-##  2 HALLMAR… HALLMARK_HYP…     164           0.503  1.44 3.18e-6  7.95e-5 4.52e-5
-##  3 HALLMAR… HALLMARK_MYC…      58           0.600  1.62 1.52e-5  2.54e-4 1.44e-4
-##  4 HALLMAR… HALLMARK_P53…     177           0.485  1.39 2.61e-5  3.26e-4 1.86e-4
-##  5 HALLMAR… HALLMARK_TNF…     161           0.475  1.36 1.69e-4  1.48e-3 8.43e-4
-##  6 HALLMAR… HALLMARK_GLY…     175           0.471  1.35 1.78e-4  1.48e-3 8.43e-4
-##  7 HALLMAR… HALLMARK_UV_…     122           0.486  1.37 4.08e-4  2.91e-3 1.66e-3
-##  8 HALLMAR… HALLMARK_EST…     152           0.465  1.33 5.63e-4  3.52e-3 2.00e-3
-##  9 HALLMAR… HALLMARK_KRA…     124           0.481  1.36 8.01e-4  4.31e-3 2.45e-3
-## 10 HALLMAR… HALLMARK_XEN…     134           0.472  1.34 9.02e-4  4.31e-3 2.45e-3
-## 11 HALLMAR… HALLMARK_ALL…     106           0.485  1.36 9.48e-4  4.31e-3 2.45e-3
-## 12 HALLMAR… HALLMARK_MYO…     116           0.460  1.30 3.53e-3  1.44e-2 8.21e-3
-## 13 HALLMAR… HALLMARK_APO…     124           0.463  1.31 3.76e-3  1.44e-2 8.21e-3
-## 14 HALLMAR… HALLMARK_INF…     113           0.463  1.30 4.42e-3  1.58e-2 8.98e-3
-## 15 HALLMAR… HALLMARK_TGF…      50           0.526  1.41 6.13e-3  2.04e-2 1.16e-2
-## 16 HALLMAR… HALLMARK_IL2…     147           0.440  1.25 8.15e-3  2.55e-2 1.45e-2
-## 17 HALLMAR… HALLMARK_EST…     159           0.430  1.23 1.46e-2  4.29e-2 2.44e-2
+##  1 HALLMAR… HALLMARK_EPI…     129           0.545  1.54 1.84e-7  9.22e-6 5.24e-6
+##  2 HALLMAR… HALLMARK_HYP…     164           0.503  1.44 2.22e-6  5.55e-5 3.15e-5
+##  3 HALLMAR… HALLMARK_P53…     177           0.485  1.39 9.52e-6  1.59e-4 9.02e-5
+##  4 HALLMAR… HALLMARK_MYC…      58           0.600  1.62 2.42e-5  3.02e-4 1.72e-4
+##  5 HALLMAR… HALLMARK_GLY…     175           0.471  1.35 1.58e-4  1.48e-3 8.43e-4
+##  6 HALLMAR… HALLMARK_TNF…     161           0.475  1.36 1.78e-4  1.48e-3 8.43e-4
+##  7 HALLMAR… HALLMARK_UV_…     122           0.486  1.37 5.36e-4  3.58e-3 2.03e-3
+##  8 HALLMAR… HALLMARK_EST…     152           0.465  1.32 5.72e-4  3.58e-3 2.03e-3
+##  9 HALLMAR… HALLMARK_ALL…     106           0.485  1.36 1.02e-3  5.20e-3 2.96e-3
+## 10 HALLMAR… HALLMARK_KRA…     124           0.481  1.35 1.04e-3  5.20e-3 2.96e-3
+## 11 HALLMAR… HALLMARK_XEN…     134           0.472  1.33 1.24e-3  5.65e-3 3.21e-3
+## 12 HALLMAR… HALLMARK_APO…     124           0.463  1.30 3.98e-3  1.66e-2 9.42e-3
+## 13 HALLMAR… HALLMARK_IL2…     147           0.440  1.25 4.65e-3  1.77e-2 1.01e-2
+## 14 HALLMAR… HALLMARK_TGF…      50           0.526  1.40 5.24e-3  1.77e-2 1.01e-2
+## 15 HALLMAR… HALLMARK_MYO…     116           0.460  1.29 5.32e-3  1.77e-2 1.01e-2
+## 16 HALLMAR… HALLMARK_INF…     113           0.463  1.30 6.58e-3  2.06e-2 1.17e-2
+## 17 HALLMAR… HALLMARK_EST…     159           0.430  1.23 1.02e-2  3.01e-2 1.71e-2
 ## # … with 3 more variables: rank &lt;int&gt;, leading_edge &lt;chr&gt;,
 ## #   core_enrichment &lt;chr&gt;</code></pre>
 </div>
@@ -1197,7 +1197,7 @@ ordering criteria in GSEA) provide different results.</p>
 <a href="sec-ms.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-30
+2021-10-07
  using 
 R version 4.1.0 (2021-05-18)
 </p>
