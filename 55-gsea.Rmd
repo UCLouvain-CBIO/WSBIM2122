@@ -247,7 +247,7 @@ in the urn. Drawing a green marble is defined as success, and a red
 marble failure. Using the formula above, we can compute the
 probability to draw $k$ green marbles from the urn.
 
-The in frame of an enrichment analysis [@Rivals:2007], we use the
+In the frame of an enrichment analysis [@Rivals:2007], we use the
 following formulation to calculate a probabiliy that we have more
 green marbles than we would expect by change, i.e. there to be an over
 representation of green marbles.
