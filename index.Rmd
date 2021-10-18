@@ -18,7 +18,7 @@ bibliography: [refs.bib, packages.bib]
 
 # Preamble {-}
 
-The [WSBIM2122](https://uclouvain.be/cours-2020-wsbim2122.html) course
+The [WSBIM2122](https://uclouvain.be/cours-2021-wsbim2122.html) course
 is a project-based course that teaches the analysis of quantitative
 omics data. It is composed of three major parts:
 
