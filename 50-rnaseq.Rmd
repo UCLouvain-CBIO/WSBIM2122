@@ -484,7 +484,7 @@ plot the counts distributions of each sample.
 
 ```{r}
 as_tibble(assay(dds)) %>%
-  gather(sample, value = counts) %>%
+  pivot_longer(names_to = "sample", values_to = "counts", cols = 1:6) %>% 
   ggplot(aes(x = log2(counts + 1), fill = sample)) +
   geom_histogram(bins = 20) +
   facet_wrap(~ sample)
@@ -1007,7 +1007,7 @@ res_tbl %>%
 ```
 
 
-### Raw counts plots
+### Count plots
 
 It may be also useful to check the validity of the analysis by simply assessing the expression
 levels of the most highly differentially expressed genes.
@@ -1019,8 +1019,8 @@ best_genes <- res_tbl %>%
 
 as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = TRUE),
           rownames = 'ENSEMBL') %>%
-  gather(sample, counts, -ENSEMBL) %>%
-  left_join(as_tibble(coldata, rownames = "sample")) %>%
+  pivot_longer(names_to = "sample", values_to = "counts", -ENSEMBL) %>%  
+  left_join(as_tibble(coldata, rownames = "sample")) %>% 
   ggplot(aes(x = sample, y = counts, fill = Condition)) +
   geom_bar(stat = 'identity', color = "gray30") +
   facet_wrap( ~ ENSEMBL, scales = "free", ncol = 3) +
