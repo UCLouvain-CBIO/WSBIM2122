@@ -18,7 +18,7 @@ library("tidyverse")
 library("Spectra")
 library("magrittr")
 library("ggplot2")
-library("PSM")
+library("PSMatch")
 ```
 
 Proteins as the functional units in all living organisms, and they are
@@ -54,14 +54,14 @@ package](https://rformassspectrometry.github.io/Spectra/articles/Spectra.html),
 which can be install with the `BiocManager` package, available from
 CRAN. We will also make use of some test data from the `msdata`
 package. Identification data will be handled by the
-[`PSM`](https://rformassspectrometry.github.io/PSM/) package.
+[`PSMatch`](https://rformassspectrometry.github.io/PSMatch/) package.
 
 
 ```{r, eval = FALSE}
 BiocManager::install("msdata")
 BiocManager::install("lgatto/ProtGenerics")
 BiocManager::install("RforMassSpectrometry/Spectra")
-BiocManager::install("RforMassSpectrometry/PSM")
+BiocManager::install("RforMassSpectrometry/PSMatch")
 ```
 
 ## How does mass spectrometry work?
@@ -296,7 +296,7 @@ theoretical fragments to those observed in MS2 spectra.
 
 
 ```{r, message = FALSE}
-library("PSM")
+library("PSMatch")
 calculateFragments("THSQEEMQHMQR")
 ```
 
@@ -318,11 +318,11 @@ positives. See [@Kall:2008] for further reading.
 Identification results are also stored in an XML-based file format,
 called `mzIdentML` (or `mzId` for short). Below, we access such a file
 available in the `msdata` package and load its content into R with the
-`PSMs::readPSMs()` function.
+`PSMs::PSM()` function.
 
 ```{r readPSMs}
 basename(idf <- msdata::ident(full.names = TRUE))
-id <- readPSMs(idf)
+id <- PSM(idf)
 head(id)
 ```
 
