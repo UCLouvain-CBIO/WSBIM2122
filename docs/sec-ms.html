@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2021-10-19" />
+<meta name="date" content="2021-10-31" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -264,11 +264,11 @@ package</a>,
 which can be install with the <code>BiocManager</code> package, available from
 CRAN. We will also make use of some test data from the <code>msdata</code>
 package. Identification data will be handled by the
-<a href="https://rformassspectrometry.github.io/PSM/"><code>PSM</code></a> package.</p>
+<a href="https://rformassspectrometry.github.io/PSMatch/"><code>PSMatch</code></a> package.</p>
 <div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="sec-ms.html#cb322-1" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"msdata"</span>)</span>
 <span id="cb322-2"><a href="sec-ms.html#cb322-2" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"lgatto/ProtGenerics"</span>)</span>
 <span id="cb322-3"><a href="sec-ms.html#cb322-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"RforMassSpectrometry/Spectra"</span>)</span>
-<span id="cb322-4"><a href="sec-ms.html#cb322-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"RforMassSpectrometry/PSM"</span>)</span></code></pre></div>
+<span id="cb322-4"><a href="sec-ms.html#cb322-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"RforMassSpectrometry/PSMatch"</span>)</span></code></pre></div>
 </div>
 <div id="how-does-mass-spectrometry-work" class="section level2" number="7.2">
 <h2>
@@ -526,7 +526,7 @@ Figure 7.8: Peptide fragmentation.
 <p>It is thus possible to calculate the expected set of fagment peaks for
 a given peptide, such as <em>THSQEEMQHMQR</em> below and match these
 theoretical fragments to those observed in MS2 spectra.</p>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="sec-ms.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"PSM"</span>)</span>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="sec-ms.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"PSMatch"</span>)</span>
 <span id="cb331-2"><a href="sec-ms.html#cb331-2" aria-hidden="true" tabindex="-1"></a><span class="fu">calculateFragments</span>(<span class="st">"THSQEEMQHMQR"</span>)</span></code></pre></div>
 <pre><code>##           mz ion type pos z         seq
 ## 1   102.0550  b1    b   1 1           T
@@ -562,12 +562,17 @@ positives. See <span class="citation">(<label for="tufte-mn-18" class="margin-to
 <p>Identification results are also stored in an XML-based file format,
 called <code>mzIdentML</code> (or <code>mzId</code> for short). Below, we access such a file
 available in the <code>msdata</code> package and load its content into R with the
-<code>PSMs::readPSMs()</code> function.</p>
+<code>PSMs::PSM()</code> function.</p>
 <div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="sec-ms.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="fu">basename</span>(idf <span class="ot">&lt;-</span> msdata<span class="sc">::</span><span class="fu">ident</span>(<span class="at">full.names =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre><code>## [1] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid"</code></pre>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="sec-ms.html#cb335-1" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">readPSMs</span>(idf)</span>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="sec-ms.html#cb335-1" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">PSM</span>(idf)</span>
 <span id="cb335-2"><a href="sec-ms.html#cb335-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(id)</span></code></pre></div>
 <pre><code>## PSM with 6 rows and 35 columns.
+## Spectra: 6 unique
+##   db: 4 target, 2 decoy
+##   ranks: 1:6 
+## Peptides: 6 unique, 0 multiple
+## Proteins: 6 
 ## names(35): sequence spectrumID ... subReplacementResidue subLocation</code></pre>
 <div class="question">
 <p class="question-begin">
@@ -630,9 +635,9 @@ rate in these hits (which we know from above is very high). The
 <em><a href="https://bioconductor.org/packages/3.14/MSnID">MSnID</a></em> is highly recommended.</span>.</p>
 <div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="sec-ms.html#cb340-1" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">filterPSMs</span>(id)</span></code></pre></div>
 <pre><code>## Starting with 5802 PSMs:</code></pre>
-<pre><code>##  removed 2896 decoy hits</code></pre>
-<pre><code>##  removed 155 PSMs with rank &gt; 1</code></pre>
-<pre><code>##  removed 85 non-proteotypic peptides</code></pre>
+<pre><code>## Removed 2896 decoy hits.</code></pre>
+<pre><code>## Removed 155 PSMs with rank &gt; 1.</code></pre>
+<pre><code>## Removed 85 non-proteotypic peptides.</code></pre>
 <pre><code>## 2666 PSMs left.</code></pre>
 <p>For simplicity, we are also going to ignore the location of the
 peptide modifications by removing the <code>modLocation</code> column.</p>
@@ -850,7 +855,7 @@ quantitative proteomics data.</p>
 <a href="sec-prot.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-10-19
+2021-10-31
  using 
 R version 4.1.0 (2021-05-18)
 </p>
