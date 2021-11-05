@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2021-10-31" />
+<meta name="date" content="2021-11-05" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -682,9 +682,9 @@ adjusted p-value above) and compute a new GSEA score.</p>
 ##                Cell        Type Condition sizeFactor
 ##         &lt;character&gt; &lt;character&gt;  &lt;factor&gt;  &lt;numeric&gt;
 ## sample1       Cell1  Epithelial      KD     0.726883
-## sample2       Cell1  Epithelial      KD     1.308664
+## sample2       Cell1  Epithelial      mock   1.308664
 ## sample3       Cell1  Epithelial      KD     1.077368
-## sample4       Cell1  Epithelial      mock   0.966025
+## sample4       Cell1  Epithelial      KD     0.966025
 ## sample5       Cell1  Epithelial      mock   1.042111
 ## sample6       Cell1  Epithelial      mock   1.012664</code></pre>
 <div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="sec-gsea.html#cb285-1" aria-hidden="true" tabindex="-1"></a>res_tmp <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds_tmp) <span class="sc">%&gt;%</span></span>
@@ -703,22 +703,22 @@ adjusted p-value above) and compute a new GSEA score.</p>
 <span id="cb285-14"><a href="sec-gsea.html#cb285-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">score =</span> <span class="fu">cumsum</span>(score))</span>
 <span id="cb285-15"><a href="sec-gsea.html#cb285-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb285-16"><a href="sec-gsea.html#cb285-16" aria-hidden="true" tabindex="-1"></a>res_tmp</span></code></pre></div>
-<pre><code>## # A tibble: 13,704 × 5
-##    ENSEMBL         ENTREZID      padj inGO  score
-##    &lt;chr&gt;              &lt;int&gt;     &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
-##  1 ENSG00000101856    10857 1.37e-147 FALSE  -1  
-##  2 ENSG00000177494    79413 5.20e- 67 FALSE  -2  
-##  3 ENSG00000136159    55270 1.84e- 44 FALSE  -3  
-##  4 ENSG00000175315     1474 9.16e- 43 FALSE  -4  
-##  5 ENSG00000128245     7533 1.88e- 42 FALSE  -5  
-##  6 ENSG00000113272    54974 9.56e- 39 FALSE  -6  
-##  7 ENSG00000213853     2013 2.01e- 36 FALSE  -7  
-##  8 ENSG00000115107    55240 1.49e- 33 FALSE  -8  
-##  9 ENSG00000008513     6482 1.18e- 32 FALSE  -9  
-## 10 ENSG00000105855     3696 3.76e- 31 TRUE   27.4
-## # … with 13,694 more rows</code></pre>
+<pre><code>## # A tibble: 19,094 × 5
+##    ENSEMBL          ENTREZID  padj inGO  score
+##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
+##  1 ENSG00000223972     84771 0.997 FALSE    -1
+##  2 ENSG00000223972    727856 0.997 FALSE    -2
+##  3 ENSG00000223972 100287102 0.997 FALSE    -3
+##  4 ENSG00000223972 100287596 0.997 FALSE    -4
+##  5 ENSG00000223972 102725121 0.997 FALSE    -5
+##  6 ENSG00000227232    653635 0.997 FALSE    -6
+##  7 ENSG00000278267 102466751 0.997 FALSE    -7
+##  8 ENSG00000279457 102723897 0.997 FALSE    -8
+##  9 ENSG00000230021 101928626 0.997 FALSE    -9
+## 10 ENSG00000237491 105378580 0.997 FALSE   -10
+## # … with 19,084 more rows</code></pre>
 <div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="sec-gsea.html#cb287-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(res_tmp<span class="sc">$</span>score)</span></code></pre></div>
-<pre><code>## [1] 2130.066</code></pre>
+<pre><code>## [1] 371.7108</code></pre>
 <div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="sec-gsea.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res_tmp<span class="sc">$</span>score, <span class="at">type =</span> <span class="st">"l"</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-129-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests
@@ -1197,9 +1197,9 @@ ordering criteria in GSEA) provide different results.</p>
 <a href="sec-ms.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-10-31
+2021-11-05
  using 
-R version 4.1.0 (2021-05-18)
+R version 4.1.2 (2021-11-01)
 </p>
 </div>
 </div>
