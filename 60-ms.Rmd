@@ -59,8 +59,8 @@ package. Identification data will be handled by the
 
 ```{r, eval = FALSE}
 BiocManager::install("msdata")
-BiocManager::install("lgatto/ProtGenerics")
-BiocManager::install("RforMassSpectrometry/Spectra")
+BiocManager::install("ProtGenerics")
+BiocManager::install("Spectra")
 BiocManager::install("RforMassSpectrometry/PSMatch")
 ```
 
