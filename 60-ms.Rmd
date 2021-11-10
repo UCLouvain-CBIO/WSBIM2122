@@ -39,9 +39,9 @@ The technique of choice to study proteins in a high throughput way is
 *mass spectrometry*.
 
 *A beginner's guide to mass spectrometry–based proteomics*
-[@Sinha:2020] is an approachable introduction to sample preparation,
-mass spectrometry and data analysis.
-
+[@Sinha:2020] and *The ABC's (and XYZ's) of peptide sequencing*
+[@Steen:2004] are approachable introductions to sample preparation,
+mass spectrometry, data interpretation and analysis.
 
 ## Setup
 
