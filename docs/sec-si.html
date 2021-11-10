@@ -14,7 +14,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2021-11-05" />
+<meta name="date" content="2021-11-10" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -74,8 +74,8 @@ function reset_tooltip(id) {
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 <script src="libs/plotly-binding-4.10.0/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
@@ -216,7 +216,7 @@ div.csl-indent {
 <h1>
 <span class="header-section-number">Chapter 11</span> Session information</h1>
 <p>The following packages have been used to generate this document.</p>
-<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="sec-si.html#cb448-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="sec-si.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
 <pre><code>## R version 4.1.2 (2021-11-01)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Manjaro Linux
@@ -241,8 +241,8 @@ div.csl-indent {
 ##  [1] plotly_4.10.0               factoextra_1.0.7           
 ##  [3] gplots_3.1.1                limma_3.50.0               
 ##  [5] QFeatures_1.5.1             MultiAssayExperiment_1.20.0
-##  [7] PSMatch_0.5.0               magrittr_2.0.1             
-##  [9] Spectra_1.4.0               ProtGenerics_1.26.0        
+##  [7] PSMatch_0.7.0               magrittr_2.0.1             
+##  [9] Spectra_1.4.1               ProtGenerics_1.26.0        
 ## [11] BiocParallel_1.28.0         msigdbr_7.4.1              
 ## [13] clusterProfiler_4.2.0       GO.db_3.14.0               
 ## [15] org.Hs.eg.db_3.14.0         AnnotationDbi_1.56.1       
@@ -251,11 +251,11 @@ div.csl-indent {
 ## [21] Biobase_2.54.0              MatrixGenerics_1.6.0       
 ## [23] matrixStats_0.61.0          GenomicRanges_1.46.0       
 ## [25] GenomeInfoDb_1.30.0         IRanges_2.28.0             
-## [27] S4Vectors_0.32.0            BiocGenerics_0.40.0        
+## [27] S4Vectors_0.32.2            BiocGenerics_0.40.0        
 ## [29] DT_0.19                     forcats_0.5.1              
 ## [31] stringr_1.4.0               dplyr_1.0.7                
 ## [33] purrr_0.3.4                 readr_2.0.2                
-## [35] tidyr_1.1.4                 tibble_3.1.5               
+## [35] tidyr_1.1.4                 tibble_3.1.6               
 ## [37] tidyverse_1.3.1             ggplot2_3.3.5              
 ## [39] rWSBIM2122_0.3.0           
 ## 
@@ -280,21 +280,21 @@ div.csl-indent {
 ##  [52] splines_4.1.2           rstatix_0.7.0           lazyeval_0.2.2         
 ##  [55] broom_0.7.10            abind_1.4-5             BiocManager_1.30.16    
 ##  [58] yaml_2.2.1              reshape2_1.4.4          modelr_0.1.8           
-##  [61] crosstalk_1.1.1         backports_1.3.0         qvalue_2.26.0          
+##  [61] crosstalk_1.2.0         backports_1.3.0         qvalue_2.26.0          
 ##  [64] tools_4.1.2             bookdown_0.24           ggplotify_0.1.0        
 ##  [67] ellipsis_0.3.2          jquerylib_0.1.4         RColorBrewer_1.1-2     
 ##  [70] Rcpp_1.0.7              plyr_1.8.6              progress_1.2.2         
 ##  [73] zlibbioc_1.40.0         RCurl_1.98-1.5          prettyunits_1.1.1      
 ##  [76] ggpubr_0.4.0            viridis_0.6.2           haven_2.4.3            
 ##  [79] ggrepel_0.9.1           cluster_2.1.2           fs_1.5.0               
-##  [82] data.table_1.14.2       openxlsx_4.2.4          DO.db_2.9              
-##  [85] reprex_2.0.1            msmbstyle_0.0.19        hms_1.1.1              
-##  [88] evaluate_0.14           xtable_1.8-4            XML_3.99-0.8           
-##  [91] rio_0.5.27              readxl_1.3.1            gridExtra_2.3          
-##  [94] compiler_4.1.2          KernSmooth_2.23-20      ncdf4_1.17             
-##  [97] crayon_1.4.2            shadowtext_0.0.9        htmltools_0.5.2        
-## [100] ggfun_0.0.4            
-##  [ reached getOption("max.print") -- omitted 56 entries ]</code></pre>
+##  [82] data.table_1.14.2       DO.db_2.9               reprex_2.0.1           
+##  [85] msmbstyle_0.0.19        hms_1.1.1               evaluate_0.14          
+##  [88] xtable_1.8-4            XML_3.99-0.8            readxl_1.3.1           
+##  [91] gridExtra_2.3           compiler_4.1.2          KernSmooth_2.23-20     
+##  [94] ncdf4_1.17.1            crayon_1.4.2            shadowtext_0.0.9       
+##  [97] htmltools_0.5.2         ggfun_0.0.4             tzdb_0.2.0             
+## [100] geneplotter_1.72.0     
+##  [ reached getOption("max.print") -- omitted 52 entries ]</code></pre>
 <div id="sec-setup2" class="section level2" number="11.1">
 <h2>
 <span class="header-section-number">11.1</span> R package setup<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('sec-setup2')" onmouseout="reset_tooltip('sec-setup2-tooltip')"><span class="tooltiptext" id="sec-setup2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
@@ -311,9 +311,9 @@ the following code:</p>
           "readr", "rWSBIM2122", "S4Vectors", "Spectra", "stats", "stats4",
           "stringr", "SummarizedExperiment", "tibble", "tidyr", "tidyverse",
           "utils")</code></pre>
-<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="sec-si.html#cb451-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"BiocManager"</span>))</span>
-<span id="cb451-2"><a href="sec-si.html#cb451-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
-<span id="cb451-3"><a href="sec-si.html#cb451-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(pkgs)</span></code></pre></div>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="sec-si.html#cb440-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"BiocManager"</span>))</span>
+<span id="cb440-2"><a href="sec-si.html#cb440-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb440-3"><a href="sec-si.html#cb440-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(pkgs)</span></code></pre></div>
 
 </div>
 </div></body></html>
@@ -322,7 +322,7 @@ the following code:</p>
 <a href="sec-anx.html"><button class="btn btn-default">Previous</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-11-05
+2021-11-10
  using 
 R version 4.1.2 (2021-11-01)
 </p>
