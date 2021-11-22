@@ -643,7 +643,7 @@ pca_prot <-
     filterNA() %>%
     assay() %>%
     t() %>%
-    prcomp() %>%
+    prcomp(scale = TRUE, center = TRUE) %>%
     fviz_pca_ind(habillage = cptac$condition,
                  title = "Proteins (median aggregation)")
 
