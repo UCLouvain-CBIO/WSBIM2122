@@ -8,13 +8,12 @@
 <meta property="og:title" content="Chapter 5 Differential expression analysis | Omics Data Analysis" />
 <meta property="og:type" content="book" />
 
-
 <meta property="og:description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain." />
 
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2021-11-22" />
+<meta name="date" content="2022-06-27" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -27,7 +26,6 @@ MathJax.Hub.Config({
 
 <title>Chapter 5 Differential expression analysis | Omics Data Analysis</title>
 
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
@@ -69,7 +67,7 @@ function reset_tooltip(id) {
 </script>
 <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.20/datatables.js"></script>
+<script src="libs/datatables-binding-0.23/datatables.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
@@ -213,7 +211,8 @@ div.csl-indent {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec-rnaseq" class="section level1" number="5">
+<html><body>
+<div id="sec-rnaseq" class="section level1" number="5">
 <h1>
 <span class="header-section-number">Chapter 5</span> Differential expression analysis</h1>
 <p><strong>Learning Objectives</strong></p>
@@ -373,9 +372,7 @@ parameter to model this “extra” variance that is empirically observed
 in RNA-Seq experiments.</p>
 <p><img src="figs/NB.png" width="80%" style="display: block; margin: auto;"></p>
 <p>The dispersion parameter <span class="math inline">\(\alpha_i\)</span> defines the relationship between
-the variance of the observed count and its mean value<label for="tufte-sn-8" class="margin-toggle sidenote-number">8</label><input type="checkbox" id="tufte-sn-8" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">8</span> Note that as dispersion parameter gets lower and lower,
-the variance converges to the same value as the mean, and the negative
-binomial turns into a Poisson distribution.</span>.</p>
+the variance of the observed count and its mean value<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>.</p>
 <p><img src="figs/VAR.png" width="60%" style="display: block; margin: auto;"></p>
 </div>
 <div id="dispersion-estimation" class="section level3" number="5.1.3">
@@ -426,8 +423,7 @@ dispersion will be significantly increased and this will limit the
 number of false-positive that could arise from an underestimated
 dispersion. Dispersion estimates that are slightly above the curve are
 also shrunk toward the curve. However, genes with extremely high
-dispersion<label for="tufte-sn-9" class="margin-toggle sidenote-number">9</label><input type="checkbox" id="tufte-sn-9" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">9</span> genes with extremely high dispersion are those for which the adjusted
-dispersion is more than 2 residual standard deviations above the curve.</span> values are not. In fact DESeq2 assumes that
+dispersion<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a> values are not. In fact DESeq2 assumes that
 these genes might not follow the modeling assumptions and could have
 higher variability than others for biological or technical
 reasons. For these genes, shrinking the values toward the curve could
@@ -702,10 +698,7 @@ strategy to avoid this is to take the logarithm of the normalised count values p
 a small pseudocount; however, now the genes with low counts tend to dominate the
 results because, due to the strong Poisson noise inherent to small count values, they
 show the strongest relative differences between samples. As a solution, DESeq2 offers
-the regularized-logarithm transformation <code>rlog()</code><label for="tufte-sn-10" class="margin-toggle sidenote-number">10</label><input type="checkbox" id="tufte-sn-10" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">10</span> For genes with high counts, the rlog transformation differs not much from
-an ordinary log2 transformation. However for genes with lower counts, the transformation
-moderates the variance across the mean shrunking the values towards the genes’ averages
-across all samples. See <code>?rlog</code> for more details about the function.</span>.</p>
+the regularized-logarithm transformation <code>rlog()</code><a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>.</p>
 <div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="sec-rnaseq.html#cb167-1" aria-hidden="true" tabindex="-1"></a>rld <span class="ot">&lt;-</span> <span class="fu">rlogTransformation</span>(dds)</span></code></pre></div>
 <div class="question">
 <p class="question-begin">
@@ -848,8 +841,7 @@ forget to re-run DESeq() function after the re-leveling operation.</p>
 the samples to compare.</p>
 <p>Note that the <code>contrast</code> argument of <code>results()</code> can also be used to
 extract results of interest. In this case, the two following commands will give the same
-results<label for="tufte-sn-11" class="margin-toggle sidenote-number">11</label><input type="checkbox" id="tufte-sn-11" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">11</span> Using the <code>name</code> argument is however necessary to extract specific
-coefficients from more complex designs.</span>.</p>
+results<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>.</p>
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="sec-rnaseq.html#cb194-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds,</span>
 <span id="cb194-2"><a href="sec-rnaseq.html#cb194-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">name =</span> <span class="st">"Condition_KD_vs_mock"</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="sec-rnaseq.html#cb195-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds,</span>
@@ -876,9 +868,7 @@ coefficients from more complex designs.</span>.</p>
 reported on a logarithmic scale to base 2. In this case, as we are testing
 the “Condition_KD_vs_mock” coefficient, positive log2FC indicates a gene up-regulated
 in the KD condition compared to the mock condition, while a negative log2FC indicate
-a down-regulation <label for="tufte-sn-12" class="margin-toggle sidenote-number">12</label><input type="checkbox" id="tufte-sn-12" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">12</span> DESeq2 offers further options to shrink LFC estimates. This is useful for
-ranking and visualization (see <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2 vignette</a>
-for more information).</span>.</p>
+a down-regulation <a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>.</p>
 <p><strong>lfcSE</strong>: The standard error estimate for the log2FoldChange estimate</p>
 <p><strong>stat</strong>: The value of the test statistic for the gene</p>
 <p><strong>pvalue</strong>: The pvalue of the test for the gene</p>
@@ -1327,7 +1317,7 @@ group of genes</li>
 <span class="header-section-number">5.2.12</span> Querying the Biomart service<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('querying-the-biomart-service')" onmouseout="reset_tooltip('querying-the-biomart-service-tooltip')"><span class="tooltiptext" id="querying-the-biomart-service-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The result table only uses Ensembl gene IDs, but gene names may be
-more informative. Bioconductor’s <em><a href="https://bioconductor.org/packages/3.14/biomaRt">biomaRt</a></em>
+more informative. Bioconductor’s <em><a href="https://bioconductor.org/packages/3.15/biomaRt">biomaRt</a></em>
 package can help with mapping various ID schemes to each other.</p>
 <p>Below, we query the Biomart service to extract the gene names
 (<code>enternal_gene_name</code>) and ENTREZ gene identifiers (<code>entrezgene_id</code>)
@@ -1373,16 +1363,36 @@ next chapter.</p>
 
 </div>
 </div>
-</div></body></html>
+</div>
+<div class="footnotes">
+<hr>
+<ol start="8">
+<li id="fn8"><p>Note that as dispersion parameter gets lower and lower,
+the variance converges to the same value as the mean, and the negative
+binomial turns into a Poisson distribution.<a href="sec-rnaseq.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>genes with extremely high dispersion are those for which the adjusted
+dispersion is more than 2 residual standard deviations above the curve.<a href="sec-rnaseq.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>For genes with high counts, the rlog transformation differs not much from
+an ordinary log2 transformation. However for genes with lower counts, the transformation
+moderates the variance across the mean shrunking the values towards the genes’ averages
+across all samples. See <code>?rlog</code> for more details about the function.<a href="sec-rnaseq.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>Using the <code>name</code> argument is however necessary to extract specific
+coefficients from more complex designs.<a href="sec-rnaseq.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p>DESeq2 offers further options to shrink LFC estimates. This is useful for
+ranking and visualization (see <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2 vignette</a>
+for more information).<a href="sec-rnaseq.html#fnref12" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+</body></html>
 
 <p style="text-align: center;">
 <a href="sec-hts.html"><button class="btn btn-default">Previous</button></a>
 <a href="sec-gsea.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-11-22
+2022-06-27
  using 
-R version 4.1.2 (2021-11-01)
+R version 4.2.0 Patched (2022-05-13 r82357)
 </p>
 </div>
 </div>

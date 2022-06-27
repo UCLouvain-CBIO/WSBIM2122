@@ -61,7 +61,7 @@ package. Identification data will be handled by the
 BiocManager::install("msdata")
 BiocManager::install("ProtGenerics")
 BiocManager::install("Spectra")
-BiocManager::install("RforMassSpectrometry/PSMatch")
+BiocManager::install("PSMatch")
 ```
 
 ## How does mass spectrometry work?

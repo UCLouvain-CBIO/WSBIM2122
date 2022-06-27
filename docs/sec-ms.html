@@ -8,13 +8,12 @@
 <meta property="og:title" content="Chapter 7 Mass spectrometry | Omics Data Analysis" />
 <meta property="og:type" content="book" />
 
-
 <meta property="og:description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain." />
 
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2021-11-22" />
+<meta name="date" content="2022-06-27" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -27,7 +26,6 @@ MathJax.Hub.Config({
 
 <title>Chapter 7 Mass spectrometry | Omics Data Analysis</title>
 
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
@@ -69,7 +67,7 @@ function reset_tooltip(id) {
 </script>
 <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.20/datatables.js"></script>
+<script src="libs/datatables-binding-0.23/datatables.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
@@ -216,7 +214,8 @@ div.csl-indent {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec-ms" class="section level1" number="7">
+<html><body>
+<div id="sec-ms" class="section level1" number="7">
 <h1>
 <span class="header-section-number">Chapter 7</span> Mass spectrometry</h1>
 <p>The <strong>objectives</strong> of this chapter it to learn how mass spectrometry
@@ -269,7 +268,7 @@ package. Identification data will be handled by the
 <div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="sec-ms.html#cb322-1" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"msdata"</span>)</span>
 <span id="cb322-2"><a href="sec-ms.html#cb322-2" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"ProtGenerics"</span>)</span>
 <span id="cb322-3"><a href="sec-ms.html#cb322-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"Spectra"</span>)</span>
-<span id="cb322-4"><a href="sec-ms.html#cb322-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"RforMassSpectrometry/PSMatch"</span>)</span></code></pre></div>
+<span id="cb322-4"><a href="sec-ms.html#cb322-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"PSMatch"</span>)</span></code></pre></div>
 </div>
 <div id="how-does-mass-spectrometry-work" class="section level2" number="7.2">
 <h2>
@@ -552,9 +551,7 @@ theoretical fragments to those observed in MS2 spectra.</p>
 ##  [ reached 'max' / getOption("max.print") -- omitted 42 rows ]</code></pre>
 <p>In a full experiment, all possible peptides from the proteome of
 interest (such as databases that can be downloaded from the <a href="https://www.uniprot.org/">UniProt
-site</a><label for="tufte-sn-15" class="margin-toggle sidenote-number">15</label><input type="checkbox" id="tufte-sn-15" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">15</span> The Universal Protein Resource (UniProt) is a freely and
-accessible comprehensive resource for protein sequence and
-annotation data.</span>) are compared to the
+site</a><a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>) are compared to the
 millions of observed spectra.</p>
 <p>The matching between millions of observed and possible spectra causes
 real challenges due to the large search space and the risk of false
@@ -572,11 +569,6 @@ available in the <code>msdata</code> package and load its content into R with th
 <div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="sec-ms.html#cb335-1" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">PSM</span>(idf)</span>
 <span id="cb335-2"><a href="sec-ms.html#cb335-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(id)</span></code></pre></div>
 <pre><code>## PSM with 6 rows and 35 columns.
-## Spectra: 6 unique
-##   db: 4 target, 2 decoy
-##   ranks: 1:6 
-## Peptides: 6 unique, 0 multiple
-## Proteins: 6 
 ## names(35): sequence spectrumID ... subReplacementResidue subLocation</code></pre>
 <div class="question">
 <p class="question-begin">
@@ -633,10 +625,7 @@ hits. Interprete the figures.</p>
 <p>Before proceeding, we want to only focus on relevant peptides. The
 <code>filterPSMs()</code> function will remove decoy peptides, only keep PSMs of
 rank 1 (i.e. the best respective matches), and remove peptides that
-match multiple proteins<label for="tufte-sn-16" class="margin-toggle sidenote-number">16</label><input type="checkbox" id="tufte-sn-16" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">16</span> A more rigorous processing of these identifications would
-be required, for instance a way to evalutation the false discovery
-rate in these hits (which we know from above is very high). The
-<em><a href="https://bioconductor.org/packages/3.14/MSnID">MSnID</a></em> is highly recommended.</span>.</p>
+match multiple proteins<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a>.</p>
 <div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="sec-ms.html#cb340-1" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">filterPSMs</span>(id)</span></code></pre></div>
 <pre><code>## Starting with 5802 PSMs:</code></pre>
 <pre><code>## Removed 2896 decoy hits.</code></pre>
@@ -852,16 +841,29 @@ quantitative proteomics data.</p>
 
 </div>
 </div>
-</div></body></html>
+</div>
+<div class="footnotes">
+<hr>
+<ol start="15">
+<li id="fn15"><p>The Universal Protein Resource (UniProt) is a freely and
+accessible comprehensive resource for protein sequence and
+annotation data.<a href="sec-ms.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p>A more rigorous processing of these identifications would
+be required, for instance a way to evalutation the false discovery
+rate in these hits (which we know from above is very high). The
+<em><a href="https://bioconductor.org/packages/3.15/MSnID">MSnID</a></em> is highly recommended.<a href="sec-ms.html#fnref16" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+</body></html>
 
 <p style="text-align: center;">
 <a href="sec-gsea.html"><button class="btn btn-default">Previous</button></a>
 <a href="sec-prot.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-11-22
+2022-06-27
  using 
-R version 4.1.2 (2021-11-01)
+R version 4.2.0 Patched (2022-05-13 r82357)
 </p>
 </div>
 </div>
