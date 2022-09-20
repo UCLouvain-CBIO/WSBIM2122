@@ -20,7 +20,7 @@ The starting point of the analysis is a count matrix, and the goal is to identif
 genes that are differentially expressed between samples.
 
 The different steps of the analysis are illustrated in the figure below. Briefly,
-DESeq2 starts by normalising the raw counts. Then, it estimates the gene-wise
+DESeq2 starts by estimating scaling factors. Then, it estimates the gene-wise
 dispersions and shrinks these estimates to generate more accurate estimates of dispersion
 to model the counts. Finally, DESeq2 fits a generalized linear model, performs hypothesis
 testing and generates a list of differentially expressed genes.
@@ -31,28 +31,28 @@ knitr::include_graphics("./figs/deseq2_steps.png")
 ```
 
 
-### Normalisation
+### Size factor estimation
 
-- **Why is it mandatory to normalise?**
+DESeq2 expects as an input a matrix of raw counts (un-normalised counts).
+These counts are supposed to reflect gene abundance (what we are interested in), 
+but they are also dependent on other less interesting factors such as gene length, 
+sequencing biases, sequencing depth or library composition. DESeq2 will estimate 
+scaling factors that will be used internally to account for the “uninteresting” 
+factors rendering the expression levels more comparable between samples. 
 
-Observed counts are supposed to reflect gene abundance (what we are
-interested in), however they are also dependent on other less interesting
-factors such as gene length, sequencing biases, sequencing depth or library
-composition. Normalisation is the process of scaling raw count values to
-account for the “uninteresting” factors rendering the expression levels more
-comparable between and/or within samples.
 
 - **Gene length**
 
 As illustrated in the example below, gene 1 and gene 2 have similar levels of expression,
 but many more reads map to gene 2 than to gene 1. This might not be related to biology
-but it can just reflect the fact that gene 2 is longer. Gene length normalisation is
-mandatory when the purpose is to compare expression levels between different genes within
-the same sample. However, for differential expression analysis, as genes expression
-levels are compared between samples, gene length normalisation is not necessary (and
-even not recommended). It was just mentioned here for information because many RNAseq common
-normalisation methods such as TPM (transcript per million), FPKM (fragment per million),
-or RPKM (reads per million) do normalise read counts by gene length.
+but it could just reflect the fact that gene 2 is longer. Taking into account gene lengths 
+in the normalisation procedure is important when the purpose is to compare gene expression 
+levels within the same sample. However, for differential expression analysis, as gene 
+expression levels are compared between samples, it is not necessary to use gene lengths to 
+estimate the scaling factors (it is even not recommended). It was just mentioned here for 
+information because many RNAseq common normalisation methods such as TPM (transcripts per 
+million), FPKM (fragments per million), or RPKM (reads per million) take into account gene 
+lengths.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
 knitr::include_graphics("./figs/read_length.png")
@@ -102,11 +102,10 @@ between samples [@Anders:2010].
 
 - **DESeq2 normalisation method**
 
-DESeq2 will use a normalisation method that takes into account both
-library size and library composition. To normalise for sequencing
-depth and RNA composition, DESeq2 uses the median of ratios method:
+DESeq2 will estimate size factors in a way that takes into account both
+library size and library composition, using the median of ratios method:
 
-```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
+```{r, echo=FALSE, fig.align='center', out.width='60%', purl=TRUE}
 knitr::include_graphics("./figs/SF_formula.png")
 ```
 
@@ -130,9 +129,8 @@ zero. This will hence automatically eliminate genes expressed in some
 samples but not in others and will help to focus the scaling factor on
 housekeeping genes.
 
-**Step 4**: DESeq2 calculates the normalised counts using the scaling
-factor. This is performed by dividing each raw count values in a given
-sample by that sample’s scaling factor.
+**Step 4**: Normalised counts can be obtained by dividing each raw count 
+values in a given sample by that sample’s scaling factor.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
 knitr::include_graphics("./figs/SF_steps.png")
@@ -194,10 +192,7 @@ to the mean parameter, an extra parameter $α$ called the “dispersion”
 parameter to model this “extra” variance that is empirically observed
 in RNA-Seq experiments.
 
-
-```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
-knitr::include_graphics("./figs/NB.png")
-```
+$$K_{ij} \sim NB(mean = µ_{ij},  dispersion = \alpha_i)$$
 
 The dispersion parameter $\alpha_i$ defines the relationship between
 the variance of the observed count and its mean value[^small_alpha].
@@ -206,18 +201,16 @@ the variance of the observed count and its mean value[^small_alpha].
 the variance converges to the same value as the mean, and the negative
 binomial turns into a Poisson distribution.
 
+$$VAR(K_{ij}) = µ_{ij} + \alpha_i.µ_{ij}^2$$
 
-```{r, echo=FALSE, fig.align='center', out.width='60%', purl=TRUE}
-knitr::include_graphics("./figs/VAR.png")
-```
-
-### Dispersion estimation
 
 Having modelised counts by a negative-binomial distribution, next step
 is to estimate, for each gene, the two parameters of the distribution
 (mean and dispersion). The mean will be estimated easily from the
 observed normalised counts in both conditions, but the dispersion is
 not that trivial to estimate accurately.
+
+### Dispersion estimation
 
 Dispersion is a measure of variability in the data ($α = CV^2$).
 A gene with a dispersion value of 0.04 means 20% variation
@@ -287,13 +280,17 @@ knitr::include_graphics("./figs/disp_shrinkage.png")
 
 DESeq2 fits a generalized linear model of the form: $$log2(q_{ij}) = \Sigma x_j.β_i$$
 
-where $q_{ij}$ represents the normalised counts for gene i in sample j and $β_i$ represents
-the log2FC between conditions. $β_i$ coefficients are computed from the data.
+where the parameter $q_{ij}$ is proportional to the expected true concentration of 
+fragments for sample j:
+
+$$ q_{ij} = \frac{µ_{ij}}{SizeFactor_{j}} $$
+and $β_i$ represents the log2FC between conditions. $β_i$ coefficients are computed from the data.
 
 In the case of a simple design with one condition (a treatment effect for example), the model
 can be written
 
-$$log2(q_{ij}) = \beta_0 + \beta_1\times x_j + \epsilon$$
+$$log2(q_{ij}) = \beta_0 + \beta_1.x_j + \epsilon$$
+
 $\beta_0$ is the log2 expression level in the reference (control samples)
 
 $\beta_1$ is the log2FC between treated and control cells
