@@ -445,13 +445,13 @@ We now have two copies of the `seq_1.fas` and `sim_1.csv` files. The
 
 ```
 $ rm seq_1.fas
-$ rm sim_1.fas
+$ rm sim_1.csv
 ```
 
 or in one go
 
 ```
-$ rm seq_1.fas sim_1.fas
+$ rm seq_1.fas sim_1.csv
 ```
 
 We can use wildcards for accessing or manipulate multiple files at
@@ -479,7 +479,7 @@ wsbim2122_data/new_dir
 wsbim2122_data/new_dir/file1.txt
 wsbim2122_data/new_dir/file2.txt
 wsbim2122_data/new_dir/data/seq_1.fas
-wsbim2122_data/new_dir/data/sim_100.fas
+wsbim2122_data/new_dir/data/sim_100.csv
 ```
 
 `r msmbstyle::question_end()`
