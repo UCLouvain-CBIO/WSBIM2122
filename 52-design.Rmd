@@ -1,0 +1,8 @@
+# Complex experimental design {#sec-design}
+
+**Learning Objectives**
+
+The goal of this chapter is
+
+- to understand more complex experimental designs
+- how to extract relevant factors
