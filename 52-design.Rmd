@@ -1,4 +1,4 @@
-# Complex experimental design {#sec-design}
+# More complex experimental design {#sec-design}
 
 **Learning Objectives**
 

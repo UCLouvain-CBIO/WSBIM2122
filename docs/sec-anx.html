@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 10 Annex | Omics Data Analysis" />
+<meta property="og:title" content="Chapter 11 Annex | Omics Data Analysis" />
 <meta property="og:type" content="book" />
 
 <meta property="og:description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain." />
@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2022-06-27" />
+<meta name="date" content="2022-09-21" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -24,7 +24,7 @@ MathJax.Hub.Config({
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
-<title>Chapter 10 Annex | Omics Data Analysis</title>
+<title>Chapter 11 Annex | Omics Data Analysis</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -67,7 +67,7 @@ function reset_tooltip(id) {
 </script>
 <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.23/datatables.js"></script>
+<script src="libs/datatables-binding-0.25/datatables.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
@@ -85,7 +85,6 @@ function reset_tooltip(id) {
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -193,15 +192,16 @@ div.csl-indent {
 <a href="sec-linmod.html"><span class="toc-section-number">3</span> Linear models</a>
 <a href="sec-hts.html"><span class="toc-section-number">4</span> High throughput sequencing</a>
 <a href="sec-rnaseq.html"><span class="toc-section-number">5</span> Differential expression analysis</a>
-<a href="sec-gsea.html"><span class="toc-section-number">6</span> Enrichment analyses</a>
-<a href="sec-ms.html"><span class="toc-section-number">7</span> Mass spectrometry</a>
-<a href="sec-prot.html"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
-<a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
-<a id="active-page" href="sec-anx.html"><span class="toc-section-number">10</span> Annex</a><ul class="toc-sections">
+<a href="sec-design.html"><span class="toc-section-number">6</span> More complex experimental design</a>
+<a href="sec-gsea.html"><span class="toc-section-number">7</span> Enrichment analyses</a>
+<a href="sec-ms.html"><span class="toc-section-number">8</span> Mass spectrometry</a>
+<a href="sec-prot.html"><span class="toc-section-number">9</span> Quantitative proteomics data analysis</a>
+<a href="sec-ccl.html"><span class="toc-section-number">10</span> Conclusions</a>
+<a id="active-page" href="sec-anx.html"><span class="toc-section-number">11</span> Annex</a><ul class="toc-sections">
 <li class="toc"><a href="#available-platforms"> Available platforms</a></li>
 <li class="toc"><a href="#project-reports"> Project reports</a></li>
 </ul>
-<a href="sec-si.html"><span class="toc-section-number">11</span> Session information</a>
+<a href="sec-si.html"><span class="toc-section-number">12</span> Session information</a>
 </div>
 </li>
 </ul>
@@ -211,12 +211,12 @@ div.csl-indent {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec-anx" class="section level1" number="10">
+<html><body><div id="sec-anx" class="section level1" number="11">
 <h1>
-<span class="header-section-number">Chapter 10</span> Annex</h1>
-<div id="available-platforms" class="section level2" number="10.1">
+<span class="header-section-number">Chapter 11</span> Annex</h1>
+<div id="available-platforms" class="section level2" number="11.1">
 <h2>
-<span class="header-section-number">10.1</span> Available platforms<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('available-platforms')" onmouseout="reset_tooltip('available-platforms-tooltip')"><span class="tooltiptext" id="available-platforms-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">11.1</span> Available platforms<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('available-platforms')" onmouseout="reset_tooltip('available-platforms-tooltip')"><span class="tooltiptext" id="available-platforms-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Given the increased need for autonomous work, the students are free to
 use any computers they prefer to for this work, including the
@@ -227,9 +227,9 @@ details) or their own computers. They should also make sure they have
 all the documents they need and use a system they are comfortable with
 during the presentations and final oral exam.</p>
 </div>
-<div id="project-reports" class="section level2" number="10.2">
+<div id="project-reports" class="section level2" number="11.2">
 <h2>
-<span class="header-section-number">10.2</span> Project reports<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('project-reports')" onmouseout="reset_tooltip('project-reports-tooltip')"><span class="tooltiptext" id="project-reports-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">11.2</span> Project reports<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('project-reports')" onmouseout="reset_tooltip('project-reports-tooltip')"><span class="tooltiptext" id="project-reports-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>The group projects constitute a significant part of the work and final
 grades. The reports will be written in Rmarkdown (see <a href="sec-rmd.html#sec-rmd">2</a>
@@ -270,9 +270,9 @@ improve your own group report.</p>
 <a href="sec-si.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-06-27
+2022-09-21
  using 
-R version 4.2.0 Patched (2022-05-13 r82357)
+R version 4.2.1 (2022-06-23)
 </p>
 </div>
 </div>

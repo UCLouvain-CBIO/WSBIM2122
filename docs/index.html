@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2022-06-27" />
+<meta name="date" content="2022-09-21" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -67,7 +67,7 @@ function reset_tooltip(id) {
 </script>
 <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.23/datatables.js"></script>
+<script src="libs/datatables-binding-0.25/datatables.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
@@ -85,7 +85,6 @@ function reset_tooltip(id) {
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -199,12 +198,13 @@ div.csl-indent {
 <a href="sec-linmod.html"><span class="toc-section-number">3</span> Linear models</a>
 <a href="sec-hts.html"><span class="toc-section-number">4</span> High throughput sequencing</a>
 <a href="sec-rnaseq.html"><span class="toc-section-number">5</span> Differential expression analysis</a>
-<a href="sec-gsea.html"><span class="toc-section-number">6</span> Enrichment analyses</a>
-<a href="sec-ms.html"><span class="toc-section-number">7</span> Mass spectrometry</a>
-<a href="sec-prot.html"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
-<a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
-<a href="sec-anx.html"><span class="toc-section-number">10</span> Annex</a>
-<a href="sec-si.html"><span class="toc-section-number">11</span> Session information</a>
+<a href="sec-design.html"><span class="toc-section-number">6</span> More complex experimental design</a>
+<a href="sec-gsea.html"><span class="toc-section-number">7</span> Enrichment analyses</a>
+<a href="sec-ms.html"><span class="toc-section-number">8</span> Mass spectrometry</a>
+<a href="sec-prot.html"><span class="toc-section-number">9</span> Quantitative proteomics data analysis</a>
+<a href="sec-ccl.html"><span class="toc-section-number">10</span> Conclusions</a>
+<a href="sec-anx.html"><span class="toc-section-number">11</span> Annex</a>
+<a href="sec-si.html"><span class="toc-section-number">12</span> Session information</a>
 </div>
 </li>
 </ul>
@@ -214,8 +214,7 @@ div.csl-indent {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<!--bookdown:title:end--><!--bookdown:title:start--><html><body>
-<div id="preamble" class="section level1 unnumbered">
+<!--bookdown:title:end--><!--bookdown:title:start--><html><body><div id="preamble" class="section level1 unnumbered">
 <h1>Preamble</h1>
 <p>The <a href="https://uclouvain.be/cours-2021-wsbim2122.html">WSBIM2122</a> course
 is a project-based course that teaches the analysis of quantitative
@@ -311,14 +310,14 @@ We will also use the
 interact with R and write scripts and reports. Both R and RStudio are
 easy to install and works on all major operating systems.</p>
 <p>Once R and RStudio are installed, a set of packages will need to be
-installed. See section <a href="sec-si.html#sec-setup2">11.1</a> for details.</p>
+installed. See section <a href="sec-si.html#sec-setup2">12.1</a> for details.</p>
 <p>The <code>rWSBIM2122</code> package provides some pre-formatted data used in this
 course. It can be installed with</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"UCLouvain-CBIO/rWSBIM2122"</span>)</span></code></pre></div>
 <p>and then loaded with</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rWSBIM2122"</span>)</span></code></pre></div>
 <p>To build this book, you’ll need <code>bookdown</code> <span class="citation">(<label for="tufte-mn-4" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-4" class="margin-toggle">Xie 2022a<span class="marginnote">Xie, Yihui. 2022a. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.</span>)</span> and a
-fork<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> of <a href="https://github.com/grimbough/msmbstyle/"><code>msmbstyle</code>
+fork<label for="tufte-sn-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="tufte-sn-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> <a href="https://github.com/lgatto/msmbstyle" class="uri">https://github.com/lgatto/msmbstyle</a></span> of <a href="https://github.com/grimbough/msmbstyle/"><code>msmbstyle</code>
 style</a> <span class="citation">(<label for="tufte-mn-5" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-5" class="margin-toggle">Smith 2022<span class="marginnote">Smith, Mike. 2022. <em>Msmbstyle: MSMB Styles for r Markdown Documents</em>.</span>)</span>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="index.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"bookdown"</span>)</span>
 <span id="cb3-2"><a href="index.html#cb3-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"lgatto/msmbstyle"</span>)</span></code></pre></div>
@@ -326,22 +325,15 @@ style</a> <span class="citation">(<label for="tufte-mn-5" class="margin-toggle">
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="index.html#cb4-1" aria-hidden="true" tabindex="-1"></a>bookdown<span class="sc">::</span><span class="fu">render_book</span>(<span class="st">"."</span>)</span></code></pre></div>
 
 </div>
-</div>
-<div class="footnotes">
-<hr>
-<ol start="1">
-<li id="fn1"><p><a href="https://github.com/lgatto/msmbstyle" class="uri">https://github.com/lgatto/msmbstyle</a><a href="index.html#fnref1" class="footnote-back">↩︎</a></p></li>
-</ol>
-</div>
-</body></html>
+</div></body></html>
 
 <p style="text-align: center;">
 <a href="sec-cli.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-06-27
+2022-09-21
  using 
-R version 4.2.0 Patched (2022-05-13 r82357)
+R version 4.2.1 (2022-06-23)
 </p>
 </div>
 </div>
