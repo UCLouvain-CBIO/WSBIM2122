@@ -85,7 +85,6 @@ function reset_tooltip(id) {
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -120,7 +119,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -133,7 +132,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -187,25 +186,25 @@ div.csl-indent {
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
-<a href="index.html" id="toc-preamble">Preamble</a>
-<a href="sec-cli.html" id="toc-sec-cli"><span class="toc-section-number">1</span> The shell</a>
-<a href="sec-rmd.html" id="toc-sec-rmd"><span class="toc-section-number">2</span> R markdown</a>
-<a href="sec-linmod.html" id="toc-sec-linmod"><span class="toc-section-number">3</span> Linear models</a>
-<a href="sec-hts.html" id="toc-sec-hts"><span class="toc-section-number">4</span> High throughput sequencing</a>
-<a href="sec-rnaseq.html" id="toc-sec-rnaseq"><span class="toc-section-number">5</span> Differential expression analysis</a>
-<a href="sec-design.html" id="toc-sec-design"><span class="toc-section-number">6</span> More complex experimental design</a>
-<a href="sec-gsea.html" id="toc-sec-gsea"><span class="toc-section-number">7</span> Enrichment analyses</a>
-<a id="active-page" href="sec-ms.html" id="toc-sec-ms"><span class="toc-section-number">8</span> Mass spectrometry</a><ul class="toc-sections">
+<a href="index.html">Preamble</a>
+<a href="sec-cli.html"><span class="toc-section-number">1</span> The shell</a>
+<a href="sec-rmd.html"><span class="toc-section-number">2</span> R markdown</a>
+<a href="sec-linmod.html"><span class="toc-section-number">3</span> Linear models</a>
+<a href="sec-hts.html"><span class="toc-section-number">4</span> High throughput sequencing</a>
+<a href="sec-rnaseq.html"><span class="toc-section-number">5</span> Differential expression analysis</a>
+<a href="sec-design.html"><span class="toc-section-number">6</span> More complex experimental design</a>
+<a href="sec-gsea.html"><span class="toc-section-number">7</span> Enrichment analyses</a>
+<a id="active-page" href="sec-ms.html"><span class="toc-section-number">8</span> Mass spectrometry</a><ul class="toc-sections">
 <li class="toc"><a href="#setup-1"> Setup</a></li>
 <li class="toc"><a href="#how-does-mass-spectrometry-work"> How does mass spectrometry work?</a></li>
 <li class="toc"><a href="#reading-and-accessing-ms-data"> Reading and accessing MS data</a></li>
 <li class="toc"><a href="#identification-matching-spectra-to-peptides"> Identification: matching spectra to peptides</a></li>
 <li class="toc"><a href="#quantitative-proteomics"> Quantitative proteomics</a></li>
 </ul>
-<a href="sec-prot.html" id="toc-sec-prot"><span class="toc-section-number">9</span> Quantitative proteomics data analysis</a>
-<a href="sec-ccl.html" id="toc-sec-ccl"><span class="toc-section-number">10</span> Conclusions</a>
-<a href="sec-anx.html" id="toc-sec-anx"><span class="toc-section-number">11</span> Annex</a>
-<a href="sec-si.html" id="toc-sec-si"><span class="toc-section-number">12</span> Session information</a>
+<a href="sec-prot.html"><span class="toc-section-number">9</span> Quantitative proteomics data analysis</a>
+<a href="sec-ccl.html"><span class="toc-section-number">10</span> Conclusions</a>
+<a href="sec-anx.html"><span class="toc-section-number">11</span> Annex</a>
+<a href="sec-si.html"><span class="toc-section-number">12</span> Session information</a>
 </div>
 </li>
 </ul>
@@ -215,8 +214,7 @@ div.csl-indent {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body>
-<div id="sec-ms" class="section level1" number="8">
+<html><body><div id="sec-ms" class="section level1" number="8">
 <h1>
 <span class="header-section-number">Chapter 8</span> Mass spectrometry</h1>
 <p>The <strong>objectives</strong> of this chapter it to learn how mass spectrometry
@@ -552,7 +550,9 @@ theoretical fragments to those observed in MS2 spectra.</p>
 ##  [ reached 'max' / getOption("max.print") -- omitted 42 rows ]</code></pre>
 <p>In a full experiment, all possible peptides from the proteome of
 interest (such as databases that can be downloaded from the <a href="https://www.uniprot.org/">UniProt
-site</a><a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>) are compared to the
+site</a><label for="tufte-sn-15" class="margin-toggle sidenote-number">15</label><input type="checkbox" id="tufte-sn-15" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">15</span> The Universal Protein Resource (UniProt) is a freely and
+accessible comprehensive resource for protein sequence and
+annotation data.</span>) are compared to the
 millions of observed spectra.</p>
 <p>The matching between millions of observed and possible spectra causes
 real challenges due to the large search space and the risk of false
@@ -626,7 +626,10 @@ hits. Interprete the figures.</p>
 <p>Before proceeding, we want to only focus on relevant peptides. The
 <code>filterPSMs()</code> function will remove decoy peptides, only keep PSMs of
 rank 1 (i.e. the best respective matches), and remove peptides that
-match multiple proteins<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a>.</p>
+match multiple proteins<label for="tufte-sn-16" class="margin-toggle sidenote-number">16</label><input type="checkbox" id="tufte-sn-16" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">16</span> A more rigorous processing of these identifications would
+be required, for instance a way to evalutation the false discovery
+rate in these hits (which we know from above is very high). The
+<em><a href="https://bioconductor.org/packages/3.15/MSnID">MSnID</a></em> is highly recommended.</span>.</p>
 <div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="sec-ms.html#cb341-1" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">filterPSMs</span>(id)</span></code></pre></div>
 <pre><code>## Starting with 5802 PSMs:</code></pre>
 <pre><code>## Removed 2896 decoy hits.</code></pre>
@@ -842,20 +845,7 @@ quantitative proteomics data.</p>
 
 </div>
 </div>
-</div>
-<div class="footnotes">
-<hr>
-<ol start="15">
-<li id="fn15"><p>The Universal Protein Resource (UniProt) is a freely and
-accessible comprehensive resource for protein sequence and
-annotation data.<a href="sec-ms.html#fnref15" class="footnote-back">↩︎</a></p></li>
-<li id="fn16"><p>A more rigorous processing of these identifications would
-be required, for instance a way to evalutation the false discovery
-rate in these hits (which we know from above is very high). The
-<em><a href="https://bioconductor.org/packages/3.15/MSnID">MSnID</a></em> is highly recommended.<a href="sec-ms.html#fnref16" class="footnote-back">↩︎</a></p></li>
-</ol>
-</div>
-</body></html>
+</div></body></html>
 
 <p style="text-align: center;">
 <a href="sec-gsea.html"><button class="btn btn-default">Previous</button></a>
@@ -864,7 +854,7 @@ rate in these hits (which we know from above is very high). The
 <p class="build-date">Page built: 
 2022-09-23
  using 
-R version 4.2.0 Patched (2022-05-13 r82357)
+R version 4.2.1 (2022-06-23)
 </p>
 </div>
 </div>

@@ -85,7 +85,6 @@ function reset_tooltip(id) {
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -120,7 +119,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -133,7 +132,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -187,10 +186,10 @@ div.csl-indent {
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
-<a href="index.html" id="toc-preamble">Preamble</a>
-<a href="sec-cli.html" id="toc-sec-cli"><span class="toc-section-number">1</span> The shell</a>
-<a href="sec-rmd.html" id="toc-sec-rmd"><span class="toc-section-number">2</span> R markdown</a>
-<a id="active-page" href="sec-linmod.html" id="toc-sec-linmod"><span class="toc-section-number">3</span> Linear models</a><ul class="toc-sections">
+<a href="index.html">Preamble</a>
+<a href="sec-cli.html"><span class="toc-section-number">1</span> The shell</a>
+<a href="sec-rmd.html"><span class="toc-section-number">2</span> R markdown</a>
+<a id="active-page" href="sec-linmod.html"><span class="toc-section-number">3</span> Linear models</a><ul class="toc-sections">
 <li class="toc"><a href="#starting-with-a-t-test"> Starting with a t-test</a></li>
 <li class="toc"><a href="#the-linear-model-equivalence"> The linear model equivalence</a></li>
 <li class="toc"><a href="#paired-t-test"> Paired t-test</a></li>
@@ -200,15 +199,15 @@ div.csl-indent {
 <li class="toc"><a href="#which-model-to-use"> Which model to use?</a></li>
 <li class="toc"><a href="#additional-reading"> Additional reading</a></li>
 </ul>
-<a href="sec-hts.html" id="toc-sec-hts"><span class="toc-section-number">4</span> High throughput sequencing</a>
-<a href="sec-rnaseq.html" id="toc-sec-rnaseq"><span class="toc-section-number">5</span> Differential expression analysis</a>
-<a href="sec-design.html" id="toc-sec-design"><span class="toc-section-number">6</span> More complex experimental design</a>
-<a href="sec-gsea.html" id="toc-sec-gsea"><span class="toc-section-number">7</span> Enrichment analyses</a>
-<a href="sec-ms.html" id="toc-sec-ms"><span class="toc-section-number">8</span> Mass spectrometry</a>
-<a href="sec-prot.html" id="toc-sec-prot"><span class="toc-section-number">9</span> Quantitative proteomics data analysis</a>
-<a href="sec-ccl.html" id="toc-sec-ccl"><span class="toc-section-number">10</span> Conclusions</a>
-<a href="sec-anx.html" id="toc-sec-anx"><span class="toc-section-number">11</span> Annex</a>
-<a href="sec-si.html" id="toc-sec-si"><span class="toc-section-number">12</span> Session information</a>
+<a href="sec-hts.html"><span class="toc-section-number">4</span> High throughput sequencing</a>
+<a href="sec-rnaseq.html"><span class="toc-section-number">5</span> Differential expression analysis</a>
+<a href="sec-design.html"><span class="toc-section-number">6</span> More complex experimental design</a>
+<a href="sec-gsea.html"><span class="toc-section-number">7</span> Enrichment analyses</a>
+<a href="sec-ms.html"><span class="toc-section-number">8</span> Mass spectrometry</a>
+<a href="sec-prot.html"><span class="toc-section-number">9</span> Quantitative proteomics data analysis</a>
+<a href="sec-ccl.html"><span class="toc-section-number">10</span> Conclusions</a>
+<a href="sec-anx.html"><span class="toc-section-number">11</span> Annex</a>
+<a href="sec-si.html"><span class="toc-section-number">12</span> Session information</a>
 </div>
 </li>
 </ul>
@@ -218,8 +217,7 @@ div.csl-indent {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body>
-<div id="sec-linmod" class="section level1" number="3">
+<html><body><div id="sec-linmod" class="section level1" number="3">
 <h1>
 <span class="header-section-number">Chapter 3</span> Linear models</h1>
 <p>The objective of this chapter is to provide students with an intuitive
@@ -458,7 +456,7 @@ p-value.</p>
 </p>
 </div>
 </div>
-<p>This comparison can be replicated using a linar model<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>This comparison can be replicated using a linar model<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> See below for the exact equation.</span></p>
 <p><span class="math display">\[y = \beta_0 + \beta_1 \times group + \beta_i \times ID_i + \epsilon\]</span></p>
 <p>where the <span class="math inline">\(\beta_i\)</span> coefficients will encode the relation between
 pairs of individuals. We model this with</p>
@@ -556,7 +554,8 @@ from ID1.</p>
 </h2>
 <p>In the example above, we had two variables that influenced the gene
 expression, namely the group and the specific individual and we ended
-up with a model that included both of these<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>:</p>
+up with a model that included both of these<label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> We will drop the left-hand side term of our formula, setting
+it by default as the quantiative expression data.</span>:</p>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="sec-linmod.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="sc">~</span> group <span class="sc">+</span> ID</span></code></pre></div>
 <p>Any additional variables could be added to the model if deemed
 necessary.</p>
@@ -617,8 +616,8 @@ opposite responses in the extreme conditions: that the expression of
 some genes will increase in the mutant under dry conditions while they
 will decrease (or change to a lesser extend at least) under humid
 conditions.</p>
-<div id="htmlwidget-a16bd31faa434a249a56" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a16bd31faa434a249a56">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6,7,8,9,10,11,12],["WT","WT","WT","WT","WT","WT","MT","MT","MT","MT","MT","MT"],["normal","dry","humid","normal","dry","humid","normal","dry","humid","normal","dry","humid"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>sample<\/th>\n      <th>genotype<\/th>\n      <th>condition<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Such situation require a new model formula syntax</p>
+<div id="htmlwidget-92444b26ec59d14a2b97" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-92444b26ec59d14a2b97">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6,7,8,9,10,11,12],["WT","WT","WT","WT","WT","WT","MT","MT","MT","MT","MT","MT"],["normal","dry","humid","normal","dry","humid","normal","dry","humid","normal","dry","humid"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>sample<\/th>\n      <th>genotype<\/th>\n      <th>condition<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Such situation require a new model formula syntax</p>
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="sec-linmod.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="sc">~</span> genotype <span class="sc">*</span> condition</span></code></pre></div>
 <p>which is equivalent to</p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="sec-linmod.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="sc">~</span> genotype <span class="sc">+</span> condition <span class="sc">+</span> genotype <span class="sc">*</span> condition</span></code></pre></div>
@@ -1054,7 +1053,7 @@ models. The same model is applied to all genes and the significance of
 coefficient(s) of interest is/are considered.</p>
 <p>Solving this dilema isn’t a statistical but a scientific question. You
 will have to define the hypothesis that underlies the
-experiment<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>. If there are reasons to believe that an interaction
+experiment<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> ideally even before generating any data.</span>. If there are reasons to believe that an interaction
 effect is relevant (i.e. there are different effects in the two cell
 types), then the more complex model (with an interaction) is
 appropriate. If no such interaction is expected, then testing for it
@@ -1073,22 +1072,12 @@ adjustment for multiple testing.</p>
 experiment, with concrete RNA sequencing example. The <a href="https://f1000research.com/articles/9-1444"><em>A guide to
 creating design matrices for gene expression
 experiments</em></a> paper
-<span class="citation">(<label for="tufte-mn-7" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-7" class="margin-toggle">Law et al. 2020<span class="marginnote">Law, CW, K Zeglinski, X Dong, M Alhamdoosh, GK Smyth, and ME Ritchie. 2020. <span>“A Guide to Creating Design Matrices for Gene Expression Experiments [Version 1; Peer Review: 2 Approved].”</span> <em>F1000Research</em> 9 (1444). <a href="https://doi.org/10.12688/f1000research.27893.1">https://doi.org/10.12688/f1000research.27893.1</a>.</span>)</span> is an excellent guide describing the basics of how to set
+<span class="citation">(<label for="tufte-mn-7" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-7" class="margin-toggle">Law et al. 2020<span class="marginnote">Law, CW, K Zeglinski, X Dong, M Alhamdoosh, GK Smyth, and ME Ritchie. 2020. <span>“A Guide to Creating Design Matrices for Gene Expression Experiments [version 1; Peer Review: 2 Approved].”</span> <em>F1000Research</em> 9 (1444). <a href="https://doi.org/10.12688/f1000research.27893.1">https://doi.org/10.12688/f1000research.27893.1</a>.</span>)</span> is an excellent guide describing the basics of how to set
 up design and contrast matrices and great preparation to chapter
 <a href="sec-rnaseq.html#sec-rnaseq">5</a>.</p>
 
 </div>
-</div>
-<div class="footnotes">
-<hr>
-<ol start="2">
-<li id="fn2"><p>See below for the exact equation.<a href="sec-linmod.html#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>We will drop the left-hand side term of our formula, setting
-it by default as the quantiative expression data.<a href="sec-linmod.html#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p>ideally even before generating any data.<a href="sec-linmod.html#fnref4" class="footnote-back">↩︎</a></p></li>
-</ol>
-</div>
-</body></html>
+</div></body></html>
 
 <p style="text-align: center;">
 <a href="sec-rmd.html"><button class="btn btn-default">Previous</button></a>
@@ -1097,7 +1086,7 @@ it by default as the quantiative expression data.<a href="sec-linmod.html#fnref3
 <p class="build-date">Page built: 
 2022-09-23
  using 
-R version 4.2.0 Patched (2022-05-13 r82357)
+R version 4.2.1 (2022-06-23)
 </p>
 </div>
 </div>

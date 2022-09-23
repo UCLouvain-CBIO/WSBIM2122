@@ -586,13 +586,14 @@ Cound the number of line containing the `TATATA` pattern in all the
 - How many files are there?
 - How many points where simulated over all files?
 - How many points with `id` b where simulated over all files?
+- How many points with `id` d where simulated over all files?
 
 `r msmbstyle::question_end()`
 
 
 `r msmbstyle::question_begin()`
 
-Image that you task is to load all the simulation data into R to
+Imagine that you task is to load all the simulation data into R to
 compare the `x` and `y` values for each `id`. You could [read each
 file into R individually and then combine the
 data](https://uclouvain-cbio.github.io/WSBIM1207/sec-prog.html#analysing-data-from-multiple-files).
