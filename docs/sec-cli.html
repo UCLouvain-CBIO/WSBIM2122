@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2022-09-21" />
+<meta name="date" content="2022-09-23" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -334,6 +334,11 @@ system:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="sec-cli.html#cb9-1" aria-hidden="true" tabindex="-1"></a>rWSBIM2122<span class="sc">::</span><span class="fu">prepare_shell</span>()</span></code></pre></div>
 <pre><code>## Preparing shell data in 'wsbim2122_data'.</code></pre>
 <pre><code>## wsbim2122_data is ready.</code></pre>
+<p>This R command could also be executed from the shell by executing a
+(short) R script on the fly. <code>R -e</code> below means to start R, execute a
+script, and then exit. The script follows that command and is provided,
+here, as a quoted R expression - it could also be an R script file.</p>
+<pre><code>$ R -e 'rWSBIM2122::prepare_shell()'</code></pre>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -863,7 +868,7 @@ delete a directory using the <code>-r</code> (recursive) option.</p>
 <p>To complete this chapter on shell, let’s conclude by mentioning the R
 <code>system()</code> and <code>system2()</code> functions, that enable to invoke a system
 command such as a shell script:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="sec-cli.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"combine_all_simulations.sh"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="sec-cli.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"combine_all_simulations.sh"</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="references" class="section level2" number="1.6">
@@ -886,7 +891,7 @@ Genomics</a> lessons.</li>
 <a href="sec-rmd.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-09-21
+2022-09-23
  using 
 R version 4.2.1 (2022-06-23)
 </p>

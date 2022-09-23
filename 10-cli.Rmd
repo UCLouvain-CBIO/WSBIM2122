@@ -141,6 +141,14 @@ unlink("wsbim2122_data", recursive = TRUE, force = TRUE)
 ```{r prepare_wsbim2122_data}
 rWSBIM2122::prepare_shell()
 ```
+This R command could also be executed from the shell by executing a
+(short) R script on the fly. `R -e` below means to start R, execute a
+script, and then exit. The script follows that command and is provided,
+here, as a quoted R expression - it could also be an R script file.
+
+```
+$ R -e 'rWSBIM2122::prepare_shell()'
+```
 
 `r msmbstyle::question_begin()`
 

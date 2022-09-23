@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2022-09-21" />
+<meta name="date" content="2022-09-23" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -281,12 +281,12 @@ List of 1
 available. A typical example is when you use R on a server through the
 terminal. In such cases, you can directly use the
 <code>rmarkdown::render()</code> function:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="sec-rmd.html#cb45-1" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render</span>(<span class="st">"report.Rmd"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="sec-rmd.html#cb46-1" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render</span>(<span class="st">"report.Rmd"</span>)</span></code></pre></div>
 <p>It is also possibly to define the output format, which will override
 the output format defined in the header:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="sec-rmd.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rmarkdown"</span>)</span>
-<span id="cb46-2"><a href="sec-rmd.html#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">render</span>(<span class="st">"report.Rmd"</span>, <span class="at">output_format =</span> <span class="fu">pdf_document</span>())</span>
-<span id="cb46-3"><a href="sec-rmd.html#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">render</span>(<span class="st">"report.Rmd"</span>, <span class="at">output_format =</span> <span class="fu">html_document</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="sec-rmd.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rmarkdown"</span>)</span>
+<span id="cb47-2"><a href="sec-rmd.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">render</span>(<span class="st">"report.Rmd"</span>, <span class="at">output_format =</span> <span class="fu">pdf_document</span>())</span>
+<span id="cb47-3"><a href="sec-rmd.html#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">render</span>(<span class="st">"report.Rmd"</span>, <span class="at">output_format =</span> <span class="fu">html_document</span>())</span></code></pre></div>
 <p>Note that the <code>pdf_document()</code> and <code>html_document()</code> functions are
 also defined in the <code>rmarkdown</code> package. Make sure to either load the
 package or prefix it all functions.</p>
@@ -446,7 +446,7 @@ above and cite them.</p>
 </div>
 <p>A useful function to get the BibTex entries of R packages or their
 associated scientific papers is to use the <code>citation()</code> function:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="sec-rmd.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">citation</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="sec-rmd.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">citation</span>()</span></code></pre></div>
 <pre><code>## 
 ## To cite R in publications use:
 ## 
@@ -468,7 +468,7 @@ associated scientific papers is to use the <code>citation()</code> function:</p>
 ## We have invested a lot of time and effort in creating R, please cite it
 ## when using it for data analysis. See also 'citation("pkgname")' for
 ## citing R packages.</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="sec-rmd.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">citation</span>(<span class="at">package =</span> <span class="st">"SummarizedExperiment"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="sec-rmd.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">citation</span>(<span class="at">package =</span> <span class="st">"SummarizedExperiment"</span>)</span></code></pre></div>
 <pre><code>## 
 ## To cite package 'SummarizedExperiment' in publications use:
 ## 
@@ -516,7 +516,7 @@ Xie, Christophe Dervieux, Emily Riederer.</p></li>
 <a href="sec-linmod.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-09-21
+2022-09-23
  using 
 R version 4.2.1 (2022-06-23)
 </p>
