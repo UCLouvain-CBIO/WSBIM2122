@@ -85,6 +85,7 @@ function reset_tooltip(id) {
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -119,7 +120,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -132,7 +133,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -186,22 +187,22 @@ div.csl-indent {
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
-<a href="index.html">Preamble</a>
-<a href="sec-cli.html"><span class="toc-section-number">1</span> The shell</a>
-<a href="sec-rmd.html"><span class="toc-section-number">2</span> R markdown</a>
-<a href="sec-linmod.html"><span class="toc-section-number">3</span> Linear models</a>
-<a href="sec-hts.html"><span class="toc-section-number">4</span> High throughput sequencing</a>
-<a id="active-page" href="sec-rnaseq.html"><span class="toc-section-number">5</span> Differential expression analysis</a><ul class="toc-sections">
+<a href="index.html" id="toc-preamble">Preamble</a>
+<a href="sec-cli.html" id="toc-sec-cli"><span class="toc-section-number">1</span> The shell</a>
+<a href="sec-rmd.html" id="toc-sec-rmd"><span class="toc-section-number">2</span> R markdown</a>
+<a href="sec-linmod.html" id="toc-sec-linmod"><span class="toc-section-number">3</span> Linear models</a>
+<a href="sec-hts.html" id="toc-sec-hts"><span class="toc-section-number">4</span> High throughput sequencing</a>
+<a id="active-page" href="sec-rnaseq.html" id="toc-sec-rnaseq"><span class="toc-section-number">5</span> Differential expression analysis</a><ul class="toc-sections">
 <li class="toc"><a href="#theory-behind-deseq2"> Theory behind DESeq2</a></li>
 <li class="toc"><a href="#running-deseq2"> Running DESeq2</a></li>
 </ul>
-<a href="sec-design.html"><span class="toc-section-number">6</span> More complex experimental design</a>
-<a href="sec-gsea.html"><span class="toc-section-number">7</span> Enrichment analyses</a>
-<a href="sec-ms.html"><span class="toc-section-number">8</span> Mass spectrometry</a>
-<a href="sec-prot.html"><span class="toc-section-number">9</span> Quantitative proteomics data analysis</a>
-<a href="sec-ccl.html"><span class="toc-section-number">10</span> Conclusions</a>
-<a href="sec-anx.html"><span class="toc-section-number">11</span> Annex</a>
-<a href="sec-si.html"><span class="toc-section-number">12</span> Session information</a>
+<a href="sec-design.html" id="toc-sec-design"><span class="toc-section-number">6</span> More complex experimental design</a>
+<a href="sec-gsea.html" id="toc-sec-gsea"><span class="toc-section-number">7</span> Enrichment analyses</a>
+<a href="sec-ms.html" id="toc-sec-ms"><span class="toc-section-number">8</span> Mass spectrometry</a>
+<a href="sec-prot.html" id="toc-sec-prot"><span class="toc-section-number">9</span> Quantitative proteomics data analysis</a>
+<a href="sec-ccl.html" id="toc-sec-ccl"><span class="toc-section-number">10</span> Conclusions</a>
+<a href="sec-anx.html" id="toc-sec-anx"><span class="toc-section-number">11</span> Annex</a>
+<a href="sec-si.html" id="toc-sec-si"><span class="toc-section-number">12</span> Session information</a>
 </div>
 </li>
 </ul>
@@ -211,7 +212,8 @@ div.csl-indent {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec-rnaseq" class="section level1" number="5">
+<html><body>
+<div id="sec-rnaseq" class="section level1" number="5">
 <h1>
 <span class="header-section-number">Chapter 5</span> Differential expression analysis</h1>
 <p><strong>Learning Objectives</strong></p>
@@ -367,9 +369,7 @@ parameter to model this “extra” variance that is empirically observed
 in RNA-Seq experiments.</p>
 <p><span class="math display">\[K_{ij} \sim NB(mean = µ_{ij},  dispersion = \alpha_i)\]</span></p>
 <p>The dispersion parameter <span class="math inline">\(\alpha_i\)</span> defines the relationship between
-the variance of the observed count and its mean value<label for="tufte-sn-8" class="margin-toggle sidenote-number">8</label><input type="checkbox" id="tufte-sn-8" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">8</span> Note that as dispersion parameter gets lower and lower,
-the variance converges to the same value as the mean, and the negative
-binomial turns into a Poisson distribution.</span>.</p>
+the variance of the observed count and its mean value<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>.</p>
 <p><span class="math display">\[VAR(K_{ij}) = µ_{ij} + \alpha_i.µ_{ij}^2\]</span></p>
 <p>Having modelised counts by a negative-binomial distribution, next step
 is to estimate, for each gene, the two parameters of the distribution
@@ -420,8 +420,7 @@ dispersion will be significantly increased and this will limit the
 number of false-positive that could arise from an underestimated
 dispersion. Dispersion estimates that are slightly above the curve are
 also shrunk toward the curve. However, genes with extremely high
-dispersion<label for="tufte-sn-9" class="margin-toggle sidenote-number">9</label><input type="checkbox" id="tufte-sn-9" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">9</span> genes with extremely high dispersion are those for which the adjusted
-dispersion is more than 2 residual standard deviations above the curve.</span> values are not. In fact DESeq2 assumes that
+dispersion<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a> values are not. In fact DESeq2 assumes that
 these genes might not follow the modeling assumptions and could have
 higher variability than others for biological or technical
 reasons. For these genes, shrinking the values toward the curve could
@@ -698,10 +697,7 @@ strategy to avoid this is to take the logarithm of the normalised count values p
 a small pseudocount; however, now the genes with low counts tend to dominate the
 results because, due to the strong Poisson noise inherent to small count values, they
 show the strongest relative differences between samples. As a solution, DESeq2 offers
-the regularized-logarithm transformation <code>rlog()</code><label for="tufte-sn-10" class="margin-toggle sidenote-number">10</label><input type="checkbox" id="tufte-sn-10" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">10</span> For genes with high counts, the rlog transformation differs not much from
-an ordinary log2 transformation. However for genes with lower counts, the transformation
-moderates the variance across the mean shrunking the values towards the genes’ averages
-across all samples. See <code>?rlog</code> for more details about the function.</span>.</p>
+the regularized-logarithm transformation <code>rlog()</code><a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>.</p>
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="sec-rnaseq.html#cb168-1" aria-hidden="true" tabindex="-1"></a>rld <span class="ot">&lt;-</span> <span class="fu">rlogTransformation</span>(dds)</span></code></pre></div>
 <div class="question">
 <p class="question-begin">
@@ -844,8 +840,7 @@ forget to re-run DESeq() function after the re-leveling operation.</p>
 the samples to compare.</p>
 <p>Note that the <code>contrast</code> argument of <code>results()</code> can also be used to
 extract results of interest. In this case, the two following commands will give the same
-results<label for="tufte-sn-11" class="margin-toggle sidenote-number">11</label><input type="checkbox" id="tufte-sn-11" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">11</span> Using the <code>name</code> argument is however necessary to extract specific
-coefficients from more complex designs.</span>.</p>
+results<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>.</p>
 <div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="sec-rnaseq.html#cb195-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds,</span>
 <span id="cb195-2"><a href="sec-rnaseq.html#cb195-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">name =</span> <span class="st">"Condition_KD_vs_mock"</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="sec-rnaseq.html#cb196-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds,</span>
@@ -872,9 +867,7 @@ coefficients from more complex designs.</span>.</p>
 reported on a logarithmic scale to base 2. In this case, as we are testing
 the “Condition_KD_vs_mock” coefficient, positive log2FC indicates a gene up-regulated
 in the KD condition compared to the mock condition, while a negative log2FC indicate
-a down-regulation.<label for="tufte-sn-12" class="margin-toggle sidenote-number">12</label><input type="checkbox" id="tufte-sn-12" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">12</span> DESeq2 offers further options to shrink LFC estimates. This is useful for
-ranking and visualization (see <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2 vignette</a>
-for more information).</span></p>
+a down-regulation <a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>.</p>
 <p><strong>lfcSE</strong>: The standard error estimate for the log2FoldChange estimate</p>
 <p><strong>stat</strong>: The value of the test statistic for the gene</p>
 <p><strong>pvalue</strong>: The pvalue of the test for the gene</p>
@@ -1370,7 +1363,27 @@ next chapter.</p>
 
 </div>
 </div>
-</div></body></html>
+</div>
+<div class="footnotes">
+<hr>
+<ol start="8">
+<li id="fn8"><p>Note that as dispersion parameter gets lower and lower,
+the variance converges to the same value as the mean, and the negative
+binomial turns into a Poisson distribution.<a href="sec-rnaseq.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>genes with extremely high dispersion are those for which the adjusted
+dispersion is more than 2 residual standard deviations above the curve.<a href="sec-rnaseq.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>For genes with high counts, the rlog transformation differs not much from
+an ordinary log2 transformation. However for genes with lower counts, the transformation
+moderates the variance across the mean shrunking the values towards the genes’ averages
+across all samples. See <code>?rlog</code> for more details about the function.<a href="sec-rnaseq.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>Using the <code>name</code> argument is however necessary to extract specific
+coefficients from more complex designs.<a href="sec-rnaseq.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p>DESeq2 offers further options to shrink LFC estimates. This is useful for
+ranking and visualization (see <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2 vignette</a>
+for more information).<a href="sec-rnaseq.html#fnref12" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+</body></html>
 
 <p style="text-align: center;">
 <a href="sec-hts.html"><button class="btn btn-default">Previous</button></a>
@@ -1379,7 +1392,7 @@ next chapter.</p>
 <p class="build-date">Page built: 
 2022-09-23
  using 
-R version 4.2.1 (2022-06-23)
+R version 4.2.0 Patched (2022-05-13 r82357)
 </p>
 </div>
 </div>

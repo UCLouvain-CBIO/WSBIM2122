@@ -272,7 +272,7 @@ to mean *the current user's home directory*.
 `r msmbstyle::question_begin()`
 
 - Navitage to the `wsbim2122_data` directory. From there, list the files
-  and direcoties in it's parent directory.
+  and directories in it's parent directory.
 
 - Using a single command, list the files and directries in your home
   directory. Make sure this command will work from anywhere on your
