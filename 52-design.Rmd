@@ -15,33 +15,34 @@ suppressPackageStartupMessages(library("tidyverse"))
 ## A more complex dataset
 
 
-The dataset that we used previously was quite simple, we had 
-3 KD samples vs 3 control samples.
-But the original dataset was in reality a bit more complex, as the KD 
-experiments were actually done on 2 different cell lines.
-So we have now 12 samples. The 6 first samples correspond to an epithelial 
-cell line (Cell1), and 6 other samples correspond to a fibroblast cell 
-line (Cell2).
+The dataset that we used previously was quite simple, we had 3 KD
+samples vs 3 control samples.  But the original dataset was in reality
+a bit more complex, as the KD experiments were actually done on 2
+different cell lines.  So we have now 12 samples. The 6 first samples
+correspond to an epithelial cell line (Cell1), and 6 other samples
+correspond to a fibroblast cell line (Cell2).
+
+```{r, echo=FALSE}
+stopifnot(packageVersion("rWSBIM2122") >= "0.4.1")
+```
 
 ```{r}
 load("wsbim2122_data/deseq2/coldata_both.rda")
 load("wsbim2122_data/deseq2/counts_both.rda")
-rownames(coldata)[3] <- "sample3"
-names(counts)[3] <- "sample3"
 coldata
 ```
 
 ### PCA analysis
 
 Let's start by a PCA analysis, that will help us to define the most
-appropriate design to use for the analysis. 
+appropriate design to use for the analysis.
 
 To generate the [DESeqDataSet](https://www.rdocumentation.org/packages/DESeq2/versions/1.12.3/topics/DESeqDataSet-class), remember that we have to specify the experimental design.
 
-We will see that can use different experimental designs for the analysis, 
-depending on the biological questions that we want to answer. We will discuss 
-about this latter. At this step, as we just want to do a PCA (that will anyway 
-be blind to the sample information specified by the design formula), 
+We will see that can use different experimental designs for the analysis,
+depending on the biological questions that we want to answer. We will discuss
+about this latter. At this step, as we just want to do a PCA (that will anyway
+be blind to the sample information specified by the design formula),
 we can use a design ~ 1.
 
 ```{r, message = FALSE, warning = FALSE}
@@ -51,12 +52,12 @@ dds <- DESeqDataSetFromMatrix(countData = counts,
 dds <- DESeq(dds)
 
 rld <- rlogTransformation(dds)
-pca_data <- plotPCA(rld, 
-                    intgroup = c("Condition", "Type"), 
+pca_data <- plotPCA(rld,
+                    intgroup = c("Condition", "Type"),
                     returnData = TRUE)
 percentVar <- round(100 * attr(pca_data, "percentVar"))
-ggplot(pca_data, 
-       aes(x = PC1, y = PC2, 
+ggplot(pca_data,
+       aes(x = PC1, y = PC2,
            color = Condition, shape = Type)) +
   geom_point(size = 3) +
   xlab(paste0("PC1: ",percentVar[1],"% variance")) +
@@ -70,8 +71,8 @@ This means that most of the variability comes from the cell origin.
 The design used for the analysis will have to take this cell effect into
 account.
 
-Different designs can be used to analyse this dataset, depending on the 
-biological questions that are asked. 
+Different designs can be used to analyse this dataset, depending on the
+biological questions that are asked.
 
 - **A paired design** should be used to answer to the question:
 
@@ -87,13 +88,13 @@ biological questions that are asked.
 
 
 ## Paired design
- 
-To take into account the condition effect while controlling the cell origin, 
-we can use the following design:  
 
-`design = ~ Cell + Condition` 
+To take into account the condition effect while controlling the cell origin,
+we can use the following design:
 
-Let's run the analysis with this design (we have to re-run the 
+`design = ~ Cell + Condition`
+
+Let's run the analysis with this design (we have to re-run the
 `DESeqDataSetFromMatrix()` and `DESeq()` functions)
 
 ```{r, message = FALSE, warning = FALSE}
@@ -109,7 +110,7 @@ dds$Type <- relevel(dds$Type, ref = "Epithelial")
 dds <- DESeq(dds)
 ```
 
-As we have seen previously, the `resultsNames()` function gives the 
+As we have seen previously, the `resultsNames()` function gives the
 names of the coefficients that can be extracted.
 
 ```{r}
@@ -124,29 +125,29 @@ $$log2(q_{ij}) = Intercept + Type\_Fibroblast\_vs\_Epithelial.x_j + Condition\_K
 - The $Intercept$ represents the log2 expression level in the
 reference (in mock Epithelial cells).
 
-- The $Type\_Fibroblast\_vs\_Epithelial$ coefficient corresponds to the log2FC 
-between fibroblasts and epithelial cells. $x_j = 0$ if the sample j corresponds to epithelial cells, 
+- The $Type\_Fibroblast\_vs\_Epithelial$ coefficient corresponds to the log2FC
+between fibroblasts and epithelial cells. $x_j = 0$ if the sample j corresponds to epithelial cells,
 and $x_j = 1$ if the sample j corresponds to fibroblasts.
 
 - The $Condition\_KD\_vs\_mock$ coefficient corresponds to the log2FC between KD and
-mock cells. $y_j = 0$ if the sample j corresponds 
+mock cells. $y_j = 0$ if the sample j corresponds
 to mock cells, and $y_j$ = 1 if the sample j corresponds to KD cells.
 
 
-The following figure (generated with the [ExploreModelMatrix](http://www.bioconductor.org/packages/release/bioc/vignettes/ExploreModelMatrix/inst/doc/ExploreModelMatrix.html) package) illustrates the value of the 
-linear predictor of a generalized linear model for each combination of 
-input variables. It can help to understand and to generate contrasts. 
+The following figure (generated with the [ExploreModelMatrix](http://www.bioconductor.org/packages/release/bioc/vignettes/ExploreModelMatrix/inst/doc/ExploreModelMatrix.html) package) illustrates the value of the
+linear predictor of a generalized linear model for each combination of
+input variables. It can help to understand and to generate contrasts.
 
 ```{r echo=FALSE}
 coldata$Condition <- factor(coldata$Condition, levels = c("mock", "KD"))
 coldata$Type <- factor(coldata$Type, levels = c("Epithelial", "Fibroblast"))
-vd <- ExploreModelMatrix::VisualizeDesign(sampleData = coldata, 
-                      designFormula = ~ Type + Condition, 
+vd <- ExploreModelMatrix::VisualizeDesign(sampleData = coldata,
+                      designFormula = ~ Type + Condition,
                       textSizeFitted = 6)
 vd$plotlist[[1]]
 ```
 
-From this figure, we can see how the genes log2 expression values are modelized 
+From this figure, we can see how the genes log2 expression values are modelized
 in the different samples.
 
 - In mock epithelial cells
@@ -164,31 +165,31 @@ $log2(q_{Gene_i\_Fibroblast\_KD}) = Intercept + Type\_Fibroblast\_vs\_Epithelial
 ### KD effect
 
 To identify the genes that are consistently affected by the KD in both cell lines,
-we will have to test (for each gene) the *Condition_KD_vs_mock* coefficient, to see 
+we will have to test (for each gene) the *Condition_KD_vs_mock* coefficient, to see
 if it is significantly different from zero.
 
-Remember that we can use the `name` parameter of the `results()` function to specify the 
-coefficient that we want to extract (here the *Condition_KD_vs_mock* coefficient). 
+Remember that we can use the `name` parameter of the `results()` function to specify the
+coefficient that we want to extract (here the *Condition_KD_vs_mock* coefficient).
 This will test if genes are differentially expressed in KD cells versus
-mock cells. 
+mock cells.
 
 ```{r}
 res <- results(dds, name = "Condition_KD_vs_mock")
-res_tbl <- as_tibble(res, rownames = "ENSEMBL") %>% 
+res_tbl <- as_tibble(res, rownames = "ENSEMBL") %>%
   arrange(padj)
 head(res_tbl)
 ```
 
 The normalised counts of the genes with the lowest p-adjusted values are plotted bellow.
-We can see that these genes correspond to genes that are highly affected by the siRNA 
+We can see that these genes correspond to genes that are highly affected by the siRNA
 in both cells lines.
 
 ```{r}
 as_tibble(counts(dds[res_tbl$ENSEMBL[1:2], ], normalize = TRUE),
           rownames = 'ENSEMBL') %>%
-  pivot_longer(names_to = "sample", values_to = "counts", -ENSEMBL) %>%  
-  left_join(as_tibble(colData(dds), rownames = "sample")) %>% 
-  mutate(name = paste0(substr(Type, 1, 5), '_', Condition, '_', 1:3)) %>% 
+  pivot_longer(names_to = "sample", values_to = "counts", -ENSEMBL) %>%
+  left_join(as_tibble(colData(dds), rownames = "sample")) %>%
+  mutate(name = paste0(substr(Type, 1, 5), '_', Condition, '_', 1:3)) %>%
   ggplot(aes(x = name, y = counts, fill = Condition)) +
   geom_bar(stat = 'identity', color = "gray30") +
   facet_wrap( ~ ENSEMBL, scales = "free") +
@@ -211,13 +212,13 @@ we would have tested the *Type_Fibroblast_vs_Epithelial* coefficient.
 
 ```{r}
 res <- results(dds, name = "Type_Fibroblast_vs_Epithelial")
-res_tbl <- as_tibble(res, rownames = "ENSEMBL") %>% 
+res_tbl <- as_tibble(res, rownames = "ENSEMBL") %>%
   arrange(padj)
 as_tibble(counts(dds[res_tbl$ENSEMBL[1:2], ], normalize = TRUE),
           rownames = 'ENSEMBL') %>%
-  pivot_longer(names_to = "sample", values_to = "counts", -ENSEMBL) %>%  
-  left_join(as_tibble(colData(dds), rownames = "sample")) %>% 
-  mutate(name = paste0(substr(Type, 1, 5), '_', Condition, '_', 1:3)) %>% 
+  pivot_longer(names_to = "sample", values_to = "counts", -ENSEMBL) %>%
+  left_join(as_tibble(colData(dds), rownames = "sample")) %>%
+  mutate(name = paste0(substr(Type, 1, 5), '_', Condition, '_', 1:3)) %>%
   ggplot(aes(x = name, y = counts, fill = Condition)) +
   geom_bar(stat = 'identity', color = "gray30") +
   facet_wrap( ~ ENSEMBL, scales = "free") +
@@ -236,7 +237,7 @@ as_tibble(counts(dds[res_tbl$ENSEMBL[1:2], ], normalize = TRUE),
 ## Design with interaction
 
 Interaction terms can be added to the design formula, in order to test
-the treatment effect in one cell line or the treatment 
+the treatment effect in one cell line or the treatment
 effect that differs across the cell lines.
 
 The design with an interaction could be written $$design = ~ Cell * Condition$$
@@ -244,7 +245,7 @@ which is equivalent to
 $$design = ~ Cell + Condition + Cell:Condition$$
 
 
-Let's use this design in our analysis (we have to re-run the 
+Let's use this design in our analysis (we have to re-run the
 `DESeqDataSetFromMatrix()` and `DESeq()` functions)
 
 ```{r, message = FALSE, warning = FALSE}
@@ -272,19 +273,19 @@ $$log2(q_{ij}) = Intercept + Type\_Fibroblast\_vs\_Epithelial.x_j + Condition\_K
 - The $Intercept$ represents the log2 expression level in the
 reference (in mock Cell1).
 
-- The $Type\_Fibroblast\_vs\_Epithelial$ coefficient corresponds 
-to the log2FC between mock fibroblasts and mock epithelial cells. 
-$x_j = 0$ if the sample j corresponds to fibroblasts, 
+- The $Type\_Fibroblast\_vs\_Epithelial$ coefficient corresponds
+to the log2FC between mock fibroblasts and mock epithelial cells.
+$x_j = 0$ if the sample j corresponds to fibroblasts,
 and $x_j = 1$ if the sample j corresponds to epithelial cells.
 
-- The $Condition\_KD\_vs\_mock$ coefficient corresponds to the log2FC 
-between KD and mock cells in the reference cells (here epithelial cells). 
-$y_j = 0$ if the sample j corresponds to mock cells, and $y_j$ = 1 if 
+- The $Condition\_KD\_vs\_mock$ coefficient corresponds to the log2FC
+between KD and mock cells in the reference cells (here epithelial cells).
+$y_j = 0$ if the sample j corresponds to mock cells, and $y_j$ = 1 if
 the sample j corresponds to KD cells.
 
-- The $TypeFibroblast.ConditionKD$ coefficient corresponds to the 
-the *extra KD effect* in KD-fibroblasts compared to KD-epitelial cells. 
-$z_j = 0$ if the sample j corresponds to mock cells or to epithial cells, 
+- The $TypeFibroblast.ConditionKD$ coefficient corresponds to the
+the *extra KD effect* in KD-fibroblasts compared to KD-epitelial cells.
+$z_j = 0$ if the sample j corresponds to mock cells or to epithial cells,
 and $z_j = 1$ if the sample j corresponds to KD-fibroblasts.
 
 This is summarized in the following figure:
@@ -292,13 +293,13 @@ This is summarized in the following figure:
 ```{r echo=FALSE}
 coldata$Condition <- factor(coldata$Condition, levels = c("mock", "KD"))
 coldata$Type <- factor(coldata$Type, levels = c("Epithelial", "Fibroblast"))
-vd <- ExploreModelMatrix::VisualizeDesign(sampleData = coldata, 
-                      designFormula = ~ Type * Condition, 
+vd <- ExploreModelMatrix::VisualizeDesign(sampleData = coldata,
+                      designFormula = ~ Type * Condition,
                       textSizeFitted = 4)
 vd$plotlist[[1]]
 ```
 
-From this figure, we can see how the genes log2 expression values 
+From this figure, we can see how the genes log2 expression values
 are modelized in the different samples.
 
 - in mock epithelial cells
@@ -316,29 +317,29 @@ $log2(q_{Gene_i\_Fibroblast\_KD}) = Intercept + Type\_Fibroblast\_vs\_Epithelial
 
 ### KD effect in Epithelial cells
 
-As the epithelial cells were set as the reference cells, 
-the *Condition_KD_vs_mock* coefficient should be extracted to 
+As the epithelial cells were set as the reference cells,
+the *Condition_KD_vs_mock* coefficient should be extracted to
 test the effect of the KD in these cells.
 
-In fact, testing the siRNA effect in epithelial cells is like comparing the 
+In fact, testing the siRNA effect in epithelial cells is like comparing the
 logFC between epithelial KD and epithelial mock cells.
 
-$$log2(\frac{q_{Gene_i\_Epithelial\_KD}}{q_{Gene_i\_Epithelial\_mock}})$$ 
+$$log2(\frac{q_{Gene_i\_Epithelial\_KD}}{q_{Gene_i\_Epithelial\_mock}})$$
 
-$$= log2(q_{Gene_i\_Epithelial\_KD}) - log2(q_{Gene_i\_Epithelial\_mock})$$ 
-$$= Intercept + Condition\_KD - Intercept = Condition\_KD$$ 
+$$= log2(q_{Gene_i\_Epithelial\_KD}) - log2(q_{Gene_i\_Epithelial\_mock})$$
+$$= Intercept + Condition\_KD - Intercept = Condition\_KD$$
 
 ```{r}
 res <- results(dds, name = "Condition_KD_vs_mock")
-res_tbl <- as_tibble(res, rownames = "ENSEMBL") %>% 
+res_tbl <- as_tibble(res, rownames = "ENSEMBL") %>%
   arrange(padj)
 head(res_tbl)
 
 as_tibble(counts(dds[res_tbl$ENSEMBL[1:2], ], normalize = TRUE),
           rownames = 'ENSEMBL') %>%
-  pivot_longer(names_to = "sample", values_to = "counts", -ENSEMBL) %>%  
-  left_join(as_tibble(colData(dds), rownames = "sample")) %>% 
-  mutate(name = paste0(substr(Type, 1, 5), '_', Condition, '_', 1:3)) %>% 
+  pivot_longer(names_to = "sample", values_to = "counts", -ENSEMBL) %>%
+  left_join(as_tibble(colData(dds), rownames = "sample")) %>%
+  mutate(name = paste0(substr(Type, 1, 5), '_', Condition, '_', 1:3)) %>%
   ggplot(aes(x = name, y = counts, fill = Condition)) +
   geom_bar(stat = 'identity', color = "gray30") +
   facet_wrap( ~ ENSEMBL, scales = "free") +
@@ -351,34 +352,34 @@ as_tibble(counts(dds[res_tbl$ENSEMBL[1:2], ], normalize = TRUE),
 
 ### KD effect in Fibroblasts cells
 
-As the fibroblasts cells were NOT set as the reference cells, 
-it is less trivial to extract the right coefficients to test the 
+As the fibroblasts cells were NOT set as the reference cells,
+it is less trivial to extract the right coefficients to test the
 KD effect in fibroblasts.
 
-But remember that testing the siRNA effect in fibroblast cells is like 
+But remember that testing the siRNA effect in fibroblast cells is like
 comparing the logFC between fibroblast KD and fibroblast mock cells.
 
-$$log2(\frac{q_{Gene_i\_Fibroblast\_KD}}{q_{Gene_i\_Fibroblast\_mock}})$$ 
+$$log2(\frac{q_{Gene_i\_Fibroblast\_KD}}{q_{Gene_i\_Fibroblast\_mock}})$$
 
-$$= log2(q_{Gene_i\_Fibroblast\_KD}) - log2(q_{Gene_i\_Fibroblast\_mock})$$ 
-$$= (Intercept + Condition\_KD + Type\_Fibroblast\_vs\_Epithelial +  TypeFibroblast.ConditionKD )$$ $$ - (Intercept + Type\_Fibroblast\_vs\_Epithelial) $$ 
-$$= Condition\_KD +  TypeFibroblast.ConditionKD $$ 
+$$= log2(q_{Gene_i\_Fibroblast\_KD}) - log2(q_{Gene_i\_Fibroblast\_mock})$$
+$$= (Intercept + Condition\_KD + Type\_Fibroblast\_vs\_Epithelial +  TypeFibroblast.ConditionKD )$$ $$ - (Intercept + Type\_Fibroblast\_vs\_Epithelial) $$
+$$= Condition\_KD +  TypeFibroblast.ConditionKD $$
 
-So to test the KD effect in fibroblasts, we have to extract both 
+So to test the KD effect in fibroblasts, we have to extract both
 *Condition_KD_vs_mock* and *TypeFibroblast.ConditionKD* coefficients.
 
 ```{r}
-res <- results(dds, 
+res <- results(dds,
                list(c("Condition_KD_vs_mock", "TypeFibroblast.ConditionKD")))
-res_tbl <- as_tibble(res, rownames = "ENSEMBL") %>% 
+res_tbl <- as_tibble(res, rownames = "ENSEMBL") %>%
   arrange(padj)
 head(res_tbl)
 
 as_tibble(counts(dds[res_tbl$ENSEMBL[1:2], ], normalize = TRUE),
           rownames = 'ENSEMBL') %>%
-  pivot_longer(names_to = "sample", values_to = "counts", -ENSEMBL) %>%  
-  left_join(as_tibble(colData(dds), rownames = "sample")) %>% 
-  mutate(name = paste0(substr(Type, 1, 5), '_', Condition, '_', 1:3)) %>% 
+  pivot_longer(names_to = "sample", values_to = "counts", -ENSEMBL) %>%
+  left_join(as_tibble(colData(dds), rownames = "sample")) %>%
+  mutate(name = paste0(substr(Type, 1, 5), '_', Condition, '_', 1:3)) %>%
   ggplot(aes(x = name, y = counts, fill = Condition)) +
   geom_bar(stat = 'identity', color = "gray30") +
   facet_wrap( ~ ENSEMBL, scales = "free") +
@@ -390,8 +391,8 @@ as_tibble(counts(dds[res_tbl$ENSEMBL[1:2], ], normalize = TRUE),
 ```
 
 
-Note that another possibility would have been to set the fibroblasts 
-as the reference cells, re-run the whole analysis, and to simply 
+Note that another possibility would have been to set the fibroblasts
+as the reference cells, re-run the whole analysis, and to simply
 extract the *Condition_KD_vs_mock* coefficient.
 
 ```{r, message = FALSE, warning = FALSE}
@@ -403,9 +404,9 @@ dds_test$Type <- relevel(dds_test$Type, ref = "Fibroblast")
 # Set the mock condition as the reference level
 dds_test$Condition <- relevel(dds_test$Condition, ref = "mock")
 dds_test <- DESeq(dds_test)
-res <- results(dds_test, 
+res <- results(dds_test,
                name = "Condition_KD_vs_mock")
-res_tbl <- as_tibble(res, rownames = "ENSEMBL") %>% 
+res_tbl <- as_tibble(res, rownames = "ENSEMBL") %>%
   arrange(padj)
 head(res_tbl)
 ```
@@ -416,8 +417,8 @@ head(res_tbl)
 Which genes are not affected in the same way by the KD in the two cell lines?
 In other terms, we are testing the KD effects that are significantly different in both cell
 lines. This can be done by extracting the *TypeFibroblast.ConditionKD* coefficient.
-In fact this coefficient corresponds to the *extra KD effect* ocuring in fibroblasts 
-compared to epitelial cells. 
+In fact this coefficient corresponds to the *extra KD effect* ocuring in fibroblasts
+compared to epitelial cells.
 
 If the effect of the KD is similar in both cell types, we expect the
 *TypeFibroblast.ConditionKD* coefficient to be nearly 0.
@@ -430,26 +431,26 @@ If the effect of the KD is lower in fibroblasts than in epithelial cells, we exp
 
 ```{r}
 res <- results(dds, name = "TypeFibroblast.ConditionKD")
-res_tbl <- as_tibble(res, rownames = "ENSEMBL") %>% 
+res_tbl <- as_tibble(res, rownames = "ENSEMBL") %>%
   arrange(padj)
 head(res_tbl)
 ```
 
-We can see that gene ENSG00000177494 (with the lowest p-value) has as 
-highly negative log2FC. This means that the effect of the siRNA treatment 
+We can see that gene ENSG00000177494 (with the lowest p-value) has as
+highly negative log2FC. This means that the effect of the siRNA treatment
 is much lower in fibroblasts than in epithelial cells.
 
 Gene ENSG00000108179 is also an illustrative example,
-as its value is decreased by the siRNA treatment in the epithelial cells, 
+as its value is decreased by the siRNA treatment in the epithelial cells,
 while on the contrary it is increased by the treatment in the fibroblast cells.
 
 
 ```{r}
 as_tibble(counts(dds[res_tbl$ENSEMBL[c(1,5)], ], normalize = TRUE),
           rownames = 'ENSEMBL') %>%
-  pivot_longer(names_to = "sample", values_to = "counts", -ENSEMBL) %>%  
-  left_join(as_tibble(colData(dds), rownames = "sample")) %>% 
-  mutate(name = paste0(substr(Type, 1, 5), '_', Condition, '_', 1:3)) %>% 
+  pivot_longer(names_to = "sample", values_to = "counts", -ENSEMBL) %>%
+  left_join(as_tibble(colData(dds), rownames = "sample")) %>%
+  mutate(name = paste0(substr(Type, 1, 5), '_', Condition, '_', 1:3)) %>%
   ggplot(aes(x = name, y = counts, fill = Condition)) +
   geom_bar(stat = 'identity', color = "gray30") +
   facet_wrap( ~ ENSEMBL, scales = "free") +
@@ -459,6 +460,3 @@ as_tibble(counts(dds[res_tbl$ENSEMBL[c(1,5)], ], normalize = TRUE),
         legend.text = element_text(size = 7),
         legend.title = element_text(size = 7))
 ```
-
-
-

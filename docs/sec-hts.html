@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2022-09-23" />
+<meta name="date" content="2022-09-28" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -85,6 +85,7 @@ function reset_tooltip(id) {
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -119,7 +120,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -132,7 +133,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -186,11 +187,11 @@ div.csl-indent {
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
-<a href="index.html">Preamble</a>
-<a href="sec-cli.html"><span class="toc-section-number">1</span> The shell</a>
-<a href="sec-rmd.html"><span class="toc-section-number">2</span> R markdown</a>
-<a href="sec-linmod.html"><span class="toc-section-number">3</span> Linear models</a>
-<a id="active-page" href="sec-hts.html"><span class="toc-section-number">4</span> High throughput sequencing</a><ul class="toc-sections">
+<a href="index.html" id="toc-preamble">Preamble</a>
+<a href="sec-cli.html" id="toc-sec-cli"><span class="toc-section-number">1</span> The shell</a>
+<a href="sec-rmd.html" id="toc-sec-rmd"><span class="toc-section-number">2</span> R markdown</a>
+<a href="sec-linmod.html" id="toc-sec-linmod"><span class="toc-section-number">3</span> Linear models</a>
+<a id="active-page" href="sec-hts.html" id="toc-sec-hts"><span class="toc-section-number">4</span> High throughput sequencing</a><ul class="toc-sections">
 <li class="toc"><a href="#rna-seq-library-preparation"> RNA-seq library preparation</a></li>
 <li class="toc"><a href="#sequencing"> Sequencing</a></li>
 <li class="toc"><a href="#fastq-files"> fastq files</a></li>
@@ -199,14 +200,14 @@ div.csl-indent {
 <li class="toc"><a href="#counting"> Counting</a></li>
 <li class="toc"><a href="#preparing-the-count-matrix"> Preparing the count matrix</a></li>
 </ul>
-<a href="sec-rnaseq.html"><span class="toc-section-number">5</span> Differential expression analysis</a>
-<a href="sec-design.html"><span class="toc-section-number">6</span> More complex experimental design</a>
-<a href="sec-gsea.html"><span class="toc-section-number">7</span> Enrichment analyses</a>
-<a href="sec-ms.html"><span class="toc-section-number">8</span> Mass spectrometry</a>
-<a href="sec-prot.html"><span class="toc-section-number">9</span> Quantitative proteomics data analysis</a>
-<a href="sec-ccl.html"><span class="toc-section-number">10</span> Conclusions</a>
-<a href="sec-anx.html"><span class="toc-section-number">11</span> Annex</a>
-<a href="sec-si.html"><span class="toc-section-number">12</span> Session information</a>
+<a href="sec-rnaseq.html" id="toc-sec-rnaseq"><span class="toc-section-number">5</span> Differential expression analysis</a>
+<a href="sec-design.html" id="toc-sec-design"><span class="toc-section-number">6</span> More complex experimental design</a>
+<a href="sec-gsea.html" id="toc-sec-gsea"><span class="toc-section-number">7</span> Enrichment analyses</a>
+<a href="sec-ms.html" id="toc-sec-ms"><span class="toc-section-number">8</span> Mass spectrometry</a>
+<a href="sec-prot.html" id="toc-sec-prot"><span class="toc-section-number">9</span> Quantitative proteomics data analysis</a>
+<a href="sec-ccl.html" id="toc-sec-ccl"><span class="toc-section-number">10</span> Conclusions</a>
+<a href="sec-anx.html" id="toc-sec-anx"><span class="toc-section-number">11</span> Annex</a>
+<a href="sec-si.html" id="toc-sec-si"><span class="toc-section-number">12</span> Session information</a>
 </div>
 </li>
 </ul>
@@ -216,7 +217,8 @@ div.csl-indent {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec-hts" class="section level1" number="4">
+<html><body>
+<div id="sec-hts" class="section level1" number="4">
 <h1>
 <span class="header-section-number">Chapter 4</span> High throughput sequencing</h1>
 <p><strong>Learning Objectives</strong></p>
@@ -242,7 +244,7 @@ ribosomal RNA which constitute the majority of total RNA. This can be
 done by extracting poly(A) RNA or by depleting rRNA. Purified RNA is then
 fragmented, reverse transcribed and adapters are ligated to both extremities
 to allow for amplification and sequencing.</p>
-<p><img src="figs/Unstranded_lib_prep.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figs/Unstranded_lib_prep.png" width="60%" style="display: block; margin: auto;"></p>
 <div id="stranded-versus-unstranded-libraries" class="section level3" number="4.1.1">
 <h3>
 <span class="header-section-number">4.1.1</span> Stranded versus unstranded libraries<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('stranded-versus-unstranded-libraries')" onmouseout="reset_tooltip('stranded-versus-unstranded-libraries-tooltip')"><span class="tooltiptext" id="stranded-versus-unstranded-libraries-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
@@ -315,7 +317,7 @@ unique fluorophore, and after each round, the machine records which
 base was added. The fluorophore is then washed away and the process is
 repeated.</p>
 <p>For a dynamic view of the cluster amplification process, watch the
-<a href="https://www.youtube.com/watch?v=fCd6B5HRaZ8">Illumina video</a>.</p>
+<a href="https://www.youtube.com/watch?v=HMyCqWhwB8E">Illumina video</a>.</p>
 </div>
 </div>
 <div id="fastq-files" class="section level2" number="4.3">
@@ -463,7 +465,7 @@ might generate an unexpected distribution.</p>
 <p><img src="figs/fastqc_fig6.png" width="80%" style="display: block; margin: auto;"></p>
 <p>If a sequencer is unable to make a base call with sufficient
 confidence then it will replace the conventional base call with an
-‘N.’ This graph plots the percent of times that ‘N’ occurs at a
+‘N’. This graph plots the percent of times that ‘N’ occurs at a
 position in all reads. If there was an increase at a particular
 position, it could indicate that something went wrong during
 sequencing.</p>
@@ -491,7 +493,7 @@ expected in this case.</p>
 the total. Finding that a single sequence is highly overrepresented in
 the set means that it is either highly biologically significant, or
 that the library is biased or contaminated. Here it is of course not
-relevant as it just corresponds to a sequence full of ‘N.’</p>
+relevant as it just corresponds to a sequence full of ‘N’.</p>
 <p><strong>10. Adapter Content</strong></p>
 <p><img src="figs/fastqc_fig10.png" width="80%" style="display: block; margin: auto;"></p>
 <p>This graph indicates if and where adapter sequences occur in the reads.</p>
@@ -576,12 +578,8 @@ use an aligner able to handle spliced reads.</p>
 launched with default parameters. In this basic configuration,
 mandatory parameters are of course the fastq file(s) and the sequence
 of the genome on which the reads have to be aligned. In practical, the
-genome’s sequence is not given as it is but in an indexed form.<label for="tufte-sn-5" class="margin-toggle sidenote-number">5</label><input type="checkbox" id="tufte-sn-5" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">5</span> Genome indexing allows the aligner to quickly find
-potential alignment sites for query sequences in a genome, which saves
-considerable time during alignment. Frequently used genome (human,
-mouse, rat…) already have indexed versions that can be downloaded
-directly. When working with another reference genome, a specific
-indexed genome has to be built.</span> Of course many of other parameters can be fine
+genome’s sequence is not given as it is but in an indexed form
+<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>. Of course many of other parameters can be fine
 tuned (see the
 <a href="http://daehwankimlab.github.io/hisat2/manual/">manual</a> for more
 details). The alignment output file data is a <code>sam</code> file (see below).</p>
@@ -640,13 +638,11 @@ a very useful interactive tool for the visual exploration of genomic data.</p>
 <p>Visualising the alignments is not part of the processing pipeline
 but sometimes it can be useful..</p>
 <p><img src="figs/pipeline_IGV.png" width="60%" style="display: block; margin: auto;"></p>
-<p>IGV requires that BAM files have an associated index file<label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> Indexing a BAM file allows IGV to quickly extract alignments overlapping
-particular genomic regions</span>.
+<p>IGV requires that BAM files have an associated index file<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>.
 Samtools can be used to index the BAM file. The following command would create
 the indexed SampleName.bam.bai file.</p>
 <pre><code>samtools index SampleName.bam</code></pre>
-<p>Bam file can be loaded in IGV<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> Note that the index file must reside in the same directory as the bam
-file that it indexes, and it must have the same basename</span>.
+<p>Bam file can be loaded in IGV<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>.
 Below is an example of visualisation of a bam file using IGV, focusing on CDKN1A gene.</p>
 <p><img src="figs/IGV.png" width="100%" style="display: block; margin: auto;"></p>
 <p>Loading a BAM file creates 3 associated tracks:</p>
@@ -676,7 +672,7 @@ from the <a href="https://www.gencodegenes.org/human/">UCSC table
 browser</a>. The first few lines of
 gtf annotation file for human genome assembly GRCh38 look like this:</p>
 <p><img src="figs/gtf_example.png" width="100%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb132-1"><a href="sec-hts.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> -n 20 wsbim2122_data/RNAseq_pipeline/Homo_sapiens.GRCh38.94.gtf</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb132-1"><a href="sec-hts.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 20 wsbim2122_data/RNAseq_pipeline/Homo_sapiens.GRCh38.94.gtf</span></code></pre></div>
 <pre><code>## #!genome-build GRCh38.p12
 ## #!genome-version GRCh38
 ## #!genome-date 2013-12
@@ -721,8 +717,8 @@ SampleName.bam              # bam file</code></pre>
 the raw counts of each gene in that sample.</p>
 <div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="sec-hts.html#cb135-1" aria-hidden="true" tabindex="-1"></a>counts_result <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="at">file =</span> <span class="st">"wsbim2122_data/count_data/sample1_counts.tsv.gz"</span>)</span>
 <span id="cb135-2"><a href="sec-hts.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(counts_result))</span></code></pre></div>
-<div id="htmlwidget-a269ba194c57df141a4d" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a269ba194c57df141a4d">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["ENSG00000223972","ENSG00000227232","ENSG00000278267","ENSG00000243485","ENSG00000284332","ENSG00000237613"],["1;1;1;1;1;1;1;1;1","1;1;1;1;1;1;1;1;1;1;1","1","1;1;1;1;1","1","1;1;1;1;1"],["11869;12010;12179;12613;12613;12975;13221;13221;13453","14404;15005;15796;16607;16858;17233;17606;17915;18268;24738;29534","17369","29554;30267;30564;30976;30976","30366","34554;35245;35277;35721;35721"],["12227;12057;12227;12721;12697;13052;13374;14409;13670","14501;15038;15947;16765;17055;17368;17742;18061;18366;24891;29570","17436","30039;30667;30667;31109;31097","30503","35174;35481;35481;36073;36081"],["+;+;+;+;+;+;+;+;+","-;-;-;-;-;-;-;-;-;-;-","-","+;+;+;+;+","+","-;-;-;-;-"],[1735,1351,68,1021,138,1219],[0,14,8,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Geneid<\/th>\n      <th>Chr<\/th>\n      <th>Start<\/th>\n      <th>End<\/th>\n      <th>Strand<\/th>\n      <th>Length<\/th>\n      <th>../processed_data/bam/sample1.bam<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[6,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><div class="question">
+<div id="htmlwidget-0075ae9b6386d82a21d9" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0075ae9b6386d82a21d9">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["ENSG00000223972","ENSG00000227232","ENSG00000278267","ENSG00000243485","ENSG00000284332","ENSG00000237613"],["1;1;1;1;1;1;1;1;1","1;1;1;1;1;1;1;1;1;1;1","1","1;1;1;1;1","1","1;1;1;1;1"],["11869;12010;12179;12613;12613;12975;13221;13221;13453","14404;15005;15796;16607;16858;17233;17606;17915;18268;24738;29534","17369","29554;30267;30564;30976;30976","30366","34554;35245;35277;35721;35721"],["12227;12057;12227;12721;12697;13052;13374;14409;13670","14501;15038;15947;16765;17055;17368;17742;18061;18366;24891;29570","17436","30039;30667;30667;31109;31097","30503","35174;35481;35481;36073;36081"],["+;+;+;+;+;+;+;+;+","-;-;-;-;-;-;-;-;-;-;-","-","+;+;+;+;+","+","-;-;-;-;-"],[1735,1351,68,1021,138,1219],[0,14,8,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Geneid<\/th>\n      <th>Chr<\/th>\n      <th>Start<\/th>\n      <th>End<\/th>\n      <th>Strand<\/th>\n      <th>Length<\/th>\n      <th>../processed_data/bam/sample1.bam<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[6,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><div class="question">
 <p class="question-begin">
 ► Question
 </p>
@@ -848,16 +844,32 @@ in the folder <code>wsbim_data/count_data/</code>. Use these files to create a c
 it will be covered in the next chapter.</p>
 
 </div>
-</div></body></html>
+</div>
+<div class="footnotes">
+<hr>
+<ol start="5">
+<li id="fn5"><p>Genome indexing allows the aligner to quickly find
+potential alignment sites for query sequences in a genome, which saves
+considerable time during alignment. Frequently used genome (human,
+mouse, rat…) already have indexed versions that can be downloaded
+directly. When working with another reference genome, a specific
+indexed genome has to be built.<a href="sec-hts.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>Indexing a BAM file allows IGV to quickly extract alignments overlapping
+particular genomic regions<a href="sec-hts.html#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>Note that the index file must reside in the same directory as the bam
+file that it indexes, and it must have the same basename<a href="sec-hts.html#fnref7" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+</body></html>
 
 <p style="text-align: center;">
 <a href="sec-linmod.html"><button class="btn btn-default">Previous</button></a>
 <a href="sec-rnaseq.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2022-09-23
+2022-09-28
  using 
-R version 4.2.1 (2022-06-23)
+R version 4.2.0 Patched (2022-05-13 r82357)
 </p>
 </div>
 </div>
