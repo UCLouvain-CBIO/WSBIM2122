@@ -34,7 +34,7 @@ done by extracting poly(A) RNA or by depleting rRNA. Purified RNA is then
 fragmented, reverse transcribed and adapters are ligated to both extremities 
 to allow for amplification and sequencing.
 
-```{r, echo=FALSE, fig.align='center', out.width='100%'}
+```{r, echo=FALSE, fig.align='center', out.width='60%'}
 knitr::include_graphics("figs/Unstranded_lib_prep.png")
 ```
 
@@ -121,7 +121,7 @@ base was added. The fluorophore is then washed away and the process is
 repeated.
 
 For a dynamic view of the cluster amplification process, watch the
-[Illumina video](https://www.youtube.com/watch?v=fCd6B5HRaZ8).
+[Illumina video](https://www.youtube.com/watch?v=HMyCqWhwB8E).
 
 ## fastq files
 
