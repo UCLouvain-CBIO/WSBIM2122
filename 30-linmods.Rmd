@@ -463,8 +463,8 @@ summary(lm(expression ~ condition * cell_type, data = x_i))
 ```
 
 In high throughput experiments, where we test tens of thousands of
-genes, we thus can't explore each gene separately with multiple
-models. The same model is applied to all genes and the significance of
+genes, we can't explore each gene separately with multiple models. The
+same model must be applied to all genes and the significance of
 coefficient(s) of interest is/are considered.
 
 Solving this dilema isn't a statistical but a scientific question. You
