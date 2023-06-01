@@ -13,14 +13,14 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2023-01-02" />
+<meta name="date" content="2023-06-01" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   TeX: { equationNumbers: { autoNumber: "AMS" } }
 });
 </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script src="/usr/share/javascript/mathjax/tex-mml-chtml.js" type="text/javascript"></script>
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
@@ -65,13 +65,14 @@ function reset_tooltip(id) {
   tooltip.innerHTML = 'Copy link';
 }
 </script>
-<script src="libs/htmlwidgets-1.6.0/htmlwidgets.js"></script>
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.26/datatables.js"></script>
+<script src="libs/datatables-binding-0.28/datatables.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 <script src="libs/plotly-binding-4.10.1/plotly.js"></script>
@@ -147,28 +148,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -214,14 +193,14 @@ div.csl-indent {
 <h1>
 <span class="header-section-number">Chapter 12</span> Session information</h1>
 <p>The following packages have been used to generate this document.</p>
-<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="sec-si.html#cb474-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
-<pre><code>## R version 4.2.2 Patched (2022-11-10 r83330)
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="sec-si.html#cb474-1" aria-hidden="true"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
+<pre><code>## R version 4.3.0 (2023-04-21)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 22.04.1 LTS
+## Running under: Ubuntu 22.04.2 LTS
 ## 
 ## Matrix products: default
-## BLAS:   /usr/lib/x86_64-linux-gnu/atlas/libblas.so.3.10.3
-## LAPACK: /usr/lib/x86_64-linux-gnu/atlas/liblapack.so.3.10.3
+## BLAS:   /usr/lib/x86_64-linux-gnu/atlas/libblas.so.3.10.3 
+## LAPACK: /usr/lib/x86_64-linux-gnu/atlas/liblapack.so.3.10.3;  LAPACK version 3.10.0
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -231,84 +210,87 @@ div.csl-indent {
 ##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
 ## [11] LC_MEASUREMENT=en_GB.UTF-8 LC_IDENTIFICATION=C       
 ## 
+## time zone: Europe/Brussels
+## tzcode source: system (glibc)
+## 
 ## attached base packages:
 ## [1] stats4    stats     graphics  grDevices utils     datasets  methods  
 ## [8] base     
 ## 
 ## other attached packages:
 ##  [1] plotly_4.10.1               factoextra_1.0.7           
-##  [3] gplots_3.1.3                limma_3.54.0               
-##  [5] QFeatures_1.9.0             MultiAssayExperiment_1.24.0
-##  [7] PSMatch_1.2.0               magrittr_2.0.3             
-##  [9] Spectra_1.9.4               ProtGenerics_1.30.0        
-## [11] BiocParallel_1.32.4         msigdbr_7.5.1              
-## [13] clusterProfiler_4.6.0       GO.db_3.16.0               
-## [15] org.Hs.eg.db_3.16.0         AnnotationDbi_1.60.0       
-## [17] biomaRt_2.54.0              patchwork_1.1.2            
-## [19] DESeq2_1.38.2               SummarizedExperiment_1.28.0
-## [21] Biobase_2.58.0              MatrixGenerics_1.10.0      
-## [23] matrixStats_0.63.0          GenomicRanges_1.50.1       
-## [25] GenomeInfoDb_1.34.4         IRanges_2.32.0             
-## [27] S4Vectors_0.36.1            BiocGenerics_0.44.0        
-## [29] DT_0.26                     forcats_0.5.2              
-## [31] stringr_1.5.0               dplyr_1.0.10               
-## [33] purrr_0.3.5                 readr_2.1.3                
-## [35] tidyr_1.2.1                 tibble_3.1.8               
-## [37] tidyverse_1.3.2             ggplot2_3.4.0              
-## [39] rWSBIM2122_0.4.1           
+##  [3] gplots_3.1.3                limma_3.56.1               
+##  [5] QFeatures_1.10.0            MultiAssayExperiment_1.26.0
+##  [7] PSMatch_1.4.0               magrittr_2.0.3             
+##  [9] Spectra_1.10.1              ProtGenerics_1.32.0        
+## [11] BiocParallel_1.34.2         msigdbr_7.5.1              
+## [13] clusterProfiler_4.8.1       GO.db_3.17.0               
+## [15] org.Hs.eg.db_3.17.0         AnnotationDbi_1.62.1       
+## [17] biomaRt_2.56.0              patchwork_1.1.2            
+## [19] DESeq2_1.40.1               SummarizedExperiment_1.30.1
+## [21] Biobase_2.60.0              MatrixGenerics_1.12.0      
+## [23] matrixStats_0.63.0          GenomicRanges_1.52.0       
+## [25] GenomeInfoDb_1.36.0         IRanges_2.34.0             
+## [27] S4Vectors_0.38.1            BiocGenerics_0.46.0        
+## [29] DT_0.28                     lubridate_1.9.2            
+## [31] forcats_1.0.0               stringr_1.5.0              
+## [33] dplyr_1.1.2                 purrr_1.0.1                
+## [35] readr_2.1.4                 tidyr_1.3.0                
+## [37] tibble_3.2.1                tidyverse_2.0.0            
+## [39] ggplot2_3.4.2               rWSBIM2122_0.4.1           
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] utf8_1.2.2                shinydashboard_0.7.2     
-##   [3] tidyselect_1.2.0          RSQLite_2.2.19           
-##   [5] htmlwidgets_1.6.0         grid_4.2.2               
-##   [7] scatterpie_0.1.8          munsell_0.5.0            
-##   [9] preprocessCore_1.60.1     codetools_0.2-18         
-##  [11] msdata_0.38.0             withr_2.5.0              
-##  [13] colorspace_2.0-3          GOSemSim_2.24.0          
-##  [15] filelock_1.0.2            highr_0.9                
-##  [17] knitr_1.41                rstudioapi_0.14          
-##  [19] ggsignif_0.6.4            DOSE_3.24.2              
-##  [21] labeling_0.4.2            GenomeInfoDbData_1.2.9   
-##  [23] polyclip_1.10-4           bit64_4.0.5              
-##  [25] farver_2.1.1              downloader_0.4           
-##  [27] treeio_1.22.0             vctrs_0.5.1              
-##  [29] generics_0.1.3            gson_0.0.9               
-##  [31] xfun_0.35                 timechange_0.1.1         
-##  [33] BiocFileCache_2.6.0       R6_2.5.1                 
-##  [35] clue_0.3-63               graphlayouts_0.8.4       
-##  [37] locfit_1.5-9.6            MsCoreUtils_1.11.1       
-##  [39] AnnotationFilter_1.22.0   bitops_1.0-7             
-##  [41] cachem_1.0.6              fgsea_1.24.0             
-##  [43] gridGraphics_0.5-1        DelayedArray_0.24.0      
-##  [45] assertthat_0.2.1          promises_1.2.0.1         
-##  [47] scales_1.2.1              vroom_1.6.0              
-##  [49] ggraph_2.1.0              enrichplot_1.18.3        
-##  [51] googlesheets4_1.0.1       gtable_0.3.1             
-##  [53] tidygraph_1.2.2           rlang_1.0.6              
-##  [55] mzR_2.32.0                splines_4.2.2            
-##  [57] rstatix_0.7.1             lazyeval_0.2.2           
-##  [59] gargle_1.2.1              broom_1.0.2              
-##  [61] abind_1.4-5               BiocManager_1.30.19      
-##  [63] yaml_2.3.6                reshape2_1.4.4           
-##  [65] modelr_0.1.10             crosstalk_1.2.0          
-##  [67] backports_1.4.1           httpuv_1.6.7             
-##  [69] qvalue_2.30.0             tools_4.2.2              
-##  [71] bookdown_0.31             ggplotify_0.1.0          
-##  [73] ellipsis_0.3.2            jquerylib_0.1.4          
-##  [75] RColorBrewer_1.1-3        Rcpp_1.0.9               
-##  [77] plyr_1.8.8                progress_1.2.2           
-##  [79] zlibbioc_1.44.0           RCurl_1.98-1.9           
-##  [81] prettyunits_1.1.1         ggpubr_0.5.0             
-##  [83] viridis_0.6.2             cowplot_1.1.1            
-##  [85] ExploreModelMatrix_1.10.0 cluster_2.1.4            
-##  [87] haven_2.5.1               ggrepel_0.9.2            
-##  [89] fs_1.5.2                  data.table_1.14.6        
-##  [91] reprex_2.0.2              googledrive_2.0.0        
-##  [93] msmbstyle_0.0.19          hms_1.1.2                
-##  [95] shinyjs_2.1.0             mime_0.12                
-##  [97] evaluate_0.19             xtable_1.8-4             
-##  [99] HDO.db_0.99.1             XML_3.99-0.13            
-##  [ reached getOption("max.print") -- omitted 66 entries ]</code></pre>
+##   [1] fs_1.6.2                  bitops_1.0-7             
+##   [3] enrichplot_1.20.0         HDO.db_0.99.1            
+##   [5] httr_1.4.6                RColorBrewer_1.1-3       
+##   [7] tools_4.3.0               backports_1.4.1          
+##   [9] utf8_1.2.3                R6_2.5.1                 
+##  [11] lazyeval_0.2.2            withr_2.5.0              
+##  [13] prettyunits_1.1.1         gridExtra_2.3            
+##  [15] preprocessCore_1.62.1     cli_3.6.1                
+##  [17] scatterpie_0.2.0          shinyjs_2.1.0            
+##  [19] labeling_0.4.2            sass_0.4.6               
+##  [21] yulab.utils_0.0.6         gson_0.1.0               
+##  [23] DOSE_3.26.1               rstudioapi_0.14          
+##  [25] RSQLite_2.3.1             generics_0.1.3           
+##  [27] gridGraphics_0.5-1        gtools_3.9.4             
+##  [29] crosstalk_1.2.0           vroom_1.6.3              
+##  [31] car_3.1-2                 Matrix_1.5-1             
+##  [33] fansi_1.0.4               abind_1.4-5              
+##  [35] lifecycle_1.0.3           yaml_2.3.7               
+##  [37] carData_3.0-5             qvalue_2.32.0            
+##  [39] BiocFileCache_2.8.0       grid_4.3.0               
+##  [41] blob_1.2.4                promises_1.2.0.1         
+##  [43] crayon_1.5.2              shinydashboard_0.7.2     
+##  [45] lattice_0.21-8            cowplot_1.1.1            
+##  [47] mzR_2.34.0                KEGGREST_1.40.0          
+##  [49] pillar_1.9.0              knitr_1.43               
+##  [51] fgsea_1.26.0              codetools_0.2-19         
+##  [53] fastmatch_1.1-3           glue_1.6.2               
+##  [55] downloader_0.4            ggfun_0.0.9              
+##  [57] data.table_1.14.8         vctrs_0.6.2              
+##  [59] png_0.1-8                 treeio_1.24.1            
+##  [61] gtable_0.3.3              cachem_1.0.8             
+##  [63] xfun_0.39                 S4Arrays_1.0.4           
+##  [65] mime_0.12                 tidygraph_1.2.3          
+##  [67] msdata_0.40.0             ncdf4_1.21               
+##  [69] ellipsis_0.3.2            nlme_3.1-162             
+##  [71] ggtree_3.8.0              bit64_4.0.5              
+##  [73] ExploreModelMatrix_1.12.0 progress_1.2.2           
+##  [75] filelock_1.0.2            bslib_0.4.2              
+##  [77] KernSmooth_2.23-20        colorspace_2.1-0         
+##  [79] DBI_1.1.3                 tidyselect_1.2.0         
+##  [81] bit_4.0.5                 compiler_4.3.0           
+##  [83] curl_5.0.0                xml2_1.3.4               
+##  [85] DelayedArray_0.26.3       bookdown_0.34.2          
+##  [87] shadowtext_0.1.2          scales_1.2.1             
+##  [89] caTools_1.18.2            rappdirs_0.3.3           
+##  [91] digest_0.6.31             rmarkdown_2.21           
+##  [93] XVector_0.40.0            htmltools_0.5.5          
+##  [95] pkgconfig_2.0.3           highr_0.10               
+##  [97] dbplyr_2.3.2              fastmap_1.1.1            
+##  [99] rlang_1.1.1               htmlwidgets_1.6.2        
+##  [ reached getOption("max.print") -- omitted 54 entries ]</code></pre>
 <div id="sec-setup2" class="section level2" number="12.1">
 <h2>
 <span class="header-section-number">12.1</span> R package setup<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('sec-setup2')" onmouseout="reset_tooltip('sec-setup2-tooltip')"><span class="tooltiptext" id="sec-setup2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
@@ -319,15 +301,15 @@ the following code:</p>
           "BiocParallel", "biomaRt", "clusterProfiler", "datasets", "DESeq2",
           "dplyr", "DT", "factoextra", "forcats", "GenomeInfoDb",
           "GenomicRanges", "ggplot2", "GO.db", "gplots", "graphics", "grDevices",
-          "IRanges", "limma", "magrittr", "MatrixGenerics", "matrixStats",
-          "methods", "msigdbr", "MultiAssayExperiment", "org.Hs.eg.db",
-          "patchwork", "plotly", "ProtGenerics", "PSMatch", "purrr", "QFeatures",
-          "readr", "rWSBIM2122", "S4Vectors", "Spectra", "stats", "stats4",
-          "stringr", "SummarizedExperiment", "tibble", "tidyr", "tidyverse",
-          "utils")</code></pre>
-<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="sec-si.html#cb477-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"BiocManager"</span>))</span>
-<span id="cb477-2"><a href="sec-si.html#cb477-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
-<span id="cb477-3"><a href="sec-si.html#cb477-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(pkgs)</span></code></pre></div>
+          "IRanges", "limma", "lubridate", "magrittr", "MatrixGenerics",
+          "matrixStats", "methods", "msigdbr", "MultiAssayExperiment",
+          "org.Hs.eg.db", "patchwork", "plotly", "ProtGenerics", "PSMatch",
+          "purrr", "QFeatures", "readr", "rWSBIM2122", "S4Vectors", "Spectra",
+          "stats", "stats4", "stringr", "SummarizedExperiment", "tibble",
+          "tidyr", "tidyverse", "utils")</code></pre>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="sec-si.html#cb477-1" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"BiocManager"</span>))</span>
+<span id="cb477-2"><a href="sec-si.html#cb477-2" aria-hidden="true"></a>   <span class="kw">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb477-3"><a href="sec-si.html#cb477-3" aria-hidden="true"></a>BiocManager<span class="op">::</span><span class="kw">install</span>(pkgs)</span></code></pre></div>
 
 </div>
 </div></body></html>
@@ -336,9 +318,9 @@ the following code:</p>
 <a href="sec-anx.html"><button class="btn btn-default">Previous</button></a>
 </p>
 <p class="build-date">Page built: 
-2023-01-02
+2023-06-01
  using 
-R version 4.2.2 Patched (2022-11-10 r83330)
+R version 4.3.0 (2023-04-21)
 </p>
 </div>
 </div>
