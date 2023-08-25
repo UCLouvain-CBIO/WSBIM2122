@@ -1118,7 +1118,7 @@ describing thedefault shrinkage estimator for more details [@Zhu:2019]
 
 This procedure improves interpretability of the fold-changes estimates.
 
-```{r, warning = FALSE}
+```{r, warning = FALSE, message = FALSE}
 res_shr <- lfcShrink(dds, coef = "Condition_KD_vs_mock")
 res_shr_tbl <- as_tibble(res_shr, rownames = "ENSEMBL")
 
@@ -1126,14 +1126,14 @@ fig1 <- ggplot(res_tbl, aes(x = baseMean, y = log2FoldChange)) +
   geom_point(data = res_tbl, alpha = 0.2) +
   scale_x_log10() +
   geom_hline(yintercept = 0) +
-  ggtitle("MA plot using original logFC values")
+  ggtitle("MA plot with original logFC values")
 
 fig2 <- ggplot(res_shr_tbl, aes(x = baseMean, y = log2FoldChange)) +
   geom_point(data = res_shr_tbl, alpha = 0.2) +
   scale_x_log10() +
   geom_hline(yintercept = 0) +
   ylab("shrunked log2FoldChange") +
-  ggtitle("MA plot using shrunked logFC values")
+  ggtitle("MA plot with shrunked logFC values")
 
 fig1 | fig2
 ```
@@ -1157,7 +1157,8 @@ fig1 <- ggplot(res_tbl, aes(x = baseMean, y = log2FoldChange)) +
                   aes(x = baseMean, y = log2FoldChange, label = ENSEMBL, color = ENSEMBL),
                   size = 3, 
                   segment.size = 0.1, max.overlaps = 30) +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  ggtitle("MA plot with original logFC values")
 
 fig2 <- ggplot(res_shr_tbl, aes(x = baseMean, y = log2FoldChange)) +
   geom_point(data = res_shr_tbl, alpha = 0.4) +
@@ -1170,7 +1171,9 @@ fig2 <- ggplot(res_shr_tbl, aes(x = baseMean, y = log2FoldChange)) +
                   size = 3, 
                   segment.size = 0.1, max.overlaps = 30)  +
   theme(legend.position = "none") +
-  ylab("shrunked log2FoldChange")
+  ylab("shrunked log2FoldChange") +
+  ggtitle("MA plot with shrunked logFC values")
+
 
 fig1 | fig2
 ```
@@ -1271,3 +1274,20 @@ saveRDS(dds, file = "./data/dds.rds")
 saveRDS(res_tbl, file = "./data/res_tbl.rds")
 saveRDS(ensembl_to_geneName, file = "./data/ensembl_to_geneName.rds")
 ```
+
+### Further links
+
+- [iSEE](https://bioconductor.org/packages/release/bioc/html/iSEE.html) is a 
+Bioconductor package that provides an interactive Shiny-based graphical user 
+interface for exploring data stored in SummarizedExperiment objects.
+
+- [Glimma](https://www.bioconductor.org/packages/release/bioc/html/Glimma.html) 
+is a Bioconductor package that generates interactive visualisations for analysis 
+of RNA-sequencing data using output from limma, edgeR or DESeq2 packages in an 
+HTML page. The interactions are built on top of the popular static representations 
+of analysis results in order to provide additional information.
+
+
+
+
+
