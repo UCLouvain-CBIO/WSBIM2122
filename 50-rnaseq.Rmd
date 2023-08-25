@@ -1110,8 +1110,11 @@ variability rather than true strong differences.
 To overcome this problem, DESeq2 provides a shrinkage function called 
 `lfcShrink()`, to generate more accurate Log2foldchange estimates. 
 The function will shrink the fold-change values in a way that will depend 
-on counts and on gene dispersion values. As seen in the following MA-plots, the 
+on counts and on gene dispersion values[^FCShrinkage]. As seen in the following MA-plots, the 
 shrinkage is much stronger for lowly than for highly expressed genes. 
+
+[^FCShrinkage]: The shrinkage is based on bayesian approach. See the paper 
+describing thedefault shrinkage estimator for more details [@Zhu:2019]  
 
 This procedure improves interpretability of the fold-changes estimates.
 
