@@ -79,7 +79,7 @@ knitr::include_graphics("./figs/Sequencing_depth.png")
 
 - **Library composition**
 
-The library composition might also be different accross samples. To
+The library composition might also be different across samples. To
 illustrate this, let's imagine a basic cell expressing only 2 genes
 (genes 1 and 2) and assume that a drug treatment induces a strong
 expression of gene 3. If the normalisation was done using total number
@@ -1097,6 +1097,123 @@ This will result in higher dispersion values, and larger pvalues.
 dispersions(dds[best_genes$ENSEMBL,])
 dispersions(dds[selected_genes$ENSEMBL,])
 ```
+`r msmbstyle::solution_end()`
+
+### Logfoldchange shrinkage 
+
+The fold-changes values might sometimes be used for specific downstream analyses 
+(these values could for example be used for gene ranking or visualization). 
+But the Log2FC estimates provided by DESeq2 should not be used directly, 
+as some genes might be associated to large fold-changes reflecting a high 
+variability rather than true strong differences.
+
+To overcome this problem, DESeq2 provides a shrinkage function called 
+`lfcShrink()`, to generate more accurate Log2foldchange estimates. 
+The function will shrink the fold-change values in a way that will depend 
+on counts and on gene dispersion values. As seen in the following MA-plots, the 
+shrinkage is much stronger for lowly than for highly expressed genes. 
+
+This procedure improves interpretability of the fold-changes estimates.
+
+```{r, warning = FALSE}
+res_shr <- lfcShrink(dds, coef = "Condition_KD_vs_mock")
+res_shr_tbl <- as_tibble(res_shr, rownames = "ENSEMBL")
+
+fig1 <- ggplot(res_tbl, aes(x = baseMean, y = log2FoldChange)) +
+  geom_point(data = res_tbl, alpha = 0.2) +
+  scale_x_log10() +
+  geom_hline(yintercept = 0) +
+  ggtitle("MA plot using original logFC values")
+
+fig2 <- ggplot(res_shr_tbl, aes(x = baseMean, y = log2FoldChange)) +
+  geom_point(data = res_shr_tbl, alpha = 0.2) +
+  scale_x_log10() +
+  geom_hline(yintercept = 0) +
+  ylab("shrunked log2FoldChange") +
+  ggtitle("MA plot using shrunked logFC values")
+
+fig1 | fig2
+```
+
+
+`r msmbstyle::question_begin()`
+
+Genes ENSG00000183055 and ENSG00000161082, highlighted in the following MA 
+plots, have similar expression levels and log2FoldChanges before shrinkage. 
+
+
+```{r, echo = FALSE, warning = FALSE}
+my_genes <- c("ENSG00000183055", "ENSG00000161082")
+fig1 <- ggplot(res_tbl, aes(x = baseMean, y = log2FoldChange)) +
+  geom_point(data = res_tbl, alpha = 0.4) +
+  geom_point(data = res_tbl %>% filter(ENSEMBL %in% my_genes), 
+             aes(x = baseMean, y = log2FoldChange, color = ENSEMBL), size = 1, alpha = 1)  +
+  scale_x_log10() +
+  geom_hline(yintercept = 0) + theme(legend.position = "bottom")+
+  ggrepel::geom_text_repel(data = res_tbl %>% filter(ENSEMBL %in% my_genes), 
+                  aes(x = baseMean, y = log2FoldChange, label = ENSEMBL, color = ENSEMBL),
+                  size = 3, 
+                  segment.size = 0.1, max.overlaps = 30) +
+  theme(legend.position = "none")
+
+fig2 <- ggplot(res_shr_tbl, aes(x = baseMean, y = log2FoldChange)) +
+  geom_point(data = res_shr_tbl, alpha = 0.4) +
+  geom_point(data = res_shr_tbl %>% filter(ENSEMBL %in% my_genes), 
+             aes(x = baseMean, y = log2FoldChange, color = ENSEMBL), size = 1, alpha = 1)  +
+  scale_x_log10() +
+  geom_hline(yintercept = 0) + theme(legend.position = "bottom")+
+  ggrepel::geom_text_repel(data = res_shr_tbl %>% filter(ENSEMBL %in% my_genes), 
+                  aes(x = baseMean, y = log2FoldChange, label = ENSEMBL, color = ENSEMBL),
+                  size = 3, 
+                  segment.size = 0.1, max.overlaps = 30)  +
+  theme(legend.position = "none") +
+  ylab("shrunked log2FoldChange")
+
+fig1 | fig2
+```
+
+1. Compare DESeq2 results for these 2 genes before and after logFC shrinkage.
+What was the impact on their log2FoldChange values? on their p-values?
+
+2. Try to figure out why one of the 2 genes is more affected by the shrinkage 
+procedure. 
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+1. Compare DESeq2 results for these 2 genes before and after logFC shrinkage.
+What was the impact on their log2FoldChange values? on their p-values?
+
+
+```{r}
+res_tbl %>% 
+  filter(ENSEMBL %in% c("ENSG00000183055", "ENSG00000161082"))
+
+res_shr_tbl %>% 
+  filter(ENSEMBL %in% c("ENSG00000183055", "ENSG00000161082"))
+```
+
+2. Try to figure out why one of the 2 genes is more affected by the shrinkage 
+procedure. 
+
+```{r}
+as_tibble(counts(dds[c("ENSG00000183055", "ENSG00000161082"), ], normalize = TRUE),
+          rownames = 'ENSEMBL') %>%
+  gather(sample, counts, -ENSEMBL) %>%
+  left_join(as_tibble(coldata, rownames = "sample")) %>%
+  ggplot(aes(x = sample, y = counts, fill = Condition)) +
+  geom_bar(stat = 'identity', color = "gray30") +
+  facet_wrap( ~ ENSEMBL, scales = "free", ncol = 3) +
+  theme(axis.text.x = element_text(size = 7, angle = 90),
+        axis.title.x = element_blank(),
+        legend.position = "right",
+        legend.text = element_text(size = 7),
+        legend.title = element_text(size = 7))
+
+dispersions(dds[c("ENSG00000183055", "ENSG00000161082"),])
+```
+
 `r msmbstyle::solution_end()`
 
 ### Querying the Biomart service
