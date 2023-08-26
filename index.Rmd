@@ -37,12 +37,12 @@ Each project will entail an introductory lecture, dedicated office
 time for students to ask questions, oral presentations of the data
 analysis and interpretation, and submission of a fully reproducible R
 markdown report. The students will be able to amend their final
-reports after the presentations, benefiting from the in-class
-feedback and discussion. The report will contain an introduction, a
-description of the experimental design of the data, a detailed
-description of the data analysis steps, discussion and interpretation
-of the results, including a biological interpretation, as well as
-references and contribution statement of all authors.
+reports after the presentations, benefiting from in-class feedback and
+discussion. The report will contain an introduction, a description of
+the experimental design of the data, a detailed description of the
+data analysis steps, discussion and interpretation of the results,
+including a biological interpretation, as well as references and
+contribution statement of all authors.
 
 The projects will be done in groups, with different groups for each
 project. The number of students per group will be set once the total
