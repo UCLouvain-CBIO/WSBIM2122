@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2023-06-01" />
+<meta name="date" content="2023-08-26" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -75,7 +75,7 @@ function reset_tooltip(id) {
 <script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
-<script src="libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
@@ -257,7 +257,7 @@ compared with each other.</p>
 <ul>
 <li><strong>Library composition</strong></li>
 </ul>
-<p>The library composition might also be different accross samples. To
+<p>The library composition might also be different across samples. To
 illustrate this, let’s imagine a basic cell expressing only 2 genes
 (genes 1 and 2) and assume that a drug treatment induces a strong
 expression of gene 3. If the normalisation was done using total number
@@ -1297,9 +1297,111 @@ group of genes</li>
 </div>
 </div>
 </div>
-<div id="querying-the-biomart-service" class="section level3" number="5.2.12">
+<div id="logfoldchange-shrinkage" class="section level3" number="5.2.12">
 <h3>
-<span class="header-section-number">5.2.12</span> Querying the Biomart service<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('querying-the-biomart-service')" onmouseout="reset_tooltip('querying-the-biomart-service-tooltip')"><span class="tooltiptext" id="querying-the-biomart-service-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">5.2.12</span> Logfoldchange shrinkage<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('logfoldchange-shrinkage')" onmouseout="reset_tooltip('logfoldchange-shrinkage-tooltip')"><span class="tooltiptext" id="logfoldchange-shrinkage-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>The fold-changes values might sometimes be used for specific downstream analyses
+(these values could for example be used for gene ranking or visualization).
+But the Log2FC estimates provided by DESeq2 should not be used directly,
+as some genes might be associated to large fold-changes reflecting a high
+variability rather than true strong differences.</p>
+<p>To overcome this problem, DESeq2 provides a shrinkage function called
+<code>lfcShrink()</code>, to generate more accurate Log2foldchange estimates.
+The function will shrink the fold-change values in a way that will depend
+on counts and on gene dispersion values<label for="tufte-sn-13" class="margin-toggle sidenote-number">13</label><input type="checkbox" id="tufte-sn-13" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">13</span> The shrinkage is based on bayesian approach. See the paper
+describing thedefault shrinkage estimator for more details <span class="citation">(Zhu, Ibrahim, and Love <label for="tufte-mn-13" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-13" class="margin-toggle">2019<span class="marginnote">Zhu, A, G J Ibrahim, and M I Love. 2019. “Heavy-Tailed Prior Distributions for Sequence Count Data: Removing the Noise and Preserving Large Differences.” <em>Bioinformatics</em> 35 (1): 2084–92. <a href="https://doi.org/10.1093/bioinformatics/bty895">https://doi.org/10.1093/bioinformatics/bty895</a>.</span>)</span></span>. As seen in the following MA-plots, the
+shrinkage is much stronger for lowly than for highly expressed genes.</p>
+<p>This procedure improves interpretability of the fold-changes estimates.</p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="sec-rnaseq.html#cb256-1" aria-hidden="true"></a>res_shr &lt;-<span class="st"> </span><span class="kw">lfcShrink</span>(dds, <span class="dt">coef =</span> <span class="st">"Condition_KD_vs_mock"</span>)</span>
+<span id="cb256-2"><a href="sec-rnaseq.html#cb256-2" aria-hidden="true"></a>res_shr_tbl &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(res_shr, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>)</span>
+<span id="cb256-3"><a href="sec-rnaseq.html#cb256-3" aria-hidden="true"></a></span>
+<span id="cb256-4"><a href="sec-rnaseq.html#cb256-4" aria-hidden="true"></a>fig1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(res_tbl, <span class="kw">aes</span>(<span class="dt">x =</span> baseMean, <span class="dt">y =</span> log2FoldChange)) <span class="op">+</span></span>
+<span id="cb256-5"><a href="sec-rnaseq.html#cb256-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> res_tbl, <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span></span>
+<span id="cb256-6"><a href="sec-rnaseq.html#cb256-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_x_log10</span>() <span class="op">+</span></span>
+<span id="cb256-7"><a href="sec-rnaseq.html#cb256-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb256-8"><a href="sec-rnaseq.html#cb256-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"MA plot with original logFC values"</span>)</span>
+<span id="cb256-9"><a href="sec-rnaseq.html#cb256-9" aria-hidden="true"></a></span>
+<span id="cb256-10"><a href="sec-rnaseq.html#cb256-10" aria-hidden="true"></a>fig2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(res_shr_tbl, <span class="kw">aes</span>(<span class="dt">x =</span> baseMean, <span class="dt">y =</span> log2FoldChange)) <span class="op">+</span></span>
+<span id="cb256-11"><a href="sec-rnaseq.html#cb256-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> res_shr_tbl, <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span></span>
+<span id="cb256-12"><a href="sec-rnaseq.html#cb256-12" aria-hidden="true"></a><span class="st">  </span><span class="kw">scale_x_log10</span>() <span class="op">+</span></span>
+<span id="cb256-13"><a href="sec-rnaseq.html#cb256-13" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb256-14"><a href="sec-rnaseq.html#cb256-14" aria-hidden="true"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"shrunked log2FoldChange"</span>) <span class="op">+</span></span>
+<span id="cb256-15"><a href="sec-rnaseq.html#cb256-15" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"MA plot with shrunked logFC values"</span>)</span>
+<span id="cb256-16"><a href="sec-rnaseq.html#cb256-16" aria-hidden="true"></a></span>
+<span id="cb256-17"><a href="sec-rnaseq.html#cb256-17" aria-hidden="true"></a>fig1 <span class="op">|</span><span class="st"> </span>fig2</span></code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-115-1.png" width="672"></p>
+<div class="question">
+<p class="question-begin">
+► Question
+</p>
+<div class="question-body">
+<p>Genes ENSG00000183055 and ENSG00000161082, highlighted in the following MA
+plots, have similar expression levels and log2FoldChanges before shrinkage.</p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-116-1.png" width="672"></p>
+<ol style="list-style-type: decimal">
+<li><p>Compare DESeq2 results for these 2 genes before and after logFC shrinkage.
+What was the impact on their log2FoldChange values? on their p-values?</p></li>
+<li><p>Try to figure out why one of the 2 genes is more affected by the shrinkage
+procedure.</p></li>
+</ol>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-16" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-16', 'sol-start-16')"></span>
+</p>
+<div id="sol-body-16" class="solution-body" style="display: none;">
+<ol style="list-style-type: decimal">
+<li>Compare DESeq2 results for these 2 genes before and after logFC shrinkage.
+What was the impact on their log2FoldChange values? on their p-values?</li>
+</ol>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="sec-rnaseq.html#cb257-1" aria-hidden="true"></a>res_tbl <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb257-2"><a href="sec-rnaseq.html#cb257-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(ENSEMBL <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"ENSG00000183055"</span>, <span class="st">"ENSG00000161082"</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 7
+##   ENSEMBL         baseMean log2FoldChange lfcSE  stat    pvalue     padj
+##   &lt;chr&gt;              &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 ENSG00000183055     24.4           1.92 0.695  2.76 0.00572   0.0254  
+## 2 ENSG00000161082     23.3           1.94 0.477  4.06 0.0000487 0.000483</code></pre>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="sec-rnaseq.html#cb259-1" aria-hidden="true"></a>res_shr_tbl <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb259-2"><a href="sec-rnaseq.html#cb259-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(ENSEMBL <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"ENSG00000183055"</span>, <span class="st">"ENSG00000161082"</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 6
+##   ENSEMBL         baseMean log2FoldChange lfcSE    pvalue     padj
+##   &lt;chr&gt;              &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 ENSG00000183055     24.4           1.25 0.906 0.00572   0.0254  
+## 2 ENSG00000161082     23.3           1.69 0.507 0.0000487 0.000483</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Try to figure out why one of the 2 genes is more affected by the shrinkage
+procedure.</li>
+</ol>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="sec-rnaseq.html#cb261-1" aria-hidden="true"></a><span class="kw">as_tibble</span>(<span class="kw">counts</span>(dds[<span class="kw">c</span>(<span class="st">"ENSG00000183055"</span>, <span class="st">"ENSG00000161082"</span>), ], <span class="dt">normalize =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb261-2"><a href="sec-rnaseq.html#cb261-2" aria-hidden="true"></a>          <span class="dt">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="op">%&gt;%</span></span>
+<span id="cb261-3"><a href="sec-rnaseq.html#cb261-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">gather</span>(sample, counts, <span class="op">-</span>ENSEMBL) <span class="op">%&gt;%</span></span>
+<span id="cb261-4"><a href="sec-rnaseq.html#cb261-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">left_join</span>(<span class="kw">as_tibble</span>(coldata, <span class="dt">rownames =</span> <span class="st">"sample"</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb261-5"><a href="sec-rnaseq.html#cb261-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sample, <span class="dt">y =</span> counts, <span class="dt">fill =</span> Condition)) <span class="op">+</span></span>
+<span id="cb261-6"><a href="sec-rnaseq.html#cb261-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">'identity'</span>, <span class="dt">color =</span> <span class="st">"gray30"</span>) <span class="op">+</span></span>
+<span id="cb261-7"><a href="sec-rnaseq.html#cb261-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>ENSEMBL, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">ncol =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb261-8"><a href="sec-rnaseq.html#cb261-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>, <span class="dt">angle =</span> <span class="dv">90</span>),</span>
+<span id="cb261-9"><a href="sec-rnaseq.html#cb261-9" aria-hidden="true"></a>        <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb261-10"><a href="sec-rnaseq.html#cb261-10" aria-hidden="true"></a>        <span class="dt">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb261-11"><a href="sec-rnaseq.html#cb261-11" aria-hidden="true"></a>        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),</span>
+<span id="cb261-12"><a href="sec-rnaseq.html#cb261-12" aria-hidden="true"></a>        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>))</span></code></pre></div>
+<pre><code>## Joining with `by = join_by(sample)`</code></pre>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-118-1.png" width="672"></p>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="sec-rnaseq.html#cb263-1" aria-hidden="true"></a><span class="kw">dispersions</span>(dds[<span class="kw">c</span>(<span class="st">"ENSG00000183055"</span>, <span class="st">"ENSG00000161082"</span>),])</span></code></pre></div>
+<pre><code>## [1] 0.28557090 0.09884484</code></pre>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="querying-the-biomart-service" class="section level3" number="5.2.13">
+<h3>
+<span class="header-section-number">5.2.13</span> Querying the Biomart service<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('querying-the-biomart-service')" onmouseout="reset_tooltip('querying-the-biomart-service-tooltip')"><span class="tooltiptext" id="querying-the-biomart-service-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The result table only uses Ensembl gene IDs, but gene names may be
 more informative. Bioconductor’s <em><a href="https://bioconductor.org/packages/3.17/biomaRt">biomaRt</a></em>
@@ -1308,24 +1410,24 @@ package can help with mapping various ID schemes to each other.</p>
 (<code>enternal_gene_name</code>) and ENTREZ gene identifiers (<code>entrezgene_id</code>)
 (that we will need in the next chapter) and join these to our result
 data.</p>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="sec-rnaseq.html#cb256-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"biomaRt"</span>)</span>
-<span id="cb256-2"><a href="sec-rnaseq.html#cb256-2" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"org.Hs.eg.db"</span>)</span>
-<span id="cb256-3"><a href="sec-rnaseq.html#cb256-3" aria-hidden="true"></a></span>
-<span id="cb256-4"><a href="sec-rnaseq.html#cb256-4" aria-hidden="true"></a><span class="co">## Load homo sapiens ensembl dataset</span></span>
-<span id="cb256-5"><a href="sec-rnaseq.html#cb256-5" aria-hidden="true"></a>mart &lt;-<span class="st"> </span><span class="kw">useDataset</span>(<span class="st">"hsapiens_gene_ensembl"</span>, <span class="kw">useMart</span>(<span class="st">"ensembl"</span>))</span>
-<span id="cb256-6"><a href="sec-rnaseq.html#cb256-6" aria-hidden="true"></a></span>
-<span id="cb256-7"><a href="sec-rnaseq.html#cb256-7" aria-hidden="true"></a><span class="co">## Attributes define the values we are interested to retrieve.</span></span>
-<span id="cb256-8"><a href="sec-rnaseq.html#cb256-8" aria-hidden="true"></a><span class="co">## listAttributes(mart)</span></span>
-<span id="cb256-9"><a href="sec-rnaseq.html#cb256-9" aria-hidden="true"></a>ensembl_to_geneName &lt;-<span class="st"> </span><span class="kw">getBM</span>(<span class="dt">attributes =</span> <span class="kw">c</span>(<span class="st">"ensembl_gene_id"</span>, <span class="st">"external_gene_name"</span>,</span>
-<span id="cb256-10"><a href="sec-rnaseq.html#cb256-10" aria-hidden="true"></a>                                            <span class="st">"entrezgene_id"</span>),</span>
-<span id="cb256-11"><a href="sec-rnaseq.html#cb256-11" aria-hidden="true"></a>                             <span class="dt">mart =</span> mart)</span>
-<span id="cb256-12"><a href="sec-rnaseq.html#cb256-12" aria-hidden="true"></a><span class="kw">names</span>(ensembl_to_geneName) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"ENSEMBL"</span>, <span class="st">"gene"</span>, <span class="st">"ENTREZID"</span>)</span>
-<span id="cb256-13"><a href="sec-rnaseq.html#cb256-13" aria-hidden="true"></a><span class="kw">head</span>(ensembl_to_geneName)</span></code></pre></div>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="sec-rnaseq.html#cb257-1" aria-hidden="true"></a>res_tbl &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></span>
-<span id="cb257-2"><a href="sec-rnaseq.html#cb257-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">left_join</span>(ensembl_to_geneName) <span class="op">%&gt;%</span></span>
-<span id="cb257-3"><a href="sec-rnaseq.html#cb257-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">arrange</span>(padj)</span></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="sec-rnaseq.html#cb265-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"biomaRt"</span>)</span>
+<span id="cb265-2"><a href="sec-rnaseq.html#cb265-2" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">"org.Hs.eg.db"</span>)</span>
+<span id="cb265-3"><a href="sec-rnaseq.html#cb265-3" aria-hidden="true"></a></span>
+<span id="cb265-4"><a href="sec-rnaseq.html#cb265-4" aria-hidden="true"></a><span class="co">## Load homo sapiens ensembl dataset</span></span>
+<span id="cb265-5"><a href="sec-rnaseq.html#cb265-5" aria-hidden="true"></a>mart &lt;-<span class="st"> </span><span class="kw">useDataset</span>(<span class="st">"hsapiens_gene_ensembl"</span>, <span class="kw">useMart</span>(<span class="st">"ensembl"</span>))</span>
+<span id="cb265-6"><a href="sec-rnaseq.html#cb265-6" aria-hidden="true"></a></span>
+<span id="cb265-7"><a href="sec-rnaseq.html#cb265-7" aria-hidden="true"></a><span class="co">## Attributes define the values we are interested to retrieve.</span></span>
+<span id="cb265-8"><a href="sec-rnaseq.html#cb265-8" aria-hidden="true"></a><span class="co">## listAttributes(mart)</span></span>
+<span id="cb265-9"><a href="sec-rnaseq.html#cb265-9" aria-hidden="true"></a>ensembl_to_geneName &lt;-<span class="st"> </span><span class="kw">getBM</span>(<span class="dt">attributes =</span> <span class="kw">c</span>(<span class="st">"ensembl_gene_id"</span>, <span class="st">"external_gene_name"</span>,</span>
+<span id="cb265-10"><a href="sec-rnaseq.html#cb265-10" aria-hidden="true"></a>                                            <span class="st">"entrezgene_id"</span>),</span>
+<span id="cb265-11"><a href="sec-rnaseq.html#cb265-11" aria-hidden="true"></a>                             <span class="dt">mart =</span> mart)</span>
+<span id="cb265-12"><a href="sec-rnaseq.html#cb265-12" aria-hidden="true"></a><span class="kw">names</span>(ensembl_to_geneName) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"ENSEMBL"</span>, <span class="st">"gene"</span>, <span class="st">"ENTREZID"</span>)</span>
+<span id="cb265-13"><a href="sec-rnaseq.html#cb265-13" aria-hidden="true"></a><span class="kw">head</span>(ensembl_to_geneName)</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="sec-rnaseq.html#cb266-1" aria-hidden="true"></a>res_tbl &lt;-<span class="st"> </span>res_tbl <span class="op">%&gt;%</span></span>
+<span id="cb266-2"><a href="sec-rnaseq.html#cb266-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">left_join</span>(ensembl_to_geneName) <span class="op">%&gt;%</span></span>
+<span id="cb266-3"><a href="sec-rnaseq.html#cb266-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">arrange</span>(padj)</span></code></pre></div>
 <pre><code>## Joining with `by = join_by(ENSEMBL)`</code></pre>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="sec-rnaseq.html#cb259-1" aria-hidden="true"></a>res_tbl</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="sec-rnaseq.html#cb268-1" aria-hidden="true"></a>res_tbl</span></code></pre></div>
 <pre><code>## # A tibble: 58,935 × 9
 ##    ENSEMBL         baseMean log2FoldChange lfcSE  stat    pvalue      padj gene 
 ##    &lt;chr&gt;              &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;
@@ -1343,10 +1445,24 @@ data.</p>
 ## # ℹ 1 more variable: ENTREZID &lt;int&gt;</code></pre>
 <p>Below, we store these results and the <code>DESeqDataSet</code> object for in the
 next chapter.</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="sec-rnaseq.html#cb261-1" aria-hidden="true"></a><span class="kw">saveRDS</span>(dds, <span class="dt">file =</span> <span class="st">"./data/dds.rds"</span>)</span>
-<span id="cb261-2"><a href="sec-rnaseq.html#cb261-2" aria-hidden="true"></a><span class="kw">saveRDS</span>(res_tbl, <span class="dt">file =</span> <span class="st">"./data/res_tbl.rds"</span>)</span>
-<span id="cb261-3"><a href="sec-rnaseq.html#cb261-3" aria-hidden="true"></a><span class="kw">saveRDS</span>(ensembl_to_geneName, <span class="dt">file =</span> <span class="st">"./data/ensembl_to_geneName.rds"</span>)</span></code></pre></div>
-
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="sec-rnaseq.html#cb270-1" aria-hidden="true"></a><span class="kw">saveRDS</span>(dds, <span class="dt">file =</span> <span class="st">"./data/dds.rds"</span>)</span>
+<span id="cb270-2"><a href="sec-rnaseq.html#cb270-2" aria-hidden="true"></a><span class="kw">saveRDS</span>(res_tbl, <span class="dt">file =</span> <span class="st">"./data/res_tbl.rds"</span>)</span>
+<span id="cb270-3"><a href="sec-rnaseq.html#cb270-3" aria-hidden="true"></a><span class="kw">saveRDS</span>(ensembl_to_geneName, <span class="dt">file =</span> <span class="st">"./data/ensembl_to_geneName.rds"</span>)</span></code></pre></div>
+</div>
+<div id="further-links" class="section level3" number="5.2.14">
+<h3>
+<span class="header-section-number">5.2.14</span> Further links<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('further-links')" onmouseout="reset_tooltip('further-links-tooltip')"><span class="tooltiptext" id="further-links-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<ul>
+<li><p><a href="https://bioconductor.org/packages/release/bioc/html/iSEE.html">iSEE</a> is a
+Bioconductor package that provides an interactive Shiny-based graphical user
+interface for exploring data stored in SummarizedExperiment objects.</p></li>
+<li><p><a href="https://www.bioconductor.org/packages/release/bioc/html/Glimma.html">Glimma</a>
+is a Bioconductor package that generates interactive visualisations for analysis
+of RNA-sequencing data using output from limma, edgeR or DESeq2 packages in an
+HTML page. The interactions are built on top of the popular static representations
+of analysis results in order to provide additional information.</p></li>
+</ul>
 </div>
 </div>
 </div></body></html>
@@ -1356,9 +1472,9 @@ next chapter.</p>
 <a href="sec-design.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2023-06-01
+2023-08-26
  using 
-R version 4.3.0 (2023-04-21)
+R version 4.3.1 (2023-06-16)
 </p>
 </div>
 </div>
