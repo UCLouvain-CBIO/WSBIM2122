@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2023-08-26" />
+<meta name="date" content="2023-08-28" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -194,8 +194,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="row">
 <div class="col-sm-12">
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec-gsea" class="section level1" number="7">
+<div id="sec-gsea" class="section level1" number="7">
 <h1>
 <span class="header-section-number">Chapter 7</span> Enrichment analyses</h1>
 <p><strong>Motivation</strong>: at the end of this chapter, the students will be able
@@ -666,11 +665,11 @@ adjusted p-value above) and compute a new GSEA score.</p>
 ##          &lt;character&gt;   &lt;factor&gt;  &lt;factor&gt;  &lt;numeric&gt;
 ## sample1        Cell1 Epithelial      mock   0.775421
 ## sample2        Cell1 Epithelial      KD     1.408012
-## sample3        Cell1 Epithelial      KD     1.160908
+## sample3        Cell1 Epithelial      mock   1.160908
 ## sample4        Cell1 Epithelial      KD     1.023210
-## sample5        Cell1 Epithelial      KD     1.105404
+## sample5        Cell1 Epithelial      mock   1.105404
 ## ...              ...        ...       ...        ...
-## sample8        Cell2 Fibroblast      mock   0.830183
+## sample8        Cell2 Fibroblast      KD     0.830183
 ## sample9        Cell2 Fibroblast      mock   0.993755
 ## sample10       Cell2 Fibroblast      mock   0.915594
 ## sample11       Cell2 Fibroblast      KD     0.997491
@@ -691,7 +690,7 @@ adjusted p-value above) and compute a new GSEA score.</p>
 <span id="cb326-14"><a href="sec-gsea.html#cb326-14" aria-hidden="true"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">score =</span> <span class="kw">cumsum</span>(score))</span>
 <span id="cb326-15"><a href="sec-gsea.html#cb326-15" aria-hidden="true"></a></span>
 <span id="cb326-16"><a href="sec-gsea.html#cb326-16" aria-hidden="true"></a>res_tmp</span></code></pre></div>
-<pre><code>## # A tibble: 20,756 × 5
+<pre><code>## # A tibble: 20,751 × 5
 ##    ENSEMBL          ENTREZID  padj inGO  score
 ##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
 ##  1 ENSG00000223972     84771  1.00 FALSE    -1
@@ -704,9 +703,9 @@ adjusted p-value above) and compute a new GSEA score.</p>
 ##  8 ENSG00000279457 102723897  1.00 FALSE    -8
 ##  9 ENSG00000230021 101928626  1.00 FALSE    -9
 ## 10 ENSG00000237491 105378580  1.00 FALSE   -10
-## # ℹ 20,746 more rows</code></pre>
+## # ℹ 20,741 more rows</code></pre>
 <div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="sec-gsea.html#cb328-1" aria-hidden="true"></a><span class="kw">max</span>(res_tmp<span class="op">$</span>score)</span></code></pre></div>
-<pre><code>## [1] 378.5227</code></pre>
+<pre><code>## [1] 380.6444</code></pre>
 <div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="sec-gsea.html#cb330-1" aria-hidden="true"></a><span class="kw">plot</span>(res_tmp<span class="op">$</span>score, <span class="dt">type =</span> <span class="st">"l"</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-149-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests
@@ -1173,14 +1172,13 @@ permutation strategies) or user-set parameters (DE cutoffs in ORA,
 ordering criteria in GSEA) provide different results.</p>
 
 </div>
-</div></body></html>
-
+</div>
 <p style="text-align: center;">
 <a href="sec-design.html"><button class="btn btn-default">Previous</button></a>
 <a href="sec-ms.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2023-08-26
+2023-08-28
  using 
 R version 4.3.1 (2023-06-16)
 </p>

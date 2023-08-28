@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2023-08-26" />
+<meta name="date" content="2023-08-28" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -195,8 +195,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="row">
 <div class="col-sm-12">
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec-linmod" class="section level1" number="3">
+<div id="sec-linmod" class="section level1" number="3">
 <h1>
 <span class="header-section-number">Chapter 3</span> Linear models</h1>
 <p>The objective of this chapter is to provide students with an intuitive
@@ -595,8 +594,8 @@ opposite responses in the extreme conditions: that the expression of
 some genes will increase in the mutant under dry conditions while they
 will decrease (or change to a lesser extend at least) under humid
 conditions.</p>
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-eaaccee44af928b5ee76" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-eaaccee44af928b5ee76">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6,7,8,9,10,11,12],["WT","WT","WT","WT","WT","WT","MT","MT","MT","MT","MT","MT"],["normal","dry","humid","normal","dry","humid","normal","dry","humid","normal","dry","humid"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>sample<\/th>\n      <th>genotype<\/th>\n      <th>condition<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Such situation require a new model formula syntax</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e3adaf7801706bef976f" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e3adaf7801706bef976f">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6,7,8,9,10,11,12],["WT","WT","WT","WT","WT","WT","MT","MT","MT","MT","MT","MT"],["normal","dry","humid","normal","dry","humid","normal","dry","humid","normal","dry","humid"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>sample<\/th>\n      <th>genotype<\/th>\n      <th>condition<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Such situation require a new model formula syntax</p>
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="sec-linmod.html#cb77-1" aria-hidden="true"></a><span class="op">~</span><span class="st"> </span>genotype <span class="op">*</span><span class="st"> </span>condition</span></code></pre></div>
 <p>which is equivalent to</p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="sec-linmod.html#cb78-1" aria-hidden="true"></a><span class="op">~</span><span class="st"> </span>genotype <span class="op">+</span><span class="st"> </span>condition <span class="op">+</span><span class="st"> </span>genotype <span class="op">*</span><span class="st"> </span>condition</span></code></pre></div>
@@ -1056,14 +1055,13 @@ up design and contrast matrices and great preparation to chapter
 <a href="sec-rnaseq.html#sec-rnaseq">5</a>.</p>
 
 </div>
-</div></body></html>
-
+</div>
 <p style="text-align: center;">
 <a href="sec-rmd.html"><button class="btn btn-default">Previous</button></a>
 <a href="sec-hts.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2023-08-26
+2023-08-28
  using 
 R version 4.3.1 (2023-06-16)
 </p>
