@@ -1,4 +1,57 @@
-# Session information {#sec-si}
+# Course and session information {#sec-anx}
+
+
+## Available platforms
+
+Given the increased need for autonomous work, the students are free to
+use any computers they prefer to for this work, including the
+computers provided by the university, the cloud [Renku WSBIM2122
+environment](https://renkulab.io/projects?q=wsbim2122&page=1&orderBy=last_activity_at&orderSearchAsc=false&searchIn=projects)
+(see [here](https://uclouvain-cbio.github.io/WSBIM1207/sec-anx.html) for
+details) or their own computers. They should also make sure they have
+all the documents they need and use a system they are comfortable with
+during the presentations and final oral exam.
+
+## Project reports
+
+The group projects constitute a significant part of the work and final
+grades. The reports will be written in Rmarkdown (see \@ref(sec-rmd)
+and references therein) and compiled into a final pdf file. It should
+be structure as a scientific manuscript or thesis, including:
+
+- An **abstract**, summarising the report.
+
+- A short **introduction**, providing the necessary background to
+  understand the report.
+
+
+- A **material and methods** section describing the experimental
+  design and the methods utilised.
+
+- A **results** section describing and interpreting the results.
+
+- A **conclusion** documenting the wider implications of the findings,
+  possible follow-up experiments or analyses and any limitations of
+  the methods and results discussed above.
+
+- An **author contributions** section documenting the respective
+  contributions of all authors. This section is particularly important
+  as it will help us assess you involvement in the projects and guide
+  the discussions during the oral exam. While all authors are
+  expected to have contributed to the work and report, some will
+  probably have specifically focused on different aspects of the
+  work. These are areas where will dwell into more details.
+
+Before handing in your reports, each group will present their
+preliminary results. The group is free to choose the type of support
+they want to use (slides, a report, an Rmd file, ... ). The emphasis
+of the presentations will not be to present a polished report, but for
+students and instructors to ask questions to highlight possible
+improvements. You will then be able to use the output of these
+questions and discussions, including those with other groups, to
+improve your own group report.
+
+## Session information {#sec-si}
 
 The following packages have been used to generate this document.
 

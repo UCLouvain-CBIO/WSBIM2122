@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 4 High throughput sequencing | Omics Data Analysis" />
+<meta property="og:title" content="Chapter 3 High throughput sequencing | Omics Data Analysis" />
 <meta property="og:type" content="book" />
 
 <meta property="og:description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain." />
@@ -24,7 +24,7 @@ MathJax.Hub.Config({
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
-<title>Chapter 4 High throughput sequencing | Omics Data Analysis</title>
+<title>Chapter 3 High throughput sequencing | Omics Data Analysis</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -188,10 +188,9 @@ div.csl-indent {
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
 <a href="index.html" id="toc-preamble">Preamble</a>
-<a href="sec-cli.html" id="toc-sec-cli"><span class="toc-section-number">1</span> The shell</a>
-<a href="sec-rmd.html" id="toc-sec-rmd"><span class="toc-section-number">2</span> R markdown</a>
-<a href="sec-linmod.html" id="toc-sec-linmod"><span class="toc-section-number">3</span> Linear models</a>
-<a id="active-page" href="sec-hts.html" id="toc-sec-hts"><span class="toc-section-number">4</span> High throughput sequencing</a><ul class="toc-sections">
+<a href="sec-rmd.html" id="toc-sec-rmd"><span class="toc-section-number">1</span> R markdown</a>
+<a href="sec-linmod.html" id="toc-sec-linmod"><span class="toc-section-number">2</span> Linear models</a>
+<a id="active-page" href="sec-hts.html" id="toc-sec-hts"><span class="toc-section-number">3</span> High throughput sequencing</a><ul class="toc-sections">
 <li class="toc"><a href="#rna-seq-library-preparation"> RNA-seq library preparation</a></li>
 <li class="toc"><a href="#sequencing"> Sequencing</a></li>
 <li class="toc"><a href="#fastq-files"> fastq files</a></li>
@@ -200,14 +199,14 @@ div.csl-indent {
 <li class="toc"><a href="#counting"> Counting</a></li>
 <li class="toc"><a href="#preparing-the-count-matrix"> Preparing the count matrix</a></li>
 </ul>
-<a href="sec-rnaseq.html" id="toc-sec-rnaseq"><span class="toc-section-number">5</span> Differential expression analysis</a>
-<a href="sec-design.html" id="toc-sec-design"><span class="toc-section-number">6</span> More complex experimental design</a>
-<a href="sec-gsea.html" id="toc-sec-gsea"><span class="toc-section-number">7</span> Enrichment analyses</a>
-<a href="sec-ms.html" id="toc-sec-ms"><span class="toc-section-number">8</span> Mass spectrometry</a>
-<a href="sec-prot.html" id="toc-sec-prot"><span class="toc-section-number">9</span> Quantitative proteomics data analysis</a>
-<a href="sec-ccl.html" id="toc-sec-ccl"><span class="toc-section-number">10</span> Conclusions</a>
-<a href="sec-anx.html" id="toc-sec-anx"><span class="toc-section-number">11</span> Annex</a>
-<a href="sec-si.html" id="toc-sec-si"><span class="toc-section-number">12</span> Session information</a>
+<a href="sec-rnaseq.html" id="toc-sec-rnaseq"><span class="toc-section-number">4</span> Differential expression analysis</a>
+<a href="sec-design.html" id="toc-sec-design"><span class="toc-section-number">5</span> More complex experimental design</a>
+<a href="sec-gsea.html" id="toc-sec-gsea"><span class="toc-section-number">6</span> Enrichment analyses</a>
+<a href="sec-ms.html" id="toc-sec-ms"><span class="toc-section-number">7</span> Mass spectrometry</a>
+<a href="sec-prot.html" id="toc-sec-prot"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
+<a href="sec-ccl.html" id="toc-sec-ccl"><span class="toc-section-number">9</span> Conclusions</a>
+<a href="sec-cli.html" id="toc-sec-cli"><span class="toc-section-number">10</span> Annex- the shell</a>
+<a href="sec-anx.html" id="toc-sec-anx"><span class="toc-section-number">11</span> Course and session information</a>
 </div>
 </li>
 </ul>
@@ -218,25 +217,25 @@ div.csl-indent {
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html><body>
-<div id="sec-hts" class="section level1" number="4">
+<div id="sec-hts" class="section level1" number="3">
 <h1>
-<span class="header-section-number">Chapter 4</span> High throughput sequencing</h1>
+<span class="header-section-number">Chapter 3</span> High throughput sequencing</h1>
 <p><strong>Learning Objectives</strong></p>
 <p>The aim of this chapter is to present high throughput sequencing by
 going through one of its key applications: RNAseq. It is a highly
 sensitive and accurate tool that has revolutionised the study of
 transcriptomes. The objective is to give an overview of the
 technology.</p>
-<p><em>RNA Sequencing Data: Hitchhiker’s Guide to Expression Analysis</em><span class="citation">(<label for="tufte-mn-8" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-8" class="margin-toggle">Van den Berge et al. 2019<span class="marginnote">Van den Berge, Koen, Katharina Hembach, Charlotte Soneson, Simone Tiberi, Lieven Clement, Michael Love, Rob Patro, and Mark Robinson. 2019. <span>“RNA Sequencing Data: Hitchhiker’s Guide to Expression Analysis.”</span> <em>Annual Review of Biomedical Data Science</em> 2 (July): 139–73. <a href="https://doi.org/10.1146/annurev-biodatasci-072018-021255">https://doi.org/10.1146/annurev-biodatasci-072018-021255</a>.</span>)</span>
-is an interesting review describing RNA-seq
-technology and data analysis.</p>
+<p><em>RNA Sequencing Data: Hitchhiker’s Guide to Expression
+Analysis</em><span class="citation">(<label for="tufte-mn-5" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-5" class="margin-toggle">Van den Berge et al. 2019<span class="marginnote">Van den Berge, Koen, Katharina Hembach, Charlotte Soneson, Simone Tiberi, Lieven Clement, Michael Love, Rob Patro, and Mark Robinson. 2019. <span>“RNA Sequencing Data: Hitchhiker’s Guide to Expression Analysis.”</span> <em>Annual Review of Biomedical Data Science</em> 2 (July): 139–73. <a href="https://doi.org/10.1146/annurev-biodatasci-072018-021255">https://doi.org/10.1146/annurev-biodatasci-072018-021255</a>.</span>)</span> is an interesting review describing
+RNA-seq technology and data analysis.</p>
 <p>We will pass through the different steps starting from the library
 preparation and the sequencing process. We will explore the resulting
 fastq files and the downstream processing pipeline including quality
 control, alignment and counting steps.</p>
-<div id="rna-seq-library-preparation" class="section level2" number="4.1">
+<div id="rna-seq-library-preparation" class="section level2" number="3.1">
 <h2>
-<span class="header-section-number">4.1</span> RNA-seq library preparation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('rna-seq-library-preparation')" onmouseout="reset_tooltip('rna-seq-library-preparation-tooltip')"><span class="tooltiptext" id="rna-seq-library-preparation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.1</span> RNA-seq library preparation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('rna-seq-library-preparation')" onmouseout="reset_tooltip('rna-seq-library-preparation-tooltip')"><span class="tooltiptext" id="rna-seq-library-preparation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>The starting point of a RNAseq experiment is the cDNA library
 preparation. RNA is first isolated from cells and purified to remove
@@ -245,9 +244,9 @@ done by extracting poly(A) RNA or by depleting rRNA. Purified RNA is then
 fragmented, reverse transcribed and adapters are ligated to both extremities
 to allow for amplification and sequencing.</p>
 <p><img src="figs/Unstranded_lib_prep.png" width="60%" style="display: block; margin: auto;"></p>
-<div id="stranded-versus-unstranded-libraries" class="section level3" number="4.1.1">
+<div id="stranded-versus-unstranded-libraries" class="section level3" number="3.1.1">
 <h3>
-<span class="header-section-number">4.1.1</span> Stranded versus unstranded libraries<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('stranded-versus-unstranded-libraries')" onmouseout="reset_tooltip('stranded-versus-unstranded-libraries-tooltip')"><span class="tooltiptext" id="stranded-versus-unstranded-libraries-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.1.1</span> Stranded versus unstranded libraries<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('stranded-versus-unstranded-libraries')" onmouseout="reset_tooltip('stranded-versus-unstranded-libraries-tooltip')"><span class="tooltiptext" id="stranded-versus-unstranded-libraries-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The library preparation presented above corresponds to an <strong>unstranded protocol</strong>.</p>
 <p>As both cDNA strands will be amplified for sequencing, about half of the
@@ -266,13 +265,13 @@ strand of DNA, it means that it was originally transcribed in antisense.</p>
 <p>Strand-specificity leads to lower number of ambiguous reads.</p>
 </div>
 </div>
-<div id="sequencing" class="section level2" number="4.2">
+<div id="sequencing" class="section level2" number="3.2">
 <h2>
-<span class="header-section-number">4.2</span> Sequencing<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('sequencing')" onmouseout="reset_tooltip('sequencing-tooltip')"><span class="tooltiptext" id="sequencing-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.2</span> Sequencing<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('sequencing')" onmouseout="reset_tooltip('sequencing-tooltip')"><span class="tooltiptext" id="sequencing-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<div id="se-vs-pe-sequencing" class="section level3" number="4.2.1">
+<div id="se-vs-pe-sequencing" class="section level3" number="3.2.1">
 <h3>
-<span class="header-section-number">4.2.1</span> SE vs PE sequencing<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('se-vs-pe-sequencing')" onmouseout="reset_tooltip('se-vs-pe-sequencing-tooltip')"><span class="tooltiptext" id="se-vs-pe-sequencing-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.2.1</span> SE vs PE sequencing<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('se-vs-pe-sequencing')" onmouseout="reset_tooltip('se-vs-pe-sequencing-tooltip')"><span class="tooltiptext" id="se-vs-pe-sequencing-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>Once the library is ready, molecules from the library are sequenced in
 a high throughput manner to obtain short sequences from one end
@@ -282,9 +281,9 @@ to localise the fragment in the genome and resolve mapping close to
 repeat regions, resulting in less multimapping reads.</p>
 <p><img src="figs/SE_vs_PE.png" width="100%" style="display: block; margin: auto;"></p>
 </div>
-<div id="cluster-amplification" class="section level3" number="4.2.2">
+<div id="cluster-amplification" class="section level3" number="3.2.2">
 <h3>
-<span class="header-section-number">4.2.2</span> cluster amplification<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('cluster-amplification')" onmouseout="reset_tooltip('cluster-amplification-tooltip')"><span class="tooltiptext" id="cluster-amplification-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.2.2</span> cluster amplification<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('cluster-amplification')" onmouseout="reset_tooltip('cluster-amplification-tooltip')"><span class="tooltiptext" id="cluster-amplification-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The sequencing is done by a cluster amplification process.</p>
 <p>The library preparation is hybridized to a flow cell coated with
@@ -320,9 +319,9 @@ repeated.</p>
 <a href="https://www.youtube.com/watch?v=HMyCqWhwB8E">Illumina video</a>.</p>
 </div>
 </div>
-<div id="fastq-files" class="section level2" number="4.3">
+<div id="fastq-files" class="section level2" number="3.3">
 <h2>
-<span class="header-section-number">4.3</span> fastq files<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('fastq-files')" onmouseout="reset_tooltip('fastq-files-tooltip')"><span class="tooltiptext" id="fastq-files-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.3</span> fastq files<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('fastq-files')" onmouseout="reset_tooltip('fastq-files-tooltip')"><span class="tooltiptext" id="fastq-files-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>The sequence data generated from the sequencer are received in text
 files called <code>fastq</code> files. For a single-end run, one fastq file is
@@ -356,18 +355,18 @@ fastq file above?</p>
 </div>
 </div>
 </div>
-<div id="processing-pipeline" class="section level2" number="4.4">
+<div id="processing-pipeline" class="section level2" number="3.4">
 <h2>
-<span class="header-section-number">4.4</span> Processing pipeline<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('processing-pipeline')" onmouseout="reset_tooltip('processing-pipeline-tooltip')"><span class="tooltiptext" id="processing-pipeline-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.4</span> Processing pipeline<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('processing-pipeline')" onmouseout="reset_tooltip('processing-pipeline-tooltip')"><span class="tooltiptext" id="processing-pipeline-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>The raw reads from fastq files will need to pass through a different
 tools to yield ultimately a count table, representing a snapshot of
 individual gene expression levels. The execution of this set of tools
 in a specified order is commonly referred to as a pipeline.</p>
 <p><img src="figs/pipeline.png" width="40%" style="display: block; margin: auto;"></p>
-<div id="quality-control" class="section level3" number="4.4.1">
+<div id="quality-control" class="section level3" number="3.4.1">
 <h3>
-<span class="header-section-number">4.4.1</span> Quality control<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('quality-control')" onmouseout="reset_tooltip('quality-control-tooltip')"><span class="tooltiptext" id="quality-control-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.4.1</span> Quality control<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('quality-control')" onmouseout="reset_tooltip('quality-control-tooltip')"><span class="tooltiptext" id="quality-control-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>Of course, no one will analyse the sequences from the fastq file one
 by one to check their quality… Rather, a software called
@@ -383,7 +382,7 @@ allows to analyse different features of the reads and generates a
 report that includes several diagnostic plots to highlight any problem
 the data may have.</p>
 <p>FastQC is run from the command line:</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="sec-hts.html#cb124-1" tabindex="-1"></a><span class="sc">$</span> fastqc SampleName.fastq</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="sec-hts.html#cb83-1" tabindex="-1"></a><span class="sc">$</span> fastqc SampleName.fastq</span></code></pre></div>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -557,9 +556,9 @@ if the per base sequence quality is higher after trimming…</p>
 </div>
 </div>
 </div>
-<div id="alignment" class="section level2" number="4.5">
+<div id="alignment" class="section level2" number="3.5">
 <h2>
-<span class="header-section-number">4.5</span> Alignment<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('alignment')" onmouseout="reset_tooltip('alignment-tooltip')"><span class="tooltiptext" id="alignment-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.5</span> Alignment<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('alignment')" onmouseout="reset_tooltip('alignment-tooltip')"><span class="tooltiptext" id="alignment-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p><img src="figs/pipeline_mapping.png" width="20%" style="display: block; margin: auto;"></p>
 <p>Next step is to map the reads to determine where in the genome the
@@ -570,7 +569,7 @@ reads originated from. Many different aligners are available such as
 <a href="https://combine-lab.github.io/salmon/">Salmon</a>,
 <a href="https://sourceforge.net/projects/subread/">Subread</a>… There is no
 gold standard, but some tools are better suited for particular NGS
-analyses <span class="citation">(<label for="tufte-mn-9" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-9" class="margin-toggle">Giacomo et al. 2017<span class="marginnote">Giacomo, B, K E Hayer, E J Kim, B Di Camillo, G A FitzGerald, and G R Grant. 2017. <span>“Simulation-Based Comprehensive Benchmarking of RNA-Seq Aligners.”</span> <em>Nature Methods</em> 2 (14): 135. <a href="https://doi.org/10.1038/nmeth.4106">https://doi.org/10.1038/nmeth.4106</a>.</span>)</span>… In the case of RNAseq, it is important to
+analyses <span class="citation">(<label for="tufte-mn-6" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-6" class="margin-toggle">Giacomo et al. 2017<span class="marginnote">Giacomo, B, K E Hayer, E J Kim, B Di Camillo, G A FitzGerald, and G R Grant. 2017. <span>“Simulation-Based Comprehensive Benchmarking of RNA-Seq Aligners.”</span> <em>Nature Methods</em> 2 (14): 135. <a href="https://doi.org/10.1038/nmeth.4106">https://doi.org/10.1038/nmeth.4106</a>.</span>)</span>… In the case of RNAseq, it is important to
 use an aligner able to handle spliced reads.</p>
 <p><img src="figs/spliced_alignment.png" width="100%" style="display: block; margin: auto;"></p>
 <p>Here we show an example of what the command could look like when using
@@ -579,7 +578,7 @@ launched with default parameters. In this basic configuration,
 mandatory parameters are of course the fastq file(s) and the sequence
 of the genome on which the reads have to be aligned. In practical, the
 genome’s sequence is not given as it is but in an indexed form
-<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>. Of course many of other parameters can be fine
+<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>. Of course many of other parameters can be fine
 tuned (see the
 <a href="http://daehwankimlab.github.io/hisat2/manual/">manual</a> for more
 details). The alignment output file data is a <code>sam</code> file (see below).</p>
@@ -600,7 +599,7 @@ Each entry has 11 mandatories fields for essential mapping information
 and a variable number of other fields for aligner specific information.
 An example of few entries from a SAM
 file is displayed below.</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb128-1"><a href="sec-hts.html#cb128-1" tabindex="-1"></a><span class="fu">head</span> wsbim2122_data/RNAseq_pipeline/example.sam</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb87-1"><a href="sec-hts.html#cb87-1" tabindex="-1"></a><span class="fu">head</span> wsbim2122_data/RNAseq_pipeline/example.sam</span></code></pre></div>
 <pre><code>## DRR016707.26395247   147 1   19626495    60  101M    =   19626490    -106    GTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGGAAGTTGTAAGG   DDDDDDDDDDDDDEEEEEEEFFFFFFHCHHHJJJHHJJJJJJJJJJJJIHFJJIHJJJJJJJJJJJJJJJJJJJJJJJJJJJJIJJJJHHHHHFFFFFCCC   AS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:101    YS:i:0  YT:Z:CP NH:i:1
 ## DRR016707.26395247   99  1   19626490    60  101M    =   19626495    106 CTTCTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGGAAGTTG   CCCFFFFFHHHHHJIJJJJIJJJJJJJJJJIJJJJJJJJJJJJJJJHHIHIJJJIJJHIJJJIIIIIIJGIJJJJDHJJJHHHHHHHFFFFFFEDACEEDD   AS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:101    YS:i:0  YT:Z:CP NH:i:1
 ## DRR016707.34969377   163 1   19626487    60  101M    =   19626493    107 ATTCTTCTGTAACAATGTTATCAGTAATGCTTTAAACTCCAGCACCTGGTTATGCATTTGAAACCAAGTCTGTTTCTTGTTTTGTATTTTCTCTCTGGAAG   CC@FFFFFHFHFFHGGJCIFJGHIIIIGIIIIJIIJJJIGIIIIIIGII?:BFHGHIIIIGEHHHGIIDGGH@GGIGHJGHHHHCEHDEFDDFFEEECCEC   AS:i:0  XN:i:0  XM:i:0  XO:i:0  XG:i:0  NM:i:0  MD:Z:101    YS:i:0  YT:Z:CP NH:i:1
@@ -638,11 +637,11 @@ a very useful interactive tool for the visual exploration of genomic data.</p>
 <p>Visualising the alignments is not part of the processing pipeline
 but sometimes it can be useful..</p>
 <p><img src="figs/pipeline_IGV.png" width="60%" style="display: block; margin: auto;"></p>
-<p>IGV requires that BAM files have an associated index file<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>.
+<p>IGV requires that BAM files have an associated index file<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.
 Samtools can be used to index the BAM file. The following command would create
 the indexed SampleName.bam.bai file.</p>
 <pre><code>samtools index SampleName.bam</code></pre>
-<p>Bam file can be loaded in IGV<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>.
+<p>Bam file can be loaded in IGV<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>.
 Below is an example of visualisation of a bam file using IGV, focusing on CDKN1A gene.</p>
 <p><img src="figs/IGV.png" width="100%" style="display: block; margin: auto;"></p>
 <p>Loading a BAM file creates 3 associated tracks:</p>
@@ -652,9 +651,9 @@ Below is an example of visualisation of a bam file using IGV, focusing on CDKN1A
 <li><p>Alignment Track to view individual aligned reads</p></li>
 </ul>
 </div>
-<div id="counting" class="section level2" number="4.6">
+<div id="counting" class="section level2" number="3.6">
 <h2>
-<span class="header-section-number">4.6</span> Counting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('counting')" onmouseout="reset_tooltip('counting-tooltip')"><span class="tooltiptext" id="counting-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.6</span> Counting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('counting')" onmouseout="reset_tooltip('counting-tooltip')"><span class="tooltiptext" id="counting-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p><img src="figs/pipeline_counting.png" width="20%" style="display: block; margin: auto;"></p>
 <p>Now comes the quantification step. It can be performed with several
@@ -672,7 +671,7 @@ from the <a href="https://www.gencodegenes.org/human/">UCSC table
 browser</a>. The first few lines of
 gtf annotation file for human genome assembly GRCh38 look like this:</p>
 <p><img src="figs/gtf_example.png" width="100%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb132-1"><a href="sec-hts.html#cb132-1" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 20 wsbim2122_data/RNAseq_pipeline/Homo_sapiens.GRCh38.94.gtf</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb91-1"><a href="sec-hts.html#cb91-1" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 20 wsbim2122_data/RNAseq_pipeline/Homo_sapiens.GRCh38.94.gtf</span></code></pre></div>
 <pre><code>## #!genome-build GRCh38.p12
 ## #!genome-version GRCh38
 ## #!genome-date 2013-12
@@ -715,10 +714,10 @@ for more details).</p>
 SampleName.bam              # bam file</code></pre>
 <p>Here is an example of featurecounts output file. The last column gives
 the raw counts of each gene in that sample.</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="sec-hts.html#cb135-1" tabindex="-1"></a>counts_result <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="at">file =</span> <span class="st">"wsbim2122_data/count_data/sample1_counts.tsv.gz"</span>)</span>
-<span id="cb135-2"><a href="sec-hts.html#cb135-2" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(counts_result))</span></code></pre></div>
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-3967c31c6ebbaf88aa2d" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-3967c31c6ebbaf88aa2d">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["ENSG00000223972","ENSG00000227232","ENSG00000278267","ENSG00000243485","ENSG00000284332","ENSG00000237613"],["1;1;1;1;1;1;1;1;1","1;1;1;1;1;1;1;1;1;1;1","1","1;1;1;1;1","1","1;1;1;1;1"],["11869;12010;12179;12613;12613;12975;13221;13221;13453","14404;15005;15796;16607;16858;17233;17606;17915;18268;24738;29534","17369","29554;30267;30564;30976;30976","30366","34554;35245;35277;35721;35721"],["12227;12057;12227;12721;12697;13052;13374;14409;13670","14501;15038;15947;16765;17055;17368;17742;18061;18366;24891;29570","17436","30039;30667;30667;31109;31097","30503","35174;35481;35481;36073;36081"],["+;+;+;+;+;+;+;+;+","-;-;-;-;-;-;-;-;-;-;-","-","+;+;+;+;+","+","-;-;-;-;-"],[1735,1351,68,1021,138,1219],[0,14,8,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Geneid<\/th>\n      <th>Chr<\/th>\n      <th>Start<\/th>\n      <th>End<\/th>\n      <th>Strand<\/th>\n      <th>Length<\/th>\n      <th>../processed_data/bam/sample1.bam<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[6,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><div class="question">
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="sec-hts.html#cb94-1" tabindex="-1"></a>counts_result <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="at">file =</span> <span class="st">"wsbim2122_data/count_data/sample1_counts.tsv.gz"</span>)</span>
+<span id="cb94-2"><a href="sec-hts.html#cb94-2" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(counts_result))</span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-521bc1297a456e18ef02" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-521bc1297a456e18ef02">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["ENSG00000223972","ENSG00000227232","ENSG00000278267","ENSG00000243485","ENSG00000284332","ENSG00000237613"],["1;1;1;1;1;1;1;1;1","1;1;1;1;1;1;1;1;1;1;1","1","1;1;1;1;1","1","1;1;1;1;1"],["11869;12010;12179;12613;12613;12975;13221;13221;13453","14404;15005;15796;16607;16858;17233;17606;17915;18268;24738;29534","17369","29554;30267;30564;30976;30976","30366","34554;35245;35277;35721;35721"],["12227;12057;12227;12721;12697;13052;13374;14409;13670","14501;15038;15947;16765;17055;17368;17742;18061;18366;24891;29570","17436","30039;30667;30667;31109;31097","30503","35174;35481;35481;36073;36081"],["+;+;+;+;+;+;+;+;+","-;-;-;-;-;-;-;-;-;-;-","-","+;+;+;+;+","+","-;-;-;-;-"],[1735,1351,68,1021,138,1219],[0,14,8,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Geneid<\/th>\n      <th>Chr<\/th>\n      <th>Start<\/th>\n      <th>End<\/th>\n      <th>Strand<\/th>\n      <th>Length<\/th>\n      <th>../processed_data/bam/sample1.bam<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[6,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><div class="question">
 <p class="question-begin">
 ► Question
 </p>
@@ -744,32 +743,32 @@ the raw counts of each gene in that sample.</p>
 <ol style="list-style-type: decimal">
 <li>How many genes are tested ?</li>
 </ol>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="sec-hts.html#cb136-1" tabindex="-1"></a><span class="fu">nrow</span>(counts_result)</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="sec-hts.html#cb95-1" tabindex="-1"></a><span class="fu">nrow</span>(counts_result)</span></code></pre></div>
 <pre><code>## [1] 58735</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>How many reads were assigned to genes?</li>
 </ol>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="sec-hts.html#cb138-1" tabindex="-1"></a>counts_result <span class="ot">&lt;-</span> counts_result <span class="sc">%&gt;%</span></span>
-<span id="cb138-2"><a href="sec-hts.html#cb138-2" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">counts =</span> <span class="st">"../processed_data/bam/sample1.bam"</span>)</span>
-<span id="cb138-3"><a href="sec-hts.html#cb138-3" tabindex="-1"></a><span class="fu">sum</span>(counts_result<span class="sc">$</span>counts)</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="sec-hts.html#cb97-1" tabindex="-1"></a>counts_result <span class="ot">&lt;-</span> counts_result <span class="sc">%&gt;%</span></span>
+<span id="cb97-2"><a href="sec-hts.html#cb97-2" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">counts =</span> <span class="st">"../processed_data/bam/sample1.bam"</span>)</span>
+<span id="cb97-3"><a href="sec-hts.html#cb97-3" tabindex="-1"></a><span class="fu">sum</span>(counts_result<span class="sc">$</span>counts)</span></code></pre></div>
 <pre><code>## [1] 10527830</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Inspect the counts. What is the maximum value? How many genes have zero counts ?</li>
 </ol>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="sec-hts.html#cb140-1" tabindex="-1"></a><span class="fu">summary</span>(counts_result<span class="sc">$</span>counts)</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="sec-hts.html#cb99-1" tabindex="-1"></a><span class="fu">summary</span>(counts_result<span class="sc">$</span>counts)</span></code></pre></div>
 <pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
 ##      0.0      0.0      0.0    179.2      6.0 143371.0</code></pre>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="sec-hts.html#cb142-1" tabindex="-1"></a>counts_result <span class="sc">%&gt;%</span></span>
-<span id="cb142-2"><a href="sec-hts.html#cb142-2" tabindex="-1"></a>  <span class="fu">filter</span>(counts <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb142-3"><a href="sec-hts.html#cb142-3" tabindex="-1"></a>  <span class="fu">nrow</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="sec-hts.html#cb101-1" tabindex="-1"></a>counts_result <span class="sc">%&gt;%</span></span>
+<span id="cb101-2"><a href="sec-hts.html#cb101-2" tabindex="-1"></a>  <span class="fu">filter</span>(counts <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb101-3"><a href="sec-hts.html#cb101-3" tabindex="-1"></a>  <span class="fu">nrow</span>()</span></code></pre></div>
 <pre><code>## [1] 36035</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Plot the distribution of counts. How does it look like?</li>
 </ol>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="sec-hts.html#cb144-1" tabindex="-1"></a>counts_result <span class="sc">%&gt;%</span></span>
-<span id="cb144-2"><a href="sec-hts.html#cb144-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log2</span>(counts <span class="sc">+</span> <span class="dv">1</span>))) <span class="sc">+</span></span>
-<span id="cb144-3"><a href="sec-hts.html#cb144-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>)</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-62-1.png" width="672"></p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="sec-hts.html#cb103-1" tabindex="-1"></a>counts_result <span class="sc">%&gt;%</span></span>
+<span id="cb103-2"><a href="sec-hts.html#cb103-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log2</span>(counts <span class="sc">+</span> <span class="dv">1</span>))) <span class="sc">+</span></span>
+<span id="cb103-3"><a href="sec-hts.html#cb103-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>)</span></code></pre></div>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-60-1.png" width="672"></p>
 <p>Note that a “pseudo-count” was added before the log2 transformation of the counts,
 to avoid elimination of counts equal to zero.</p>
 <p class="solution-end">
@@ -778,9 +777,9 @@ to avoid elimination of counts equal to zero.</p>
 </div>
 </div>
 </div>
-<div id="preparing-the-count-matrix" class="section level2" number="4.7">
+<div id="preparing-the-count-matrix" class="section level2" number="3.7">
 <h2>
-<span class="header-section-number">4.7</span> Preparing the count matrix<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('preparing-the-count-matrix')" onmouseout="reset_tooltip('preparing-the-count-matrix-tooltip')"><span class="tooltiptext" id="preparing-the-count-matrix-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">3.7</span> Preparing the count matrix<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('preparing-the-count-matrix')" onmouseout="reset_tooltip('preparing-the-count-matrix-tooltip')"><span class="tooltiptext" id="preparing-the-count-matrix-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>The aim of an RNAseq experiment is often to compare different types of
 cells, or to compare treated cells to control cells, to see if some
@@ -814,28 +813,28 @@ in the folder <code>wsbim_data/count_data/</code>. Use these files to create a c
 ► Solution<span id="sol-start-8" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-8', 'sol-start-8')"></span>
 </p>
 <div id="sol-body-8" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="sec-hts.html#cb146-1" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"wsbim2122_data/count_data"</span>,</span>
-<span id="cb146-2"><a href="sec-hts.html#cb146-2" tabindex="-1"></a>                      <span class="at">pattern =</span> <span class="st">"*tsv.gz"</span>,</span>
-<span id="cb146-3"><a href="sec-hts.html#cb146-3" tabindex="-1"></a>                      <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb146-4"><a href="sec-hts.html#cb146-4" tabindex="-1"></a>samples</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="sec-hts.html#cb105-1" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"wsbim2122_data/count_data"</span>,</span>
+<span id="cb105-2"><a href="sec-hts.html#cb105-2" tabindex="-1"></a>                      <span class="at">pattern =</span> <span class="st">"*tsv.gz"</span>,</span>
+<span id="cb105-3"><a href="sec-hts.html#cb105-3" tabindex="-1"></a>                      <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb105-4"><a href="sec-hts.html#cb105-4" tabindex="-1"></a>samples</span></code></pre></div>
 <pre><code>## [1] "wsbim2122_data/count_data/sample1_counts.tsv.gz"
 ## [2] "wsbim2122_data/count_data/sample2_counts.tsv.gz"
 ## [3] "wsbim2122_data/count_data/sample3_counts.tsv.gz"
 ## [4] "wsbim2122_data/count_data/sample4_counts.tsv.gz"
 ## [5] "wsbim2122_data/count_data/sample5_counts.tsv.gz"
 ## [6] "wsbim2122_data/count_data/sample6_counts.tsv.gz"</code></pre>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="sec-hts.html#cb148-1" tabindex="-1"></a>counts <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="at">file =</span> samples[<span class="dv">1</span>]) <span class="sc">%&gt;%</span></span>
-<span id="cb148-2"><a href="sec-hts.html#cb148-2" tabindex="-1"></a>    <span class="fu">select</span>(Geneid, <span class="fu">ends_with</span>(<span class="st">'.bam'</span>))</span>
-<span id="cb148-3"><a href="sec-hts.html#cb148-3" tabindex="-1"></a></span>
-<span id="cb148-4"><a href="sec-hts.html#cb148-4" tabindex="-1"></a><span class="cf">for</span> (sample <span class="cf">in</span> samples[<span class="sc">-</span><span class="dv">1</span>]){</span>
-<span id="cb148-5"><a href="sec-hts.html#cb148-5" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(sample) <span class="sc">%&gt;%</span></span>
-<span id="cb148-6"><a href="sec-hts.html#cb148-6" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">ends_with</span>(<span class="st">'.bam'</span>))</span>
-<span id="cb148-7"><a href="sec-hts.html#cb148-7" tabindex="-1"></a>  counts <span class="ot">&lt;-</span> <span class="fu">cbind</span>(counts, tmp)</span>
-<span id="cb148-8"><a href="sec-hts.html#cb148-8" tabindex="-1"></a>}</span>
-<span id="cb148-9"><a href="sec-hts.html#cb148-9" tabindex="-1"></a></span>
-<span id="cb148-10"><a href="sec-hts.html#cb148-10" tabindex="-1"></a><span class="fu">names</span>(counts) <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="at">pattern =</span> <span class="st">".bam$"</span>, <span class="st">''</span>, <span class="fu">names</span>(counts))</span>
-<span id="cb148-11"><a href="sec-hts.html#cb148-11" tabindex="-1"></a><span class="fu">names</span>(counts) <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="at">pattern =</span> <span class="st">"../processed_data/bam/"</span>, <span class="st">''</span>, <span class="fu">names</span>(counts))</span>
-<span id="cb148-12"><a href="sec-hts.html#cb148-12" tabindex="-1"></a><span class="fu">head</span>(counts)</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="sec-hts.html#cb107-1" tabindex="-1"></a>counts <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="at">file =</span> samples[<span class="dv">1</span>]) <span class="sc">%&gt;%</span></span>
+<span id="cb107-2"><a href="sec-hts.html#cb107-2" tabindex="-1"></a>    <span class="fu">select</span>(Geneid, <span class="fu">ends_with</span>(<span class="st">'.bam'</span>))</span>
+<span id="cb107-3"><a href="sec-hts.html#cb107-3" tabindex="-1"></a></span>
+<span id="cb107-4"><a href="sec-hts.html#cb107-4" tabindex="-1"></a><span class="cf">for</span> (sample <span class="cf">in</span> samples[<span class="sc">-</span><span class="dv">1</span>]){</span>
+<span id="cb107-5"><a href="sec-hts.html#cb107-5" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(sample) <span class="sc">%&gt;%</span></span>
+<span id="cb107-6"><a href="sec-hts.html#cb107-6" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">ends_with</span>(<span class="st">'.bam'</span>))</span>
+<span id="cb107-7"><a href="sec-hts.html#cb107-7" tabindex="-1"></a>  counts <span class="ot">&lt;-</span> <span class="fu">cbind</span>(counts, tmp)</span>
+<span id="cb107-8"><a href="sec-hts.html#cb107-8" tabindex="-1"></a>}</span>
+<span id="cb107-9"><a href="sec-hts.html#cb107-9" tabindex="-1"></a></span>
+<span id="cb107-10"><a href="sec-hts.html#cb107-10" tabindex="-1"></a><span class="fu">names</span>(counts) <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="at">pattern =</span> <span class="st">".bam$"</span>, <span class="st">''</span>, <span class="fu">names</span>(counts))</span>
+<span id="cb107-11"><a href="sec-hts.html#cb107-11" tabindex="-1"></a><span class="fu">names</span>(counts) <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="at">pattern =</span> <span class="st">"../processed_data/bam/"</span>, <span class="st">''</span>, <span class="fu">names</span>(counts))</span>
+<span id="cb107-12"><a href="sec-hts.html#cb107-12" tabindex="-1"></a><span class="fu">head</span>(counts)</span></code></pre></div>
 <pre><code>##            Geneid sample1 sample2 sample3 sample4 sample5 sample6
 ## 1 ENSG00000223972       0       0       0       0       0       1
 ## 2 ENSG00000227232      14      28      17      40      16      13
@@ -855,17 +854,17 @@ it will be covered in the next chapter.</p>
 </div>
 <div class="footnotes">
 <hr>
-<ol start="5">
-<li id="fn5"><p>Genome indexing allows the aligner to quickly find
+<ol start="4">
+<li id="fn4"><p>Genome indexing allows the aligner to quickly find
 potential alignment sites for query sequences in a genome, which saves
 considerable time during alignment. Frequently used genome (human,
 mouse, rat…) already have indexed versions that can be downloaded
 directly. When working with another reference genome, a specific
-indexed genome has to be built.<a href="sec-hts.html#fnref5" class="footnote-back">↩︎</a></p></li>
-<li id="fn6"><p>Indexing a BAM file allows IGV to quickly extract alignments overlapping
-particular genomic regions<a href="sec-hts.html#fnref6" class="footnote-back">↩︎</a></p></li>
-<li id="fn7"><p>Note that the index file must reside in the same directory as the bam
-file that it indexes, and it must have the same basename<a href="sec-hts.html#fnref7" class="footnote-back">↩︎</a></p></li>
+indexed genome has to be built.<a href="sec-hts.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Indexing a BAM file allows IGV to quickly extract alignments overlapping
+particular genomic regions<a href="sec-hts.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>Note that the index file must reside in the same directory as the bam
+file that it indexes, and it must have the same basename<a href="sec-hts.html#fnref6" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 </body></html>

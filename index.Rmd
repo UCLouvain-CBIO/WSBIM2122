@@ -22,10 +22,10 @@ The [WSBIM2122](https://uclouvain.be/cours-2021-wsbim2122.html) course
 is a project-based course that teaches the analysis of quantitative
 omics data. It is composed of three major parts:
 
-- Introductory material about the command line interface, advanced
-  usage of R markdown for reports and slides, linear models, and
-  utilisation and interpretation of gene set enrichment and
-  over-representation analyses (GSEA).
+- Introductory material about (advanced) usage of R markdown for
+  reports and slides, linear models, and utilisation and
+  interpretation of gene set enrichment and over-representation
+  analyses (GSEA).
 
 - Project 1: analysis and interpretation of RNA-Seq data, including
   high throughput sequencing (HTS) data processing.
@@ -50,14 +50,17 @@ number of students is known.
 
 Tentative schedule for the course.
 
-- Shell and Rmd
-- Linear models
-- Project 1: lecture on HTS, RNA-Seq and
-- Project 1 (cont'd): Gene set enrichment
+- Short presentations: shell (see \@ref(sec-cli)) and Rmd (chapter
+  \@ref(sec-rmd)).
+- Linear models (chapter \@ref(sec-linmod)).
+- Project 1: lectures on HTS (chapter \@ref(sec-hts)) and RNA-Seq
+  (chapter \@ref(sec-rnaseq)).
+- Project 1 (cont'd): Gene set enrichment (chapter \@ref(sec-gsea)).
 - QA session for project 1
 - Project 1 presentations
 - Submission of the 1st report
-- Project 2: lecture on MS and quantitative proteomics
+- Project 2: lectures on mass spectrometry (chapter \@ref(sec-ms)) and
+  quantitative proteomics (chapter \@ref(sec-prot)).
 - QA session for project 2
 - Project 2 presentations
 - Submission of the 2nd report
@@ -130,21 +133,4 @@ and then loaded with
 
 ```{r rwsbim1322, message = FALSE, warning = FALSE}
 library("rWSBIM2122")
-```
-
-To build this book, you'll need `bookdown` [@R-bookdown] and a
-fork[^msmbfork] of [`msmbstyle`
-style](https://github.com/grimbough/msmbstyle/) [@R-msmbstyle].
-
-[^msmbfork]: https://github.com/lgatto/msmbstyle
-
-```{r combilebook1, eval=FALSE}
-install.packages("bookdown")
-devtools::install_github("lgatto/msmbstyle")
-```
-
-In the course's work directory, simply type
-
-```{r combilebook2, eval=FALSE}
-bookdown::render_book(".")
 ```

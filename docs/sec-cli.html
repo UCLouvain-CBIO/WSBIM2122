@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 1 The shell | Omics Data Analysis" />
+<meta property="og:title" content="Chapter 10 Annex- the shell | Omics Data Analysis" />
 <meta property="og:type" content="book" />
 
 <meta property="og:description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain." />
@@ -24,7 +24,7 @@ MathJax.Hub.Config({
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
-<title>Chapter 1 The shell | Omics Data Analysis</title>
+<title>Chapter 10 Annex- the shell | Omics Data Analysis</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -188,25 +188,24 @@ div.csl-indent {
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
 <a href="index.html" id="toc-preamble">Preamble</a>
-<a id="active-page" href="sec-cli.html" id="toc-sec-cli"><span class="toc-section-number">1</span> The shell</a><ul class="toc-sections">
-<li class="toc"><a href="#introduction"> Introduction</a></li>
+<a href="sec-rmd.html" id="toc-sec-rmd"><span class="toc-section-number">1</span> R markdown</a>
+<a href="sec-linmod.html" id="toc-sec-linmod"><span class="toc-section-number">2</span> Linear models</a>
+<a href="sec-hts.html" id="toc-sec-hts"><span class="toc-section-number">3</span> High throughput sequencing</a>
+<a href="sec-rnaseq.html" id="toc-sec-rnaseq"><span class="toc-section-number">4</span> Differential expression analysis</a>
+<a href="sec-design.html" id="toc-sec-design"><span class="toc-section-number">5</span> More complex experimental design</a>
+<a href="sec-gsea.html" id="toc-sec-gsea"><span class="toc-section-number">6</span> Enrichment analyses</a>
+<a href="sec-ms.html" id="toc-sec-ms"><span class="toc-section-number">7</span> Mass spectrometry</a>
+<a href="sec-prot.html" id="toc-sec-prot"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
+<a href="sec-ccl.html" id="toc-sec-ccl"><span class="toc-section-number">9</span> Conclusions</a>
+<a id="active-page" href="sec-cli.html" id="toc-sec-cli"><span class="toc-section-number">10</span> Annex- the shell</a><ul class="toc-sections">
+<li class="toc"><a href="#introduction-2"> Introduction</a></li>
 <li class="toc"><a href="#navigating-files-and-directories"> Navigating Files and Directories</a></li>
 <li class="toc"><a href="#working-with-files-and-directories"> Working with Files and Directories</a></li>
 <li class="toc"><a href="#data-analysis-in-the-shell"> Data analysis in the shell</a></li>
 <li class="toc"><a href="#writing-scripts"> Writing scripts</a></li>
-<li class="toc"><a href="#references"> References</a></li>
+<li class="toc"><a href="#references-1"> References</a></li>
 </ul>
-<a href="sec-rmd.html" id="toc-sec-rmd"><span class="toc-section-number">2</span> R markdown</a>
-<a href="sec-linmod.html" id="toc-sec-linmod"><span class="toc-section-number">3</span> Linear models</a>
-<a href="sec-hts.html" id="toc-sec-hts"><span class="toc-section-number">4</span> High throughput sequencing</a>
-<a href="sec-rnaseq.html" id="toc-sec-rnaseq"><span class="toc-section-number">5</span> Differential expression analysis</a>
-<a href="sec-design.html" id="toc-sec-design"><span class="toc-section-number">6</span> More complex experimental design</a>
-<a href="sec-gsea.html" id="toc-sec-gsea"><span class="toc-section-number">7</span> Enrichment analyses</a>
-<a href="sec-ms.html" id="toc-sec-ms"><span class="toc-section-number">8</span> Mass spectrometry</a>
-<a href="sec-prot.html" id="toc-sec-prot"><span class="toc-section-number">9</span> Quantitative proteomics data analysis</a>
-<a href="sec-ccl.html" id="toc-sec-ccl"><span class="toc-section-number">10</span> Conclusions</a>
-<a href="sec-anx.html" id="toc-sec-anx"><span class="toc-section-number">11</span> Annex</a>
-<a href="sec-si.html" id="toc-sec-si"><span class="toc-section-number">12</span> Session information</a>
+<a href="sec-anx.html" id="toc-sec-anx"><span class="toc-section-number">11</span> Course and session information</a>
 </div>
 </li>
 </ul>
@@ -216,16 +215,16 @@ div.csl-indent {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec-cli" class="section level1" number="1">
+<html><body><div id="sec-cli" class="section level1" number="10">
 <h1>
-<span class="header-section-number">Chapter 1</span> The shell</h1>
+<span class="header-section-number">Chapter 10</span> Annex- the shell</h1>
 <p>This chapter is based on the Data Carpentries <a href="https://swcarpentry.github.io/shell-novice/">The Unix
 Shell</a> and <a href="https://datacarpentry.org/shell-genomics/">Introduction
 to the Command Line for
 Genomics</a> lessons.</p>
-<div id="introduction" class="section level2" number="1.1">
+<div id="introduction-2" class="section level2" number="10.1">
 <h2>
-<span class="header-section-number">1.1</span> Introduction<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('introduction')" onmouseout="reset_tooltip('introduction-tooltip')"><span class="tooltiptext" id="introduction-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">10.1</span> Introduction<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('introduction-2')" onmouseout="reset_tooltip('introduction-2-tooltip')"><span class="tooltiptext" id="introduction-2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Learning objectives:</p>
 <ul>
@@ -317,9 +316,9 @@ ks: command not found</code></pre>
 corresponding to that command is not installed.</p>
 </div>
 </div>
-<div id="navigating-files-and-directories" class="section level2" number="1.2">
+<div id="navigating-files-and-directories" class="section level2" number="10.2">
 <h2>
-<span class="header-section-number">1.2</span> Navigating Files and Directories<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('navigating-files-and-directories')" onmouseout="reset_tooltip('navigating-files-and-directories-tooltip')"><span class="tooltiptext" id="navigating-files-and-directories-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">10.2</span> Navigating Files and Directories<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('navigating-files-and-directories')" onmouseout="reset_tooltip('navigating-files-and-directories-tooltip')"><span class="tooltiptext" id="navigating-files-and-directories-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Let’s find out where we are by running a command called pwd (which
 stands for “print working directory”). At any moment, our current
@@ -332,7 +331,7 @@ system:</p>
 /home/lgatto</code></pre>
 <p>To create a shared set of files and directories, we will use the
 <code>rWSBIM2122::prepare_shell()</code> function in RStudio’s R console:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="sec-cli.html#cb9-1" tabindex="-1"></a>rWSBIM2122<span class="sc">::</span><span class="fu">prepare_shell</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="sec-cli.html#cb446-1" tabindex="-1"></a>rWSBIM2122<span class="sc">::</span><span class="fu">prepare_shell</span>()</span></code></pre></div>
 <pre><code>## Preparing shell data in 'wsbim2122_data'.</code></pre>
 <pre><code>## wsbim2122_data is ready.</code></pre>
 <p>This R command could also be executed from the shell by executing a
@@ -415,9 +414,9 @@ directory or file name.</p>
 <pre><code>$ cd wsbim2122_date
 cd: wsbim2122_date: No such file or directory</code></pre>
 </div>
-<div id="hidden-files-and-directories" class="section level3" number="1.2.1">
+<div id="hidden-files-and-directories" class="section level3" number="10.2.1">
 <h3>
-<span class="header-section-number">1.2.1</span> Hidden files and directories<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('hidden-files-and-directories')" onmouseout="reset_tooltip('hidden-files-and-directories-tooltip')"><span class="tooltiptext" id="hidden-files-and-directories-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">10.2.1</span> Hidden files and directories<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('hidden-files-and-directories')" onmouseout="reset_tooltip('hidden-files-and-directories-tooltip')"><span class="tooltiptext" id="hidden-files-and-directories-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>Files and directories that start with a <code>.</code> are hidden, i.e that they
 won’t show up with <code>ls</code>. To display <em>all</em> files and directories,
@@ -454,9 +453,9 @@ system.</p></li>
 </div>
 </div>
 </div>
-<div id="working-with-files-and-directories" class="section level2" number="1.3">
+<div id="working-with-files-and-directories" class="section level2" number="10.3">
 <h2>
-<span class="header-section-number">1.3</span> Working with Files and Directories<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('working-with-files-and-directories')" onmouseout="reset_tooltip('working-with-files-and-directories-tooltip')"><span class="tooltiptext" id="working-with-files-and-directories-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">10.3</span> Working with Files and Directories<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('working-with-files-and-directories')" onmouseout="reset_tooltip('working-with-files-and-directories-tooltip')"><span class="tooltiptext" id="working-with-files-and-directories-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>To create a directory, you can use the <code>mkdir</code> command, short for
 <em>make directory</em>:</p>
@@ -671,9 +670,9 @@ wsbim2122_data/new_dir/data/sim_100.csv</code></pre>
 </div>
 </div>
 </div>
-<div id="data-analysis-in-the-shell" class="section level2" number="1.4">
+<div id="data-analysis-in-the-shell" class="section level2" number="10.4">
 <h2>
-<span class="header-section-number">1.4</span> Data analysis in the shell<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('data-analysis-in-the-shell')" onmouseout="reset_tooltip('data-analysis-in-the-shell-tooltip')"><span class="tooltiptext" id="data-analysis-in-the-shell-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">10.4</span> Data analysis in the shell<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('data-analysis-in-the-shell')" onmouseout="reset_tooltip('data-analysis-in-the-shell-tooltip')"><span class="tooltiptext" id="data-analysis-in-the-shell-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Above, you searched for the <code>TATATA</code> pattern in one of the <code>fas</code>
 files. We could do the same thing without opening the file with the
@@ -787,9 +786,9 @@ single file, <code>all_sims.csv</code> containing all the simulation data.</p>
 </div>
 </div>
 </div>
-<div id="writing-scripts" class="section level2" number="1.5">
+<div id="writing-scripts" class="section level2" number="10.5">
 <h2>
-<span class="header-section-number">1.5</span> Writing scripts<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('writing-scripts')" onmouseout="reset_tooltip('writing-scripts-tooltip')"><span class="tooltiptext" id="writing-scripts-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">10.5</span> Writing scripts<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('writing-scripts')" onmouseout="reset_tooltip('writing-scripts-tooltip')"><span class="tooltiptext" id="writing-scripts-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>A really powerful thing about the command line is that you can write
 scripts. Scripts let you save commands to run them and also lets you
@@ -830,9 +829,9 @@ outside of your group can do with the file. We’re going to concentrate
 on the three positions that deal with your permissions (as the file
 owner).</p>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-3"></span>
+<span style="display:block;" id="fig:unnamed-chunk-218"></span>
 <p class="caption marginnote shownote">
-Figure 1.1: The 10 slots defining the file permission (figure from the Data Carpentry’s <a href="https://datacarpentry.org/shell-genomics/03-working-with-files/"><em>Working with Files and Directories</em></a> lesson.
+Figure 10.1: The 10 slots defining the file permission (figure from the Data Carpentry’s <a href="https://datacarpentry.org/shell-genomics/03-working-with-files/"><em>Working with Files and Directories</em></a> lesson.
 </p>
 <img src="figs/rwx_figure.svg" alt="The 10 slots defining the file permission (figure from the Data Carpentry's [*Working with Files and Directories*](https://datacarpentry.org/shell-genomics/03-working-with-files/) lesson." width="100%">
 </div>
@@ -870,12 +869,12 @@ delete a directory using the <code>-r</code> (recursive) option.</p>
 <p>To complete this chapter on shell, let’s conclude by mentioning the R
 <code>system()</code> and <code>system2()</code> functions, that enable to invoke a system
 command such as a shell script:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="sec-cli.html#cb43-1" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"combine_all_simulations.sh"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="sec-cli.html#cb480-1" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"combine_all_simulations.sh"</span>)</span></code></pre></div>
 </div>
 </div>
-<div id="references" class="section level2" number="1.6">
+<div id="references-1" class="section level2" number="10.6">
 <h2>
-<span class="header-section-number">1.6</span> References<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('references')" onmouseout="reset_tooltip('references-tooltip')"><span class="tooltiptext" id="references-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">10.6</span> References<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('references-1')" onmouseout="reset_tooltip('references-1-tooltip')"><span class="tooltiptext" id="references-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <ul>
 <li>The Data Carpentries <a href="https://swcarpentry.github.io/shell-novice/">The Unix
@@ -883,14 +882,14 @@ Shell</a> and
 <a href="https://datacarpentry.org/shell-genomics/">Introduction to the Command Line for
 Genomics</a> lessons.</li>
 <li>
-<em>Bioinformatics Data Skills</em> <span class="citation">(<label for="tufte-mn-6" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-6" class="margin-toggle">Buffalo 2015<span class="marginnote">Buffalo, Vince. 2015. <em>Bioinformatics Data Skills</em>. O’Reilly Media, Inc.</span>)</span>.</li>
+<em>Bioinformatics Data Skills</em> <span class="citation">(<label for="tufte-mn-24" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-24" class="margin-toggle">Buffalo 2015<span class="marginnote">Buffalo, Vince. 2015. <em>Bioinformatics Data Skills</em>. O’Reilly Media, Inc.</span>)</span>.</li>
 </ul>
 </div>
 </div></body></html>
 
 <p style="text-align: center;">
-<a href="index.html"><button class="btn btn-default">Previous</button></a>
-<a href="sec-rmd.html"><button class="btn btn-default">Next</button></a>
+<a href="sec-ccl.html"><button class="btn btn-default">Previous</button></a>
+<a href="sec-anx.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
 2023-08-28

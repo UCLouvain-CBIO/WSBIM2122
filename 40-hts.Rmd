@@ -15,9 +15,9 @@ sensitive and accurate tool that has revolutionised the study of
 transcriptomes. The objective is to give an overview of the
 technology.
 
-*RNA Sequencing Data: Hitchhiker's Guide to Expression Analysis*[@Van_den_Berge:2019]
-is an interesting review describing RNA-seq
-technology and data analysis.
+*RNA Sequencing Data: Hitchhiker's Guide to Expression
+Analysis*[@Van_den_Berge:2019] is an interesting review describing
+RNA-seq technology and data analysis.
 
 
 We will pass through the different steps starting from the library

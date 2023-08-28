@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 2 R markdown | Omics Data Analysis" />
+<meta property="og:title" content="Chapter 1 R markdown | Omics Data Analysis" />
 <meta property="og:type" content="book" />
 
 <meta property="og:description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain." />
@@ -24,7 +24,7 @@ MathJax.Hub.Config({
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
-<title>Chapter 2 R markdown | Omics Data Analysis</title>
+<title>Chapter 1 R markdown | Omics Data Analysis</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -188,24 +188,23 @@ div.csl-indent {
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
 <a href="index.html" id="toc-preamble">Preamble</a>
-<a href="sec-cli.html" id="toc-sec-cli"><span class="toc-section-number">1</span> The shell</a>
-<a id="active-page" href="sec-rmd.html" id="toc-sec-rmd"><span class="toc-section-number">2</span> R markdown</a><ul class="toc-sections">
+<a id="active-page" href="sec-rmd.html" id="toc-sec-rmd"><span class="toc-section-number">1</span> R markdown</a><ul class="toc-sections">
 <li class="toc"><a href="#knitting-from-within-r"> Knitting from within R</a></li>
 <li class="toc"><a href="#caching"> Caching</a></li>
 <li class="toc"><a href="#writing-slides-in-rmarkdown"> Writing slides in Rmarkdown</a></li>
 <li class="toc"><a href="#citations"> Citations</a></li>
-<li class="toc"><a href="#references-1"> References</a></li>
+<li class="toc"><a href="#references"> References</a></li>
 </ul>
-<a href="sec-linmod.html" id="toc-sec-linmod"><span class="toc-section-number">3</span> Linear models</a>
-<a href="sec-hts.html" id="toc-sec-hts"><span class="toc-section-number">4</span> High throughput sequencing</a>
-<a href="sec-rnaseq.html" id="toc-sec-rnaseq"><span class="toc-section-number">5</span> Differential expression analysis</a>
-<a href="sec-design.html" id="toc-sec-design"><span class="toc-section-number">6</span> More complex experimental design</a>
-<a href="sec-gsea.html" id="toc-sec-gsea"><span class="toc-section-number">7</span> Enrichment analyses</a>
-<a href="sec-ms.html" id="toc-sec-ms"><span class="toc-section-number">8</span> Mass spectrometry</a>
-<a href="sec-prot.html" id="toc-sec-prot"><span class="toc-section-number">9</span> Quantitative proteomics data analysis</a>
-<a href="sec-ccl.html" id="toc-sec-ccl"><span class="toc-section-number">10</span> Conclusions</a>
-<a href="sec-anx.html" id="toc-sec-anx"><span class="toc-section-number">11</span> Annex</a>
-<a href="sec-si.html" id="toc-sec-si"><span class="toc-section-number">12</span> Session information</a>
+<a href="sec-linmod.html" id="toc-sec-linmod"><span class="toc-section-number">2</span> Linear models</a>
+<a href="sec-hts.html" id="toc-sec-hts"><span class="toc-section-number">3</span> High throughput sequencing</a>
+<a href="sec-rnaseq.html" id="toc-sec-rnaseq"><span class="toc-section-number">4</span> Differential expression analysis</a>
+<a href="sec-design.html" id="toc-sec-design"><span class="toc-section-number">5</span> More complex experimental design</a>
+<a href="sec-gsea.html" id="toc-sec-gsea"><span class="toc-section-number">6</span> Enrichment analyses</a>
+<a href="sec-ms.html" id="toc-sec-ms"><span class="toc-section-number">7</span> Mass spectrometry</a>
+<a href="sec-prot.html" id="toc-sec-prot"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
+<a href="sec-ccl.html" id="toc-sec-ccl"><span class="toc-section-number">9</span> Conclusions</a>
+<a href="sec-cli.html" id="toc-sec-cli"><span class="toc-section-number">10</span> Annex- the shell</a>
+<a href="sec-anx.html" id="toc-sec-anx"><span class="toc-section-number">11</span> Course and session information</a>
 </div>
 </li>
 </ul>
@@ -215,18 +214,18 @@ div.csl-indent {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec-rmd" class="section level1" number="2">
+<html><body><div id="sec-rmd" class="section level1" number="1">
 <h1>
-<span class="header-section-number">Chapter 2</span> R markdown</h1>
+<span class="header-section-number">Chapter 1</span> R markdown</h1>
 <p>We have already seen how to implement <a href="https://uclouvain-cbio.github.io/WSBIM1207/sec-rr.html">reproducible
 report</a> using
 the
 <a href="https://uclouvain-cbio.github.io/WSBIM1207/sec-rr.html#knitr-and-rmarkdown">Rmarkdown</a>
 <a href="http://rmarkdown.rstudio.com/">package</a> in the WSBIM1207 cours.</p>
 <p>Here, we are going to see a few additional capabilities</p>
-<div id="knitting-from-within-r" class="section level2" number="2.1">
+<div id="knitting-from-within-r" class="section level2" number="1.1">
 <h2>
-<span class="header-section-number">2.1</span> Knitting from within R<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('knitting-from-within-r')" onmouseout="reset_tooltip('knitting-from-within-r-tooltip')"><span class="tooltiptext" id="knitting-from-within-r-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">1.1</span> Knitting from within R<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('knitting-from-within-r')" onmouseout="reset_tooltip('knitting-from-within-r-tooltip')"><span class="tooltiptext" id="knitting-from-within-r-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>When compiling Rmd documents with many code chunks, it becomes
 difficult to quickly locate bugs in case of errors:</p>
@@ -282,19 +281,19 @@ List of 1
 available. A typical example is when you use R on a server through the
 terminal. In such cases, you can directly use the
 <code>rmarkdown::render()</code> function:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="sec-rmd.html#cb46-1" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render</span>(<span class="st">"report.Rmd"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="sec-rmd.html#cb5-1" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render</span>(<span class="st">"report.Rmd"</span>)</span></code></pre></div>
 <p>It is also possibly to define the output format, which will override
 the output format defined in the header:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="sec-rmd.html#cb47-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rmarkdown"</span>)</span>
-<span id="cb47-2"><a href="sec-rmd.html#cb47-2" tabindex="-1"></a><span class="fu">render</span>(<span class="st">"report.Rmd"</span>, <span class="at">output_format =</span> <span class="fu">pdf_document</span>())</span>
-<span id="cb47-3"><a href="sec-rmd.html#cb47-3" tabindex="-1"></a><span class="fu">render</span>(<span class="st">"report.Rmd"</span>, <span class="at">output_format =</span> <span class="fu">html_document</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="sec-rmd.html#cb6-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rmarkdown"</span>)</span>
+<span id="cb6-2"><a href="sec-rmd.html#cb6-2" tabindex="-1"></a><span class="fu">render</span>(<span class="st">"report.Rmd"</span>, <span class="at">output_format =</span> <span class="fu">pdf_document</span>())</span>
+<span id="cb6-3"><a href="sec-rmd.html#cb6-3" tabindex="-1"></a><span class="fu">render</span>(<span class="st">"report.Rmd"</span>, <span class="at">output_format =</span> <span class="fu">html_document</span>())</span></code></pre></div>
 <p>Note that the <code>pdf_document()</code> and <code>html_document()</code> functions are
 also defined in the <code>rmarkdown</code> package. Make sure to either load the
 package or prefix it all functions.</p>
 </div>
-<div id="caching" class="section level2" number="2.2">
+<div id="caching" class="section level2" number="1.2">
 <h2>
-<span class="header-section-number">2.2</span> Caching<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('caching')" onmouseout="reset_tooltip('caching-tooltip')"><span class="tooltiptext" id="caching-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">1.2</span> Caching<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('caching')" onmouseout="reset_tooltip('caching-tooltip')"><span class="tooltiptext" id="caching-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Caching refers to the general technique of storing a result once its
 computed so that next time, one the result is needed, it can be read
@@ -341,9 +340,9 @@ file to confirm that the chunk is executed.</p>
 </div>
 </div>
 </div>
-<div id="writing-slides-in-rmarkdown" class="section level2" number="2.3">
+<div id="writing-slides-in-rmarkdown" class="section level2" number="1.3">
 <h2>
-<span class="header-section-number">2.3</span> Writing slides in Rmarkdown<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('writing-slides-in-rmarkdown')" onmouseout="reset_tooltip('writing-slides-in-rmarkdown-tooltip')"><span class="tooltiptext" id="writing-slides-in-rmarkdown-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">1.3</span> Writing slides in Rmarkdown<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('writing-slides-in-rmarkdown')" onmouseout="reset_tooltip('writing-slides-in-rmarkdown-tooltip')"><span class="tooltiptext" id="writing-slides-in-rmarkdown-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>So far, we have used Rmarkdown to produce documents, in pdf or in
 html. Rmarkdown can be used to produce various types of documents
@@ -356,9 +355,9 @@ appropriate template and defining the type of document in the Rmd
 header. In RStudio, this is simply a matter of choosing a template
 from the list of pre-installed ones when creation a new Rmd document:</p>
 <div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:unnamed-chunk-4"></span>
+<span style="display:block;" id="fig:unnamed-chunk-2"></span>
 <p class="caption marginnote shownote">
-Figure 2.1: Choosing and Rmd template.
+Figure 1.1: Choosing and Rmd template.
 </p>
 <img src="figs/rmd_template.png" alt="Choosing and Rmd template." width="80%">
 </div>
@@ -381,9 +380,9 @@ Markdown: The Definitive Guide</em> book.</p>
 </div>
 </div>
 </div>
-<div id="citations" class="section level2" number="2.4">
+<div id="citations" class="section level2" number="1.4">
 <h2>
-<span class="header-section-number">2.4</span> Citations<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('citations')" onmouseout="reset_tooltip('citations-tooltip')"><span class="tooltiptext" id="citations-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">1.4</span> Citations<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('citations')" onmouseout="reset_tooltip('citations-tooltip')"><span class="tooltiptext" id="citations-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>One important aspect of writing scientific documents is to cite one’s
 sources. The packages and papers that one reads and cites as part of a
@@ -392,7 +391,7 @@ manually. It is therefore recommeded to use store references in a
 unique file, ideally managed by a dedicated software.</p>
 <p>In markdown, that file type is often a BibTex file (extension <code>.bib</code>)
 that contain a set of entries such as these ones for R itself, the
-<code>dplyr</code> package, or the <code>DESeq</code> paper (see chapter <a href="sec-rnaseq.html#sec-rnaseq">5</a>).</p>
+<code>dplyr</code> package, or the <code>DESeq</code> paper (see chapter <a href="sec-rnaseq.html#sec-rnaseq">4</a>).</p>
 <pre><code>@Manual{R-base,
   title = {R: A Language and Environment for Statistical
            Computing},
@@ -447,7 +446,7 @@ above and cite them.</p>
 </div>
 <p>A useful function to get the BibTex entries of R packages or their
 associated scientific papers is to use the <code>citation()</code> function:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="sec-rmd.html#cb51-1" tabindex="-1"></a><span class="fu">citation</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="sec-rmd.html#cb10-1" tabindex="-1"></a><span class="fu">citation</span>()</span></code></pre></div>
 <pre><code>## To cite R in publications use:
 ## 
 ##   R Core Team (2023). _R: A Language and Environment for Statistical
@@ -468,7 +467,7 @@ associated scientific papers is to use the <code>citation()</code> function:</p>
 ## We have invested a lot of time and effort in creating R, please cite it
 ## when using it for data analysis. See also 'citation("pkgname")' for
 ## citing R packages.</code></pre>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="sec-rmd.html#cb53-1" tabindex="-1"></a><span class="fu">citation</span>(<span class="at">package =</span> <span class="st">"SummarizedExperiment"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="sec-rmd.html#cb12-1" tabindex="-1"></a><span class="fu">citation</span>(<span class="at">package =</span> <span class="st">"SummarizedExperiment"</span>)</span></code></pre></div>
 <pre><code>## To cite package 'SummarizedExperiment' in publications use:
 ## 
 ##   Morgan M, Obenchain V, Hester J, Pagès H (2023).
@@ -494,9 +493,9 @@ associated scientific papers is to use the <code>citation()</code> function:</p>
 <li><a href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html#Bibliographies" class="uri">https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html#Bibliographies</a></li>
 </ul>
 </div>
-<div id="references-1" class="section level2" number="2.5">
+<div id="references" class="section level2" number="1.5">
 <h2>
-<span class="header-section-number">2.5</span> References<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('references-1')" onmouseout="reset_tooltip('references-1-tooltip')"><span class="tooltiptext" id="references-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">1.5</span> References<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('references')" onmouseout="reset_tooltip('references-tooltip')"><span class="tooltiptext" id="references-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <ul>
 <li><p><a href="https://bookdown.org/yihui/rmarkdown">R Markdown: The Definitive
@@ -510,7 +509,7 @@ Xie, Christophe Dervieux, Emily Riederer.</p></li>
 </div></body></html>
 
 <p style="text-align: center;">
-<a href="sec-cli.html"><button class="btn btn-default">Previous</button></a>
+<a href="index.html"><button class="btn btn-default">Previous</button></a>
 <a href="sec-linmod.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
