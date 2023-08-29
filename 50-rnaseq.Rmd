@@ -251,7 +251,11 @@ distribution of reasonable estimates of dispersion.
 **Step 3: Shrinkage of gene-wise dispersion estimates toward the
 values predicted by the curve**.  Initial gene-wise dispersion
 estimates will be shrinked (by an empirical Bayes approach) towards
-this fitted curve to obtain the final dispersion estimates. The
+this fitted curve to obtain the final dispersion estimates. The strength
+of the shrinkage for each gene will depend on how close the dispersion 
+values are from the curve, and on the number of samples available (the 
+more sample (as the sample size increases, the shrinkage decreases in 
+strength, and eventually becomes negligible).
 adjusted dispersion values are represented by the blue dots in the
 dispersion plot. For a certain number of genes, the adjusted
 dispersion will be significantly increased and this will limit the
