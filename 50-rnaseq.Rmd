@@ -285,7 +285,7 @@ knitr::include_graphics("./figs/disp_shrinkage.png")
 DESeq2 fits a generalized linear model of the form: $$log2(q_{ij}) = \Sigma x_j.β_i$$
 
 where the parameter $q_{ij}$ is proportional to the expected true concentration of 
-fragments for sample j:
+gene i for sample j:
 
 $$ q_{ij} = \frac{µ_{ij}}{SizeFactor_{j}} $$
 and $β_i$ represents the log2FC between conditions. $β_i$ coefficients are computed from the data.
@@ -558,26 +558,60 @@ rld <- rlogTransformation(dds)
 
 `r msmbstyle::question_begin()`
 
-Pick a gene highly expressed and a gene lowly expressed and inspect the effect
-of the rlog transformation
+ENSG00000198804 and ENSG00000248671 are two genes expressed respectively at a 
+very high and a very low level. Inspect the effect of the rlog transformation
+on the counts of these genes. Compare to counts that would be transformed by a 
+classical log transformation (You can use the `normTransform()` function to 
+normalise and log-transform the dds counts)
 
 `r msmbstyle::question_end()`
 
 `r msmbstyle::solution_begin()`
 
 ```{r}
-# picked a very highly expressed gene
-assay(dds["ENSG00000198804"])
-log2(assay(dds["ENSG00000198804"]))
-assay(rld["ENSG00000198804"])
+assay(dds)[c("ENSG00000198804", "ENSG00000248671"),]
 
-# picked a lowly expressed gene
-assay(dds["ENSG00000248671"])
-log2(assay(dds["ENSG00000248671"]))
-assay(rld["ENSG00000248671"])
+# normalises and gives log2(n+1)
+log_dds <- normTransform(dds)
+
+assay(log_dds)[c("ENSG00000198804", "ENSG00000248671"), ]
+assay(rld)[c("ENSG00000198804", "ENSG00000248671"), ]
 ```
 
 `r msmbstyle::solution_end()`
+
+`r msmbstyle::question_begin()`
+
+Generate a scatter plot representing the log counts of sample1 versus the 
+log counts of sample2 (sample1 and sample2 are 2 control replicates).
+
+Generate a scatter plot representing the "rlog transformed" counts of sample1 
+versus the "rlog transformed" counts of sample2.
+
+Compare the two plots.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+```{r}
+fig1 <- as_tibble(assay(log_dds[, 1:2])) %>% 
+  ggplot(aes(x = sample1, y = sample2)) +
+  geom_point(alpha = 0.2) +
+  geom_abline(slope = 1, color = "red") +
+  ggtitle("log2 transformation")
+
+fig2 <- as_tibble(assay(rld[,1:2], normalize = TRUE)) %>% 
+  ggplot(aes(x = sample1, y = sample2))+
+  geom_point(alpha = 0.2) +
+  geom_abline(slope = 1, color = "red") +
+  ggtitle("rlogTransformation")
+
+library("patchwork")
+fig1 | fig2
+```
+
+
 
 The `plotPCA()` function can then be used on the transformed counts to generate a PCA.
 
