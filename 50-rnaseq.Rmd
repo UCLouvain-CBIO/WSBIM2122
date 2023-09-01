@@ -625,7 +625,7 @@ for custom plotting.
 
 ```{r}
 pca_data <- plotPCA(rld, intgroup = "Condition", returnData = TRUE)
-pca_data
+
 ggplot(pca_data, aes(x = PC1, y = PC2, color = Condition, label = name)) +
   geom_point() +
   geom_text()
@@ -661,7 +661,6 @@ SD <- enframe(colSums(assay(dds, "counts")), name = "sample", value = "n_reads")
   ggplot(aes(x = sample, y = n_reads)) +
   geom_bar(stat = "identity")
 
-library("patchwork")
 SF / SD
 ```
 
@@ -676,6 +675,51 @@ gene-wise estimates towards the fitted estimates.
 ```{r dispersion_plot}
 plotDispEsts(dds)
 ```
+
+`r msmbstyle::question_begin()`
+
+**Impact of number of replicate on the dispersion estimations.**
+
+Create a a new fictive DESeqDataSet object containing only 2 replicates of each 
+condition instead of the 3 replicates that we have in our `dds` object.
+
+Inspect its dispersion plot. Compare with the dispersion plot of dds.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+```{r disp_exercice}
+dds_2_replicates <- DESeqDataSetFromMatrix(countData = counts[, c(1,2,4,6)],
+                                         colData = coldata[c(1,2,4,6), ],
+                                         design = ~ Condition)
+dds_2_replicates <- DESeq(dds_2_replicates)
+
+plotDispEsts(dds_2_replicates) 
+plotDispEsts(dds)
+```
+
+`r msmbstyle::solution_end()`
+
+`r msmbstyle::question_begin()`
+
+Using the `dispersions()` function, you can acceed to the dispersion values.
+Compare on a scatterplot the dispersions values obtained with 2 replicates
+and with 3 replicates.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+```{r disp_exercice}
+tibble(dispersions_3_replicates = dispersions(dds), 
+       dispersions_2_replicates = dispersions(dds_2_replicates)) %>% 
+  ggplot(aes(x = dispersions_3_replicates, y = dispersions_2_replicates)) +
+  geom_point() +
+  geom_abline(slope = 1, color = "red")
+```
+
+`r msmbstyle::solution_end()`
 
 ### DESeq2 results
 
