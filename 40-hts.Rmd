@@ -627,7 +627,8 @@ for more details).
 
 ```
 featureCounts \
--p \                        # paired (fragments counted instead of reads)
+-p \                        # paired-end
+--countReadPairs \          # fragments counted instead of reads
 -a annotations.gtf \        # name of the annotation file
 -t exon \                   # feature type in GTF annotation
 -g gene_id \                # Meta-features used in GTF annotation
