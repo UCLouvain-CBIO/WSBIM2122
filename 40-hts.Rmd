@@ -608,10 +608,6 @@ gtf annotation file for human genome assembly GRCh38 look like this:
 knitr::include_graphics("figs/gtf_example.png")
 ```
 
-```{bash}
-head -n 20 wsbim2122_data/RNAseq_pipeline/Homo_sapiens.GRCh38.94.gtf
-```
-
 FeatureCounts will count the number of uniquely mapped reads assigned
 to features (e.g. an exon) or meta-features (e.g. a gene) of the gtf
 file. When summarizing reads at gene level, read counts obtained for
