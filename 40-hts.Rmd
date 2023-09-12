@@ -510,7 +510,7 @@ Field 4: Position of alignment
 
 Field 5: Mapping quality score (read uniquely mapped (60), multiply mapped (1) or unmapped (0))
 
-Field 6: [CIGAR](https://sites.google.com/site/bioinformaticsremarks/bioinfo/sam-bam-format/what-is-a-cigar)
+Field 6: [CIGAR](https://timd.one/blog/genomics/cigar.php)
 string. It is a representation of alignment indicating positions of match/mismatch/deletion/insertion
 compared to the reference.
 
