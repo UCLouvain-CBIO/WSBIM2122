@@ -175,10 +175,9 @@ in a specified order is commonly referred to as a pipeline.
 knitr::include_graphics("figs/pipeline.png")
 ```
 
-You can download the whole script that we will use to process the RNAseq data 
-by clicking 
-[here](https://uclouvain-cbio.github.io/WSBIM2122/data/script_RNAseq_processing.sh)
-
+You can download the whole script that we will use to process the RNAseq data
+by clicking
+[here](https://raw.githubusercontent.com/UCLouvain-CBIO/WSBIM2122/master/data/script_RNAseq_processing.sh)
 
 ### Quality control
 

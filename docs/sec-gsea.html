@@ -684,14 +684,14 @@ adjusted p-value above) and compute a new GSEA score.</p>
 <pre><code>## DataFrame with 12 rows and 4 columns
 ##                 Cell       Type Condition sizeFactor
 ##          &lt;character&gt;   &lt;factor&gt;  &lt;factor&gt;  &lt;numeric&gt;
-## sample1        Cell1 Epithelial      KD     0.775421
+## sample1        Cell1 Epithelial      mock   0.775421
 ## sample2        Cell1 Epithelial      mock   1.408012
 ## sample3        Cell1 Epithelial      mock   1.160908
-## sample4        Cell1 Epithelial      KD     1.023210
-## sample5        Cell1 Epithelial      KD     1.105404
+## sample4        Cell1 Epithelial      mock   1.023210
+## sample5        Cell1 Epithelial      mock   1.105404
 ## ...              ...        ...       ...        ...
-## sample8        Cell2 Fibroblast      mock   0.830183
-## sample9        Cell2 Fibroblast      mock   0.993755
+## sample8        Cell2 Fibroblast      KD     0.830183
+## sample9        Cell2 Fibroblast      KD     0.993755
 ## sample10       Cell2 Fibroblast      KD     0.915594
 ## sample11       Cell2 Fibroblast      mock   0.997491
 ## sample12       Cell2 Fibroblast      KD     0.976773</code></pre>
@@ -712,21 +712,21 @@ adjusted p-value above) and compute a new GSEA score.</p>
 <span id="cb273-15"><a href="sec-gsea.html#cb273-15" tabindex="-1"></a></span>
 <span id="cb273-16"><a href="sec-gsea.html#cb273-16" tabindex="-1"></a>res_tmp</span></code></pre></div>
 <pre><code>## # A tibble: 20,756 × 5
-##    ENSEMBL         ENTREZID  padj inGO  score
-##    &lt;chr&gt;              &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
-##  1 ENSG00000128585     4289 0.464 FALSE    -1
-##  2 ENSG00000144036    23233 0.525 FALSE    -2
-##  3 ENSG00000144426    65065 0.525 FALSE    -3
-##  4 ENSG00000204120    26058 0.525 FALSE    -4
-##  5 ENSG00000111647    23074 0.525 FALSE    -5
-##  6 ENSG00000196943   161424 0.525 FALSE    -6
-##  7 ENSG00000103657     8925 0.525 FALSE    -7
-##  8 ENSG00000007541     9091 0.525 FALSE    -8
-##  9 ENSG00000103253    84264 0.525 FALSE    -9
-## 10 ENSG00000133027    10400 0.525 FALSE   -10
+##    ENSEMBL          ENTREZID  padj inGO  score
+##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
+##  1 ENSG00000169554      9839 0.499 FALSE    -1
+##  2 ENSG00000223972     84771 1.00  FALSE    -2
+##  3 ENSG00000223972    727856 1.00  FALSE    -3
+##  4 ENSG00000223972 100287102 1.00  FALSE    -4
+##  5 ENSG00000223972 100287596 1.00  FALSE    -5
+##  6 ENSG00000223972 102725121 1.00  FALSE    -6
+##  7 ENSG00000227232    653635 1.00  FALSE    -7
+##  8 ENSG00000278267 102466751 1.00  FALSE    -8
+##  9 ENSG00000279457 102723897 1.00  FALSE    -9
+## 10 ENSG00000230021 101928626 1.00  FALSE   -10
 ## # ℹ 20,746 more rows</code></pre>
 <div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="sec-gsea.html#cb275-1" tabindex="-1"></a><span class="fu">max</span>(res_tmp<span class="sc">$</span>score)</span></code></pre></div>
-<pre><code>## [1] 517.9642</code></pre>
+<pre><code>## [1] 381.5227</code></pre>
 <div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="sec-gsea.html#cb277-1" tabindex="-1"></a><span class="fu">plot</span>(res_tmp<span class="sc">$</span>score, <span class="at">type =</span> <span class="st">"l"</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-149-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests
