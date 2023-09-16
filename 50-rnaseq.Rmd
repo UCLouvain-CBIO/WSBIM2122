@@ -251,7 +251,11 @@ distribution of reasonable estimates of dispersion.
 **Step 3: Shrinkage of gene-wise dispersion estimates toward the
 values predicted by the curve**.  Initial gene-wise dispersion
 estimates will be shrinked (by an empirical Bayes approach) towards
-this fitted curve to obtain the final dispersion estimates. The
+this fitted curve to obtain the final dispersion estimates. The strength
+of the shrinkage for each gene will depend on how close the dispersion 
+values are from the curve, and on the number of samples available (the 
+more sample (as the sample size increases, the shrinkage decreases in 
+strength, and eventually becomes negligible).
 adjusted dispersion values are represented by the blue dots in the
 dispersion plot. For a certain number of genes, the adjusted
 dispersion will be significantly increased and this will limit the
@@ -281,7 +285,7 @@ knitr::include_graphics("./figs/disp_shrinkage.png")
 DESeq2 fits a generalized linear model of the form: $$log2(q_{ij}) = \Sigma x_j.β_i$$
 
 where the parameter $q_{ij}$ is proportional to the expected true concentration of 
-fragments for sample j:
+gene i for sample j:
 
 $$ q_{ij} = \frac{µ_{ij}}{SizeFactor_{j}} $$
 and $β_i$ represents the log2FC between conditions. $β_i$ coefficients are computed from the data.
@@ -470,9 +474,8 @@ As for SummarizedExperiments (see chapter 3 from [WSBIM1322 course](http://bit.l
 
 `r msmbstyle::question_begin()`
 
-Access the count data from the dds object and
-
-plot the counts distributions of each sample.
+Access the count data from the dds object and plot the count distributions 
+of each sample.
 
 `r msmbstyle::question_end()`
 
@@ -488,6 +491,23 @@ as_tibble(assay(dds)) %>%
 ```
 
 `r msmbstyle::solution_end()`
+
+The count matrix contains many rows with only zeros. We can start by removing 
+these rows of the dds object as anyway no statistical test can be done on 
+these genes that have no variation in their counts (equal to 0 in all samples).
+
+It is not necessary to pre-filter low count genes before running 
+the DESeq2 functions, but by removing rows containing only zeros, we reduce the 
+memory size of the `dds` object and increase the speed of the analysis.
+Additional filtering to improve power will be applied later.
+
+```{r}
+dds <- dds[rowSums(counts(dds)) > 0, ]
+dim(dds)
+```
+
+
+
 
 ### Run DESeq2
 
@@ -510,7 +530,8 @@ Before anything else, a good practice is to explore the data
 and perform quality controls checks.
 
 
-It is highly recommended to starts by a PCA to assess overall similarity between the samples:
+It is highly recommended to starts by a PCA to assess overall similarity between 
+the samples:
 
 - Which samples are similar/different to each other?
 
@@ -533,19 +554,20 @@ knitr::include_graphics("./figs/PCA_outlier.png")
 `r msmbstyle::question_end()`
 
 Remember that if one performs PCA directly on a matrix of normalised read counts,
-the result typically depends only on the few most strongly expressed genes because
-they show the largest absolute differences between samples. A simple and often used
-strategy to avoid this is to take the logarithm of the normalised count values plus
-a small pseudocount; however, now the genes with low counts tend to dominate the
-results because, due to the strong Poisson noise inherent to small count values, they
-show the strongest relative differences between samples. As a solution, DESeq2 offers
-the regularized-logarithm transformation `rlog()`[^rlog].
+the result typically depends only on the few most strongly expressed genes 
+because they show the largest absolute differences between samples. 
+A simple and often used strategy to avoid this is to take the logarithm of the 
+normalised count values plus a small pseudocount; however, now the genes with 
+low counts tend to dominate the results because, due to the strong Poisson noise 
+inherent to small count values, they show the strongest relative differences 
+between samples. As a solution, DESeq2 offers the regularized-logarithm 
+transformation `rlog()`[^rlog].
 
 [^rlog]:For genes with high counts, the rlog transformation differs not much from
-an ordinary log2 transformation. However for genes with lower counts, the transformation
-moderates the variance across the mean shrunking the values towards the genes’ averages
-across all samples. See `?rlog` for more details about the function.
-
+an ordinary log2 transformation. However for genes with lower counts, the 
+transformation moderates the variance across the mean shrunking the values 
+towards the genes’ averages across all samples. 
+See `?rlog` for more details about the function.
 
 
 ```{r rlog}
@@ -554,23 +576,50 @@ rld <- rlogTransformation(dds)
 
 `r msmbstyle::question_begin()`
 
-Pick a gene highly expressed and a gene lowly expressed and inspect the effect
-of the rlog transformation
+1. ENSG00000198804 and ENSG00000248671 are two genes expressed respectively at a 
+very high and a very low level. Inspect the effect of the rlog transformation
+on the counts of these genes. Compare to counts that would be transformed by a 
+classical log transformation (You can use the `normTransform()` function to 
+normalise and log-transform the dds counts)
+
+2. Draw a scatter plot representing the log counts of sample1 versus the 
+log counts of sample2 (sample1 and sample2 are 2 control replicates).
+Draw another scatter plot representing the "rlog transformed" counts of sample1 
+versus the "rlog transformed" counts of sample2. Compare the two plots.
 
 `r msmbstyle::question_end()`
 
 `r msmbstyle::solution_begin()`
 
-```{r}
-# picked a very highly expressed gene
-assay(dds["ENSG00000198804"])
-log2(assay(dds["ENSG00000198804"]))
-assay(rld["ENSG00000198804"])
+Question 1
 
-# picked a lowly expressed gene
-assay(dds["ENSG00000248671"])
-log2(assay(dds["ENSG00000248671"]))
-assay(rld["ENSG00000248671"])
+```{r}
+assay(dds)[c("ENSG00000198804", "ENSG00000248671"),]
+
+# normalises and gives log2(n+1)
+log_dds <- normTransform(dds)
+
+assay(log_dds)[c("ENSG00000198804", "ENSG00000248671"), ]
+assay(rld)[c("ENSG00000198804", "ENSG00000248671"), ]
+```
+
+Question 2
+
+```{r}
+fig1 <- as_tibble(assay(log_dds[, 1:2])) %>% 
+  ggplot(aes(x = sample1, y = sample2)) +
+  geom_point(alpha = 0.2) +
+  geom_abline(slope = 1, color = "red") +
+  ggtitle("log2 transformation")
+
+fig2 <- as_tibble(assay(rld[,1:2], normalize = TRUE)) %>% 
+  ggplot(aes(x = sample1, y = sample2))+
+  geom_point(alpha = 0.2) +
+  geom_abline(slope = 1, color = "red") +
+  ggtitle("rlogTransformation")
+
+library("patchwork")
+fig1 | fig2
 ```
 
 `r msmbstyle::solution_end()`
@@ -587,7 +636,7 @@ for custom plotting.
 
 ```{r}
 pca_data <- plotPCA(rld, intgroup = "Condition", returnData = TRUE)
-pca_data
+
 ggplot(pca_data, aes(x = PC1, y = PC2, color = Condition, label = name)) +
   geom_point() +
   geom_text()
@@ -623,7 +672,6 @@ SD <- enframe(colSums(assay(dds, "counts")), name = "sample", value = "n_reads")
   ggplot(aes(x = sample, y = n_reads)) +
   geom_bar(stat = "identity")
 
-library("patchwork")
 SF / SD
 ```
 
@@ -638,6 +686,46 @@ gene-wise estimates towards the fitted estimates.
 ```{r dispersion_plot}
 plotDispEsts(dds)
 ```
+
+`r msmbstyle::question_begin()`
+
+1. Create a new fictive DESeqDataSet object containing only 2 replicates of each 
+condition instead of the 3 replicates that we have in our `dds` object. 
+Inspect its dispersion plot and compare it with the dispersion plot of `dds`.
+
+2. Using the `dispersions()` function, you can acceed to the dispersion values.
+Compare on a scatter plot the dispersions values obtained with 2 replicates
+and with 3 replicates.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+Question 1.
+
+```{r disp_exercice, message = FALSE, warning = FALSE}
+dds_2_replicates <- DESeqDataSetFromMatrix(countData = counts[, c(1,2,4,6)],
+                                         colData = coldata[c(1,2,4,6), ],
+                                         design = ~ Condition)
+# Keep only genes present in dds to be able to compare the 2 objects
+dds_2_replicates <- dds_2_replicates[rownames(dds), ]
+dds_2_replicates <- DESeq(dds_2_replicates)
+
+plotDispEsts(dds_2_replicates) 
+plotDispEsts(dds)
+```
+
+Question 2.
+
+```{r, message = FALSE, warning = FALSE}
+tibble(dispersions_3_replicates = dispersions(dds), 
+       dispersions_2_replicates = dispersions(dds_2_replicates)) %>% 
+  ggplot(aes(x = dispersions_3_replicates, y = dispersions_2_replicates)) +
+  geom_point() +
+  geom_abline(slope = 1, color = "red")
+```
+
+`r msmbstyle::solution_end()`
 
 ### DESeq2 results
 
@@ -665,7 +753,7 @@ resultsNames(dds)
 Results can then be extracted using the `results()`function.
 
 The `name` parameter must be an element of resultsNames(object) specifying the
-the samples to compare.
+samples to compare.
 
 Note that the `contrast` argument of `results()` can also be used to
 extract results of interest. In this case, the two following commands will give the same
@@ -697,7 +785,7 @@ res_tbl
 reported on a logarithmic scale to base 2. In this case, as we are testing
 the "Condition_KD_vs_mock" coefficient, positive log2FC indicates a gene up-regulated
 in the KD condition compared to the mock condition, while a negative log2FC indicate
-a down-regulation [^log2C].
+a down-regulation.
 
 **lfcSE**: The standard error estimate for the log2FoldChange estimate
 
@@ -706,11 +794,6 @@ a down-regulation [^log2C].
 **pvalue**: The pvalue of the test for the gene
 
 **padj**: pvalue adjusted for multiple testing
-
-
-[^log2C]: DESeq2 offers further options to shrink LFC estimates. This is useful for
-ranking and visualization (see [DESeq2 vignette](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)
-for more information).
 
 
 `r msmbstyle::question_begin()`
@@ -792,20 +875,15 @@ coefficients(dds[best_genes])[,1] + coefficients(dds[best_genes])[,2]
 summary(res$padj)
 ```
 
-Let's filter genes with no padjusted values
+Let's inspect genes with no padjusted values
 
 ```{r}
 res_tbl %>%
   filter(is.na(padj))
 ```
 
-Many genes with `padj == NA` correspond to genes with a `basemean == 0`.
-No pvalue can be calculated because there is no variation in their counts
-(equal to 0 in all samples).
-
-Some of these genes do have a `basemean > 0` and a pvalue, but if you look at
-them carefully, they all have a very low basemean. Actually these genes are the one
-that have been filtered out by the independent filtering procedure.
+These genes all have a very low basemean and are the one that have been filtered 
+out by the independent filtering procedure.
 
 `r msmbstyle::solution_end()`
 
@@ -821,8 +899,8 @@ metadata(res)$filterThreshold
 This means that genes whith basemean < `r metadata(res)$filterThreshold` have been
 filtered. This represents `r names(metadata(res)$filterThreshold)` of all tested genes!
 
-Remember that the filtering threshold has been fixed in a way that maximizes the number
-of genes which will have a significant padjusted value.
+Remember that the filtering threshold has been fixed in a way that maximizes the 
+number of genes which will have a significant padjusted value.
 
 We can plot the number of rejections over the basemean quantiles.
 The threshold chosen (red vertical line) is the lowest quantile for which the number of
@@ -832,20 +910,19 @@ rejections is within 1 residual standard deviation to the peak of the curve.
 as_tibble(metadata(res)$filterNumRej) %>%
   ggplot(aes(x = theta, y = numRej)) +
   geom_point() +
-  geom_vline(xintercept = 0.7169,
+  geom_vline(xintercept = 0.4071429,
              color = 'red')
 ```
 
 
 `r msmbstyle::question_begin()`
 
-1. Actually many of these genes would have been filtered anyway because
-their `basemean == 0`. Evaluate how many genes were really filtered by the independent
-filtering procedure.
-
-2. Re-run the results() function on the same dds object,
+1. Re-run the results() function on the same dds object,
 but set the independent filtering parameter to FALSE.
 Check how many genes have no padj?
+
+2. Compare the number of significant genes obtained with and without 
+independent filtering 
 
 3. Imagine another way of filtering genes with very low counts
 
@@ -853,23 +930,7 @@ Check how many genes have no padj?
 
 `r msmbstyle::solution_begin()`
 
-1. Actually many of these genes would have been filtered anyway because
-their `basemean == 0`. Evaluate how many genes were really filtered by the independent
-filtering procedure.
-
-```{r}
-# Number of genes with basemean == 0
-res_tbl %>%
-  filter(baseMean == 0) %>%
-  nrow()
-
-# Number of genes filtered by the independent filtering procedure
-res_tbl %>%
-  filter(baseMean > 0 & baseMean < metadata(res)$filterThreshold) %>%
-  nrow()
-```
-
-2. Re-run the results() function on the same dds object,
+1. Re-run the results() function on the same dds object,
 but set the independent filtering parameter to FALSE.
 Check how many genes have no padj?
 
@@ -877,35 +938,42 @@ Check how many genes have no padj?
 res_no_IF <- results(dds,
                      name = "Condition_KD_vs_mock",
                      independentFiltering = FALSE)
-as_tibble(res_no_IF, rownames = "ENSEMBL") %>%
+
+res_no_IF_tbl <- as_tibble(res_no_IF, rownames = "ENSEMBL")
+
+res_no_IF_tbl %>%
   filter(is.na(padj)) %>% nrow()
+```
+
+
+2. Compare the number of significant genes obtained with and without 
+independent filtering 
+
+```{r}
+res_tbl %>% filter(padj < .05) %>% nrow()
+
+res_no_IF_tbl %>% filter(padj < .05) %>% nrow()
 ```
 
 3. Imagine another way of filtering genes with very low counts
 
-```{r}
+```{r, message = FALSE}
 # filter the data to remove genes with few counts
 filtering_thr <- 5
 # keep genes with counts > 5 in 3 or more samples
 keep <- rowSums(counts(dds, normalized = TRUE) >= filtering_thr) >=3
 dds_bis <- DESeq(dds[keep, ])
+dim(dds_bis)
+
 res_bis <- results(dds_bis,
                    name = "Condition_KD_vs_mock",
                    independentFiltering = FALSE)
-
-# All genes now have a padj value
-# => logical as we kept only those with at least 5 counts in at least 3 sample
-as_tibble(res_bis, rownames = "ENSEMBL") %>%
-  filter(is.na(padj)) %>% nrow()
-
-# Total number of genes kept
-as_tibble(res_bis, rownames = "ENSEMBL") %>%
-  filter(!is.na(padj)) %>% nrow()
+res_bis_tbl <- as_tibble(res_bis, rownames = "ENSEMBL") 
 
 # Compare with previous analysis
 # (Independant filtering threshold fixed automatically by DESeq2)
-as_tibble(res, rownames = "ENSEMBL") %>%
-  filter(!is.na(padj)) %>% nrow()
+res_tbl %>% filter(padj < 0.05)
+res_bis_tbl %>% filter(padj < 0.05)
 ```
 
 
@@ -926,7 +994,7 @@ hist(res_tbl$pvalue)
 
 `r msmbstyle::question_begin()`
 
-What do you think about the this pvalues histogram?
+What do you think about the pvalues histogram?
 
 `r msmbstyle::question_end()`
 
@@ -934,8 +1002,8 @@ What do you think about the this pvalues histogram?
 
 There is a peak at 0, but there is also a peak close to 0.8.
 Assumption that the p-values near 1 are uniform doesn't seem to be completely valid.
-This implies that in principle, a false discovery rate shouldn't be applied to control
-these p-values.
+This implies that in principle, a false discovery rate shouldn't be applied to 
+control these p-values.
 Let's try to figure out why the p-values show this behavior.
 
 ```{r}
@@ -952,12 +1020,11 @@ res_tbl %>%
 We observe that most of the genes that have a pvalue around 0.8
 (corresponding to genes belonging to the second peak) have a pvalue,
 but no padjusted value. These are hence genes that were filtered out
-by the independent filtering process. This means that DESeq2 does
-calculate a pvalue for every gene (except for those that have a
-basemean = 0), but the pvalue adjustement is computed later only on
-genes that pass the independent filtering threshold. If we plot again
-the pvalues histogram using filtered genes only, then we observe that
-the pvalues behaviour is now much nicer!
+by the independent filtering process. This means that DESeq2
+calculates pvalue for every gene, but the pvalue adjustement is computed 
+later only, on genes that pass the independent filtering threshold. 
+If we plot again the pvalues histogram using filtered genes only, 
+then we observe that the pvalues behaviour is now much nicer!
 
 
 ```{r}
@@ -1000,7 +1067,8 @@ res_tbl %>%
   geom_point(size = 0.5) +
   geom_hline(yintercept = -log10(0.05)) +
   geom_vline(xintercept = 1) +
-  geom_vline(xintercept = -1)
+  geom_vline(xintercept = -1) +
+  theme(legend.position = "bottom")
 ```
 
 
@@ -1039,7 +1107,7 @@ as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = TRUE),
 res_tbl %>%
   filter(!is.na(padj)) %>%
   ggplot(aes(x= log2FoldChange, y = -log10(padj))) +
-   geom_point(size = 0.5, color = "gray40") +
+   geom_point(size = 0.5, color = "gray60") +
    geom_point(data = subset(res_tbl,
                             padj < 0.05 &
                             padj > 1e-5 &
@@ -1097,6 +1165,7 @@ This will result in higher dispersion values, and larger pvalues.
 dispersions(dds[best_genes$ENSEMBL,])
 dispersions(dds[selected_genes$ENSEMBL,])
 ```
+
 `r msmbstyle::solution_end()`
 
 ### Logfoldchange shrinkage 
@@ -1110,8 +1179,8 @@ variability rather than true strong differences.
 To overcome this problem, DESeq2 provides a shrinkage function called 
 `lfcShrink()`, to generate more accurate Log2foldchange estimates. 
 The function will shrink the fold-change values in a way that will depend 
-on counts and on gene dispersion values[^FCShrinkage]. As seen in the following MA-plots, the 
-shrinkage is much stronger for lowly than for highly expressed genes. 
+on counts and on gene dispersion values[^FCShrinkage]. As seen in the following 
+MA-plots, the shrinkage is much stronger for lowly than for highly expressed genes. 
 
 [^FCShrinkage]: The shrinkage is based on bayesian approach. See the paper 
 describing thedefault shrinkage estimator for more details [@Zhu:2019]  
