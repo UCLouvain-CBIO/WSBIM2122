@@ -483,8 +483,8 @@ of each sample.
 `r msmbstyle::solution_begin()`
 
 ```{r}
-as_tibble(assay(dds)) %>%
-  pivot_longer(names_to = "sample", values_to = "counts", cols = 1:6) %>% 
+as_tibble(assay(dds), rownames = "gene") %>%
+  pivot_longer(names_to = "sample", values_to = "counts", cols = 2:7) %>% 
   ggplot(aes(x = log2(counts + 1), fill = sample)) +
   geom_histogram(bins = 20) +
   facet_wrap(~ sample)
