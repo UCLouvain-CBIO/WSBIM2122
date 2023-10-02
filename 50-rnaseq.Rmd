@@ -561,12 +561,12 @@ normalised count values plus a small pseudocount; however, now the genes with
 low counts tend to dominate the results because, due to the strong Poisson noise 
 inherent to small count values, they show the strongest relative differences 
 between samples. As a solution, DESeq2 offers the regularized-logarithm 
-transformation `rlog()`[^rlog].
+transformation `rlog()`. 
 
-[^rlog]:For genes with high counts, the rlog transformation differs not much from
-an ordinary log2 transformation. However for genes with lower counts, the 
-transformation moderates the variance across the mean shrunking the values 
-towards the genes’ averages across all samples. 
+For genes with high counts, the rlog transformation 
+differs not much from an ordinary log2 transformation. However for genes with 
+lower counts, the transformation moderates the variance across the mean, 
+shrunking the values towards the genes’ averages across all samples. 
 See `?rlog` for more details about the function.
 
 
