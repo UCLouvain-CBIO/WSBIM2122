@@ -612,7 +612,7 @@ fig1 <- as_tibble(assay(log_dds[, 1:2])) %>%
   geom_abline(slope = 1, color = "red") +
   ggtitle("log2 transformation")
 
-fig2 <- as_tibble(assay(rld[,1:2], normalize = TRUE)) %>% 
+fig2 <- as_tibble(assay(rld[,1:2])) %>% 
   ggplot(aes(x = sample1, y = sample2))+
   geom_point(alpha = 0.2) +
   geom_abline(slope = 1, color = "red") +
