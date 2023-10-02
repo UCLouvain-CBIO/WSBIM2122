@@ -664,13 +664,13 @@ Compare Size Factors to sequencing depth.
 
 
 ```{r size_factor}
-SF <- enframe(sizeFactors(dds), name = "sample", value = "Size_Factor") %>%
-  ggplot(aes(x = sample, y = Size_Factor)) +
-  geom_bar(stat = "identity")
+SF <- tibble(sample = colnames(dds), SF = sizeFactors(dds)) %>%
+  ggplot(aes(x = sample, y = SF)) +
+  geom_col()
 
-SD <- enframe(colSums(assay(dds, "counts")), name = "sample", value = "n_reads") %>%
-  ggplot(aes(x = sample, y = n_reads)) +
-  geom_bar(stat = "identity")
+SD <- tibble(sample = colnames(dds), SeqDepth = colSums(assay(dds))) %>%
+  ggplot(aes(x = sample, y = SeqDepth)) +
+  geom_col()
 
 SF / SD
 ```
