@@ -502,7 +502,7 @@ memory size of the `dds` object and increase the speed of the analysis.
 Additional filtering to improve power will be applied later.
 
 ```{r}
-dds <- dds[rowSums(counts(dds)) > 0, ]
+dds <- dds[rowSums(assay(dds)) > 0, ]
 dim(dds)
 ```
 
