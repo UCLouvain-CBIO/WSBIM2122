@@ -133,7 +133,7 @@ continually during the cell-division cycle.
 `r msmbstyle::solution_begin()`
 
 ```{r go.db2}
-GO_0005813 <- select(org.Hs.eg.db,
+GO_0005813 <- AnnotationDbi::select(org.Hs.eg.db,
                      keys = "GO:0005813",
                      columns = c("ENTREZID", "SYMBOL"),
                      keytype = "GO") %>%
@@ -386,6 +386,12 @@ dds_tmp <- dds
 dds_tmp$Condition <- dds_tmp$Condition[sample(ncol(dds_tmp))]
 colData(dds)
 colData(dds_tmp)
+
+ensembl_to_geneName <- tibble(ENSEMBL = rownames(dds)) %>% 
+  mutate(gene = AnnotationDbi::mapIds(org.Hs.eg.db, ENSEMBL, "SYMBOL", 
+                                      "ENSEMBL")) %>% 
+  mutate(ENTREZID = AnnotationDbi::mapIds(org.Hs.eg.db, ENSEMBL, "ENTREZID", 
+                                          "ENSEMBL"))
 
 res_tmp <- DESeq(dds_tmp) %>%
     results(name = "Condition_KD_vs_mock") %>%
