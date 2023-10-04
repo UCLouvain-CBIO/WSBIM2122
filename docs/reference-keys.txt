@@ -77,7 +77,7 @@ ma-plot
 volcano-plot
 count-plots
 logfoldchange-shrinkage
-querying-the-biomart-service
+adding-gene-annotations
 further-links
 sec-design
 a-more-complex-dataset

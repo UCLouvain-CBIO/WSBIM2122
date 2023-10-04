@@ -909,18 +909,18 @@ in mock cells versus their expression level in KD cells.</p>
 <pre><code>## [1] mock mock mock KD   KD   KD  
 ## Levels: KD mock</code></pre>
 <p>In this case, it seems more logical to use mock cells as reference.
-Reference levels can be changed using the relevel( ) function. But in this case don’t
-forget to re-run DESeq() function after the re-leveling operation.</p>
+Reference levels can be changed using the <code>relevel()</code> function. But in this
+case don’t forget to re-run <code>DESeq()</code> function after the re-leveling operation.</p>
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="sec-rnaseq.html#cb150-1" tabindex="-1"></a>dds<span class="sc">$</span>Condition <span class="ot">&lt;-</span> <span class="fu">relevel</span>(dds<span class="sc">$</span>Condition, <span class="at">ref =</span> <span class="st">"mock"</span>)</span>
 <span id="cb150-2"><a href="sec-rnaseq.html#cb150-2" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds)</span>
 <span id="cb150-3"><a href="sec-rnaseq.html#cb150-3" tabindex="-1"></a><span class="fu">resultsNames</span>(dds)</span></code></pre></div>
 <pre><code>## [1] "Intercept"            "Condition_KD_vs_mock"</code></pre>
-<p>Results can then be extracted using the <code>results()</code>function.</p>
+<p>Results can then be extracted using the <code>results()</code> function.</p>
 <p>The <code>name</code> parameter must be an element of resultsNames(object) specifying the
 samples to compare.</p>
 <p>Note that the <code>contrast</code> argument of <code>results()</code> can also be used to
-extract results of interest. In this case, the two following commands will give the same
-results<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>.</p>
+extract results of interest. In this case, the two following commands will give
+the same results<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>.</p>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="sec-rnaseq.html#cb152-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds,</span>
 <span id="cb152-2"><a href="sec-rnaseq.html#cb152-2" tabindex="-1"></a>               <span class="at">name =</span> <span class="st">"Condition_KD_vs_mock"</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="sec-rnaseq.html#cb153-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds,</span>
@@ -1087,7 +1087,7 @@ rejections is within 1 residual standard deviation to the peak of the curve.</p>
 <div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="sec-rnaseq.html#cb174-1" tabindex="-1"></a><span class="fu">as_tibble</span>(<span class="fu">metadata</span>(res)<span class="sc">$</span>filterNumRej) <span class="sc">%&gt;%</span></span>
 <span id="cb174-2"><a href="sec-rnaseq.html#cb174-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, <span class="at">y =</span> numRej)) <span class="sc">+</span></span>
 <span id="cb174-3"><a href="sec-rnaseq.html#cb174-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb174-4"><a href="sec-rnaseq.html#cb174-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.4071429</span>,</span>
+<span id="cb174-4"><a href="sec-rnaseq.html#cb174-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.484</span>,</span>
 <span id="cb174-5"><a href="sec-rnaseq.html#cb174-5" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">'red'</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-102-1.png" width="672"></p>
 <div class="question">
@@ -1497,55 +1497,73 @@ procedure.</li>
 </div>
 </div>
 </div>
-<div id="querying-the-biomart-service" class="section level3" number="4.2.13">
+<div id="adding-gene-annotations" class="section level3" number="4.2.13">
 <h3>
-<span class="header-section-number">4.2.13</span> Querying the Biomart service<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('querying-the-biomart-service')" onmouseout="reset_tooltip('querying-the-biomart-service-tooltip')"><span class="tooltiptext" id="querying-the-biomart-service-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">4.2.13</span> Adding gene annotations<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('adding-gene-annotations')" onmouseout="reset_tooltip('adding-gene-annotations-tooltip')"><span class="tooltiptext" id="adding-gene-annotations-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The result table only uses Ensembl gene IDs, but gene names may be
-more informative. Bioconductor’s <em><a href="https://bioconductor.org/packages/3.17/biomaRt">biomaRt</a></em>
-package can help with mapping various ID schemes to each other.</p>
-<p>Below, we query the Biomart service to extract the gene names
-(<code>enternal_gene_name</code>) and ENTREZ gene identifiers (<code>entrezgene_id</code>)
-(that we will need in the next chapter) and join these to our result
-data.</p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="sec-rnaseq.html#cb212-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"biomaRt"</span>)</span>
-<span id="cb212-2"><a href="sec-rnaseq.html#cb212-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"org.Hs.eg.db"</span>)</span>
-<span id="cb212-3"><a href="sec-rnaseq.html#cb212-3" tabindex="-1"></a></span>
-<span id="cb212-4"><a href="sec-rnaseq.html#cb212-4" tabindex="-1"></a><span class="do">## Load homo sapiens ensembl dataset</span></span>
-<span id="cb212-5"><a href="sec-rnaseq.html#cb212-5" tabindex="-1"></a>mart <span class="ot">&lt;-</span> <span class="fu">useDataset</span>(<span class="st">"hsapiens_gene_ensembl"</span>, <span class="fu">useMart</span>(<span class="st">"ensembl"</span>))</span>
-<span id="cb212-6"><a href="sec-rnaseq.html#cb212-6" tabindex="-1"></a></span>
-<span id="cb212-7"><a href="sec-rnaseq.html#cb212-7" tabindex="-1"></a><span class="do">## Attributes define the values we are interested to retrieve.</span></span>
-<span id="cb212-8"><a href="sec-rnaseq.html#cb212-8" tabindex="-1"></a><span class="do">## listAttributes(mart)</span></span>
-<span id="cb212-9"><a href="sec-rnaseq.html#cb212-9" tabindex="-1"></a>ensembl_to_geneName <span class="ot">&lt;-</span> <span class="fu">getBM</span>(<span class="at">attributes =</span> <span class="fu">c</span>(<span class="st">"ensembl_gene_id"</span>, <span class="st">"external_gene_name"</span>,</span>
-<span id="cb212-10"><a href="sec-rnaseq.html#cb212-10" tabindex="-1"></a>                                            <span class="st">"entrezgene_id"</span>),</span>
-<span id="cb212-11"><a href="sec-rnaseq.html#cb212-11" tabindex="-1"></a>                             <span class="at">mart =</span> mart)</span>
-<span id="cb212-12"><a href="sec-rnaseq.html#cb212-12" tabindex="-1"></a><span class="fu">names</span>(ensembl_to_geneName) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ENSEMBL"</span>, <span class="st">"gene"</span>, <span class="st">"ENTREZID"</span>)</span>
-<span id="cb212-13"><a href="sec-rnaseq.html#cb212-13" tabindex="-1"></a><span class="fu">head</span>(ensembl_to_geneName)</span></code></pre></div>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="sec-rnaseq.html#cb213-1" tabindex="-1"></a>res_tbl <span class="ot">&lt;-</span> res_tbl <span class="sc">%&gt;%</span></span>
-<span id="cb213-2"><a href="sec-rnaseq.html#cb213-2" tabindex="-1"></a>  <span class="fu">left_join</span>(ensembl_to_geneName) <span class="sc">%&gt;%</span></span>
-<span id="cb213-3"><a href="sec-rnaseq.html#cb213-3" tabindex="-1"></a>  <span class="fu">arrange</span>(padj)</span></code></pre></div>
-<pre><code>## Joining with `by = join_by(ENSEMBL)`</code></pre>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="sec-rnaseq.html#cb215-1" tabindex="-1"></a>res_tbl</span></code></pre></div>
-<pre><code>## # A tibble: 32,236 × 9
-##    ENSEMBL         baseMean log2FoldChange lfcSE  stat    pvalue      padj gene 
-##    &lt;chr&gt;              &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;
-##  1 ENSG00000101856    1209.          -4.67 0.178 -26.2 8.24e-152 1.36e-147 PGRM…
-##  2 ENSG00000177494     277.           6.25 0.351  17.8 6.25e- 71 5.17e- 67 ZBED2
-##  3 ENSG00000136159     630.           2.24 0.154  14.6 3.32e- 48 1.83e- 44 NUDT…
-##  4 ENSG00000175315     220.           4.29 0.300  14.3 2.20e- 46 9.11e- 43 CST6 
-##  5 ENSG00000128245    2692.           2.05 0.144  14.2 5.64e- 46 1.87e- 42 YWHAH
-##  6 ENSG00000113272     381.           2.33 0.171  13.6 3.45e- 42 9.51e- 39 THG1L
-##  7 ENSG00000213853     506.           2.53 0.191  13.2 8.45e- 40 2.00e- 36 EMP2 
-##  8 ENSG00000115107     193.           3.44 0.271  12.7 7.18e- 37 1.48e- 33 STEA…
-##  9 ENSG00000008513    1419.           3.00 0.240  12.5 6.39e- 36 1.17e- 32 ST3G…
-## 10 ENSG00000105855    6134.           2.18 0.178  12.2 2.26e- 34 3.75e- 31 ITGB8
-## # ℹ 32,226 more rows
-## # ℹ 1 more variable: ENTREZID &lt;int&gt;</code></pre>
-<p>Below, we store these results and the <code>DESeqDataSet</code> object for in the
+more informative.</p>
+<p><code>AnnotationDbi</code> is an R package that provides an interface for connecting
+and querying various annotation databases.</p>
+<p>There are a many organism-specific <code>orgDb</code> packages, such as <code>org.Hs.eg.db</code>
+for human and <code>org.Mm.eg.db</code> for mouse.</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="sec-rnaseq.html#cb212-1" tabindex="-1"></a><span class="co">#BiocManager::install(c("AnnotationDbi", "org.Hs.eg.db"))</span></span>
+<span id="cb212-2"><a href="sec-rnaseq.html#cb212-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"AnnotationDbi"</span>)</span>
+<span id="cb212-3"><a href="sec-rnaseq.html#cb212-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"org.Hs.eg.db"</span>)</span></code></pre></div>
+<p>The <code>keytypes()</code> function can help us to see what information we can extract
+from the database (ENSEMBL gene ID, gene symbol, gene name, …)</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="sec-rnaseq.html#cb213-1" tabindex="-1"></a><span class="fu">keytypes</span>(org.Hs.eg.db)</span></code></pre></div>
+<pre><code>##  [1] "ACCNUM"       "ALIAS"        "ENSEMBL"      "ENSEMBLPROT"  "ENSEMBLTRANS"
+##  [6] "ENTREZID"     "ENZYME"       "EVIDENCE"     "EVIDENCEALL"  "GENENAME"    
+## [11] "GENETYPE"     "GO"           "GOALL"        "IPI"          "MAP"         
+## [16] "OMIM"         "ONTOLOGY"     "ONTOLOGYALL"  "PATH"         "PFAM"        
+## [21] "PMID"         "PROSITE"      "REFSEQ"       "SYMBOL"       "UCSCKG"      
+## [26] "UNIPROT"</code></pre>
+<p>We can easily extract information from this database using the <code>mapIds()</code> function.</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="sec-rnaseq.html#cb215-1" tabindex="-1"></a><span class="co"># Retrieving the gene symbol of our "best genes"</span></span>
+<span id="cb215-2"><a href="sec-rnaseq.html#cb215-2" tabindex="-1"></a><span class="fu">mapIds</span>(<span class="at">x =</span> org.Hs.eg.db,               </span>
+<span id="cb215-3"><a href="sec-rnaseq.html#cb215-3" tabindex="-1"></a>       <span class="at">keys =</span> selected_genes<span class="sc">$</span>ENSEMBL,  </span>
+<span id="cb215-4"><a href="sec-rnaseq.html#cb215-4" tabindex="-1"></a>       <span class="at">column =</span> <span class="st">"SYMBOL"</span>,              </span>
+<span id="cb215-5"><a href="sec-rnaseq.html#cb215-5" tabindex="-1"></a>       <span class="at">keytype =</span> <span class="st">"ENSEMBL"</span>)</span></code></pre></div>
+<pre><code>## 'select()' returned 1:1 mapping between keys and columns</code></pre>
+<pre><code>## ENSG00000127129 ENSG00000112499 ENSG00000171004 ENSG00000257859 ENSG00000157368 
+##          "EDN2"       "SLC22A2"        "HS6ST2"        "CASC18"          "IL34"</code></pre>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="sec-rnaseq.html#cb218-1" tabindex="-1"></a><span class="co"># Retrieving the ENTREZID of our "best genes"</span></span>
+<span id="cb218-2"><a href="sec-rnaseq.html#cb218-2" tabindex="-1"></a><span class="fu">mapIds</span>(<span class="at">x =</span> org.Hs.eg.db, </span>
+<span id="cb218-3"><a href="sec-rnaseq.html#cb218-3" tabindex="-1"></a>       <span class="at">keys =</span> selected_genes<span class="sc">$</span>ENSEMBL,</span>
+<span id="cb218-4"><a href="sec-rnaseq.html#cb218-4" tabindex="-1"></a>       <span class="at">column =</span> <span class="st">"ENTREZID"</span>, </span>
+<span id="cb218-5"><a href="sec-rnaseq.html#cb218-5" tabindex="-1"></a>       <span class="at">keytype =</span> <span class="st">"ENSEMBL"</span>)</span></code></pre></div>
+<pre><code>## 'select()' returned 1:1 mapping between keys and columns</code></pre>
+<pre><code>## ENSG00000127129 ENSG00000112499 ENSG00000171004 ENSG00000257859 ENSG00000157368 
+##          "1907"          "6582"         "90161"     "101929110"        "146433"</code></pre>
+<p>Let’s add gene symbols and ENTREZID in our table of results.</p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="sec-rnaseq.html#cb221-1" tabindex="-1"></a>res_tbl <span class="ot">&lt;-</span> res_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb221-2"><a href="sec-rnaseq.html#cb221-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gene =</span> <span class="fu">mapIds</span>(org.Hs.eg.db, ENSEMBL, <span class="st">"SYMBOL"</span>, <span class="st">"ENSEMBL"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb221-3"><a href="sec-rnaseq.html#cb221-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ENTREZID =</span> <span class="fu">mapIds</span>(org.Hs.eg.db, ENSEMBL, <span class="st">"ENTREZID"</span>, <span class="st">"ENSEMBL"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb221-4"><a href="sec-rnaseq.html#cb221-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(ENSEMBL, gene, ENTREZID, <span class="fu">everything</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb221-5"><a href="sec-rnaseq.html#cb221-5" tabindex="-1"></a>  <span class="fu">arrange</span>(padj)</span></code></pre></div>
+<pre><code>## 'select()' returned 1:many mapping between keys and columns
+## 'select()' returned 1:many mapping between keys and columns</code></pre>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="sec-rnaseq.html#cb223-1" tabindex="-1"></a>res_tbl</span></code></pre></div>
+<pre><code>## # A tibble: 32,102 × 9
+##    ENSEMBL         gene   ENTREZID baseMean log2FoldChange lfcSE  stat    pvalue
+##    &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+##  1 ENSG00000101856 PGRMC1 10857       1209.          -4.67 0.178 -26.2 8.24e-152
+##  2 ENSG00000177494 ZBED2  79413        277.           6.25 0.351  17.8 6.25e- 71
+##  3 ENSG00000136159 NUDT15 55270        630.           2.24 0.154  14.6 3.32e- 48
+##  4 ENSG00000175315 CST6   1474         220.           4.29 0.300  14.3 2.20e- 46
+##  5 ENSG00000128245 YWHAH  7533        2692.           2.05 0.144  14.2 5.64e- 46
+##  6 ENSG00000113272 THG1L  54974        381.           2.33 0.171  13.6 3.45e- 42
+##  7 ENSG00000213853 EMP2   2013         506.           2.53 0.191  13.2 8.45e- 40
+##  8 ENSG00000115107 STEAP3 55240        193.           3.44 0.271  12.7 7.18e- 37
+##  9 ENSG00000008513 ST3GA… 6482        1419.           3.00 0.240  12.5 6.39e- 36
+## 10 ENSG00000105855 ITGB8  3696        6134.           2.18 0.178  12.2 2.26e- 34
+## # ℹ 32,092 more rows
+## # ℹ 1 more variable: padj &lt;dbl&gt;</code></pre>
+<p>Below, we store these results and the <code>DESeqDataSet</code> object for the
 next chapter.</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="sec-rnaseq.html#cb217-1" tabindex="-1"></a><span class="fu">saveRDS</span>(dds, <span class="at">file =</span> <span class="st">"./data/dds.rds"</span>)</span>
-<span id="cb217-2"><a href="sec-rnaseq.html#cb217-2" tabindex="-1"></a><span class="fu">saveRDS</span>(res_tbl, <span class="at">file =</span> <span class="st">"./data/res_tbl.rds"</span>)</span>
-<span id="cb217-3"><a href="sec-rnaseq.html#cb217-3" tabindex="-1"></a><span class="fu">saveRDS</span>(ensembl_to_geneName, <span class="at">file =</span> <span class="st">"./data/ensembl_to_geneName.rds"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="sec-rnaseq.html#cb225-1" tabindex="-1"></a><span class="fu">saveRDS</span>(dds, <span class="at">file =</span> <span class="st">"./data/dds.rds"</span>)</span>
+<span id="cb225-2"><a href="sec-rnaseq.html#cb225-2" tabindex="-1"></a><span class="fu">saveRDS</span>(res_tbl, <span class="at">file =</span> <span class="st">"./data/res_tbl.rds"</span>)</span></code></pre></div>
 </div>
 <div id="further-links" class="section level3" number="4.2.14">
 <h3>
