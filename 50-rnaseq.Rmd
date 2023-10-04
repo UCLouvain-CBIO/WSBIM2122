@@ -910,7 +910,7 @@ rejections is within 1 residual standard deviation to the peak of the curve.
 as_tibble(metadata(res)$filterNumRej) %>%
   ggplot(aes(x = theta, y = numRej)) +
   geom_point() +
-  geom_vline(xintercept = 0.4071429,
+  geom_vline(xintercept = 0.484,
              color = 'red')
 ```
 
@@ -1291,57 +1291,66 @@ dispersions(dds[c("ENSG00000183055", "ENSG00000161082"),])
 
 `r msmbstyle::solution_end()`
 
-### Querying the Biomart service
+### Adding gene annotations
 
 The result table only uses Ensembl gene IDs, but gene names may be
-more informative.  Bioconductor's `r BiocStyle::Biocpkg("biomaRt")`
-package can help with mapping various ID schemes to each other.
+more informative.  
 
-```{r, echo = FALSE}
-suppressPackageStartupMessages(library("biomaRt"))
-suppressPackageStartupMessages(library("org.Hs.eg.db"))
-```
+`AnnotationDbi` is an R package that provides an interface for connecting 
+and querying various annotation databases.
 
-Below, we query the Biomart service to extract the gene names
-(`enternal_gene_name`) and ENTREZ gene identifiers (`entrezgene_id`)
-(that we will need in the next chapter) and join these to our result
-data.
+There are a many organism-specific `orgDb` packages, such as `org.Hs.eg.db` 
+for human and `org.Mm.eg.db` for mouse. 
 
-```{r, echo = FALSE}
-ensembl_to_geneName <- readRDS(file = "./data/ensembl_to_geneName.rds")
-```
-
-```{r, eval = FALSE}
-library("biomaRt")
+```{r message = FALSE}
+#BiocManager::install(c("AnnotationDbi", "org.Hs.eg.db"))
+library("AnnotationDbi")
 library("org.Hs.eg.db")
-
-## Load homo sapiens ensembl dataset
-mart <- useDataset("hsapiens_gene_ensembl", useMart("ensembl"))
-
-## Attributes define the values we are interested to retrieve.
-## listAttributes(mart)
-ensembl_to_geneName <- getBM(attributes = c("ensembl_gene_id", "external_gene_name",
-                                            "entrezgene_id"),
-                             mart = mart)
-names(ensembl_to_geneName) <- c("ENSEMBL", "gene", "ENTREZID")
-head(ensembl_to_geneName)
 ```
+
+The `keytypes()` function can help us to see what information we can extract 
+from the database (ENSEMBL gene ID, gene symbol, gene name, ...)
+
 
 ```{r}
-res_tbl <- res_tbl %>%
-  left_join(ensembl_to_geneName) %>%
+keytypes(org.Hs.eg.db)
+```
+
+We can easily extract information from this database using the `mapIds()` function.
+
+```{r}
+# Retrieving the gene symbol of our "best genes"
+mapIds(x = org.Hs.eg.db,               
+       keys = selected_genes$ENSEMBL,  
+       column = "SYMBOL",              
+       keytype = "ENSEMBL")
+
+# Retrieving the ENTREZID of our "best genes"
+mapIds(x = org.Hs.eg.db, 
+       keys = selected_genes$ENSEMBL,
+       column = "ENTREZID", 
+       keytype = "ENSEMBL")
+```
+
+Let's add gene symbols and ENTREZID in our table of results.
+
+```{r}
+res_tbl <- res_tbl %>% 
+  mutate(gene = mapIds(org.Hs.eg.db, ENSEMBL, "SYMBOL", "ENSEMBL")) %>% 
+  mutate(ENTREZID = mapIds(org.Hs.eg.db, ENSEMBL, "ENTREZID", "ENSEMBL")) %>% 
+  dplyr::select(ENSEMBL, gene, ENTREZID, everything()) %>%
   arrange(padj)
 
 res_tbl
 ```
 
-Below, we store these results and the `DESeqDataSet` object for in the
+
+Below, we store these results and the `DESeqDataSet` object for the
 next chapter.
 
 ```{r}
 saveRDS(dds, file = "./data/dds.rds")
 saveRDS(res_tbl, file = "./data/res_tbl.rds")
-saveRDS(ensembl_to_geneName, file = "./data/ensembl_to_geneName.rds")
 ```
 
 ### Further links
