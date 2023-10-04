@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2023-09-16" />
+<meta name="date" content="2023-10-04" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -83,7 +83,7 @@ function reset_tooltip(id) {
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -564,7 +564,7 @@ theoretical fragments to those observed in MS2 spectra.</p>
 ##  [ reached 'max' / getOption("max.print") -- omitted 42 rows ]</code></pre>
 <p>In a full experiment, all possible peptides from the proteome of
 interest (such as databases that can be downloaded from the <a href="https://www.uniprot.org/">UniProt
-site</a><a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>) are compared to the
+site</a><a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a>) are compared to the
 millions of observed spectra.</p>
 <p>The matching between millions of observed and possible spectra causes
 real challenges due to the large search space and the risk of false
@@ -638,7 +638,7 @@ hits. Interprete the figures.</p>
 <p>Before proceeding, we want to only focus on relevant peptides. The
 <code>filterPSMs()</code> function will remove decoy peptides, only keep PSMs of
 rank 1 (i.e. the best respective matches), and remove peptides that
-match multiple proteins<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>.</p>
+match multiple proteins<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>.</p>
 <div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="sec-ms.html#cb328-1" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">filterPSMs</span>(id)</span></code></pre></div>
 <pre><code>## Starting with 5802 PSMs:</code></pre>
 <pre><code>## Removed 2896 decoy hits.</code></pre>
@@ -857,14 +857,14 @@ quantitative proteomics data.</p>
 </div>
 <div class="footnotes">
 <hr>
-<ol start="14">
-<li id="fn14"><p>The Universal Protein Resource (UniProt) is a freely and
+<ol start="13">
+<li id="fn13"><p>The Universal Protein Resource (UniProt) is a freely and
 accessible comprehensive resource for protein sequence and
-annotation data.<a href="sec-ms.html#fnref14" class="footnote-back">↩︎</a></p></li>
-<li id="fn15"><p>A more rigorous processing of these identifications would
+annotation data.<a href="sec-ms.html#fnref13" class="footnote-back">↩︎</a></p></li>
+<li id="fn14"><p>A more rigorous processing of these identifications would
 be required, for instance a way to evalutation the false discovery
 rate in these hits (which we know from above is very high). The
-<em><a href="https://bioconductor.org/packages/3.17/MSnID">MSnID</a></em> is highly recommended.<a href="sec-ms.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<em><a href="https://bioconductor.org/packages/3.17/MSnID">MSnID</a></em> is highly recommended.<a href="sec-ms.html#fnref14" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 </body></html>
@@ -874,7 +874,7 @@ rate in these hits (which we know from above is very high). The
 <a href="sec-prot.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2023-09-16
+2023-10-04
  using 
 R version 4.3.1 Patched (2023-07-10 r84676)
 </p>

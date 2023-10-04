@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2023-09-16" />
+<meta name="date" content="2023-10-04" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -83,7 +83,7 @@ function reset_tooltip(id) {
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -636,8 +636,8 @@ of each sample.</p>
 ► Solution<span id="sol-start-9" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-9', 'sol-start-9')"></span>
 </p>
 <div id="sol-body-9" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="sec-rnaseq.html#cb119-1" tabindex="-1"></a><span class="fu">as_tibble</span>(<span class="fu">assay</span>(dds)) <span class="sc">%&gt;%</span></span>
-<span id="cb119-2"><a href="sec-rnaseq.html#cb119-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"sample"</span>, <span class="at">values_to =</span> <span class="st">"counts"</span>, <span class="at">cols =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>) <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="sec-rnaseq.html#cb119-1" tabindex="-1"></a><span class="fu">as_tibble</span>(<span class="fu">assay</span>(dds), <span class="at">rownames =</span> <span class="st">"gene"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb119-2"><a href="sec-rnaseq.html#cb119-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"sample"</span>, <span class="at">values_to =</span> <span class="st">"counts"</span>, <span class="at">cols =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb119-3"><a href="sec-rnaseq.html#cb119-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log2</span>(counts <span class="sc">+</span> <span class="dv">1</span>), <span class="at">fill =</span> sample)) <span class="sc">+</span></span>
 <span id="cb119-4"><a href="sec-rnaseq.html#cb119-4" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
 <span id="cb119-5"><a href="sec-rnaseq.html#cb119-5" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> sample)</span></code></pre></div>
@@ -654,7 +654,7 @@ these genes that have no variation in their counts (equal to 0 in all samples).<
 the DESeq2 functions, but by removing rows containing only zeros, we reduce the
 memory size of the <code>dds</code> object and increase the speed of the analysis.
 Additional filtering to improve power will be applied later.</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="sec-rnaseq.html#cb120-1" tabindex="-1"></a>dds <span class="ot">&lt;-</span> dds[<span class="fu">rowSums</span>(<span class="fu">counts</span>(dds)) <span class="sc">&gt;</span> <span class="dv">0</span>, ]</span>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="sec-rnaseq.html#cb120-1" tabindex="-1"></a>dds <span class="ot">&lt;-</span> dds[<span class="fu">rowSums</span>(<span class="fu">assay</span>(dds)) <span class="sc">&gt;</span> <span class="dv">0</span>, ]</span>
 <span id="cb120-2"><a href="sec-rnaseq.html#cb120-2" tabindex="-1"></a><span class="fu">dim</span>(dds)</span></code></pre></div>
 <pre><code>## [1] 32102     6</code></pre>
 </div>
@@ -712,7 +712,12 @@ normalised count values plus a small pseudocount; however, now the genes with
 low counts tend to dominate the results because, due to the strong Poisson noise
 inherent to small count values, they show the strongest relative differences
 between samples. As a solution, DESeq2 offers the regularized-logarithm
-transformation <code>rlog()</code><a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>.</p>
+transformation <code>rlog()</code>.</p>
+<p>For genes with high counts, the rlog transformation
+differs not much from an ordinary log2 transformation. However for genes with
+lower counts, the transformation moderates the variance across the mean,
+shrunking the values towards the genes’ averages across all samples.
+See <code>?rlog</code> for more details about the function.</p>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="sec-rnaseq.html#cb129-1" tabindex="-1"></a>rld <span class="ot">&lt;-</span> <span class="fu">rlogTransformation</span>(dds)</span></code></pre></div>
 <div class="question">
 <p class="question-begin">
@@ -763,7 +768,7 @@ versus the “rlog transformed” counts of sample2. Compare the two plots.</p><
 <span id="cb136-4"><a href="sec-rnaseq.html#cb136-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
 <span id="cb136-5"><a href="sec-rnaseq.html#cb136-5" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"log2 transformation"</span>)</span>
 <span id="cb136-6"><a href="sec-rnaseq.html#cb136-6" tabindex="-1"></a></span>
-<span id="cb136-7"><a href="sec-rnaseq.html#cb136-7" tabindex="-1"></a>fig2 <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">assay</span>(rld[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">normalize =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb136-7"><a href="sec-rnaseq.html#cb136-7" tabindex="-1"></a>fig2 <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">assay</span>(rld[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])) <span class="sc">%&gt;%</span> </span>
 <span id="cb136-8"><a href="sec-rnaseq.html#cb136-8" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sample1, <span class="at">y =</span> sample2))<span class="sc">+</span></span>
 <span id="cb136-9"><a href="sec-rnaseq.html#cb136-9" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
 <span id="cb136-10"><a href="sec-rnaseq.html#cb136-10" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
@@ -816,13 +821,13 @@ Usually these size factors should vary around 1, indicating comparable sequencin
 ► Solution<span id="sol-start-11" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-11', 'sol-start-11')"></span>
 </p>
 <div id="sol-body-11" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="sec-rnaseq.html#cb141-1" tabindex="-1"></a>SF <span class="ot">&lt;-</span> <span class="fu">enframe</span>(<span class="fu">sizeFactors</span>(dds), <span class="at">name =</span> <span class="st">"sample"</span>, <span class="at">value =</span> <span class="st">"Size_Factor"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb141-2"><a href="sec-rnaseq.html#cb141-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sample, <span class="at">y =</span> Size_Factor)) <span class="sc">+</span></span>
-<span id="cb141-3"><a href="sec-rnaseq.html#cb141-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>)</span>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="sec-rnaseq.html#cb141-1" tabindex="-1"></a>SF <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">sample =</span> <span class="fu">colnames</span>(dds), <span class="at">SF =</span> <span class="fu">sizeFactors</span>(dds)) <span class="sc">%&gt;%</span></span>
+<span id="cb141-2"><a href="sec-rnaseq.html#cb141-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sample, <span class="at">y =</span> SF)) <span class="sc">+</span></span>
+<span id="cb141-3"><a href="sec-rnaseq.html#cb141-3" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span>
 <span id="cb141-4"><a href="sec-rnaseq.html#cb141-4" tabindex="-1"></a></span>
-<span id="cb141-5"><a href="sec-rnaseq.html#cb141-5" tabindex="-1"></a>SD <span class="ot">&lt;-</span> <span class="fu">enframe</span>(<span class="fu">colSums</span>(<span class="fu">assay</span>(dds, <span class="st">"counts"</span>)), <span class="at">name =</span> <span class="st">"sample"</span>, <span class="at">value =</span> <span class="st">"n_reads"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb141-6"><a href="sec-rnaseq.html#cb141-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sample, <span class="at">y =</span> n_reads)) <span class="sc">+</span></span>
-<span id="cb141-7"><a href="sec-rnaseq.html#cb141-7" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>)</span>
+<span id="cb141-5"><a href="sec-rnaseq.html#cb141-5" tabindex="-1"></a>SD <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">sample =</span> <span class="fu">colnames</span>(dds), <span class="at">SeqDepth =</span> <span class="fu">colSums</span>(<span class="fu">assay</span>(dds))) <span class="sc">%&gt;%</span></span>
+<span id="cb141-6"><a href="sec-rnaseq.html#cb141-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sample, <span class="at">y =</span> SeqDepth)) <span class="sc">+</span></span>
+<span id="cb141-7"><a href="sec-rnaseq.html#cb141-7" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span>
 <span id="cb141-8"><a href="sec-rnaseq.html#cb141-8" tabindex="-1"></a></span>
 <span id="cb141-9"><a href="sec-rnaseq.html#cb141-9" tabindex="-1"></a>SF <span class="sc">/</span> SD</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/size_factor-1.png" width="672"></p>
@@ -915,7 +920,7 @@ forget to re-run DESeq() function after the re-leveling operation.</p>
 samples to compare.</p>
 <p>Note that the <code>contrast</code> argument of <code>results()</code> can also be used to
 extract results of interest. In this case, the two following commands will give the same
-results<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>.</p>
+results<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>.</p>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="sec-rnaseq.html#cb152-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds,</span>
 <span id="cb152-2"><a href="sec-rnaseq.html#cb152-2" tabindex="-1"></a>               <span class="at">name =</span> <span class="st">"Condition_KD_vs_mock"</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="sec-rnaseq.html#cb153-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds,</span>
@@ -1403,7 +1408,7 @@ variability rather than true strong differences.</p>
 <p>To overcome this problem, DESeq2 provides a shrinkage function called
 <code>lfcShrink()</code>, to generate more accurate Log2foldchange estimates.
 The function will shrink the fold-change values in a way that will depend
-on counts and on gene dispersion values<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>. As seen in the following
+on counts and on gene dispersion values<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>. As seen in the following
 MA-plots, the shrinkage is much stronger for lowly than for highly expressed genes.</p>
 <p>This procedure improves interpretability of the fold-changes estimates.</p>
 <div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="sec-rnaseq.html#cb203-1" tabindex="-1"></a>res_shr <span class="ot">&lt;-</span> <span class="fu">lfcShrink</span>(dds, <span class="at">coef =</span> <span class="st">"Condition_KD_vs_mock"</span>)</span>
@@ -1567,15 +1572,10 @@ the variance converges to the same value as the mean, and the negative
 binomial turns into a Poisson distribution.<a href="sec-rnaseq.html#fnref7" class="footnote-back">↩︎</a></p></li>
 <li id="fn8"><p>genes with extremely high dispersion are those for which the adjusted
 dispersion is more than 2 residual standard deviations above the curve.<a href="sec-rnaseq.html#fnref8" class="footnote-back">↩︎</a></p></li>
-<li id="fn9"><p>For genes with high counts, the rlog transformation differs not much from
-an ordinary log2 transformation. However for genes with lower counts, the
-transformation moderates the variance across the mean shrunking the values
-towards the genes’ averages across all samples.
-See <code>?rlog</code> for more details about the function.<a href="sec-rnaseq.html#fnref9" class="footnote-back">↩︎</a></p></li>
-<li id="fn10"><p>Using the <code>name</code> argument is however necessary to extract specific
-coefficients from more complex designs.<a href="sec-rnaseq.html#fnref10" class="footnote-back">↩︎</a></p></li>
-<li id="fn11"><p>The shrinkage is based on bayesian approach. See the paper
-describing thedefault shrinkage estimator for more details <span class="citation">(<label for="tufte-mn-25" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-25" class="margin-toggle">Zhu, Ibrahim, and Love 2019<span class="marginnote">Zhu, A, G J Ibrahim, and M I Love. 2019. <span>“Heavy-Tailed Prior Distributions for Sequence Count Data: Removing the Noise and Preserving Large Differences.”</span> <em>Bioinformatics</em> 35 (1): 2084–92. <a href="https://doi.org/10.1093/bioinformatics/bty895">https://doi.org/10.1093/bioinformatics/bty895</a>.</span>)</span><a href="sec-rnaseq.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>Using the <code>name</code> argument is however necessary to extract specific
+coefficients from more complex designs.<a href="sec-rnaseq.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>The shrinkage is based on bayesian approach. See the paper
+describing thedefault shrinkage estimator for more details <span class="citation">(<label for="tufte-mn-25" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-25" class="margin-toggle">Zhu, Ibrahim, and Love 2019<span class="marginnote">Zhu, A, G J Ibrahim, and M I Love. 2019. <span>“Heavy-Tailed Prior Distributions for Sequence Count Data: Removing the Noise and Preserving Large Differences.”</span> <em>Bioinformatics</em> 35 (1): 2084–92. <a href="https://doi.org/10.1093/bioinformatics/bty895">https://doi.org/10.1093/bioinformatics/bty895</a>.</span>)</span><a href="sec-rnaseq.html#fnref10" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 </body></html>
@@ -1585,7 +1585,7 @@ describing thedefault shrinkage estimator for more details <span class="citation
 <a href="sec-design.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2023-09-16
+2023-10-04
  using 
 R version 4.3.1 Patched (2023-07-10 r84676)
 </p>

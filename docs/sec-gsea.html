@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2023-09-16" />
+<meta name="date" content="2023-10-04" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -83,7 +83,7 @@ function reset_tooltip(id) {
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -261,7 +261,7 @@ sets that are generally used stem from community-maintained resources.</p>
 </h3>
 <p>The <a href="http://geneontology.org/">Gene Ontology</a> <span class="citation">(<label for="tufte-mn-10" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-10" class="margin-toggle">Ashburner et al. 2000<span class="marginnote">Ashburner, M, C A Ball, J A Blake, D Botstein, H Butler, J M Cherry, A P Davis, et al. 2000. <span>“Gene Ontology: Tool for the Unification of Biology. The Gene Ontology Consortium.”</span> <em>Nat Genet</em> 25 (1): 25–29. <a href="https://doi.org/10.1038/75556">https://doi.org/10.1038/75556</a>.</span>)</span>
 defines GO terms. These terms are based on a controlled vocabulary (to
-resuse the same words in a consistent way) and relations<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a> that
+resuse the same words in a consistent way) and relations<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> that
 define the directed links between terms. These relations define a
 hierarchy between GO terms: all term can be represented as a (direct
 acyclic) graph (DAG). There exist thus very general and very specific
@@ -688,13 +688,13 @@ adjusted p-value above) and compute a new GSEA score.</p>
 ## sample2        Cell1 Epithelial      mock   1.408012
 ## sample3        Cell1 Epithelial      mock   1.160908
 ## sample4        Cell1 Epithelial      mock   1.023210
-## sample5        Cell1 Epithelial      mock   1.105404
+## sample5        Cell1 Epithelial      KD     1.105404
 ## ...              ...        ...       ...        ...
-## sample8        Cell2 Fibroblast      KD     0.830183
+## sample8        Cell2 Fibroblast      mock   0.830183
 ## sample9        Cell2 Fibroblast      KD     0.993755
 ## sample10       Cell2 Fibroblast      KD     0.915594
-## sample11       Cell2 Fibroblast      mock   0.997491
-## sample12       Cell2 Fibroblast      KD     0.976773</code></pre>
+## sample11       Cell2 Fibroblast      KD     0.997491
+## sample12       Cell2 Fibroblast      mock   0.976773</code></pre>
 <div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="sec-gsea.html#cb273-1" tabindex="-1"></a>res_tmp <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds_tmp) <span class="sc">%&gt;%</span></span>
 <span id="cb273-2"><a href="sec-gsea.html#cb273-2" tabindex="-1"></a>    <span class="fu">results</span>(<span class="at">name =</span> <span class="st">"Condition_KD_vs_mock"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb273-3"><a href="sec-gsea.html#cb273-3" tabindex="-1"></a>    <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="sc">%&gt;%</span></span>
@@ -711,22 +711,22 @@ adjusted p-value above) and compute a new GSEA score.</p>
 <span id="cb273-14"><a href="sec-gsea.html#cb273-14" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">score =</span> <span class="fu">cumsum</span>(score))</span>
 <span id="cb273-15"><a href="sec-gsea.html#cb273-15" tabindex="-1"></a></span>
 <span id="cb273-16"><a href="sec-gsea.html#cb273-16" tabindex="-1"></a>res_tmp</span></code></pre></div>
-<pre><code>## # A tibble: 20,756 × 5
-##    ENSEMBL          ENTREZID  padj inGO  score
-##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
-##  1 ENSG00000169554      9839 0.499 FALSE    -1
-##  2 ENSG00000223972     84771 1.00  FALSE    -2
-##  3 ENSG00000223972    727856 1.00  FALSE    -3
-##  4 ENSG00000223972 100287102 1.00  FALSE    -4
-##  5 ENSG00000223972 100287596 1.00  FALSE    -5
-##  6 ENSG00000223972 102725121 1.00  FALSE    -6
-##  7 ENSG00000227232    653635 1.00  FALSE    -7
-##  8 ENSG00000278267 102466751 1.00  FALSE    -8
-##  9 ENSG00000279457 102723897 1.00  FALSE    -9
-## 10 ENSG00000230021 101928626 1.00  FALSE   -10
-## # ℹ 20,746 more rows</code></pre>
+<pre><code>## # A tibble: 12,856 × 5
+##    ENSEMBL         ENTREZID      padj inGO  score
+##    &lt;chr&gt;              &lt;int&gt;     &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
+##  1 ENSG00000187800   375033 0.0000146 FALSE    -1
+##  2 ENSG00000173706    57493 0.0000146 FALSE    -2
+##  3 ENSG00000065308     9697 0.0000146 FALSE    -3
+##  4 ENSG00000111799     1303 0.0000594 FALSE    -4
+##  5 ENSG00000225663   348262 0.0000595 FALSE    -5
+##  6 ENSG00000113249    26762 0.000300  FALSE    -6
+##  7 ENSG00000174705   285590 0.000300  FALSE    -7
+##  8 ENSG00000142949     5792 0.000538  FALSE    -8
+##  9 ENSG00000173898     6712 0.000610  FALSE    -9
+## 10 ENSG00000159433    57519 0.000610  FALSE   -10
+## # ℹ 12,846 more rows</code></pre>
 <div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="sec-gsea.html#cb275-1" tabindex="-1"></a><span class="fu">max</span>(res_tmp<span class="sc">$</span>score)</span></code></pre></div>
-<pre><code>## [1] 381.5227</code></pre>
+<pre><code>## [1] 942.3239</code></pre>
 <div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="sec-gsea.html#cb277-1" tabindex="-1"></a><span class="fu">plot</span>(res_tmp<span class="sc">$</span>score, <span class="at">type =</span> <span class="st">"l"</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-149-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests
@@ -862,7 +862,7 @@ be done in different ways and lead to different results.</p>
 <a href="http://bioconductor.org/packages/release/BiocViews.html#___GeneSetEnrichment">the very
 many</a>
 packages that are available.
-Here, we will demonstrate <em><a href="https://bioconductor.org/packages/3.17/clusterProfiler">clusterProfiler</a></em><a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a>,
+Here, we will demonstrate <em><a href="https://bioconductor.org/packages/3.17/clusterProfiler">clusterProfiler</a></em><a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>,
 that itself relies on other packages to perform the GSEA-related computations.</p>
 <div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="sec-gsea.html#cb287-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"clusterProfiler"</span>)</span></code></pre></div>
 <p>These dedicated packages will perform either of the two tests (or
@@ -1200,11 +1200,11 @@ ordering criteria in GSEA) provide different results.</p>
 </div>
 <div class="footnotes">
 <hr>
-<ol start="12">
-<li id="fn12"><p>Example of relations between terms are, for example, <em>is_a</em>
+<ol start="11">
+<li id="fn11"><p>Example of relations between terms are, for example, <em>is_a</em>
 (mitosis <em>is_a</em> cell cycle phase) or <em>part_of</em> (mitosis <em>part_of</em>
-M phase of mitotic cell cycle).<a href="sec-gsea.html#fnref12" class="footnote-back">↩︎</a></p></li>
-<li id="fn13"><p><a href="https://yulab-smu.top/clusterProfiler-book/" class="uri">https://yulab-smu.top/clusterProfiler-book/</a><a href="sec-gsea.html#fnref13" class="footnote-back">↩︎</a></p></li>
+M phase of mitotic cell cycle).<a href="sec-gsea.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p><a href="https://yulab-smu.top/clusterProfiler-book/" class="uri">https://yulab-smu.top/clusterProfiler-book/</a><a href="sec-gsea.html#fnref12" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 </body></html>
@@ -1214,7 +1214,7 @@ M phase of mitotic cell cycle).<a href="sec-gsea.html#fnref12" class="footnote-b
 <a href="sec-ms.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2023-09-16
+2023-10-04
  using 
 R version 4.3.1 Patched (2023-07-10 r84676)
 </p>
