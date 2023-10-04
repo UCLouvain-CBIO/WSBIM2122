@@ -377,7 +377,7 @@ To be able to compute a statistical significance, we need to compute a
 null distribution of GSEA scores, i.e. a distribution of scores
 reflecting the absence of any enrichment. This is done by permuting
 the samples in the original data, repeating the statistical analysis,
-reorder the genes accodring to the new statistics (we used the
+reorder the genes according to the new statistics (we used the
 adjusted p-value above) and compute a new GSEA score.
 
 
@@ -417,7 +417,7 @@ plot(res_tmp$score, type = "l")
 ```
 
 This approach is very time consuming, given that the statistical tests
-for all the genes need to be recomputer at each permutation. In
+for all the genes need to be recomputed at each permutation. In
 addition, for experiments with limited number of samples, the number
 of permutations would be limited.
 
@@ -458,7 +458,7 @@ gsea_perm <- function(x, perm) {
 }
 ```
 
-We will expecute this function on all unique permutations,
+We will execute this function on all unique permutations,
 corresponding on the 10 first columns (including the actual design, in
 the first column). Note that columns 11 to 20 are simply the opposite
 of the first 10.
