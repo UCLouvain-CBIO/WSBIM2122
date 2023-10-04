@@ -741,8 +741,8 @@ dds$Condition
 ```
 
 In this case, it seems more logical to use mock cells as reference.
-Reference levels can be changed using the relevel( ) function. But in this case don't
-forget to re-run DESeq() function after the re-leveling operation.
+Reference levels can be changed using the `relevel()` function. But in this 
+case don't forget to re-run `DESeq()` function after the re-leveling operation.
 
 ```{r, message = FALSE}
 dds$Condition <- relevel(dds$Condition, ref = "mock")
@@ -750,14 +750,14 @@ dds <- DESeq(dds)
 resultsNames(dds)
 ```
 
-Results can then be extracted using the `results()`function.
+Results can then be extracted using the `results()` function.
 
 The `name` parameter must be an element of resultsNames(object) specifying the
 samples to compare.
 
 Note that the `contrast` argument of `results()` can also be used to
-extract results of interest. In this case, the two following commands will give the same
-results[^contrast].
+extract results of interest. In this case, the two following commands will give 
+the same results[^contrast].
 
 [^contrast]: Using the `name` argument is however necessary to extract specific
 coefficients from more complex designs.
