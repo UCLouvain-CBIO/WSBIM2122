@@ -387,10 +387,10 @@ dds_tmp$Condition <- dds_tmp$Condition[sample(ncol(dds_tmp))]
 colData(dds)
 colData(dds_tmp)
 
-ensembl_to_geneName <- tibble(ENSEMBL = rownames(dds)) %>% 
-  mutate(gene = AnnotationDbi::mapIds(org.Hs.eg.db, ENSEMBL, "SYMBOL", 
-                                      "ENSEMBL")) %>% 
-  mutate(ENTREZID = AnnotationDbi::mapIds(org.Hs.eg.db, ENSEMBL, "ENTREZID", 
+ensembl_to_geneName <- tibble(ENSEMBL = rownames(dds)) %>%
+  mutate(gene = AnnotationDbi::mapIds(org.Hs.eg.db, ENSEMBL, "SYMBOL",
+                                      "ENSEMBL")) %>%
+  mutate(ENTREZID = AnnotationDbi::mapIds(org.Hs.eg.db, ENSEMBL, "ENTREZID",
                                           "ENSEMBL"))
 
 res_tmp <- DESeq(dds_tmp) %>%
@@ -575,6 +575,42 @@ go_ora <- enrichGO(gene = de_genes,
     as_tibble
 go_ora
 ```
+
+The `GeneRatio` and `BgRatio` correspond respectively to
+
+- the ration between the number of genes of interest in the gene set
+  and the number of (unique) genes-to-interest:
+  $\frac{|genes\_of\_interest~in~gene\_set|}{|genes\_of\_interest|}$
+
+- the ratio between the number of genes of interest in the gene set
+  and size of the universe, i.e. the number of (unique) genes across
+  all gene sets: $\frac{|genes~in~gene\_set|}{|universe|}$
+
+<!-- Example from: https://www.biostars.org/p/220465/ -->
+
+Below, we have 12 genes of interest, `"a"`, to `"l"`:
+
+```{r ratios, message = FALSE, cache = FALSE, echo=FALSE}
+genes <- letters[1:12]
+genes
+```
+
+And two gene sets, `"X"` and `"Y"`:
+
+```{r ratios2, message = FALSE, cache = FALSE, echo=FALSE}
+gs_df <- data.frame("geneset"=c(rep("X", 10), rep("Y", 25)),
+                    "entrez_gene"=c(letters[1:10], letters[2:26]))
+filter(gs_df, geneset == "X")
+filter(gs_df, geneset == "Y")
+```
+
+We get:
+
+```{r ratios3, message = FALSE, cache = FALSE, echo=FALSE}
+cols <- c("GeneRatio", "BgRatio", "geneID", "Count")
+enricher(gene = genes, TERM2GENE = gs_df, minGSSize=1)@result[, cols]
+```
+
 
 `r msmbstyle::question_begin()`
 

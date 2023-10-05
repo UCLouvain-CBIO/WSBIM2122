@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2023-10-04" />
+<meta name="date" content="2023-10-05" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -686,19 +686,19 @@ adjusted p-value above) and compute a new GSEA score.</p>
 ##          &lt;character&gt;   &lt;factor&gt;  &lt;factor&gt;  &lt;numeric&gt;
 ## sample1        Cell1 Epithelial      mock   0.775421
 ## sample2        Cell1 Epithelial      KD     1.408012
-## sample3        Cell1 Epithelial      mock   1.160908
-## sample4        Cell1 Epithelial      KD     1.023210
-## sample5        Cell1 Epithelial      mock   1.105404
+## sample3        Cell1 Epithelial      KD     1.160908
+## sample4        Cell1 Epithelial      mock   1.023210
+## sample5        Cell1 Epithelial      KD     1.105404
 ## ...              ...        ...       ...        ...
 ## sample8        Cell2 Fibroblast      mock   0.830183
-## sample9        Cell2 Fibroblast      mock   0.993755
-## sample10       Cell2 Fibroblast      KD     0.915594
+## sample9        Cell2 Fibroblast      KD     0.993755
+## sample10       Cell2 Fibroblast      mock   0.915594
 ## sample11       Cell2 Fibroblast      KD     0.997491
-## sample12       Cell2 Fibroblast      KD     0.976773</code></pre>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="sec-gsea.html#cb281-1" tabindex="-1"></a>ensembl_to_geneName <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">ENSEMBL =</span> <span class="fu">rownames</span>(dds)) <span class="sc">%&gt;%</span> </span>
-<span id="cb281-2"><a href="sec-gsea.html#cb281-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gene =</span> AnnotationDbi<span class="sc">::</span><span class="fu">mapIds</span>(org.Hs.eg.db, ENSEMBL, <span class="st">"SYMBOL"</span>, </span>
-<span id="cb281-3"><a href="sec-gsea.html#cb281-3" tabindex="-1"></a>                                      <span class="st">"ENSEMBL"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb281-4"><a href="sec-gsea.html#cb281-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ENTREZID =</span> AnnotationDbi<span class="sc">::</span><span class="fu">mapIds</span>(org.Hs.eg.db, ENSEMBL, <span class="st">"ENTREZID"</span>, </span>
+## sample12       Cell2 Fibroblast      mock   0.976773</code></pre>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="sec-gsea.html#cb281-1" tabindex="-1"></a>ensembl_to_geneName <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">ENSEMBL =</span> <span class="fu">rownames</span>(dds)) <span class="sc">%&gt;%</span></span>
+<span id="cb281-2"><a href="sec-gsea.html#cb281-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gene =</span> AnnotationDbi<span class="sc">::</span><span class="fu">mapIds</span>(org.Hs.eg.db, ENSEMBL, <span class="st">"SYMBOL"</span>,</span>
+<span id="cb281-3"><a href="sec-gsea.html#cb281-3" tabindex="-1"></a>                                      <span class="st">"ENSEMBL"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb281-4"><a href="sec-gsea.html#cb281-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ENTREZID =</span> AnnotationDbi<span class="sc">::</span><span class="fu">mapIds</span>(org.Hs.eg.db, ENSEMBL, <span class="st">"ENTREZID"</span>,</span>
 <span id="cb281-5"><a href="sec-gsea.html#cb281-5" tabindex="-1"></a>                                          <span class="st">"ENSEMBL"</span>))</span>
 <span id="cb281-6"><a href="sec-gsea.html#cb281-6" tabindex="-1"></a></span>
 <span id="cb281-7"><a href="sec-gsea.html#cb281-7" tabindex="-1"></a>res_tmp <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds_tmp) <span class="sc">%&gt;%</span></span>
@@ -717,22 +717,22 @@ adjusted p-value above) and compute a new GSEA score.</p>
 <span id="cb281-20"><a href="sec-gsea.html#cb281-20" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">score =</span> <span class="fu">cumsum</span>(score))</span>
 <span id="cb281-21"><a href="sec-gsea.html#cb281-21" tabindex="-1"></a></span>
 <span id="cb281-22"><a href="sec-gsea.html#cb281-22" tabindex="-1"></a>res_tmp</span></code></pre></div>
-<pre><code>## # A tibble: 24,491 × 5
+<pre><code>## # A tibble: 24,492 × 5
 ##    ENSEMBL         ENTREZID   padj inGO  score
 ##    &lt;chr&gt;           &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
-##  1 ENSG00000278267 102466751  1.00 FALSE    -1
-##  2 ENSG00000268020 79504      1.00 FALSE    -2
-##  3 ENSG00000233750 100420257  1.00 FALSE    -3
-##  4 ENSG00000228463 728481     1.00 FALSE    -4
-##  5 ENSG00000236679 728517     1.00 FALSE    -5
-##  6 ENSG00000230021 101928626  1.00 FALSE    -6
-##  7 ENSG00000225972 100887749  1.00 FALSE    -7
-##  8 ENSG00000237973 107075141  1.00 FALSE    -8
-##  9 ENSG00000229344 107075310  1.00 FALSE    -9
-## 10 ENSG00000248527 106480796  1.00 FALSE   -10
-## # ℹ 24,481 more rows</code></pre>
+##  1 ENSG00000278267 102466751 0.978 FALSE    -1
+##  2 ENSG00000268020 79504     0.978 FALSE    -2
+##  3 ENSG00000233750 100420257 0.978 FALSE    -3
+##  4 ENSG00000228463 728481    0.978 FALSE    -4
+##  5 ENSG00000236679 728517    0.978 FALSE    -5
+##  6 ENSG00000230021 101928626 0.978 FALSE    -6
+##  7 ENSG00000225972 100887749 0.978 FALSE    -7
+##  8 ENSG00000225630 100652939 0.978 FALSE    -8
+##  9 ENSG00000237973 107075141 0.978 FALSE    -9
+## 10 ENSG00000248527 106480796 0.978 FALSE   -10
+## # ℹ 24,482 more rows</code></pre>
 <div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="sec-gsea.html#cb283-1" tabindex="-1"></a><span class="fu">max</span>(res_tmp<span class="sc">$</span>score)</span></code></pre></div>
-<pre><code>## [1] 389.821</code></pre>
+<pre><code>## [1] 180.5823</code></pre>
 <div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="sec-gsea.html#cb285-1" tabindex="-1"></a><span class="fu">plot</span>(res_tmp<span class="sc">$</span>score, <span class="at">type =</span> <span class="st">"l"</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-149-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests
@@ -911,6 +911,59 @@ further exploration of the results.</p>
 ## 18 GO:00… small ribos… 34/3844   66/120… 7.14e- 4  2.66e-2 2.45e-2 DAP3/M…    34
 ## 19 GO:00… endosome me… 165/3844  421/12… 7.78e- 4  2.75e-2 2.53e-2 STEAP3…   165
 ## 20 GO:00… Golgi membr… 188/3844  487/12… 8.34e- 4  2.80e-2 2.57e-2 EMP2/S…   188</code></pre>
+<p>The <code>GeneRatio</code> and <code>BgRatio</code> correspond respectively to</p>
+<ul>
+<li><p>the ration between the number of genes of interest in the gene set
+and the number of (unique) genes-to-interest:
+<span class="math inline">\(\frac{|genes\_of\_interest~in~gene\_set|}{|genes\_of\_interest|}\)</span></p></li>
+<li><p>the ratio between the number of genes of interest in the gene set
+and size of the universe, i.e. the number of (unique) genes across
+all gene sets: <span class="math inline">\(\frac{|genes~in~gene\_set|}{|universe|}\)</span></p></li>
+</ul>
+<!-- Example from: https://www.biostars.org/p/220465/ --><p>Below, we have 12 genes of interest, <code>"a"</code>, to <code>"l"</code>:</p>
+<pre><code>##  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l"</code></pre>
+<p>And two gene sets, <code>"X"</code> and <code>"Y"</code>:</p>
+<pre><code>##    geneset entrez_gene
+## 1        X           a
+## 2        X           b
+## 3        X           c
+## 4        X           d
+## 5        X           e
+## 6        X           f
+## 7        X           g
+## 8        X           h
+## 9        X           i
+## 10       X           j</code></pre>
+<pre><code>##    geneset entrez_gene
+## 1        Y           b
+## 2        Y           c
+## 3        Y           d
+## 4        Y           e
+## 5        Y           f
+## 6        Y           g
+## 7        Y           h
+## 8        Y           i
+## 9        Y           j
+## 10       Y           k
+## 11       Y           l
+## 12       Y           m
+## 13       Y           n
+## 14       Y           o
+## 15       Y           p
+## 16       Y           q
+## 17       Y           r
+## 18       Y           s
+## 19       Y           t
+## 20       Y           u
+## 21       Y           v
+## 22       Y           w
+## 23       Y           x
+## 24       Y           y
+## 25       Y           z</code></pre>
+<p>We get:</p>
+<pre><code>##   GeneRatio BgRatio                geneID Count
+## X     10/12   10/26   a/b/c/d/e/f/g/h/i/j    10
+## Y     11/12   25/26 b/c/d/e/f/g/h/i/j/k/l    11</code></pre>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -932,17 +985,17 @@ for details.</p>
 to be ordered in decreasing order. This indicates that the p-values
 can’t be used without transformations. One could also use the log2
 fold-change or the (absolute value) test statistics.</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="sec-gsea.html#cb298-1" tabindex="-1"></a>ordered_genes <span class="ot">&lt;-</span> <span class="fu">abs</span>(res_tbl<span class="sc">$</span>stat)</span>
-<span id="cb298-2"><a href="sec-gsea.html#cb298-2" tabindex="-1"></a><span class="fu">names</span>(ordered_genes) <span class="ot">&lt;-</span> res_tbl<span class="sc">$</span>ENTREZID</span>
-<span id="cb298-3"><a href="sec-gsea.html#cb298-3" tabindex="-1"></a>ordered_genes <span class="ot">&lt;-</span> <span class="fu">sort</span>(ordered_genes, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb298-4"><a href="sec-gsea.html#cb298-4" tabindex="-1"></a></span>
-<span id="cb298-5"><a href="sec-gsea.html#cb298-5" tabindex="-1"></a>go_gsea <span class="ot">&lt;-</span> <span class="fu">gseGO</span>(<span class="at">gene =</span> ordered_genes,</span>
-<span id="cb298-6"><a href="sec-gsea.html#cb298-6" tabindex="-1"></a>                 <span class="at">OrgDb =</span> org.Hs.eg.db,</span>
-<span id="cb298-7"><a href="sec-gsea.html#cb298-7" tabindex="-1"></a>                 <span class="at">scoreType =</span> <span class="st">"pos"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb298-8"><a href="sec-gsea.html#cb298-8" tabindex="-1"></a>    as_tibble</span></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="sec-gsea.html#cb302-1" tabindex="-1"></a>ordered_genes <span class="ot">&lt;-</span> <span class="fu">abs</span>(res_tbl<span class="sc">$</span>stat)</span>
+<span id="cb302-2"><a href="sec-gsea.html#cb302-2" tabindex="-1"></a><span class="fu">names</span>(ordered_genes) <span class="ot">&lt;-</span> res_tbl<span class="sc">$</span>ENTREZID</span>
+<span id="cb302-3"><a href="sec-gsea.html#cb302-3" tabindex="-1"></a>ordered_genes <span class="ot">&lt;-</span> <span class="fu">sort</span>(ordered_genes, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb302-4"><a href="sec-gsea.html#cb302-4" tabindex="-1"></a></span>
+<span id="cb302-5"><a href="sec-gsea.html#cb302-5" tabindex="-1"></a>go_gsea <span class="ot">&lt;-</span> <span class="fu">gseGO</span>(<span class="at">gene =</span> ordered_genes,</span>
+<span id="cb302-6"><a href="sec-gsea.html#cb302-6" tabindex="-1"></a>                 <span class="at">OrgDb =</span> org.Hs.eg.db,</span>
+<span id="cb302-7"><a href="sec-gsea.html#cb302-7" tabindex="-1"></a>                 <span class="at">scoreType =</span> <span class="st">"pos"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb302-8"><a href="sec-gsea.html#cb302-8" tabindex="-1"></a>    as_tibble</span></code></pre></div>
 <pre><code>## Warning in preparePathwaysAndStats(pathways, stats, minSize, maxSize, gseaParam, : There are ties in the preranked stats (0.62% of the list).
 ## The order of those tied genes will be arbitrary, which may produce unexpected results.</code></pre>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="sec-gsea.html#cb300-1" tabindex="-1"></a>go_gsea</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="sec-gsea.html#cb304-1" tabindex="-1"></a>go_gsea</span></code></pre></div>
 <pre><code>## # A tibble: 465 × 11
 ##    ID         Description setSize enrichmentScore   NES  pvalue p.adjust qvalues
 ##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;           &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
@@ -999,20 +1052,20 @@ to each approach?</p>
 ► Solution<span id="sol-start-20" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-20', 'sol-start-20')"></span>
 </p>
 <div id="sol-body-20" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="sec-gsea.html#cb302-1" tabindex="-1"></a>go_cc <span class="ot">&lt;-</span> <span class="fu">full_join</span>(go_ora <span class="sc">%&gt;%</span></span>
-<span id="cb302-2"><a href="sec-gsea.html#cb302-2" tabindex="-1"></a>                   <span class="fu">filter</span>(p.adjust <span class="sc">&lt;</span> <span class="fl">0.01</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb302-3"><a href="sec-gsea.html#cb302-3" tabindex="-1"></a>                   dplyr<span class="sc">::</span><span class="fu">select</span>(ID, p.adjust),</span>
-<span id="cb302-4"><a href="sec-gsea.html#cb302-4" tabindex="-1"></a>                 go_gsea <span class="sc">%&gt;%</span></span>
-<span id="cb302-5"><a href="sec-gsea.html#cb302-5" tabindex="-1"></a>                   <span class="fu">filter</span>(p.adjust <span class="sc">&lt;</span> <span class="fl">0.01</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb302-6"><a href="sec-gsea.html#cb302-6" tabindex="-1"></a>                   dplyr<span class="sc">::</span><span class="fu">select</span>(ID, p.adjust),</span>
-<span id="cb302-7"><a href="sec-gsea.html#cb302-7" tabindex="-1"></a>                 <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"ID"</span> <span class="ot">=</span> <span class="st">"ID"</span>))</span>
-<span id="cb302-8"><a href="sec-gsea.html#cb302-8" tabindex="-1"></a></span>
-<span id="cb302-9"><a href="sec-gsea.html#cb302-9" tabindex="-1"></a><span class="do">## shared</span></span>
-<span id="cb302-10"><a href="sec-gsea.html#cb302-10" tabindex="-1"></a><span class="fu">na.omit</span>(go_cc)</span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="sec-gsea.html#cb306-1" tabindex="-1"></a>go_cc <span class="ot">&lt;-</span> <span class="fu">full_join</span>(go_ora <span class="sc">%&gt;%</span></span>
+<span id="cb306-2"><a href="sec-gsea.html#cb306-2" tabindex="-1"></a>                   <span class="fu">filter</span>(p.adjust <span class="sc">&lt;</span> <span class="fl">0.01</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb306-3"><a href="sec-gsea.html#cb306-3" tabindex="-1"></a>                   dplyr<span class="sc">::</span><span class="fu">select</span>(ID, p.adjust),</span>
+<span id="cb306-4"><a href="sec-gsea.html#cb306-4" tabindex="-1"></a>                 go_gsea <span class="sc">%&gt;%</span></span>
+<span id="cb306-5"><a href="sec-gsea.html#cb306-5" tabindex="-1"></a>                   <span class="fu">filter</span>(p.adjust <span class="sc">&lt;</span> <span class="fl">0.01</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb306-6"><a href="sec-gsea.html#cb306-6" tabindex="-1"></a>                   dplyr<span class="sc">::</span><span class="fu">select</span>(ID, p.adjust),</span>
+<span id="cb306-7"><a href="sec-gsea.html#cb306-7" tabindex="-1"></a>                 <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"ID"</span> <span class="ot">=</span> <span class="st">"ID"</span>))</span>
+<span id="cb306-8"><a href="sec-gsea.html#cb306-8" tabindex="-1"></a></span>
+<span id="cb306-9"><a href="sec-gsea.html#cb306-9" tabindex="-1"></a><span class="do">## shared</span></span>
+<span id="cb306-10"><a href="sec-gsea.html#cb306-10" tabindex="-1"></a><span class="fu">na.omit</span>(go_cc)</span></code></pre></div>
 <pre><code>## # A tibble: 0 × 3
 ## # ℹ 3 variables: ID &lt;chr&gt;, p.adjust.x &lt;dbl&gt;, p.adjust.y &lt;dbl&gt;</code></pre>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="sec-gsea.html#cb304-1" tabindex="-1"></a><span class="do">## ORA only</span></span>
-<span id="cb304-2"><a href="sec-gsea.html#cb304-2" tabindex="-1"></a><span class="fu">filter</span>(go_cc, <span class="fu">is.na</span>(p.adjust.y))</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="sec-gsea.html#cb308-1" tabindex="-1"></a><span class="do">## ORA only</span></span>
+<span id="cb308-2"><a href="sec-gsea.html#cb308-2" tabindex="-1"></a><span class="fu">filter</span>(go_cc, <span class="fu">is.na</span>(p.adjust.y))</span></code></pre></div>
 <pre><code>## # A tibble: 16 × 3
 ##    ID           p.adjust.x p.adjust.y
 ##    &lt;chr&gt;             &lt;dbl&gt;      &lt;dbl&gt;
@@ -1032,8 +1085,8 @@ to each approach?</p>
 ## 14 GO:0099572 0.00732              NA
 ## 15 GO:0032279 0.00732              NA
 ## 16 GO:0098794 0.00785              NA</code></pre>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="sec-gsea.html#cb306-1" tabindex="-1"></a><span class="do">## GSEA only</span></span>
-<span id="cb306-2"><a href="sec-gsea.html#cb306-2" tabindex="-1"></a><span class="fu">filter</span>(go_cc, <span class="fu">is.na</span>(p.adjust.x))</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="sec-gsea.html#cb310-1" tabindex="-1"></a><span class="do">## GSEA only</span></span>
+<span id="cb310-2"><a href="sec-gsea.html#cb310-2" tabindex="-1"></a><span class="fu">filter</span>(go_cc, <span class="fu">is.na</span>(p.adjust.x))</span></code></pre></div>
 <pre><code>## # A tibble: 139 × 3
 ##    ID         p.adjust.x p.adjust.y
 ##    &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;
@@ -1078,11 +1131,11 @@ the ORA and GSEA analyses againt the KEGG sets.</p>
 </h3>
 <p>We will use the hallmark gene set as an example here, but any set
 described above can be utilised.</p>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="sec-gsea.html#cb308-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"msigdbr"</span>)</span>
-<span id="cb308-2"><a href="sec-gsea.html#cb308-2" tabindex="-1"></a>msig_h <span class="ot">&lt;-</span> <span class="fu">msigdbr</span>(<span class="at">species =</span> <span class="st">"Homo sapiens"</span>, <span class="at">category =</span> <span class="st">"H"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb308-3"><a href="sec-gsea.html#cb308-3" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(gs_name, entrez_gene) <span class="sc">%&gt;%</span></span>
-<span id="cb308-4"><a href="sec-gsea.html#cb308-4" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">ont =</span> gs_name, <span class="at">gene =</span> entrez_gene)</span>
-<span id="cb308-5"><a href="sec-gsea.html#cb308-5" tabindex="-1"></a>msig_h</span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="sec-gsea.html#cb312-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"msigdbr"</span>)</span>
+<span id="cb312-2"><a href="sec-gsea.html#cb312-2" tabindex="-1"></a>msig_h <span class="ot">&lt;-</span> <span class="fu">msigdbr</span>(<span class="at">species =</span> <span class="st">"Homo sapiens"</span>, <span class="at">category =</span> <span class="st">"H"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb312-3"><a href="sec-gsea.html#cb312-3" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(gs_name, entrez_gene) <span class="sc">%&gt;%</span></span>
+<span id="cb312-4"><a href="sec-gsea.html#cb312-4" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">ont =</span> gs_name, <span class="at">gene =</span> entrez_gene)</span>
+<span id="cb312-5"><a href="sec-gsea.html#cb312-5" tabindex="-1"></a>msig_h</span></code></pre></div>
 <pre><code>## # A tibble: 8,209 × 2
 ##    ont                    gene
 ##    &lt;chr&gt;                 &lt;int&gt;
@@ -1100,22 +1153,22 @@ described above can be utilised.</p>
 <p>The <code>msig_h</code> table can now be used with the <code>enricher()</code> and <code>GSEA()</code>
 functions from the <code>clusterProfiler</code> package to perform ORA and GSEA
 analyses on the MSigDB hallmark gene set.</p>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="sec-gsea.html#cb310-1" tabindex="-1"></a>msig_ora <span class="ot">&lt;-</span> <span class="fu">enricher</span>(<span class="at">gene =</span> de_genes,</span>
-<span id="cb310-2"><a href="sec-gsea.html#cb310-2" tabindex="-1"></a>                     <span class="at">universe =</span> res_tbl<span class="sc">$</span>ENTREZID,</span>
-<span id="cb310-3"><a href="sec-gsea.html#cb310-3" tabindex="-1"></a>                     <span class="at">TERM2GENE =</span> msig_h) <span class="sc">%&gt;%</span></span>
-<span id="cb310-4"><a href="sec-gsea.html#cb310-4" tabindex="-1"></a>    as_tibble</span>
-<span id="cb310-5"><a href="sec-gsea.html#cb310-5" tabindex="-1"></a>msig_ora</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="sec-gsea.html#cb314-1" tabindex="-1"></a>msig_ora <span class="ot">&lt;-</span> <span class="fu">enricher</span>(<span class="at">gene =</span> de_genes,</span>
+<span id="cb314-2"><a href="sec-gsea.html#cb314-2" tabindex="-1"></a>                     <span class="at">universe =</span> res_tbl<span class="sc">$</span>ENTREZID,</span>
+<span id="cb314-3"><a href="sec-gsea.html#cb314-3" tabindex="-1"></a>                     <span class="at">TERM2GENE =</span> msig_h) <span class="sc">%&gt;%</span></span>
+<span id="cb314-4"><a href="sec-gsea.html#cb314-4" tabindex="-1"></a>    as_tibble</span>
+<span id="cb314-5"><a href="sec-gsea.html#cb314-5" tabindex="-1"></a>msig_ora</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 9
 ##   ID         Description GeneRatio BgRatio  pvalue p.adjust  qvalue geneID Count
 ##   &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;int&gt;
 ## 1 HALLMARK_… HALLMARK_H… 82/1211   164/33… 1.42e-4  0.00709 0.00627 10370…    82
 ## 2 HALLMARK_… HALLMARK_M… 34/1211   58/3347 3.72e-4  0.00931 0.00823 1844/…    34
 ## 3 HALLMARK_… HALLMARK_A… 53/1211   106/33… 2.13e-3  0.0355  0.0314  3566/…    53</code></pre>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="sec-gsea.html#cb312-1" tabindex="-1"></a>msig_gsea <span class="ot">&lt;-</span> <span class="fu">GSEA</span>(ordered_genes, <span class="at">TERM2GENE =</span> msig_h, <span class="at">scoreType =</span> <span class="st">"pos"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb312-2"><a href="sec-gsea.html#cb312-2" tabindex="-1"></a>    as_tibble</span></code></pre></div>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="sec-gsea.html#cb316-1" tabindex="-1"></a>msig_gsea <span class="ot">&lt;-</span> <span class="fu">GSEA</span>(ordered_genes, <span class="at">TERM2GENE =</span> msig_h, <span class="at">scoreType =</span> <span class="st">"pos"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb316-2"><a href="sec-gsea.html#cb316-2" tabindex="-1"></a>    as_tibble</span></code></pre></div>
 <pre><code>## Warning in preparePathwaysAndStats(pathways, stats, minSize, maxSize, gseaParam, : There are ties in the preranked stats (0.62% of the list).
 ## The order of those tied genes will be arbitrary, which may produce unexpected results.</code></pre>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="sec-gsea.html#cb314-1" tabindex="-1"></a>msig_gsea</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="sec-gsea.html#cb318-1" tabindex="-1"></a>msig_gsea</span></code></pre></div>
 <pre><code>## # A tibble: 17 × 11
 ##    ID         Description setSize enrichmentScore   NES  pvalue p.adjust  qvalue
 ##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;           &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
@@ -1149,12 +1202,12 @@ results</a>.</p>
 <p>Another useful visualisation, that links the enrichment results back
 to the whole set of results is to highlight the genes in a particular
 set of interest on the volcano plot.</p>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="sec-gsea.html#cb316-1" tabindex="-1"></a>sel <span class="ot">&lt;-</span> res_tbl<span class="sc">$</span>ENTREZID <span class="sc">%in%</span> GO_0005925<span class="sc">$</span>ENTREZID</span>
-<span id="cb316-2"><a href="sec-gsea.html#cb316-2" tabindex="-1"></a><span class="fu">plot</span>(res_tbl<span class="sc">$</span>log2FoldChange, <span class="sc">-</span><span class="fu">log10</span>(res_tbl<span class="sc">$</span>padj))</span>
-<span id="cb316-3"><a href="sec-gsea.html#cb316-3" tabindex="-1"></a><span class="fu">points</span>(res_tbl<span class="sc">$</span>log2FoldChange[sel],</span>
-<span id="cb316-4"><a href="sec-gsea.html#cb316-4" tabindex="-1"></a>     <span class="sc">-</span><span class="fu">log10</span>(res_tbl<span class="sc">$</span>padj)[sel],</span>
-<span id="cb316-5"><a href="sec-gsea.html#cb316-5" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb316-6"><a href="sec-gsea.html#cb316-6" tabindex="-1"></a><span class="fu">grid</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="sec-gsea.html#cb320-1" tabindex="-1"></a>sel <span class="ot">&lt;-</span> res_tbl<span class="sc">$</span>ENTREZID <span class="sc">%in%</span> GO_0005925<span class="sc">$</span>ENTREZID</span>
+<span id="cb320-2"><a href="sec-gsea.html#cb320-2" tabindex="-1"></a><span class="fu">plot</span>(res_tbl<span class="sc">$</span>log2FoldChange, <span class="sc">-</span><span class="fu">log10</span>(res_tbl<span class="sc">$</span>padj))</span>
+<span id="cb320-3"><a href="sec-gsea.html#cb320-3" tabindex="-1"></a><span class="fu">points</span>(res_tbl<span class="sc">$</span>log2FoldChange[sel],</span>
+<span id="cb320-4"><a href="sec-gsea.html#cb320-4" tabindex="-1"></a>     <span class="sc">-</span><span class="fu">log10</span>(res_tbl<span class="sc">$</span>padj)[sel],</span>
+<span id="cb320-5"><a href="sec-gsea.html#cb320-5" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb320-6"><a href="sec-gsea.html#cb320-6" tabindex="-1"></a><span class="fu">grid</span>()</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-157-1.png" width="672"></p>
 <div class="question">
 <p class="question-begin">
@@ -1174,15 +1227,15 @@ volcano plot.</p>
 ► Solution<span id="sol-start-21" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-21', 'sol-start-21')"></span>
 </p>
 <div id="sol-body-21" class="solution-body" style="display: none;">
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="sec-gsea.html#cb317-1" tabindex="-1"></a>entrez_ids <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(msig_gsea<span class="sc">$</span>core_enrichment[[<span class="dv">1</span>]], <span class="st">"/"</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb317-2"><a href="sec-gsea.html#cb317-2" tabindex="-1"></a></span>
-<span id="cb317-3"><a href="sec-gsea.html#cb317-3" tabindex="-1"></a>res_tbl <span class="sc">%&gt;%</span></span>
-<span id="cb317-4"><a href="sec-gsea.html#cb317-4" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">inGO =</span> ENTREZID <span class="sc">%in%</span> entrez_ids) <span class="sc">%&gt;%</span></span>
-<span id="cb317-5"><a href="sec-gsea.html#cb317-5" tabindex="-1"></a>    <span class="fu">arrange</span>(inGO) <span class="sc">%&gt;%</span> <span class="do">## to plot inGO points last (on top)</span></span>
-<span id="cb317-6"><a href="sec-gsea.html#cb317-6" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> log2FoldChange,</span>
-<span id="cb317-7"><a href="sec-gsea.html#cb317-7" tabindex="-1"></a>               <span class="at">y =</span> <span class="sc">-</span><span class="fu">log10</span>(padj),</span>
-<span id="cb317-8"><a href="sec-gsea.html#cb317-8" tabindex="-1"></a>               <span class="at">colour =</span> inGO)) <span class="sc">+</span></span>
-<span id="cb317-9"><a href="sec-gsea.html#cb317-9" tabindex="-1"></a>    <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="sec-gsea.html#cb321-1" tabindex="-1"></a>entrez_ids <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(msig_gsea<span class="sc">$</span>core_enrichment[[<span class="dv">1</span>]], <span class="st">"/"</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb321-2"><a href="sec-gsea.html#cb321-2" tabindex="-1"></a></span>
+<span id="cb321-3"><a href="sec-gsea.html#cb321-3" tabindex="-1"></a>res_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb321-4"><a href="sec-gsea.html#cb321-4" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">inGO =</span> ENTREZID <span class="sc">%in%</span> entrez_ids) <span class="sc">%&gt;%</span></span>
+<span id="cb321-5"><a href="sec-gsea.html#cb321-5" tabindex="-1"></a>    <span class="fu">arrange</span>(inGO) <span class="sc">%&gt;%</span> <span class="do">## to plot inGO points last (on top)</span></span>
+<span id="cb321-6"><a href="sec-gsea.html#cb321-6" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> log2FoldChange,</span>
+<span id="cb321-7"><a href="sec-gsea.html#cb321-7" tabindex="-1"></a>               <span class="at">y =</span> <span class="sc">-</span><span class="fu">log10</span>(padj),</span>
+<span id="cb321-8"><a href="sec-gsea.html#cb321-8" tabindex="-1"></a>               <span class="at">colour =</span> inGO)) <span class="sc">+</span></span>
+<span id="cb321-9"><a href="sec-gsea.html#cb321-9" tabindex="-1"></a>    <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-158-1.png" width="672"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -1220,7 +1273,7 @@ M phase of mitotic cell cycle).<a href="sec-gsea.html#fnref11" class="footnote-b
 <a href="sec-ms.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2023-10-04
+2023-10-05
  using 
 R version 4.3.1 Patched (2023-07-10 r84676)
 </p>
