@@ -724,7 +724,12 @@ fit <- eBayes(fit)
 ```
 
 Finally, the `topTable()` function is used the extract the results for
-the coefficient of interest.
+the coefficient of interest. You can look at the column names of the
+coefficient table to get their names.
+
+```{r}
+colnames(coefficients(fit))
+```
 
 ```{r}
 res <-
