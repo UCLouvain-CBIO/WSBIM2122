@@ -26,8 +26,8 @@ fig:miximp
 fig:unnamed-chunk-204
 fig:unnamed-chunk-208
 fig:unnamed-chunk-209
-fig:unnamed-chunk-216
-fig:unnamed-chunk-220
+fig:unnamed-chunk-217
+fig:unnamed-chunk-221
 sec-rmd
 knitting-from-within-r
 caching
