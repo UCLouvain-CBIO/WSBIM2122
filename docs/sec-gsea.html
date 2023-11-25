@@ -684,16 +684,16 @@ adjusted p-value above) and compute a new GSEA score.</p>
 <pre><code>## DataFrame with 12 rows and 4 columns
 ##                 Cell       Type Condition sizeFactor
 ##          &lt;character&gt;   &lt;factor&gt;  &lt;factor&gt;  &lt;numeric&gt;
-## sample1        Cell1 Epithelial      KD     0.775421
-## sample2        Cell1 Epithelial      mock   1.408012
-## sample3        Cell1 Epithelial      mock   1.160908
-## sample4        Cell1 Epithelial      KD     1.023210
-## sample5        Cell1 Epithelial      KD     1.105404
+## sample1        Cell1 Epithelial      mock   0.775421
+## sample2        Cell1 Epithelial      KD     1.408012
+## sample3        Cell1 Epithelial      KD     1.160908
+## sample4        Cell1 Epithelial      mock   1.023210
+## sample5        Cell1 Epithelial      mock   1.105404
 ## ...              ...        ...       ...        ...
-## sample8        Cell2 Fibroblast      mock   0.830183
+## sample8        Cell2 Fibroblast      KD     0.830183
 ## sample9        Cell2 Fibroblast      KD     0.993755
 ## sample10       Cell2 Fibroblast      mock   0.915594
-## sample11       Cell2 Fibroblast      mock   0.997491
+## sample11       Cell2 Fibroblast      KD     0.997491
 ## sample12       Cell2 Fibroblast      KD     0.976773</code></pre>
 <div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="sec-gsea.html#cb284-1" tabindex="-1"></a>ensembl_to_geneName <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">ENSEMBL =</span> <span class="fu">rownames</span>(dds)) <span class="sc">%&gt;%</span></span>
 <span id="cb284-2"><a href="sec-gsea.html#cb284-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gene =</span> AnnotationDbi<span class="sc">::</span><span class="fu">mapIds</span>(org.Hs.eg.db, ENSEMBL, <span class="st">"SYMBOL"</span>,</span>
@@ -717,22 +717,22 @@ adjusted p-value above) and compute a new GSEA score.</p>
 <span id="cb284-20"><a href="sec-gsea.html#cb284-20" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">score =</span> <span class="fu">cumsum</span>(score))</span>
 <span id="cb284-21"><a href="sec-gsea.html#cb284-21" tabindex="-1"></a></span>
 <span id="cb284-22"><a href="sec-gsea.html#cb284-22" tabindex="-1"></a>res_tmp</span></code></pre></div>
-<pre><code>## # A tibble: 12,502 × 5
+<pre><code>## # A tibble: 12,956 × 5
 ##    ENSEMBL         ENTREZID        padj inGO  score
 ##    &lt;chr&gt;           &lt;chr&gt;          &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
-##  1 ENSG00000065054 9351     0.000000592 TRUE   31.5
-##  2 ENSG00000175602 11007    0.00000963  FALSE  30.5
-##  3 ENSG00000168077 51435    0.0000112   FALSE  29.5
-##  4 ENSG00000110719 10312    0.0000150   FALSE  28.5
-##  5 ENSG00000169908 4071     0.0000293   FALSE  27.5
-##  6 ENSG00000167601 558      0.0000293   FALSE  26.5
-##  7 ENSG00000102241 27336    0.0000345   FALSE  25.5
-##  8 ENSG00000120896 10174    0.0000686   TRUE   56.9
-##  9 ENSG00000178038 259173   0.0000903   FALSE  55.9
-## 10 ENSG00000177494 79413    0.0000924   FALSE  54.9
-## # ℹ 12,492 more rows</code></pre>
+##  1 ENSG00000065054 9351     0.000000686 TRUE   32.4
+##  2 ENSG00000175602 11007    0.00000714  FALSE  31.4
+##  3 ENSG00000110719 10312    0.00000714  FALSE  30.4
+##  4 ENSG00000168077 51435    0.00000794  FALSE  29.4
+##  5 ENSG00000169908 4071     0.00000949  FALSE  28.4
+##  6 ENSG00000102241 27336    0.0000203   FALSE  27.4
+##  7 ENSG00000167601 558      0.0000269   FALSE  26.4
+##  8 ENSG00000177494 79413    0.0000366   FALSE  25.4
+##  9 ENSG00000148908 6001     0.0000569   FALSE  24.4
+## 10 ENSG00000120896 10174    0.0000702   TRUE   56.8
+## # ℹ 12,946 more rows</code></pre>
 <div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="sec-gsea.html#cb286-1" tabindex="-1"></a><span class="fu">max</span>(res_tmp<span class="sc">$</span>score)</span></code></pre></div>
-<pre><code>## [1] 1541.6</code></pre>
+<pre><code>## [1] 1734.763</code></pre>
 <div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="sec-gsea.html#cb288-1" tabindex="-1"></a><span class="fu">plot</span>(res_tmp<span class="sc">$</span>score, <span class="at">type =</span> <span class="st">"l"</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-149-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests
