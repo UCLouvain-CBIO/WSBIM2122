@@ -1,9 +1,11 @@
 # Enrichment analyses {#sec-gsea}
 
-```{r, message = FALSE, echo = FALSE}
+```{r enrich_env_data, message = FALSE, echo = FALSE}
 library("GO.db")
 library("org.Hs.eg.db")
 library("tidyverse")
+res_tbl <- readRDS("./data/res_tbl.rds")
+dds <- readRDS("data/dds.rds")
 ```
 
 **Motivation**: at the end of this chapter, the students will be able
@@ -201,10 +203,6 @@ gene sets in a standard R data frame with key-value pairs.
 To illustrate enrichment analyses, we will use the DESeq2 results
 stored in the `res_tbl` variable, computed in the previous
 chapter.
-
-```{r, echo = FALSE}
-res_tbl <- readRDS("./data/res_tbl.rds")
-```
 
 We will focus on the genes that have an adjusted p-value (those that
 have been tested) and that have unique ENTREZ gene identifiers.
@@ -411,7 +409,7 @@ res_tmp <- res_tmp %>%
 res_tmp
 ```
 
-```{r}
+```{r gsea_res}
 max(res_tmp$score)
 plot(res_tmp$score, type = "l")
 ```
@@ -424,7 +422,7 @@ of permutations would be limited.
 We start by defining a function that will repeat the steps above and
 return a list containing the GSEA score and path.
 
-```{r}
+```{r gsea_perm}
 ##' A function that assigns the permuted Conditions,
 ##' runs DESeq and a GSEA analysis
 ##'
@@ -463,26 +461,26 @@ corresponding on the 10 first columns (including the actual design, in
 the first column). Note that columns 11 to 20 are simply the opposite
 of the first 10.
 
-```{r}
+```{r gsea_combn}
 (perms <- combn(6, 3))
 ```
 
 We not apply our function on every permutation.
 
-```{r gsea4, cache = TRUE}
+```{r gsea_apply_perms, cache = TRUE}
 paths <- apply(perms[, 1:10], 2, function(p) gsea_perm(dds, p))
 ```
 
 And calculate the scores
 
-```{r}
+```{r gsea_perm_scores}
 scores <- sapply(paths, max)
 ```
 
 If we compare the actual score to the permutation scores, we see that
 it is the largest one.
 
-```{r}
+```{r gsea_perm_plot}
 plot(density(scores))
 rug(scores)
 abline(v = scores[1])
@@ -493,7 +491,7 @@ scores that are greater than the real score divided by the number of
 permutations (the number of null scores). In our case, given that no
 null scores are greater, the nominal p-value would be 0.
 
-```{r}
+```{r gsea_emp_p}
 sum(scores > scores[1])/length(scores)
 ```
 
@@ -579,7 +577,7 @@ go_ora
 The `GeneRatio` and `BgRatio` correspond respectively to
 
 - the ration between the number of genes of interest in the gene set
-  and the number of (unique) genes-to-interest:
+  and the number of (unique) genes-of-interest:
   $\frac{|genes\_of\_interest~in~gene\_set|}{|genes\_of\_interest|}$
 
 - the ratio between the number of genes of interest in the gene set

@@ -138,7 +138,7 @@ explain the differences.
 `r msmbstyle::solution_begin()`
 
 ```{r gexp_t_test2}
-t.test(expression ~ group, data = gexp, paired = TRUE)
+mod2 <- t.test(gexp[1:10, 1], gexp[11:20, 1], paired = TRUE)
 ```
 
 ```{r gexp_vis2}

@@ -397,8 +397,8 @@ extract the *Condition_KD_vs_mock* coefficient.
 
 ```{r, message = FALSE, warning = FALSE}
 dds_test <- DESeqDataSetFromMatrix(countData = counts,
-                              colData = coldata,
-                              design =  ~ Type * Condition)
+                                   colData = coldata,
+                                   design =  ~ Type * Condition)
 # Set the Epithelial cells as the reference level
 dds_test$Type <- relevel(dds_test$Type, ref = "Fibroblast")
 # Set the mock condition as the reference level
