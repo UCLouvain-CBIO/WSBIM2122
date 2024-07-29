@@ -220,7 +220,7 @@ following questions:
 The figure below show is an illustration of how mass spectrometry
 works:
 
-1. The chromatogram at the top display to total ion current along the
+1. The chromatogram at the top display the total ion current along the
    retention time. The vertical line identifies one scan in particular
    at retention time 1800.68 seconds (the 2807th scan).
 
@@ -351,7 +351,7 @@ table(id$isDecoy)
 
 `r msmbstyle::question_begin()`
 
-Visualise the `MS.GF.RawScore` densitues for the real and decoy
+Visualise the `MS.GF.RawScore` densities for the real and decoy
 hits. Interprete the figures.
 
 `r msmbstyle::question_end()`
@@ -451,7 +451,7 @@ plotSpectraMirror(ms[i[1]], ms[i[2]],
 
 
 From the list of identified peptides, it is then necessary to infer
-the most provable proteins that were present in the biological
+the most probable proteins that were present in the biological
 sample. **Protein inference** is a difficult task, as peptides often
 match multiple proteins (either different isoforms or proteins
 stemming from different gene but with identical domains), which leads
@@ -490,7 +490,7 @@ i.e. chemical tags that have the same mass and hence can't be
 distinguish by the spectrometer. The peptides of different samples (4,
 6, 10, 11 or 16) are labelled with different tags and combined prior
 to mass spectrometry acquisition. Given that they are isobaric, all
-identical peptides, irrespective of the tag and this the sample of
+identical peptides, irrespective of the tag and thus the sample of
 origin, are co-analysed, up to fragmentation prior to MS2
 analysis. During fragmentation, the isobaric tags fall of, fragment
 themselves, and result in a set of sample specific peaks. These
