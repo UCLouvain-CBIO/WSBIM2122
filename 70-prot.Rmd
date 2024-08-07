@@ -374,7 +374,7 @@ or technical.
 
 1. Values that are missing due to the absence (or extremely low
    contentration) of a protein are observed for biological reasons,
-   and their pattern **aren't random**. A protein missing in due to
+   and their pattern **aren't random**. A protein missing due to
    the suppression of its expression will not be missing at random: it
    will be missing in the condition in which it was suppressed, and be
    present in the condition where it is expressed.
@@ -480,7 +480,7 @@ heatmap.2(x, col = c("lightgray", "black"),
 
 When downstream analyses permit, it might thus be safer not to impute
 data and deal explicitly with missing values. This is possible when
-performing hypethesis tests, but not to perform a principal component
+performing hypothesis tests, but not to perform a principal component
 analysis.
 
 
@@ -576,7 +576,7 @@ cptac <-
 `r msmbstyle::solution_end()`
 
 
-## Log-transformation and normaliation
+## Log-transformation and normalisation
 
 
 The two code chunks below log-transform and normalise using the assay
@@ -697,16 +697,16 @@ We have seen in chapter \@ref(sec-linmod) how to use linear models and
 have applied the same prinicples in chapter \@ref(sec-rnaseq) on count
 data (based on a negative binomial distribution).
 The `r BiocStyle::Biocpkg("limma")` package is the precursor package that
-enables the consistent application of linear models to normalliy
+enables the consistent application of linear models to normally
 distributed omics data in general, and microarrays in
 particuar[^limma].
 
 [^limma]: The name of the package refers to *Linear Models for Microarray Data*.
 
 The `limma` package also implements an empirical Bayes method that
-provides borrows information across features to estimate the standard
+borrows information across features to estimate the standard
 error[^shrinkage] and calculate (so called moderate) t
-statistics. This approach is demonstrably more powerful that a
+statistics. This approach is demonstrably more powerful than a
 standard t-tests when the number of samples is lot.
 
 [^shrinkage]: alike the shinkage gene-wise dispersion estimates see in

@@ -29,9 +29,9 @@ proteome is however very different.
 
 There are different modalities of the proteome that are of
 interest. In addition to the presence or amount of protein in a
-biological samples, it is also important to study the interactions
+biological sample, it is also important to study the interactions
 between proteins forming protein-protein complexes, the presence of
-post-transcriptional modification (such as, for example,
+post-transcriptional modifications (such as, for example,
 phosphorylations), the rate at which proteins are produced and
 degraded, or where the proteins reside inside a cell.
 
@@ -73,7 +73,7 @@ BiocManager::install("PSMatch")
 Mass spectrometry (MS) is a technology that *separates* charged
 molecules (ions) based on their mass to charge ratio (M/Z). It is
 often coupled to chromatography (liquid LC, but can also be gas-based
-GC). The time an analytes takes to elute from the chromatography
+GC). The time an analyte takes to elute from the chromatography
 column is the *retention time*.
 
 
@@ -84,8 +84,7 @@ knitr::include_graphics("./figs/chromatogram.png")
 An mass spectrometer is composed of three components:
 
 1. The *source*, that ionises the molecules: examples are Matrix-assisted
-   laser desorption/ionisation (MALDI) or electrospray ionisation.
-   (ESI)
+   laser desorption/ionisation (MALDI) or electrospray ionisation(ESI).
 2. The *analyser*, that separates the ions: Time of flight (TOF) or Orbitrap.
 3. The *detector* that quantifies the ions.
 
@@ -113,7 +112,7 @@ in the analyser to produce a MS2 spectrum. The unique fragment ion
 pattern can then be used to infer the peptide sequence using de novo
 sequencing (when the spectrum is of high enough quality) of using a
 search engine such as, for example Mascot, MSGF+, ..., that will match
-the observed, experimental spectrum to theoratical spectra (see
+the observed, experimental spectrum to theoretical spectra (see
 details below).
 
 
@@ -121,7 +120,7 @@ details below).
 knitr::include_graphics("figs/SchematicMS2.png")
 ```
 
-The animation below show how 25 ions different ions (i.e. having
+The animation below show how 25 different ions (i.e. having
 different M/Z values) are separated throughout the MS analysis and are
 eventually detected (i.e. quantified). The final frame shows the
 hypothetical spectrum.
@@ -136,7 +135,7 @@ vignette.
 
 The figures below illustrate the two rounds of MS. The spectrum on the
 left is an MS1 spectrum acquired after 21 minutes and 3 seconds of
-elution. 10 peaks, highlited by dotted vertical lines, were selected
+elution. 10 peaks, highlighted by dotted vertical lines, were selected
 for MS2 analysis. The peak at M/Z 460.79 (488.8) is highlighted by a
 red (orange) vertical line on the MS1 spectrum and the fragment
 spectra are shown on the MS2 spectrum on the top (bottom) right
@@ -221,7 +220,7 @@ following questions:
 The figure below show is an illustration of how mass spectrometry
 works:
 
-1. The chromatogram at the top display to total ion current along the
+1. The chromatogram at the top display the total ion current along the
    retention time. The vertical line identifies one scan in particular
    at retention time 1800.68 seconds (the 2807th scan).
 
@@ -258,7 +257,7 @@ with(spectraData(filterMsLevel(ms, 1)),
 abline(v = rtime(ms)[2807], col = "red")
 ```
 
-2. The `filterPrecursorScan()` function can be used to retains parent
+2. The `filterPrecursorScan()` function can be used to retain parent
    (MS1) and children scans (MS2) of a scan, as defined by its
    acquisition number.
 
@@ -352,7 +351,7 @@ table(id$isDecoy)
 
 `r msmbstyle::question_begin()`
 
-Visualise the `MS.GF.RawScore` densitues for the real and decoy
+Visualise the `MS.GF.RawScore` densities for the real and decoy
 hits. Interprete the figures.
 
 `r msmbstyle::question_end()`
@@ -452,7 +451,7 @@ plotSpectraMirror(ms[i[1]], ms[i[2]],
 
 
 From the list of identified peptides, it is then necessary to infer
-the most provable proteins that were present in the biological
+the most probable proteins that were present in the biological
 sample. **Protein inference** is a difficult task, as peptides often
 match multiple proteins (either different isoforms or proteins
 stemming from different gene but with identical domains), which leads
@@ -491,7 +490,7 @@ i.e. chemical tags that have the same mass and hence can't be
 distinguish by the spectrometer. The peptides of different samples (4,
 6, 10, 11 or 16) are labelled with different tags and combined prior
 to mass spectrometry acquisition. Given that they are isobaric, all
-identical peptides, irrespective of the tag and this the sample of
+identical peptides, irrespective of the tag and thus the sample of
 origin, are co-analysed, up to fragmentation prior to MS2
 analysis. During fragmentation, the isobaric tags fall of, fragment
 themselves, and result in a set of sample specific peaks. These
