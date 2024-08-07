@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Chapter 12 Session information | Omics Data Analysis" />
+<meta property="og:title" content="Chapter 11 Course and session information | Omics Data Analysis" />
 <meta property="og:type" content="book" />
 
 <meta property="og:description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain." />
@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2023-08-28" />
+<meta name="date" content="2024-08-07" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -24,7 +24,7 @@ MathJax.Hub.Config({
 
 <meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
 
-<title>Chapter 12 Session information | Omics Data Analysis</title>
+<title>Chapter 11 Course and session information | Omics Data Analysis</title>
 
 <link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
@@ -65,16 +65,18 @@ function reset_tooltip(id) {
   tooltip.innerHTML = 'Copy link';
 }
 </script>
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.28/datatables.js"></script>
+<script src="libs/datatables-binding-0.33/datatables.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
-<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
@@ -85,7 +87,6 @@ function reset_tooltip(id) {
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -120,7 +121,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -133,7 +134,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -148,28 +149,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -187,19 +166,21 @@ div.csl-indent {
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
-<a href="index.html" id="toc-preamble">Preamble</a>
-<a href="sec-cli.html" id="toc-sec-cli"><span class="toc-section-number">1</span> The shell</a>
-<a href="sec-rmd.html" id="toc-sec-rmd"><span class="toc-section-number">2</span> R markdown</a>
-<a href="sec-linmod.html" id="toc-sec-linmod"><span class="toc-section-number">3</span> Linear models</a>
-<a href="sec-hts.html" id="toc-sec-hts"><span class="toc-section-number">4</span> High throughput sequencing</a>
-<a href="sec-rnaseq.html" id="toc-sec-rnaseq"><span class="toc-section-number">5</span> Differential expression analysis</a>
-<a href="sec-design.html" id="toc-sec-design"><span class="toc-section-number">6</span> More complex experimental design</a>
-<a href="sec-gsea.html" id="toc-sec-gsea"><span class="toc-section-number">7</span> Enrichment analyses</a>
-<a href="sec-ms.html" id="toc-sec-ms"><span class="toc-section-number">8</span> Mass spectrometry</a>
-<a href="sec-prot.html" id="toc-sec-prot"><span class="toc-section-number">9</span> Quantitative proteomics data analysis</a>
-<a href="sec-ccl.html" id="toc-sec-ccl"><span class="toc-section-number">10</span> Conclusions</a>
-<a href="sec-anx.html" id="toc-sec-anx"><span class="toc-section-number">11</span> Annex</a>
-<a id="active-page" href="sec-si.html" id="toc-sec-si"><span class="toc-section-number">12</span> Session information</a><ul class="toc-sections">
+<a href="index.html">Preamble</a>
+<a href="sec-rmd.html"><span class="toc-section-number">1</span> R markdown</a>
+<a href="sec-linmod.html"><span class="toc-section-number">2</span> Linear models</a>
+<a href="sec-hts.html"><span class="toc-section-number">3</span> High throughput sequencing</a>
+<a href="sec-rnaseq.html"><span class="toc-section-number">4</span> Differential expression analysis</a>
+<a href="sec-design.html"><span class="toc-section-number">5</span> More complex experimental design</a>
+<a href="sec-gsea.html"><span class="toc-section-number">6</span> Enrichment analyses</a>
+<a href="sec-ms.html"><span class="toc-section-number">7</span> Mass spectrometry</a>
+<a href="sec-prot.html"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
+<a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
+<a href="sec-cli.html"><span class="toc-section-number">10</span> Annex: the shell</a>
+<a id="active-page" href="sec-si.html"><span class="toc-section-number">11</span> Course and session information</a><ul class="toc-sections">
+<li class="toc"><a href="#available-platforms"> Available platforms</a></li>
+<li class="toc"><a href="#project-reports"> Project reports</a></li>
+<li class="toc"><a href="#sec-si"> Session information</a></li>
 <li class="toc"><a href="#sec-setup2"> R package setup</a></li>
 </ul>
 </div>
@@ -210,27 +191,77 @@ div.csl-indent {
 </div>
 <div class="row">
 <div class="col-sm-12">
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="sec-si" class="section level1" number="12">
+<div id="sec-si" class="section level1" number="11">
 <h1>
-<span class="header-section-number">Chapter 12</span> Session information</h1>
+<span class="header-section-number">Chapter 11</span> Course and session information</h1>
+<div id="available-platforms" class="section level2" number="11.1">
+<h2>
+<span class="header-section-number">11.1</span> Available platforms<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('available-platforms')" onmouseout="reset_tooltip('available-platforms-tooltip')"><span class="tooltiptext" id="available-platforms-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Given the increased need for autonomous work, the students are free to
+use any computers they prefer to for this work, including the
+computers provided by the university, the cloud <a href="https://renkulab.io/projects?q=wsbim2122&amp;page=1&amp;orderBy=last_activity_at&amp;orderSearchAsc=false&amp;searchIn=projects">Renku WSBIM2122
+environment</a>
+for details) or their own computers. They should also make sure they
+have all the documents they need and use a system they are comfortable
+with during the presentations and final oral exam.</p>
+</div>
+<div id="project-reports" class="section level2" number="11.2">
+<h2>
+<span class="header-section-number">11.2</span> Project reports<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('project-reports')" onmouseout="reset_tooltip('project-reports-tooltip')"><span class="tooltiptext" id="project-reports-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>The group projects constitute a significant part of the work and final
+grades. The reports will be written in Rmarkdown (see <a href="sec-rmd.html#sec-rmd">1</a>
+and references therein) and compiled into a final pdf file. It should
+be structure as a scientific manuscript or thesis, including:</p>
+<ul>
+<li><p>An <strong>abstract</strong>, summarising the report.</p></li>
+<li><p>A short <strong>introduction</strong>, providing the necessary background to
+understand the report.</p></li>
+<li><p>A <strong>material and methods</strong> section describing the experimental
+design and the methods utilised.</p></li>
+<li><p>A <strong>results</strong> section describing and interpreting the results.</p></li>
+<li><p>A <strong>conclusion</strong> documenting the wider implications of the findings,
+possible follow-up experiments or analyses and any limitations of
+the methods and results discussed above.</p></li>
+<li><p>An <strong>author contributions</strong> section documenting the respective
+contributions of all authors. This section is particularly important
+as it will help us assess you involvement in the projects and guide
+the discussions during the oral exam. While all authors are
+expected to have contributed to the work and report, some will
+probably have specifically focused on different aspects of the
+work. These are areas where will dwell into more details.</p></li>
+</ul>
+<p>Before handing in your reports, each group will present their
+preliminary results. The group is free to choose the type of support
+they want to use (slides, a report, an Rmd file, … ). The emphasis
+of the presentations will not be to present a polished report, but for
+students and instructors to ask questions to highlight possible
+improvements. You will then be able to use the output of these
+questions and discussions, including those with other groups, to
+improve your own group report.</p>
+</div>
+<div id="sec-si" class="section level2" number="11.3">
+<h2>
+<span class="header-section-number">11.3</span> Session information<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('sec-si')" onmouseout="reset_tooltip('sec-si-tooltip')"><span class="tooltiptext" id="sec-si-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
 <p>The following packages have been used to generate this document.</p>
-<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="sec-si.html#cb483-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
-<pre><code>## R version 4.3.1 Patched (2023-07-10 r84676)
-## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Manjaro Linux
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="sec-si.html#cb491-1" aria-hidden="true"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
+<pre><code>## R version 4.4.1 (2024-06-14)
+## Platform: x86_64-pc-linux-gnu
+## Running under: Ubuntu 22.04.4 LTS
 ## 
 ## Matrix products: default
-## BLAS:   /usr/lib/libblas.so.3.11.0 
-## LAPACK: /usr/lib/liblapack.so.3.11.0
+## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
+## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
-##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
-##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [3] LC_TIME=nl_BE.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=nl_BE.UTF-8    LC_MESSAGES=en_US.UTF-8   
+##  [7] LC_PAPER=nl_BE.UTF-8       LC_NAME=C                 
 ##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## [11] LC_MEASUREMENT=nl_BE.UTF-8 LC_IDENTIFICATION=C       
 ## 
 ## time zone: Europe/Brussels
 ## tzcode source: system (glibc)
@@ -240,109 +271,108 @@ div.csl-indent {
 ## [8] base     
 ## 
 ## other attached packages:
-##  [1] plotly_4.10.2               factoextra_1.0.7           
-##  [3] gplots_3.1.3                limma_3.56.2               
-##  [5] QFeatures_1.11.1            MultiAssayExperiment_1.26.0
-##  [7] PSMatch_1.4.0               magrittr_2.0.3             
-##  [9] Spectra_1.10.2              ProtGenerics_1.32.0        
-## [11] BiocParallel_1.34.2         msigdbr_7.5.1              
-## [13] clusterProfiler_4.8.2       GO.db_3.17.0               
-## [15] org.Hs.eg.db_3.17.0         AnnotationDbi_1.62.2       
-## [17] biomaRt_2.56.1              patchwork_1.1.3            
-## [19] DESeq2_1.40.2               SummarizedExperiment_1.30.2
-## [21] Biobase_2.60.0              MatrixGenerics_1.12.3      
-## [23] matrixStats_1.0.0           GenomicRanges_1.52.0       
-## [25] GenomeInfoDb_1.36.1         IRanges_2.34.1             
-## [27] S4Vectors_0.38.1            BiocGenerics_0.46.0        
-## [29] DT_0.28                     lubridate_1.9.2            
-## [31] forcats_1.0.0               stringr_1.5.0              
-## [33] dplyr_1.1.2                 purrr_1.0.2                
-## [35] readr_2.1.4                 tidyr_1.3.0                
-## [37] tibble_3.2.1                tidyverse_2.0.0            
-## [39] ggplot2_3.4.3               rWSBIM2122_0.4.1           
+##  [1] plotly_4.10.4               factoextra_1.0.7           
+##  [3] gplots_3.1.3.1              limma_3.60.4               
+##  [5] QFeatures_1.15.1            MultiAssayExperiment_1.30.3
+##  [7] PSMatch_1.8.0               magrittr_2.0.3             
+##  [9] Spectra_1.14.1              ProtGenerics_1.36.0        
+## [11] BiocParallel_1.38.0         msigdbr_7.5.1              
+## [13] clusterProfiler_4.12.2      GO.db_3.19.1               
+## [15] org.Hs.eg.db_3.19.1         AnnotationDbi_1.66.0       
+## [17] patchwork_1.2.0             DESeq2_1.44.0              
+## [19] SummarizedExperiment_1.34.0 Biobase_2.64.0             
+## [21] MatrixGenerics_1.16.0       matrixStats_1.3.0          
+## [23] GenomicRanges_1.56.1        GenomeInfoDb_1.40.1        
+## [25] IRanges_2.38.1              S4Vectors_0.42.1           
+## [27] BiocGenerics_0.50.0         DT_0.33                    
+## [29] lubridate_1.9.3             forcats_1.0.0              
+## [31] stringr_1.5.1               dplyr_1.1.4                
+## [33] purrr_1.0.2                 readr_2.1.5                
+## [35] tidyr_1.3.1                 tibble_3.2.1               
+## [37] tidyverse_2.0.0             ggplot2_3.5.1              
+## [39] rWSBIM2122_0.4.1           
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] fs_1.6.3                  bitops_1.0-7             
-##   [3] enrichplot_1.20.1         HDO.db_0.99.1            
-##   [5] httr_1.4.7                RColorBrewer_1.1-3       
-##   [7] numDeriv_2016.8-1.1       tools_4.3.1              
-##   [9] backports_1.4.1           utf8_1.2.3               
-##  [11] R6_2.5.1                  lazyeval_0.2.2           
-##  [13] apeglm_1.22.1             withr_2.5.0              
-##  [15] prettyunits_1.1.1         gridExtra_2.3            
-##  [17] preprocessCore_1.62.1     cli_3.6.1                
-##  [19] scatterpie_0.2.1          shinyjs_2.1.0            
-##  [21] labeling_0.4.2            sass_0.4.7               
-##  [23] mvtnorm_1.2-3             yulab.utils_0.0.8        
-##  [25] gson_0.1.0                DOSE_3.26.1              
-##  [27] bbmle_1.0.25              rstudioapi_0.15.0        
-##  [29] RSQLite_2.3.1             generics_0.1.3           
-##  [31] gridGraphics_0.5-1        gtools_3.9.4             
-##  [33] crosstalk_1.2.0           vroom_1.6.3              
-##  [35] car_3.1-2                 Matrix_1.6-0             
-##  [37] fansi_1.0.4               abind_1.4-5              
-##  [39] lifecycle_1.0.3           yaml_2.3.7               
-##  [41] carData_3.0-5             qvalue_2.32.0            
-##  [43] BiocFileCache_2.8.0       grid_4.3.1               
-##  [45] blob_1.2.4                promises_1.2.1           
-##  [47] crayon_1.5.2              bdsmatrix_1.3-6          
-##  [49] shinydashboard_0.7.2      lattice_0.21-8           
-##  [51] cowplot_1.1.1             mzR_2.34.1               
-##  [53] KEGGREST_1.40.0           pillar_1.9.0             
-##  [55] knitr_1.43                fgsea_1.26.0             
-##  [57] codetools_0.2-19          fastmatch_1.1-4          
-##  [59] glue_1.6.2                downloader_0.4           
-##  [61] ggfun_0.1.2               data.table_1.14.8        
-##  [63] vctrs_0.6.3               png_0.1-8                
-##  [65] treeio_1.24.3             gtable_0.3.4             
-##  [67] emdbook_1.3.13            cachem_1.0.8             
-##  [69] xfun_0.40                 S4Arrays_1.0.5           
-##  [71] mime_0.12                 tidygraph_1.2.3          
-##  [73] msdata_0.40.0             coda_0.19-4              
-##  [75] ncdf4_1.21                ellipsis_0.3.2           
-##  [77] nlme_3.1-162              ggtree_3.8.2             
-##  [79] bit64_4.0.5               ExploreModelMatrix_1.12.0
-##  [81] progress_1.2.2            filelock_1.0.2           
-##  [83] bslib_0.5.1               KernSmooth_2.23-22       
-##  [85] colorspace_2.1-0          DBI_1.1.3                
-##  [87] tidyselect_1.2.0          bit_4.0.5                
-##  [89] compiler_4.3.1            curl_5.0.2               
-##  [91] xml2_1.3.5                DelayedArray_0.26.7      
-##  [93] bookdown_0.34.2           shadowtext_0.1.2         
-##  [95] scales_1.2.1              caTools_1.18.2           
-##  [97] rappdirs_0.3.3            digest_0.6.33            
-##  [99] rmarkdown_2.24            XVector_0.40.0           
-##  [ reached getOption("max.print") -- omitted 61 entries ]</code></pre>
-<div id="sec-setup2" class="section level2" number="12.1">
+##   [1] splines_4.4.1             later_1.3.2              
+##   [3] bitops_1.0-8              ggplotify_0.1.2          
+##   [5] polyclip_1.10-6           lifecycle_1.0.4          
+##   [7] rstatix_0.7.2             lattice_0.22-6           
+##   [9] vroom_1.6.5               MASS_7.3-61              
+##  [11] crosstalk_1.2.1           backports_1.5.0          
+##  [13] sass_0.4.9                rmarkdown_2.27           
+##  [15] jquerylib_0.1.4           yaml_2.3.10              
+##  [17] httpuv_1.6.15             MsCoreUtils_1.16.1       
+##  [19] cowplot_1.1.3             DBI_1.2.3                
+##  [21] RColorBrewer_1.1-3        abind_1.4-5              
+##  [23] zlibbioc_1.50.0           AnnotationFilter_1.28.0  
+##  [25] ggraph_2.2.1              yulab.utils_0.1.5        
+##  [27] tweenr_2.0.3              GenomeInfoDbData_1.2.12  
+##  [29] enrichplot_1.24.2         ggrepel_0.9.5            
+##  [31] tidytree_0.4.6            BiocStyle_2.32.1         
+##  [33] ncdf4_1.22                codetools_0.2-20         
+##  [35] DelayedArray_0.30.1       DOSE_3.30.2              
+##  [37] xml2_1.3.6                ggforce_0.4.2            
+##  [39] tidyselect_1.2.1          aplot_0.2.3              
+##  [41] UCSC.utils_1.0.0          farver_2.1.2             
+##  [43] viridis_0.6.5             jsonlite_1.8.8           
+##  [45] tidygraph_1.3.1           bbmle_1.0.25.1           
+##  [47] tools_4.4.1               ExploreModelMatrix_1.16.0
+##  [49] msdata_0.44.0             treeio_1.28.0            
+##  [51] Rcpp_1.0.12               glue_1.7.0               
+##  [53] BiocBaseUtils_1.6.0       gridExtra_2.3            
+##  [55] SparseArray_1.4.8         xfun_0.46                
+##  [57] qvalue_2.36.0             shinydashboard_0.7.2     
+##  [59] withr_3.0.1               numDeriv_2016.8-1.1      
+##  [61] BiocManager_1.30.23       fastmap_1.2.0            
+##  [63] fansi_1.0.6               shinyjs_2.1.0            
+##  [65] caTools_1.18.2            digest_0.6.36            
+##  [67] timechange_0.3.0          R6_2.5.1                 
+##  [69] mime_0.12                 gridGraphics_0.5-1       
+##  [71] colorspace_2.1-1          gtools_3.9.5             
+##  [73] RSQLite_2.3.7             utf8_1.2.4               
+##  [75] generics_0.1.3            data.table_1.15.4        
+##  [77] graphlayouts_1.1.1        httr_1.4.7               
+##  [79] htmlwidgets_1.6.4         S4Arrays_1.4.1           
+##  [81] scatterpie_0.2.3          pkgconfig_2.0.3          
+##  [83] gtable_0.3.5              blob_1.2.4               
+##  [85] XVector_0.44.0            shadowtext_0.1.4         
+##  [87] htmltools_0.5.8.1         carData_3.0-5            
+##  [89] bookdown_0.34.2           fgsea_1.30.0             
+##  [91] clue_0.3-65               rintrojs_0.3.4           
+##  [93] scales_1.3.0              png_0.1-8                
+##  [95] ggfun_0.1.5               MetaboCoreUtils_1.12.0   
+##  [97] knitr_1.48                rstudioapi_0.16.0        
+##  [99] tzdb_0.4.0                reshape2_1.4.4           
+##  [ reached getOption("max.print") -- omitted 53 entries ]</code></pre>
+</div>
+<div id="sec-setup2" class="section level2" number="11.4">
 <h2>
-<span class="header-section-number">12.1</span> R package setup<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('sec-setup2')" onmouseout="reset_tooltip('sec-setup2-tooltip')"><span class="tooltiptext" id="sec-setup2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">11.4</span> R package setup<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('sec-setup2')" onmouseout="reset_tooltip('sec-setup2-tooltip')"><span class="tooltiptext" id="sec-setup2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>To install all necessary packages to run all the code, please execute
 the following code:</p>
 <pre><code>pkgs &lt;- c("AnnotationDbi", "base", "Biobase", "BiocGenerics",
-          "BiocParallel", "biomaRt", "clusterProfiler", "datasets", "DESeq2",
-          "dplyr", "DT", "factoextra", "forcats", "GenomeInfoDb",
-          "GenomicRanges", "ggplot2", "GO.db", "gplots", "graphics", "grDevices",
-          "IRanges", "limma", "lubridate", "magrittr", "MatrixGenerics",
-          "matrixStats", "methods", "msigdbr", "MultiAssayExperiment",
-          "org.Hs.eg.db", "patchwork", "plotly", "ProtGenerics", "PSMatch",
-          "purrr", "QFeatures", "readr", "rWSBIM2122", "S4Vectors", "Spectra",
-          "stats", "stats4", "stringr", "SummarizedExperiment", "tibble",
-          "tidyr", "tidyverse", "utils")</code></pre>
-<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="sec-si.html#cb486-1" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"BiocManager"</span>))</span>
-<span id="cb486-2"><a href="sec-si.html#cb486-2" tabindex="-1"></a>   <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
-<span id="cb486-3"><a href="sec-si.html#cb486-3" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(pkgs)</span></code></pre></div>
+          "BiocParallel", "clusterProfiler", "datasets", "DESeq2", "dplyr", "DT",
+          "factoextra", "forcats", "GenomeInfoDb", "GenomicRanges", "ggplot2",
+          "GO.db", "gplots", "graphics", "grDevices", "IRanges", "limma",
+          "lubridate", "magrittr", "MatrixGenerics", "matrixStats", "methods",
+          "msigdbr", "MultiAssayExperiment", "org.Hs.eg.db", "patchwork",
+          "plotly", "ProtGenerics", "PSMatch", "purrr", "QFeatures", "readr",
+          "rWSBIM2122", "S4Vectors", "Spectra", "stats", "stats4", "stringr",
+          "SummarizedExperiment", "tibble", "tidyr", "tidyverse", "utils")</code></pre>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="sec-si.html#cb494-1" aria-hidden="true"></a><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"BiocManager"</span>))</span>
+<span id="cb494-2"><a href="sec-si.html#cb494-2" aria-hidden="true"></a>   <span class="kw">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb494-3"><a href="sec-si.html#cb494-3" aria-hidden="true"></a>BiocManager<span class="op">::</span><span class="kw">install</span>(pkgs)</span></code></pre></div>
 
 </div>
-</div></body></html>
-
+</div>
 <p style="text-align: center;">
-<a href="sec-anx.html"><button class="btn btn-default">Previous</button></a>
+<a href="sec-cli.html"><button class="btn btn-default">Previous</button></a>
 </p>
 <p class="build-date">Page built: 
-2023-08-28
+2024-08-08
  using 
-R version 4.3.1 Patched (2023-07-10 r84676)
+R version 4.4.1 (2024-06-14)
 </p>
 </div>
 </div>

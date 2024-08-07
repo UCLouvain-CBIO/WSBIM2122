@@ -129,7 +129,7 @@ imputation
 identification-quality-control
 creating-the-qfeatures-data
 filtering-out-contaminants-and-reverse-hits
-log-transformation-and-normaliation
+log-transformation-and-normalisation
 aggregation
 principal-component-analysis
 visualisation
@@ -144,8 +144,7 @@ working-with-files-and-directories
 data-analysis-in-the-shell
 writing-scripts
 references-1
-sec-anx
+sec-si
 available-platforms
 project-reports
-sec-si
 sec-setup2

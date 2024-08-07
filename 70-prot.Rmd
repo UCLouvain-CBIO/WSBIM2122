@@ -589,7 +589,8 @@ cptac <- logTransform(cptac, i = "peptides",
 
 ```{r}
 cptac <- normalize(cptac, i = "log_peptides",
-                   name = "lognorm_peptides", method = "quantiles")
+                   name = "lognorm_peptides",
+                   method = "diff.median")
 ```
 
 ```{r, fig.cap = "Three peptide level assays: raw data, log transformed and normalised.", fig.width = 15, fig.height = 5, fig.fullwidth = TRUE}

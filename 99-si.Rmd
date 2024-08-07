@@ -1,4 +1,4 @@
-# Course and session information {#sec-anx}
+# Course and session information {#sec-si}
 
 
 ## Available platforms
@@ -7,10 +7,9 @@ Given the increased need for autonomous work, the students are free to
 use any computers they prefer to for this work, including the
 computers provided by the university, the cloud [Renku WSBIM2122
 environment](https://renkulab.io/projects?q=wsbim2122&page=1&orderBy=last_activity_at&orderSearchAsc=false&searchIn=projects)
-(see [here](https://uclouvain-cbio.github.io/WSBIM1207/sec-anx.html) for
-details) or their own computers. They should also make sure they have
-all the documents they need and use a system they are comfortable with
-during the presentations and final oral exam.
+for details) or their own computers. They should also make sure they
+have all the documents they need and use a system they are comfortable
+with during the presentations and final oral exam.
 
 ## Project reports
 

@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2024-05-25" />
+<meta name="date" content="2024-08-07" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -65,6 +65,7 @@ function reset_tooltip(id) {
   tooltip.innerHTML = 'Copy link';
 }
 </script>
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
@@ -84,9 +85,8 @@ function reset_tooltip(id) {
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -95,7 +95,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -121,7 +121,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -134,7 +134,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -149,29 +149,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -189,22 +166,22 @@ div.csl-indent {
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
-<a href="index.html" id="toc-preamble">Preamble</a>
-<a href="sec-rmd.html" id="toc-sec-rmd"><span class="toc-section-number">1</span> R markdown</a>
-<a href="sec-linmod.html" id="toc-sec-linmod"><span class="toc-section-number">2</span> Linear models</a>
-<a href="sec-hts.html" id="toc-sec-hts"><span class="toc-section-number">3</span> High throughput sequencing</a>
-<a href="sec-rnaseq.html" id="toc-sec-rnaseq"><span class="toc-section-number">4</span> Differential expression analysis</a>
-<a id="active-page" href="sec-design.html" id="toc-sec-design"><span class="toc-section-number">5</span> More complex experimental design</a><ul class="toc-sections">
+<a href="index.html">Preamble</a>
+<a href="sec-rmd.html"><span class="toc-section-number">1</span> R markdown</a>
+<a href="sec-linmod.html"><span class="toc-section-number">2</span> Linear models</a>
+<a href="sec-hts.html"><span class="toc-section-number">3</span> High throughput sequencing</a>
+<a href="sec-rnaseq.html"><span class="toc-section-number">4</span> Differential expression analysis</a>
+<a id="active-page" href="sec-design.html"><span class="toc-section-number">5</span> More complex experimental design</a><ul class="toc-sections">
 <li class="toc"><a href="#a-more-complex-dataset"> A more complex dataset</a></li>
 <li class="toc"><a href="#paired-design"> Paired design</a></li>
 <li class="toc"><a href="#design-with-interaction"> Design with interaction</a></li>
 </ul>
-<a href="sec-gsea.html" id="toc-sec-gsea"><span class="toc-section-number">6</span> Enrichment analyses</a>
-<a href="sec-ms.html" id="toc-sec-ms"><span class="toc-section-number">7</span> Mass spectrometry</a>
-<a href="sec-prot.html" id="toc-sec-prot"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
-<a href="sec-ccl.html" id="toc-sec-ccl"><span class="toc-section-number">9</span> Conclusions</a>
-<a href="sec-cli.html" id="toc-sec-cli"><span class="toc-section-number">10</span> Annex- the shell</a>
-<a href="sec-anx.html" id="toc-sec-anx"><span class="toc-section-number">11</span> Course and session information</a>
+<a href="sec-gsea.html"><span class="toc-section-number">6</span> Enrichment analyses</a>
+<a href="sec-ms.html"><span class="toc-section-number">7</span> Mass spectrometry</a>
+<a href="sec-prot.html"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
+<a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
+<a href="sec-cli.html"><span class="toc-section-number">10</span> Annex: the shell</a>
+<a href="sec-si.html"><span class="toc-section-number">11</span> Course and session information</a>
 </div>
 </li>
 </ul>
@@ -232,9 +209,9 @@ a bit more complex, as the KD experiments were actually done on 2
 different cell lines. So we have now 12 samples. The 6 first samples
 correspond to an epithelial cell line (Cell1), and 6 other samples
 correspond to a fibroblast cell line (Cell2).</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="sec-design.html#cb228-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"wsbim2122_data/deseq2/coldata_both.rda"</span>)</span>
-<span id="cb228-2"><a href="sec-design.html#cb228-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"wsbim2122_data/deseq2/counts_both.rda"</span>)</span>
-<span id="cb228-3"><a href="sec-design.html#cb228-3" tabindex="-1"></a>coldata</span></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="sec-design.html#cb229-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">"wsbim2122_data/deseq2/coldata_both.rda"</span>)</span>
+<span id="cb229-2"><a href="sec-design.html#cb229-2" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">"wsbim2122_data/deseq2/counts_both.rda"</span>)</span>
+<span id="cb229-3"><a href="sec-design.html#cb229-3" aria-hidden="true"></a>coldata</span></code></pre></div>
 <pre><code>##           Cell       Type Condition
 ## sample1  Cell1 Epithelial      mock
 ## sample2  Cell1 Epithelial      mock
@@ -260,22 +237,22 @@ depending on the biological questions that we want to answer. We will discuss
 about this latter. At this step, as we just want to do a PCA (that will anyway
 be blind to the sample information specified by the design formula),
 we can use a design ~ 1.</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="sec-design.html#cb230-1" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(<span class="at">countData =</span> counts,</span>
-<span id="cb230-2"><a href="sec-design.html#cb230-2" tabindex="-1"></a>                              <span class="at">colData =</span> coldata,</span>
-<span id="cb230-3"><a href="sec-design.html#cb230-3" tabindex="-1"></a>                              <span class="at">design =</span>  <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb230-4"><a href="sec-design.html#cb230-4" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds)</span>
-<span id="cb230-5"><a href="sec-design.html#cb230-5" tabindex="-1"></a></span>
-<span id="cb230-6"><a href="sec-design.html#cb230-6" tabindex="-1"></a>rld <span class="ot">&lt;-</span> <span class="fu">rlogTransformation</span>(dds)</span>
-<span id="cb230-7"><a href="sec-design.html#cb230-7" tabindex="-1"></a>pca_data <span class="ot">&lt;-</span> <span class="fu">plotPCA</span>(rld,</span>
-<span id="cb230-8"><a href="sec-design.html#cb230-8" tabindex="-1"></a>                    <span class="at">intgroup =</span> <span class="fu">c</span>(<span class="st">"Condition"</span>, <span class="st">"Type"</span>),</span>
-<span id="cb230-9"><a href="sec-design.html#cb230-9" tabindex="-1"></a>                    <span class="at">returnData =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb230-10"><a href="sec-design.html#cb230-10" tabindex="-1"></a>percentVar <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">attr</span>(pca_data, <span class="st">"percentVar"</span>))</span>
-<span id="cb230-11"><a href="sec-design.html#cb230-11" tabindex="-1"></a><span class="fu">ggplot</span>(pca_data,</span>
-<span id="cb230-12"><a href="sec-design.html#cb230-12" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> PC1, <span class="at">y =</span> PC2,</span>
-<span id="cb230-13"><a href="sec-design.html#cb230-13" tabindex="-1"></a>           <span class="at">color =</span> Condition, <span class="at">shape =</span> Type)) <span class="sc">+</span></span>
-<span id="cb230-14"><a href="sec-design.html#cb230-14" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb230-15"><a href="sec-design.html#cb230-15" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">paste0</span>(<span class="st">"PC1: "</span>,percentVar[<span class="dv">1</span>],<span class="st">"% variance"</span>)) <span class="sc">+</span></span>
-<span id="cb230-16"><a href="sec-design.html#cb230-16" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="fu">paste0</span>(<span class="st">"PC2: "</span>,percentVar[<span class="dv">2</span>],<span class="st">"% variance"</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="sec-design.html#cb231-1" aria-hidden="true"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeqDataSetFromMatrix</span>(<span class="dt">countData =</span> counts,</span>
+<span id="cb231-2"><a href="sec-design.html#cb231-2" aria-hidden="true"></a>                              <span class="dt">colData =</span> coldata,</span>
+<span id="cb231-3"><a href="sec-design.html#cb231-3" aria-hidden="true"></a>                              <span class="dt">design =</span>  <span class="op">~</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb231-4"><a href="sec-design.html#cb231-4" aria-hidden="true"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds)</span>
+<span id="cb231-5"><a href="sec-design.html#cb231-5" aria-hidden="true"></a></span>
+<span id="cb231-6"><a href="sec-design.html#cb231-6" aria-hidden="true"></a>rld &lt;-<span class="st"> </span><span class="kw">rlogTransformation</span>(dds)</span>
+<span id="cb231-7"><a href="sec-design.html#cb231-7" aria-hidden="true"></a>pca_data &lt;-<span class="st"> </span><span class="kw">plotPCA</span>(rld,</span>
+<span id="cb231-8"><a href="sec-design.html#cb231-8" aria-hidden="true"></a>                    <span class="dt">intgroup =</span> <span class="kw">c</span>(<span class="st">"Condition"</span>, <span class="st">"Type"</span>),</span>
+<span id="cb231-9"><a href="sec-design.html#cb231-9" aria-hidden="true"></a>                    <span class="dt">returnData =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb231-10"><a href="sec-design.html#cb231-10" aria-hidden="true"></a>percentVar &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="dv">100</span> <span class="op">*</span><span class="st"> </span><span class="kw">attr</span>(pca_data, <span class="st">"percentVar"</span>))</span>
+<span id="cb231-11"><a href="sec-design.html#cb231-11" aria-hidden="true"></a><span class="kw">ggplot</span>(pca_data,</span>
+<span id="cb231-12"><a href="sec-design.html#cb231-12" aria-hidden="true"></a>       <span class="kw">aes</span>(<span class="dt">x =</span> PC1, <span class="dt">y =</span> PC2,</span>
+<span id="cb231-13"><a href="sec-design.html#cb231-13" aria-hidden="true"></a>           <span class="dt">color =</span> Condition, <span class="dt">shape =</span> Type)) <span class="op">+</span></span>
+<span id="cb231-14"><a href="sec-design.html#cb231-14" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb231-15"><a href="sec-design.html#cb231-15" aria-hidden="true"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="kw">paste0</span>(<span class="st">"PC1: "</span>,percentVar[<span class="dv">1</span>],<span class="st">"% variance"</span>)) <span class="op">+</span></span>
+<span id="cb231-16"><a href="sec-design.html#cb231-16" aria-hidden="true"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="kw">paste0</span>(<span class="st">"PC2: "</span>,percentVar[<span class="dv">2</span>],<span class="st">"% variance"</span>))</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-127-1.png" width="672"></p>
 <p>We can see from this PCA plot that PC1 separates the samples based on the
 cell line origin, while PC2 separates the samples based on the siRNA treatment.
@@ -307,19 +284,19 @@ we can use the following design:</p>
 <p><code>design = ~ Cell + Condition</code></p>
 <p>Let’s run the analysis with this design (we have to re-run the
 <code>DESeqDataSetFromMatrix()</code> and <code>DESeq()</code> functions)</p>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="sec-design.html#cb231-1" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(<span class="at">countData =</span> counts,</span>
-<span id="cb231-2"><a href="sec-design.html#cb231-2" tabindex="-1"></a>                              <span class="at">colData =</span> coldata,</span>
-<span id="cb231-3"><a href="sec-design.html#cb231-3" tabindex="-1"></a>                              <span class="at">design =</span>  <span class="sc">~</span> Type <span class="sc">+</span> Condition)</span>
-<span id="cb231-4"><a href="sec-design.html#cb231-4" tabindex="-1"></a></span>
-<span id="cb231-5"><a href="sec-design.html#cb231-5" tabindex="-1"></a><span class="co"># Set the mock level as the reference level</span></span>
-<span id="cb231-6"><a href="sec-design.html#cb231-6" tabindex="-1"></a>dds<span class="sc">$</span>Condition <span class="ot">&lt;-</span> <span class="fu">relevel</span>(dds<span class="sc">$</span>Condition, <span class="at">ref =</span> <span class="st">"mock"</span>)</span>
-<span id="cb231-7"><a href="sec-design.html#cb231-7" tabindex="-1"></a><span class="co"># Set the Epithelial cells as the reference level</span></span>
-<span id="cb231-8"><a href="sec-design.html#cb231-8" tabindex="-1"></a>dds<span class="sc">$</span>Type <span class="ot">&lt;-</span> <span class="fu">relevel</span>(dds<span class="sc">$</span>Type, <span class="at">ref =</span> <span class="st">"Epithelial"</span>)</span>
-<span id="cb231-9"><a href="sec-design.html#cb231-9" tabindex="-1"></a></span>
-<span id="cb231-10"><a href="sec-design.html#cb231-10" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds)</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="sec-design.html#cb232-1" aria-hidden="true"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeqDataSetFromMatrix</span>(<span class="dt">countData =</span> counts,</span>
+<span id="cb232-2"><a href="sec-design.html#cb232-2" aria-hidden="true"></a>                              <span class="dt">colData =</span> coldata,</span>
+<span id="cb232-3"><a href="sec-design.html#cb232-3" aria-hidden="true"></a>                              <span class="dt">design =</span>  <span class="op">~</span><span class="st"> </span>Type <span class="op">+</span><span class="st"> </span>Condition)</span>
+<span id="cb232-4"><a href="sec-design.html#cb232-4" aria-hidden="true"></a></span>
+<span id="cb232-5"><a href="sec-design.html#cb232-5" aria-hidden="true"></a><span class="co"># Set the mock level as the reference level</span></span>
+<span id="cb232-6"><a href="sec-design.html#cb232-6" aria-hidden="true"></a>dds<span class="op">$</span>Condition &lt;-<span class="st"> </span><span class="kw">relevel</span>(dds<span class="op">$</span>Condition, <span class="dt">ref =</span> <span class="st">"mock"</span>)</span>
+<span id="cb232-7"><a href="sec-design.html#cb232-7" aria-hidden="true"></a><span class="co"># Set the Epithelial cells as the reference level</span></span>
+<span id="cb232-8"><a href="sec-design.html#cb232-8" aria-hidden="true"></a>dds<span class="op">$</span>Type &lt;-<span class="st"> </span><span class="kw">relevel</span>(dds<span class="op">$</span>Type, <span class="dt">ref =</span> <span class="st">"Epithelial"</span>)</span>
+<span id="cb232-9"><a href="sec-design.html#cb232-9" aria-hidden="true"></a></span>
+<span id="cb232-10"><a href="sec-design.html#cb232-10" aria-hidden="true"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds)</span></code></pre></div>
 <p>As we have seen previously, the <code>resultsNames()</code> function gives the
 names of the coefficients that can be extracted.</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="sec-design.html#cb232-1" tabindex="-1"></a><span class="fu">resultsNames</span>(dds)</span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="sec-design.html#cb233-1" aria-hidden="true"></a><span class="kw">resultsNames</span>(dds)</span></code></pre></div>
 <pre><code>## [1] "Intercept"                     "Type_Fibroblast_vs_Epithelial"
 ## [3] "Condition_KD_vs_mock"</code></pre>
 <p>The linear model set with this design can be written</p>
@@ -361,15 +338,15 @@ if it is significantly different from zero.</p>
 coefficient that we want to extract (here the <em>Condition_KD_vs_mock</em> coefficient).
 This will test if genes are differentially expressed in KD cells versus
 mock cells.</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="sec-design.html#cb234-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds, <span class="at">name =</span> <span class="st">"Condition_KD_vs_mock"</span>)</span>
-<span id="cb234-2"><a href="sec-design.html#cb234-2" tabindex="-1"></a>res_tbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(res, <span class="at">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb234-3"><a href="sec-design.html#cb234-3" tabindex="-1"></a>  <span class="fu">arrange</span>(padj)</span>
-<span id="cb234-4"><a href="sec-design.html#cb234-4" tabindex="-1"></a><span class="fu">head</span>(res_tbl)</span></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="sec-design.html#cb235-1" aria-hidden="true"></a>res &lt;-<span class="st"> </span><span class="kw">results</span>(dds, <span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>)</span>
+<span id="cb235-2"><a href="sec-design.html#cb235-2" aria-hidden="true"></a>res_tbl &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(res, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb235-3"><a href="sec-design.html#cb235-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">arrange</span>(padj)</span>
+<span id="cb235-4"><a href="sec-design.html#cb235-4" aria-hidden="true"></a><span class="kw">head</span>(res_tbl)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 7
 ##   ENSEMBL         baseMean log2FoldChange  lfcSE  stat   pvalue     padj
 ##   &lt;chr&gt;              &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 ENSG00000144674    2735.          1.11  0.0950  11.6 2.33e-31 3.87e-27
-## 2 ENSG00000152700     967.          1.18  0.106   11.2 4.12e-29 3.03e-25
+## 2 ENSG00000152700     967.          1.18  0.106   11.2 4.11e-29 3.03e-25
 ## 3 ENSG00000104763    3267.         -1.22  0.109  -11.2 5.46e-29 3.03e-25
 ## 4 ENSG00000122557     542.          0.945 0.0865  10.9 8.77e-28 3.65e-24
 ## 5 ENSG00000257103    2297.          1.37  0.130   10.5 9.08e-26 3.02e-22
@@ -377,19 +354,19 @@ mock cells.</p>
 <p>The normalised counts of the genes with the lowest p-adjusted values are plotted bellow.
 We can see that these genes correspond to genes that are highly affected by the siRNA
 in both cells lines.</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="sec-design.html#cb236-1" tabindex="-1"></a><span class="fu">as_tibble</span>(<span class="fu">counts</span>(dds[res_tbl<span class="sc">$</span>ENSEMBL[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], ], <span class="at">normalize =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb236-2"><a href="sec-design.html#cb236-2" tabindex="-1"></a>          <span class="at">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb236-3"><a href="sec-design.html#cb236-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"sample"</span>, <span class="at">values_to =</span> <span class="st">"counts"</span>, <span class="sc">-</span>ENSEMBL) <span class="sc">%&gt;%</span></span>
-<span id="cb236-4"><a href="sec-design.html#cb236-4" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">as_tibble</span>(<span class="fu">colData</span>(dds), <span class="at">rownames =</span> <span class="st">"sample"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb236-5"><a href="sec-design.html#cb236-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">paste0</span>(<span class="fu">substr</span>(Type, <span class="dv">1</span>, <span class="dv">5</span>), <span class="st">'_'</span>, Condition, <span class="st">'_'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb236-6"><a href="sec-design.html#cb236-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> name, <span class="at">y =</span> counts, <span class="at">fill =</span> Condition)) <span class="sc">+</span></span>
-<span id="cb236-7"><a href="sec-design.html#cb236-7" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">color =</span> <span class="st">"gray30"</span>) <span class="sc">+</span></span>
-<span id="cb236-8"><a href="sec-design.html#cb236-8" tabindex="-1"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> ENSEMBL, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
-<span id="cb236-9"><a href="sec-design.html#cb236-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">angle =</span> <span class="dv">90</span>),</span>
-<span id="cb236-10"><a href="sec-design.html#cb236-10" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb236-11"><a href="sec-design.html#cb236-11" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb236-12"><a href="sec-design.html#cb236-12" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>),</span>
-<span id="cb236-13"><a href="sec-design.html#cb236-13" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="sec-design.html#cb237-1" aria-hidden="true"></a><span class="kw">as_tibble</span>(<span class="kw">counts</span>(dds[res_tbl<span class="op">$</span>ENSEMBL[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], ], <span class="dt">normalize =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb237-2"><a href="sec-design.html#cb237-2" aria-hidden="true"></a>          <span class="dt">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="op">%&gt;%</span></span>
+<span id="cb237-3"><a href="sec-design.html#cb237-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"sample"</span>, <span class="dt">values_to =</span> <span class="st">"counts"</span>, <span class="op">-</span>ENSEMBL) <span class="op">%&gt;%</span></span>
+<span id="cb237-4"><a href="sec-design.html#cb237-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">left_join</span>(<span class="kw">as_tibble</span>(<span class="kw">colData</span>(dds), <span class="dt">rownames =</span> <span class="st">"sample"</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb237-5"><a href="sec-design.html#cb237-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">name =</span> <span class="kw">paste0</span>(<span class="kw">substr</span>(Type, <span class="dv">1</span>, <span class="dv">5</span>), <span class="st">'_'</span>, Condition, <span class="st">'_'</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb237-6"><a href="sec-design.html#cb237-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> name, <span class="dt">y =</span> counts, <span class="dt">fill =</span> Condition)) <span class="op">+</span></span>
+<span id="cb237-7"><a href="sec-design.html#cb237-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">'identity'</span>, <span class="dt">color =</span> <span class="st">"gray30"</span>) <span class="op">+</span></span>
+<span id="cb237-8"><a href="sec-design.html#cb237-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>ENSEMBL, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span></span>
+<span id="cb237-9"><a href="sec-design.html#cb237-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>, <span class="dt">angle =</span> <span class="dv">90</span>),</span>
+<span id="cb237-10"><a href="sec-design.html#cb237-10" aria-hidden="true"></a>        <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb237-11"><a href="sec-design.html#cb237-11" aria-hidden="true"></a>        <span class="dt">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb237-12"><a href="sec-design.html#cb237-12" aria-hidden="true"></a>        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),</span>
+<span id="cb237-13"><a href="sec-design.html#cb237-13" aria-hidden="true"></a>        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>))</span></code></pre></div>
 <pre><code>## Joining with `by = join_by(sample)`</code></pre>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-132-1.png" width="672"></p>
 </div>
@@ -400,22 +377,22 @@ in both cells lines.</p>
 <p>Of course if the question of interest was</p>
 <p><em>What are the genes that are differentially expressed in epithelial and fibroblasts?</em></p>
 <p>we would have tested the <em>Type_Fibroblast_vs_Epithelial</em> coefficient.</p>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="sec-design.html#cb238-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds, <span class="at">name =</span> <span class="st">"Type_Fibroblast_vs_Epithelial"</span>)</span>
-<span id="cb238-2"><a href="sec-design.html#cb238-2" tabindex="-1"></a>res_tbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(res, <span class="at">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb238-3"><a href="sec-design.html#cb238-3" tabindex="-1"></a>  <span class="fu">arrange</span>(padj)</span>
-<span id="cb238-4"><a href="sec-design.html#cb238-4" tabindex="-1"></a><span class="fu">as_tibble</span>(<span class="fu">counts</span>(dds[res_tbl<span class="sc">$</span>ENSEMBL[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], ], <span class="at">normalize =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb238-5"><a href="sec-design.html#cb238-5" tabindex="-1"></a>          <span class="at">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb238-6"><a href="sec-design.html#cb238-6" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"sample"</span>, <span class="at">values_to =</span> <span class="st">"counts"</span>, <span class="sc">-</span>ENSEMBL) <span class="sc">%&gt;%</span></span>
-<span id="cb238-7"><a href="sec-design.html#cb238-7" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">as_tibble</span>(<span class="fu">colData</span>(dds), <span class="at">rownames =</span> <span class="st">"sample"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb238-8"><a href="sec-design.html#cb238-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">paste0</span>(<span class="fu">substr</span>(Type, <span class="dv">1</span>, <span class="dv">5</span>), <span class="st">'_'</span>, Condition, <span class="st">'_'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb238-9"><a href="sec-design.html#cb238-9" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> name, <span class="at">y =</span> counts, <span class="at">fill =</span> Condition)) <span class="sc">+</span></span>
-<span id="cb238-10"><a href="sec-design.html#cb238-10" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">color =</span> <span class="st">"gray30"</span>) <span class="sc">+</span></span>
-<span id="cb238-11"><a href="sec-design.html#cb238-11" tabindex="-1"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> ENSEMBL, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
-<span id="cb238-12"><a href="sec-design.html#cb238-12" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">angle =</span> <span class="dv">90</span>),</span>
-<span id="cb238-13"><a href="sec-design.html#cb238-13" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb238-14"><a href="sec-design.html#cb238-14" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb238-15"><a href="sec-design.html#cb238-15" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>),</span>
-<span id="cb238-16"><a href="sec-design.html#cb238-16" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="sec-design.html#cb239-1" aria-hidden="true"></a>res &lt;-<span class="st"> </span><span class="kw">results</span>(dds, <span class="dt">name =</span> <span class="st">"Type_Fibroblast_vs_Epithelial"</span>)</span>
+<span id="cb239-2"><a href="sec-design.html#cb239-2" aria-hidden="true"></a>res_tbl &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(res, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb239-3"><a href="sec-design.html#cb239-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">arrange</span>(padj)</span>
+<span id="cb239-4"><a href="sec-design.html#cb239-4" aria-hidden="true"></a><span class="kw">as_tibble</span>(<span class="kw">counts</span>(dds[res_tbl<span class="op">$</span>ENSEMBL[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], ], <span class="dt">normalize =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb239-5"><a href="sec-design.html#cb239-5" aria-hidden="true"></a>          <span class="dt">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="op">%&gt;%</span></span>
+<span id="cb239-6"><a href="sec-design.html#cb239-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"sample"</span>, <span class="dt">values_to =</span> <span class="st">"counts"</span>, <span class="op">-</span>ENSEMBL) <span class="op">%&gt;%</span></span>
+<span id="cb239-7"><a href="sec-design.html#cb239-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">left_join</span>(<span class="kw">as_tibble</span>(<span class="kw">colData</span>(dds), <span class="dt">rownames =</span> <span class="st">"sample"</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb239-8"><a href="sec-design.html#cb239-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">name =</span> <span class="kw">paste0</span>(<span class="kw">substr</span>(Type, <span class="dv">1</span>, <span class="dv">5</span>), <span class="st">'_'</span>, Condition, <span class="st">'_'</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb239-9"><a href="sec-design.html#cb239-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> name, <span class="dt">y =</span> counts, <span class="dt">fill =</span> Condition)) <span class="op">+</span></span>
+<span id="cb239-10"><a href="sec-design.html#cb239-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">'identity'</span>, <span class="dt">color =</span> <span class="st">"gray30"</span>) <span class="op">+</span></span>
+<span id="cb239-11"><a href="sec-design.html#cb239-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>ENSEMBL, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span></span>
+<span id="cb239-12"><a href="sec-design.html#cb239-12" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>, <span class="dt">angle =</span> <span class="dv">90</span>),</span>
+<span id="cb239-13"><a href="sec-design.html#cb239-13" aria-hidden="true"></a>        <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb239-14"><a href="sec-design.html#cb239-14" aria-hidden="true"></a>        <span class="dt">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb239-15"><a href="sec-design.html#cb239-15" aria-hidden="true"></a>        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),</span>
+<span id="cb239-16"><a href="sec-design.html#cb239-16" aria-hidden="true"></a>        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>))</span></code></pre></div>
 <pre><code>## Joining with `by = join_by(sample)`</code></pre>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-133-1.png" width="672"></p>
 </div>
@@ -432,16 +409,16 @@ which is equivalent to
 <span class="math display">\[design = ~ Cell + Condition + Cell:Condition\]</span></p>
 <p>Let’s use this design in our analysis (we have to re-run the
 <code>DESeqDataSetFromMatrix()</code> and <code>DESeq()</code> functions)</p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="sec-design.html#cb240-1" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(<span class="at">countData =</span> counts,</span>
-<span id="cb240-2"><a href="sec-design.html#cb240-2" tabindex="-1"></a>                              <span class="at">colData =</span> coldata,</span>
-<span id="cb240-3"><a href="sec-design.html#cb240-3" tabindex="-1"></a>                              <span class="at">design =</span>  <span class="sc">~</span> Type <span class="sc">*</span> Condition)</span>
-<span id="cb240-4"><a href="sec-design.html#cb240-4" tabindex="-1"></a><span class="co"># Set the Epithelial cells as the reference level</span></span>
-<span id="cb240-5"><a href="sec-design.html#cb240-5" tabindex="-1"></a>dds<span class="sc">$</span>Type <span class="ot">&lt;-</span> <span class="fu">relevel</span>(dds<span class="sc">$</span>Type, <span class="at">ref =</span> <span class="st">"Epithelial"</span>)</span>
-<span id="cb240-6"><a href="sec-design.html#cb240-6" tabindex="-1"></a><span class="co"># Set the mock condition as the reference level</span></span>
-<span id="cb240-7"><a href="sec-design.html#cb240-7" tabindex="-1"></a>dds<span class="sc">$</span>Condition <span class="ot">&lt;-</span> <span class="fu">relevel</span>(dds<span class="sc">$</span>Condition, <span class="at">ref =</span> <span class="st">"mock"</span>)</span>
-<span id="cb240-8"><a href="sec-design.html#cb240-8" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds)</span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="sec-design.html#cb241-1" aria-hidden="true"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeqDataSetFromMatrix</span>(<span class="dt">countData =</span> counts,</span>
+<span id="cb241-2"><a href="sec-design.html#cb241-2" aria-hidden="true"></a>                              <span class="dt">colData =</span> coldata,</span>
+<span id="cb241-3"><a href="sec-design.html#cb241-3" aria-hidden="true"></a>                              <span class="dt">design =</span>  <span class="op">~</span><span class="st"> </span>Type <span class="op">*</span><span class="st"> </span>Condition)</span>
+<span id="cb241-4"><a href="sec-design.html#cb241-4" aria-hidden="true"></a><span class="co"># Set the Epithelial cells as the reference level</span></span>
+<span id="cb241-5"><a href="sec-design.html#cb241-5" aria-hidden="true"></a>dds<span class="op">$</span>Type &lt;-<span class="st"> </span><span class="kw">relevel</span>(dds<span class="op">$</span>Type, <span class="dt">ref =</span> <span class="st">"Epithelial"</span>)</span>
+<span id="cb241-6"><a href="sec-design.html#cb241-6" aria-hidden="true"></a><span class="co"># Set the mock condition as the reference level</span></span>
+<span id="cb241-7"><a href="sec-design.html#cb241-7" aria-hidden="true"></a>dds<span class="op">$</span>Condition &lt;-<span class="st"> </span><span class="kw">relevel</span>(dds<span class="op">$</span>Condition, <span class="dt">ref =</span> <span class="st">"mock"</span>)</span>
+<span id="cb241-8"><a href="sec-design.html#cb241-8" aria-hidden="true"></a>dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds)</span></code></pre></div>
 <p>The <code>resultsNames()</code> function gives the names of results that can be extracted.</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="sec-design.html#cb241-1" tabindex="-1"></a><span class="fu">resultsNames</span>(dds)</span></code></pre></div>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="sec-design.html#cb242-1" aria-hidden="true"></a><span class="kw">resultsNames</span>(dds)</span></code></pre></div>
 <pre><code>## [1] "Intercept"                     "Type_Fibroblast_vs_Epithelial"
 ## [3] "Condition_KD_vs_mock"          "TypeFibroblast.ConditionKD"</code></pre>
 <p>The linear model used with this design can be written</p>
@@ -488,10 +465,10 @@ logFC between epithelial KD and epithelial mock cells.</p>
 <p><span class="math display">\[log2(\frac{q_{Gene_i\_Epithelial\_KD}}{q_{Gene_i\_Epithelial\_mock}})\]</span></p>
 <p><span class="math display">\[= log2(q_{Gene_i\_Epithelial\_KD}) - log2(q_{Gene_i\_Epithelial\_mock})\]</span>
 <span class="math display">\[= Intercept + Condition\_KD - Intercept = Condition\_KD\]</span></p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="sec-design.html#cb243-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds, <span class="at">name =</span> <span class="st">"Condition_KD_vs_mock"</span>)</span>
-<span id="cb243-2"><a href="sec-design.html#cb243-2" tabindex="-1"></a>res_tbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(res, <span class="at">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb243-3"><a href="sec-design.html#cb243-3" tabindex="-1"></a>  <span class="fu">arrange</span>(padj)</span>
-<span id="cb243-4"><a href="sec-design.html#cb243-4" tabindex="-1"></a><span class="fu">head</span>(res_tbl)</span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="sec-design.html#cb244-1" aria-hidden="true"></a>res &lt;-<span class="st"> </span><span class="kw">results</span>(dds, <span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>)</span>
+<span id="cb244-2"><a href="sec-design.html#cb244-2" aria-hidden="true"></a>res_tbl &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(res, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb244-3"><a href="sec-design.html#cb244-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">arrange</span>(padj)</span>
+<span id="cb244-4"><a href="sec-design.html#cb244-4" aria-hidden="true"></a><span class="kw">head</span>(res_tbl)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 7
 ##   ENSEMBL         baseMean log2FoldChange lfcSE  stat   pvalue     padj
 ##   &lt;chr&gt;              &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -501,19 +478,19 @@ logFC between epithelial KD and epithelial mock cells.</p>
 ## 4 ENSG00000175315     106.           4.30 0.329  13.1 5.74e-39 2.58e-35
 ## 5 ENSG00000128245    2877.           2.07 0.166  12.4 1.76e-35 6.33e-32
 ## 6 ENSG00000115107     579.           3.46 0.279  12.4 3.31e-35 9.92e-32</code></pre>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="sec-design.html#cb245-1" tabindex="-1"></a><span class="fu">as_tibble</span>(<span class="fu">counts</span>(dds[res_tbl<span class="sc">$</span>ENSEMBL[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], ], <span class="at">normalize =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb245-2"><a href="sec-design.html#cb245-2" tabindex="-1"></a>          <span class="at">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb245-3"><a href="sec-design.html#cb245-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"sample"</span>, <span class="at">values_to =</span> <span class="st">"counts"</span>, <span class="sc">-</span>ENSEMBL) <span class="sc">%&gt;%</span></span>
-<span id="cb245-4"><a href="sec-design.html#cb245-4" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">as_tibble</span>(<span class="fu">colData</span>(dds), <span class="at">rownames =</span> <span class="st">"sample"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb245-5"><a href="sec-design.html#cb245-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">paste0</span>(<span class="fu">substr</span>(Type, <span class="dv">1</span>, <span class="dv">5</span>), <span class="st">'_'</span>, Condition, <span class="st">'_'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb245-6"><a href="sec-design.html#cb245-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> name, <span class="at">y =</span> counts, <span class="at">fill =</span> Condition)) <span class="sc">+</span></span>
-<span id="cb245-7"><a href="sec-design.html#cb245-7" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">color =</span> <span class="st">"gray30"</span>) <span class="sc">+</span></span>
-<span id="cb245-8"><a href="sec-design.html#cb245-8" tabindex="-1"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> ENSEMBL, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
-<span id="cb245-9"><a href="sec-design.html#cb245-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">angle =</span> <span class="dv">90</span>),</span>
-<span id="cb245-10"><a href="sec-design.html#cb245-10" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb245-11"><a href="sec-design.html#cb245-11" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb245-12"><a href="sec-design.html#cb245-12" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>),</span>
-<span id="cb245-13"><a href="sec-design.html#cb245-13" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="sec-design.html#cb246-1" aria-hidden="true"></a><span class="kw">as_tibble</span>(<span class="kw">counts</span>(dds[res_tbl<span class="op">$</span>ENSEMBL[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], ], <span class="dt">normalize =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb246-2"><a href="sec-design.html#cb246-2" aria-hidden="true"></a>          <span class="dt">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="op">%&gt;%</span></span>
+<span id="cb246-3"><a href="sec-design.html#cb246-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"sample"</span>, <span class="dt">values_to =</span> <span class="st">"counts"</span>, <span class="op">-</span>ENSEMBL) <span class="op">%&gt;%</span></span>
+<span id="cb246-4"><a href="sec-design.html#cb246-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">left_join</span>(<span class="kw">as_tibble</span>(<span class="kw">colData</span>(dds), <span class="dt">rownames =</span> <span class="st">"sample"</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb246-5"><a href="sec-design.html#cb246-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">name =</span> <span class="kw">paste0</span>(<span class="kw">substr</span>(Type, <span class="dv">1</span>, <span class="dv">5</span>), <span class="st">'_'</span>, Condition, <span class="st">'_'</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb246-6"><a href="sec-design.html#cb246-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> name, <span class="dt">y =</span> counts, <span class="dt">fill =</span> Condition)) <span class="op">+</span></span>
+<span id="cb246-7"><a href="sec-design.html#cb246-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">'identity'</span>, <span class="dt">color =</span> <span class="st">"gray30"</span>) <span class="op">+</span></span>
+<span id="cb246-8"><a href="sec-design.html#cb246-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>ENSEMBL, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span></span>
+<span id="cb246-9"><a href="sec-design.html#cb246-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>, <span class="dt">angle =</span> <span class="dv">90</span>),</span>
+<span id="cb246-10"><a href="sec-design.html#cb246-10" aria-hidden="true"></a>        <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb246-11"><a href="sec-design.html#cb246-11" aria-hidden="true"></a>        <span class="dt">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb246-12"><a href="sec-design.html#cb246-12" aria-hidden="true"></a>        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),</span>
+<span id="cb246-13"><a href="sec-design.html#cb246-13" aria-hidden="true"></a>        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>))</span></code></pre></div>
 <pre><code>## Joining with `by = join_by(sample)`</code></pre>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-137-1.png" width="672"></p>
 </div>
@@ -532,11 +509,11 @@ comparing the logFC between fibroblast KD and fibroblast mock cells.</p>
 <span class="math display">\[= Condition\_KD +  TypeFibroblast.ConditionKD \]</span></p>
 <p>So to test the KD effect in fibroblasts, we have to extract both
 <em>Condition_KD_vs_mock</em> and <em>TypeFibroblast.ConditionKD</em> coefficients.</p>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="sec-design.html#cb247-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds,</span>
-<span id="cb247-2"><a href="sec-design.html#cb247-2" tabindex="-1"></a>               <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"Condition_KD_vs_mock"</span>, <span class="st">"TypeFibroblast.ConditionKD"</span>)))</span>
-<span id="cb247-3"><a href="sec-design.html#cb247-3" tabindex="-1"></a>res_tbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(res, <span class="at">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb247-4"><a href="sec-design.html#cb247-4" tabindex="-1"></a>  <span class="fu">arrange</span>(padj)</span>
-<span id="cb247-5"><a href="sec-design.html#cb247-5" tabindex="-1"></a><span class="fu">head</span>(res_tbl)</span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="sec-design.html#cb248-1" aria-hidden="true"></a>res &lt;-<span class="st"> </span><span class="kw">results</span>(dds,</span>
+<span id="cb248-2"><a href="sec-design.html#cb248-2" aria-hidden="true"></a>               <span class="kw">list</span>(<span class="kw">c</span>(<span class="st">"Condition_KD_vs_mock"</span>, <span class="st">"TypeFibroblast.ConditionKD"</span>)))</span>
+<span id="cb248-3"><a href="sec-design.html#cb248-3" aria-hidden="true"></a>res_tbl &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(res, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb248-4"><a href="sec-design.html#cb248-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">arrange</span>(padj)</span>
+<span id="cb248-5"><a href="sec-design.html#cb248-5" aria-hidden="true"></a><span class="kw">head</span>(res_tbl)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 7
 ##   ENSEMBL         baseMean log2FoldChange lfcSE   stat   pvalue     padj
 ##   &lt;chr&gt;              &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -546,37 +523,37 @@ comparing the logFC between fibroblast KD and fibroblast mock cells.</p>
 ## 4 ENSG00000101856    1535.          -1.99 0.240  -8.28 1.19e-16 4.14e-13
 ## 5 ENSG00000136167     150.          -2.88 0.354  -8.15 3.73e-16 1.04e-12
 ## 6 ENSG00000144674    2735.           1.04 0.129   8.05 8.22e-16 1.63e-12</code></pre>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="sec-design.html#cb249-1" tabindex="-1"></a><span class="fu">as_tibble</span>(<span class="fu">counts</span>(dds[res_tbl<span class="sc">$</span>ENSEMBL[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], ], <span class="at">normalize =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb249-2"><a href="sec-design.html#cb249-2" tabindex="-1"></a>          <span class="at">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb249-3"><a href="sec-design.html#cb249-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"sample"</span>, <span class="at">values_to =</span> <span class="st">"counts"</span>, <span class="sc">-</span>ENSEMBL) <span class="sc">%&gt;%</span></span>
-<span id="cb249-4"><a href="sec-design.html#cb249-4" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">as_tibble</span>(<span class="fu">colData</span>(dds), <span class="at">rownames =</span> <span class="st">"sample"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb249-5"><a href="sec-design.html#cb249-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">paste0</span>(<span class="fu">substr</span>(Type, <span class="dv">1</span>, <span class="dv">5</span>), <span class="st">'_'</span>, Condition, <span class="st">'_'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb249-6"><a href="sec-design.html#cb249-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> name, <span class="at">y =</span> counts, <span class="at">fill =</span> Condition)) <span class="sc">+</span></span>
-<span id="cb249-7"><a href="sec-design.html#cb249-7" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">color =</span> <span class="st">"gray30"</span>) <span class="sc">+</span></span>
-<span id="cb249-8"><a href="sec-design.html#cb249-8" tabindex="-1"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> ENSEMBL, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
-<span id="cb249-9"><a href="sec-design.html#cb249-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">angle =</span> <span class="dv">90</span>),</span>
-<span id="cb249-10"><a href="sec-design.html#cb249-10" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb249-11"><a href="sec-design.html#cb249-11" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb249-12"><a href="sec-design.html#cb249-12" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>),</span>
-<span id="cb249-13"><a href="sec-design.html#cb249-13" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="sec-design.html#cb250-1" aria-hidden="true"></a><span class="kw">as_tibble</span>(<span class="kw">counts</span>(dds[res_tbl<span class="op">$</span>ENSEMBL[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], ], <span class="dt">normalize =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb250-2"><a href="sec-design.html#cb250-2" aria-hidden="true"></a>          <span class="dt">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="op">%&gt;%</span></span>
+<span id="cb250-3"><a href="sec-design.html#cb250-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"sample"</span>, <span class="dt">values_to =</span> <span class="st">"counts"</span>, <span class="op">-</span>ENSEMBL) <span class="op">%&gt;%</span></span>
+<span id="cb250-4"><a href="sec-design.html#cb250-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">left_join</span>(<span class="kw">as_tibble</span>(<span class="kw">colData</span>(dds), <span class="dt">rownames =</span> <span class="st">"sample"</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb250-5"><a href="sec-design.html#cb250-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">name =</span> <span class="kw">paste0</span>(<span class="kw">substr</span>(Type, <span class="dv">1</span>, <span class="dv">5</span>), <span class="st">'_'</span>, Condition, <span class="st">'_'</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb250-6"><a href="sec-design.html#cb250-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> name, <span class="dt">y =</span> counts, <span class="dt">fill =</span> Condition)) <span class="op">+</span></span>
+<span id="cb250-7"><a href="sec-design.html#cb250-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">'identity'</span>, <span class="dt">color =</span> <span class="st">"gray30"</span>) <span class="op">+</span></span>
+<span id="cb250-8"><a href="sec-design.html#cb250-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>ENSEMBL, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span></span>
+<span id="cb250-9"><a href="sec-design.html#cb250-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>, <span class="dt">angle =</span> <span class="dv">90</span>),</span>
+<span id="cb250-10"><a href="sec-design.html#cb250-10" aria-hidden="true"></a>        <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb250-11"><a href="sec-design.html#cb250-11" aria-hidden="true"></a>        <span class="dt">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb250-12"><a href="sec-design.html#cb250-12" aria-hidden="true"></a>        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),</span>
+<span id="cb250-13"><a href="sec-design.html#cb250-13" aria-hidden="true"></a>        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>))</span></code></pre></div>
 <pre><code>## Joining with `by = join_by(sample)`</code></pre>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-138-1.png" width="672"></p>
 <p>Note that another possibility would have been to set the fibroblasts
 as the reference cells, re-run the whole analysis, and to simply
 extract the <em>Condition_KD_vs_mock</em> coefficient.</p>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="sec-design.html#cb251-1" tabindex="-1"></a>dds_test <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromMatrix</span>(<span class="at">countData =</span> counts,</span>
-<span id="cb251-2"><a href="sec-design.html#cb251-2" tabindex="-1"></a>                                   <span class="at">colData =</span> coldata,</span>
-<span id="cb251-3"><a href="sec-design.html#cb251-3" tabindex="-1"></a>                                   <span class="at">design =</span>  <span class="sc">~</span> Type <span class="sc">*</span> Condition)</span>
-<span id="cb251-4"><a href="sec-design.html#cb251-4" tabindex="-1"></a><span class="co"># Set the Epithelial cells as the reference level</span></span>
-<span id="cb251-5"><a href="sec-design.html#cb251-5" tabindex="-1"></a>dds_test<span class="sc">$</span>Type <span class="ot">&lt;-</span> <span class="fu">relevel</span>(dds_test<span class="sc">$</span>Type, <span class="at">ref =</span> <span class="st">"Fibroblast"</span>)</span>
-<span id="cb251-6"><a href="sec-design.html#cb251-6" tabindex="-1"></a><span class="co"># Set the mock condition as the reference level</span></span>
-<span id="cb251-7"><a href="sec-design.html#cb251-7" tabindex="-1"></a>dds_test<span class="sc">$</span>Condition <span class="ot">&lt;-</span> <span class="fu">relevel</span>(dds_test<span class="sc">$</span>Condition, <span class="at">ref =</span> <span class="st">"mock"</span>)</span>
-<span id="cb251-8"><a href="sec-design.html#cb251-8" tabindex="-1"></a>dds_test <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds_test)</span>
-<span id="cb251-9"><a href="sec-design.html#cb251-9" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds_test,</span>
-<span id="cb251-10"><a href="sec-design.html#cb251-10" tabindex="-1"></a>               <span class="at">name =</span> <span class="st">"Condition_KD_vs_mock"</span>)</span>
-<span id="cb251-11"><a href="sec-design.html#cb251-11" tabindex="-1"></a>res_tbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(res, <span class="at">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb251-12"><a href="sec-design.html#cb251-12" tabindex="-1"></a>  <span class="fu">arrange</span>(padj)</span>
-<span id="cb251-13"><a href="sec-design.html#cb251-13" tabindex="-1"></a><span class="fu">head</span>(res_tbl)</span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="sec-design.html#cb252-1" aria-hidden="true"></a>dds_test &lt;-<span class="st"> </span><span class="kw">DESeqDataSetFromMatrix</span>(<span class="dt">countData =</span> counts,</span>
+<span id="cb252-2"><a href="sec-design.html#cb252-2" aria-hidden="true"></a>                                   <span class="dt">colData =</span> coldata,</span>
+<span id="cb252-3"><a href="sec-design.html#cb252-3" aria-hidden="true"></a>                                   <span class="dt">design =</span>  <span class="op">~</span><span class="st"> </span>Type <span class="op">*</span><span class="st"> </span>Condition)</span>
+<span id="cb252-4"><a href="sec-design.html#cb252-4" aria-hidden="true"></a><span class="co"># Set the Epithelial cells as the reference level</span></span>
+<span id="cb252-5"><a href="sec-design.html#cb252-5" aria-hidden="true"></a>dds_test<span class="op">$</span>Type &lt;-<span class="st"> </span><span class="kw">relevel</span>(dds_test<span class="op">$</span>Type, <span class="dt">ref =</span> <span class="st">"Fibroblast"</span>)</span>
+<span id="cb252-6"><a href="sec-design.html#cb252-6" aria-hidden="true"></a><span class="co"># Set the mock condition as the reference level</span></span>
+<span id="cb252-7"><a href="sec-design.html#cb252-7" aria-hidden="true"></a>dds_test<span class="op">$</span>Condition &lt;-<span class="st"> </span><span class="kw">relevel</span>(dds_test<span class="op">$</span>Condition, <span class="dt">ref =</span> <span class="st">"mock"</span>)</span>
+<span id="cb252-8"><a href="sec-design.html#cb252-8" aria-hidden="true"></a>dds_test &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds_test)</span>
+<span id="cb252-9"><a href="sec-design.html#cb252-9" aria-hidden="true"></a>res &lt;-<span class="st"> </span><span class="kw">results</span>(dds_test,</span>
+<span id="cb252-10"><a href="sec-design.html#cb252-10" aria-hidden="true"></a>               <span class="dt">name =</span> <span class="st">"Condition_KD_vs_mock"</span>)</span>
+<span id="cb252-11"><a href="sec-design.html#cb252-11" aria-hidden="true"></a>res_tbl &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(res, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb252-12"><a href="sec-design.html#cb252-12" aria-hidden="true"></a><span class="st">  </span><span class="kw">arrange</span>(padj)</span>
+<span id="cb252-13"><a href="sec-design.html#cb252-13" aria-hidden="true"></a><span class="kw">head</span>(res_tbl)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 7
 ##   ENSEMBL         baseMean log2FoldChange lfcSE   stat   pvalue     padj
 ##   &lt;chr&gt;              &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -602,10 +579,10 @@ compared to epitelial cells.</p>
 <em>TypeFibroblast.ConditionKD</em> coefficient to be higher than 0.</p>
 <p>If the effect of the KD is lower in fibroblasts than in epithelial cells, we expect the
 <em>TypeFibroblast.ConditionKD</em> coefficient to be lower than 0.</p>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="sec-design.html#cb253-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds, <span class="at">name =</span> <span class="st">"TypeFibroblast.ConditionKD"</span>)</span>
-<span id="cb253-2"><a href="sec-design.html#cb253-2" tabindex="-1"></a>res_tbl <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(res, <span class="at">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb253-3"><a href="sec-design.html#cb253-3" tabindex="-1"></a>  <span class="fu">arrange</span>(padj)</span>
-<span id="cb253-4"><a href="sec-design.html#cb253-4" tabindex="-1"></a><span class="fu">head</span>(res_tbl)</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="sec-design.html#cb254-1" aria-hidden="true"></a>res &lt;-<span class="st"> </span><span class="kw">results</span>(dds, <span class="dt">name =</span> <span class="st">"TypeFibroblast.ConditionKD"</span>)</span>
+<span id="cb254-2"><a href="sec-design.html#cb254-2" aria-hidden="true"></a>res_tbl &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(res, <span class="dt">rownames =</span> <span class="st">"ENSEMBL"</span>) <span class="op">%&gt;%</span></span>
+<span id="cb254-3"><a href="sec-design.html#cb254-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">arrange</span>(padj)</span>
+<span id="cb254-4"><a href="sec-design.html#cb254-4" aria-hidden="true"></a><span class="kw">head</span>(res_tbl)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 7
 ##   ENSEMBL         baseMean log2FoldChange lfcSE   stat   pvalue     padj
 ##   &lt;chr&gt;              &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -621,19 +598,19 @@ is much lower in fibroblasts than in epithelial cells.</p>
 <p>Gene ENSG00000108179 is also an illustrative example,
 as its value is decreased by the siRNA treatment in the epithelial cells,
 while on the contrary it is increased by the treatment in the fibroblast cells.</p>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="sec-design.html#cb255-1" tabindex="-1"></a><span class="fu">as_tibble</span>(<span class="fu">counts</span>(dds[res_tbl<span class="sc">$</span>ENSEMBL[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>)], ], <span class="at">normalize =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb255-2"><a href="sec-design.html#cb255-2" tabindex="-1"></a>          <span class="at">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb255-3"><a href="sec-design.html#cb255-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"sample"</span>, <span class="at">values_to =</span> <span class="st">"counts"</span>, <span class="sc">-</span>ENSEMBL) <span class="sc">%&gt;%</span></span>
-<span id="cb255-4"><a href="sec-design.html#cb255-4" tabindex="-1"></a>  <span class="fu">left_join</span>(<span class="fu">as_tibble</span>(<span class="fu">colData</span>(dds), <span class="at">rownames =</span> <span class="st">"sample"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb255-5"><a href="sec-design.html#cb255-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">paste0</span>(<span class="fu">substr</span>(Type, <span class="dv">1</span>, <span class="dv">5</span>), <span class="st">'_'</span>, Condition, <span class="st">'_'</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb255-6"><a href="sec-design.html#cb255-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> name, <span class="at">y =</span> counts, <span class="at">fill =</span> Condition)) <span class="sc">+</span></span>
-<span id="cb255-7"><a href="sec-design.html#cb255-7" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">color =</span> <span class="st">"gray30"</span>) <span class="sc">+</span></span>
-<span id="cb255-8"><a href="sec-design.html#cb255-8" tabindex="-1"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> ENSEMBL, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
-<span id="cb255-9"><a href="sec-design.html#cb255-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">angle =</span> <span class="dv">90</span>),</span>
-<span id="cb255-10"><a href="sec-design.html#cb255-10" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb255-11"><a href="sec-design.html#cb255-11" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb255-12"><a href="sec-design.html#cb255-12" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>),</span>
-<span id="cb255-13"><a href="sec-design.html#cb255-13" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="sec-design.html#cb256-1" aria-hidden="true"></a><span class="kw">as_tibble</span>(<span class="kw">counts</span>(dds[res_tbl<span class="op">$</span>ENSEMBL[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">5</span>)], ], <span class="dt">normalize =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb256-2"><a href="sec-design.html#cb256-2" aria-hidden="true"></a>          <span class="dt">rownames =</span> <span class="st">'ENSEMBL'</span>) <span class="op">%&gt;%</span></span>
+<span id="cb256-3"><a href="sec-design.html#cb256-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"sample"</span>, <span class="dt">values_to =</span> <span class="st">"counts"</span>, <span class="op">-</span>ENSEMBL) <span class="op">%&gt;%</span></span>
+<span id="cb256-4"><a href="sec-design.html#cb256-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">left_join</span>(<span class="kw">as_tibble</span>(<span class="kw">colData</span>(dds), <span class="dt">rownames =</span> <span class="st">"sample"</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb256-5"><a href="sec-design.html#cb256-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">name =</span> <span class="kw">paste0</span>(<span class="kw">substr</span>(Type, <span class="dv">1</span>, <span class="dv">5</span>), <span class="st">'_'</span>, Condition, <span class="st">'_'</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb256-6"><a href="sec-design.html#cb256-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> name, <span class="dt">y =</span> counts, <span class="dt">fill =</span> Condition)) <span class="op">+</span></span>
+<span id="cb256-7"><a href="sec-design.html#cb256-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">'identity'</span>, <span class="dt">color =</span> <span class="st">"gray30"</span>) <span class="op">+</span></span>
+<span id="cb256-8"><a href="sec-design.html#cb256-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>ENSEMBL, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span></span>
+<span id="cb256-9"><a href="sec-design.html#cb256-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>, <span class="dt">angle =</span> <span class="dv">90</span>),</span>
+<span id="cb256-10"><a href="sec-design.html#cb256-10" aria-hidden="true"></a>        <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb256-11"><a href="sec-design.html#cb256-11" aria-hidden="true"></a>        <span class="dt">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb256-12"><a href="sec-design.html#cb256-12" aria-hidden="true"></a>        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),</span>
+<span id="cb256-13"><a href="sec-design.html#cb256-13" aria-hidden="true"></a>        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>))</span></code></pre></div>
 <pre><code>## Joining with `by = join_by(sample)`</code></pre>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-141-1.png" width="672"></p>
 
@@ -645,9 +622,9 @@ while on the contrary it is increased by the treatment in the fibroblast cells.<
 <a href="sec-gsea.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2024-05-25
+2024-08-08
  using 
-R version 4.4.0 (2024-04-24)
+R version 4.4.1 (2024-06-14)
 </p>
 </div>
 </div>
