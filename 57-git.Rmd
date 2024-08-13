@@ -1,1 +1,34 @@
 # Collaborating with Git and GitHub {#sec-git}
+
+
+## Introduction
+
+Why ? Student's feedback on the difficulty of collaborative work on R code and rmd files. Git and GitHub are the tools that experts use for code sharing and collaborative work. 
+
+What is version control : what is it, why (line-by-line difference, clarity), how does it differ from other tools (cloud/drive). 
+
+## Theoretical concepts of Git and GitHub
+
+Understand the theoretical concepts of using Git and GitHub: repo (local and remote), pull, push, commit, clone, conflicts, issues, pull request (which prevents conflicts). Explain with a concept map + exercises and demo
+o GitHub: Create an account, log in.
+o Demo: we show how to create a test repo (which has one or two files) and we add them to it to demonstrate
+o They can create an issue to show that they have access to the online repo, comment on it, link to one of the files, close an issue, etc.
+
+## Git and RStudio
+
+Connect local RStudio with a repo: install git, create PAT and, create a 2-3 repo and clone (via Project)
+
+Use RStudio for their project: exercises: pull (always before committing!), modify, stage, commit, push. Start a conflict and resolve it. Adding documents too. 
+
+## Troubleshooting
+
+Remind you of good practice: coordinate your work so that only one of you is working on the same thing, pull/push regularly, work on different files. 
+
+Demonstration of pull requests as another useful concept.
+
+## WSBIM2122 Project
+How are they going to be able to use this for their project: we're going to create private repos to which we'll add them and we'll put a README file with the experimental design and a data file with the data.
+
+## Reference
+
+https://happygitwithr.com/ 
