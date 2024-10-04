@@ -52,9 +52,10 @@ expression in groups 1 and 2:
 
 $$y = \beta_0 + \beta_1 \times x + \epsilon$$
 
-where $y$ is the expression we want to model and $x$ represents the
-two groups that are generally encoded as 0 and 1. The expression above
-translates as follows:
+where $y$ is the expression (the dependent or response variable) we
+want to model and $x$ represents the two groups (the independent or
+explanatory variable(s)) that are generally encoded as 0 and 1. The
+expression above translates as follows:
 
 - the expression in group 1 (i.e. when $x = 0$) is equal to $\beta_0$
   (the average expression of group 1);
@@ -138,7 +139,7 @@ explain the differences.
 `r msmbstyle::solution_begin()`
 
 ```{r gexp_t_test2}
-mod2 <- t.test(gexp[1:10, 1], gexp[11:20, 1], paired = TRUE)
+(mod2 <- t.test(gexp[1:10, 1], gexp[11:20, 1], paired = TRUE))
 ```
 
 ```{r gexp_vis2}
@@ -349,10 +350,10 @@ the data to help with the interpretation.
 library("tidyverse")
 ## Prepare the data
 x <-
-    data.frame(lmdata) %>%
-    rownames_to_column() %>%
-    pivot_longer(names_to = "sample", values_to = "expression", -rowname) %>%
-    full_join(lmannot) %>%
+    data.frame(lmdata) |>
+    rownames_to_column() |>
+    pivot_longer(names_to = "sample", values_to = "expression", -rowname) |>
+    full_join(lmannot) |>
     mutate(sample = sub("sample_", "", sample))
 ```
 
@@ -414,9 +415,9 @@ x_i
 mod_i <- lm(expression ~ condition * cell_type, data = x_i)
 summary(mod_i)
 
-group_by(x_i, cell_type, condition) %>% summarise(mean = mean(expression))
-group_by(x_i, cell_type) %>% summarise(mean = mean(expression))
-group_by(x_i, condition) %>% summarise(mean = mean(expression))
+group_by(x_i, cell_type, condition) |> summarise(mean = mean(expression))
+group_by(x_i, cell_type) |> summarise(mean = mean(expression))
+group_by(x_i, condition) |> summarise(mean = mean(expression))
 
 ggplot(x_i, aes(x = sample, y = expression,
                 colour = condition,
@@ -463,8 +464,8 @@ summary(lm(expression ~ condition * cell_type, data = x_i))
 ```
 
 In high throughput experiments, where we test tens of thousands of
-genes, we can't explore each gene separately with multiple models. The
-same model must be applied to all genes and the significance of
+genes, we typically don't explore each gene separately with multiple
+models. The same model is applied to all genes and the significance of
 coefficient(s) of interest is/are considered.
 
 Solving this dilema isn't a statistical but a scientific question. You
