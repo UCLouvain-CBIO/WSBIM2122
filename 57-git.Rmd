@@ -3,31 +3,92 @@
 
 ## Introduction
 
-Why ? Student's feedback on the difficulty of collaborative work on R code and rmd files. Git and GitHub are the tools that experts use for code sharing and collaborative work. 
+Why ? Student's feedback on the difficulty of collaborative work on R code and 
+rmd files. Git and GitHub are the tools that experts use for code sharing and 
+collaborative work. 
 
-What is version control : what is it, why (line-by-line difference, clarity), how does it differ from other tools (cloud/drive). 
+What is version control : what is it, why (line-by-line difference, clarity), 
+how does it differ from other tools (cloud/drive). 
 
 ## Theoretical concepts of Git and GitHub
 
-Understand the theoretical concepts of using Git and GitHub: repo (local and remote), pull, push, commit, clone, conflicts, issues, pull request (which prevents conflicts). Explain with a concept map + exercises and demo
+Understand the theoretical concepts of using Git and GitHub: repo (local and 
+remote), pull, push, commit, clone, conflicts, issues, pull request (which 
+prevents conflicts). Explain with a concept map 
+
+Exercises and demo
 o GitHub: Create an account, log in.
-o Demo: we show how to create a test repo (which has one or two files) and we add them to it to demonstrate
-o They can create an issue to show that they have access to the online repo, comment on it, link to one of the files, close an issue, etc.
+o Demo: they create tehir own repo, try and open an issue
+o We've created a test repo (which has one or two files) and we 
+add them to it to demonstrate : They can create an issue to show that they have
+access to the online repo, comment on it, link to one of the files, assign 
+someone, close an issue, etc.
 
 ## Git and RStudio
 
-Connect local RStudio with a repo: install git, create PAT and, create a 2-3 repo and clone (via Project)
+This section of the course is based on the *Happy Git and GitHub for the useR* 
+tutorial by Jennifer Bryan.
 
-Use RStudio for their project: exercises: pull (always before committing!), modify, stage, commit, push. Start a conflict and resolve it. Adding documents too. 
+### Install Git
+
+Git needs to be install on your computer so RStudio can call it, or it can be 
+used at the command line. This is different depending on the operating system
+of your computer.
+
+- **Windows users**
+
+The easiest way is to install [Git for Windows](https://gitforwindows.org/), 
+also called "Git bash". This allows to get Git but also a Bash shell that is 
+useful to venture outside of R/RStudio. 
+
+When installing Git for Windows, use the conventional location as it is going to
+help other programs to find Git. RStudio prefers for Git to be installed in 
+"C:/Program Files". Also, when asked about “Adjusting your PATH environment”, 
+select “Git from the command line and also from 3rd-party software”. Otherwise,
+use the defaults parameters.
+
+
+- **macOS users**
+
+On macOS, Git can be installed directly from the shell by using this command : 
+
+``` bash
+git config
+```
+
+This will open an offer to install developer command line tools, accept the 
+offer and click on "Install".
+
+This might have to be redone after upgrading macOS or the RStudio Git pane can
+disappear from a system where it was previously working. 
+
+### Connect RStudio to your GitHub repo
+
+Connect local RStudio with a repo: create PAT and, new project with their first
+repo, stage/commit/push a R/Rmd file, modify and compile, push, go see on GitHub
+their pdf and the changes in the commit, change on  github (README ?) and pull
+(always before a commit !), have a look at commit history, talk about .gitignore
+(max 50 mb to push)
+
+## Git and command line
+
+Can be done with command line, show examples to connect to shell
 
 ## Troubleshooting
 
-Remind you of good practice: coordinate your work so that only one of you is working on the same thing, pull/push regularly, work on different files. 
+Remind you of good practice: coordinate your work so that only one of you is 
+working on the same thing, pull/push regularly, work on different files. 
+
+Exercise with modification on Github and Rstudio and have to resolve it (check
+errors with RStudio !).
 
 Demonstration of pull requests as another useful concept.
 
 ## WSBIM2122 Project
-How are they going to be able to use this for their project: we're going to create private repos to which we'll add them and we'll put a README file with the experimental design and a data file with the data.
+
+How are they going to be able to use this for their project: we're going to 
+create 4 private repos to which we'll add them and we'll put a README file with 
+the experimental design and a data file with the data.
 
 ## Reference
 
