@@ -32,7 +32,7 @@ wisely as you might want to reuse it later and will have to share it.
 You have now been added to the WSBIM2122_GitHub_training repository.
 **We need to add 1 or 2 simple files to the repo**
 
-1. Reply to the first issue to verify that you're able to access the repo
+1. Reply to the first issue to verify that you're able to access the repo.
 
 2. Create a new issue where you make a link to a file or a specific line of a 
 file and assign it to yourself. 
@@ -44,20 +44,20 @@ file and assign it to yourself.
 
 ## Git and RStudio
 
-It is possible to use Git through the RStudio interface and manage everything 
-that is on the repository. This is useful if you're working mainly with R and 
-want to use Git version control but also work with other people. The RStudio 
-interface then allows an easier click-button way of using git than the 
-traditional command line. 
+It is possible to use Git through the RStudio interface to manage everything 
+that is on a repository. This is useful if you're working mainly with R and 
+want to use Git version control but also if you want to do collaborative work. 
+The RStudio interface then allows a click-button way of using git that can be 
+easier than the traditional command line. 
 
 This section of the course is based on the *Happy Git and GitHub for the useR* 
-tutorial by Jennifer Bryan.
+[tutorial](https://happygitwithr.com/) by Jennifer Bryan.
 
 ### Install Git
 
-Git needs to be install on your computer so RStudio can call it, or it can be 
-used at the command line. This is different depending on the operating system
-of your computer.
+Git needs to be install on your computer so RStudio can call it, or to use it
+through the command line. Installation is different depending on the operating 
+system of your computer.
 
 - **Windows users**
 
@@ -74,9 +74,9 @@ use the defaults parameters.
 
 - **macOS users**
 
-On macOS, Git can be installed directly from the shell by using this command : 
+On macOS, Git can be installed directly from the shell using this command : 
 
-``` bash
+```{bash}
 git config
 ```
 
@@ -89,16 +89,18 @@ disappear from a system where it was previously working.
 ### Connect RStudio to your GitHub repo
 
 To connect RStudio to a GitHub repository, a personal access token (PAT) is needed.
-This will act as an identifier of a specific GitHub user, along with the 
+This will act as an identifier for a specific GitHub user, along with the 
 authorization the user has. You can thus NOT use your GitHub password as a 
 way to connect to your repository using RStudio.
 
 A PAT can be created on GitHub, in *settings > Developer Settings > Personal*
 *access tokens > Tokens (classic)* or directly [here](https://github.com/settings/tokens).
 Click on *Generate token (classic)* and configure you're token. You can configure :
-- A name, that generally describes what you're using this PAT for
+- A name, that generally describes what you're using this PAT for.
 - An expiration date, after that date the PAT won't work anymore. GitHub security
-advises for 30 days but you can configure it to no expiration if you see fit.
+advises for 30 days but you can configure it to no expiration if you see fit. We
+advise to put the expiration date to at least the end of the semester, in case
+you want to use it for your projects. 
 - What this PAT allows to do, it is recommended to select repo, user, gist and 
 workflow.
 
@@ -115,11 +117,11 @@ green button that says “<> Code” and copy the HTTPS URL address.
 
 To clone your GitHub repo on your computer, open RStudio and create a new 
 project. You'll then be able to chose to create a Version Control project and 
-chose Git. Then you just need to paste the HTTPS URL of your GitHub repo and it
+choose Git. Then you just need to paste the HTTPS URL of your GitHub repo and it
 will be cloned as an R project.
 
 The project will open and a new Git tab will appear in the "environment" pane of
-RStudio. This is where you'll be able to manage all things Git related. I file
+RStudio. This is where you'll be able to manage all things Git related. A file
 appears there once it has been added or modified from the GitHub version. Once 
 a file is modified, you can click on "Diff" to open a new window that will show
 you what has been changed in the selected file. You can then check the staged 
@@ -160,31 +162,31 @@ online. Also have a look at the commit online.
 It is still interesting to know that, usually, all these things are done through
 the command line. Here is how to do it :
 
-- Clone the repo locally
+- Clone the repo locally.
 
 ```{bash}
 git clone url 
 ```
 
-- Have a look at the files and what is different from the GitHub version
+- Have a look at the files and what is different from the GitHub version.
 
 ```{bash}
 git status
 ```
 
-- Stage a file for commit
+- Stage a file for commit.
 
 ```{bash}
 git add file
 ```
 
-- Commit the staged changes 
+- Commit the staged changes.
 
 ```{bash}
 git commit -m ‘comment’
 ```
 
-- Push or pull your changes 
+- Push or pull your changes.
 
 ```{bash}
 git push
