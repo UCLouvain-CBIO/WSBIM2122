@@ -3,31 +3,220 @@
 
 ## Introduction
 
-Why ? Student's feedback on the difficulty of collaborative work on R code and rmd files. Git and GitHub are the tools that experts use for code sharing and collaborative work. 
+Why ? Student's feedback on the difficulty of collaborative work on R code and 
+rmd files. Git and GitHub are the tools that experts use for code sharing and 
+collaborative work. 
 
-What is version control : what is it, why (line-by-line difference, clarity), how does it differ from other tools (cloud/drive). 
+What is version control : what is it, why (line-by-line difference, clarity), 
+how does it differ from other tools (cloud/drive). 
 
 ## Theoretical concepts of Git and GitHub
 
-Understand the theoretical concepts of using Git and GitHub: repo (local and remote), pull, push, commit, clone, conflicts, issues, pull request (which prevents conflicts). Explain with a concept map + exercises and demo
-o GitHub: Create an account, log in.
-o Demo: we show how to create a test repo (which has one or two files) and we add them to it to demonstrate
-o They can create an issue to show that they have access to the online repo, comment on it, link to one of the files, close an issue, etc.
+Understand the theoretical concepts of using Git and GitHub: repo (local and 
+remote), pull, push, commit, clone, conflicts, issues, pull request (which 
+prevents conflicts). Explain with a concept map 
+
+
+`r msmbstyle::question_begin()`
+
+1. Create an account on [GitHub](https://github.com/). Choose your username 
+wisely as you might want to reuse it later and will have to share it.
+**Should we ask them to share it on moodle or somewhere for the next exercise ?**
+
+2. Create your own repository and open an issue on it.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin()`
+
+You have now been added to the WSBIM2122_GitHub_training repository.
+**We need to add 1 or 2 simple files to the repo**
+
+1. Reply to the first issue to verify that you're able to access the repo.
+
+2. Create a new issue where you make a link to a file or a specific line of a 
+file and assign it to yourself. 
+
+3. Close that issue to mark it as done.
+
+`r msmbstyle::question_end()`
+
 
 ## Git and RStudio
 
-Connect local RStudio with a repo: install git, create PAT and, create a 2-3 repo and clone (via Project)
+It is possible to use Git through the RStudio interface to manage everything 
+that is on a repository. This is useful if you're working mainly with R and 
+want to use Git version control but also if you want to do collaborative work. 
+The RStudio interface then allows a click-button way of using git that can be 
+easier than the traditional command line. 
 
-Use RStudio for their project: exercises: pull (always before committing!), modify, stage, commit, push. Start a conflict and resolve it. Adding documents too. 
+This section of the course is based on the *Happy Git and GitHub for the useR* 
+[tutorial](https://happygitwithr.com/) by Jennifer Bryan.
+
+### Install Git
+
+Git needs to be install on your computer so RStudio can call it, or to use it
+through the command line. Installation is different depending on the operating 
+system of your computer.
+
+- **Windows users**
+
+The easiest way is to install [Git for Windows](https://gitforwindows.org/), 
+also called "Git bash". This allows to get Git but also a Bash shell that is 
+useful to venture outside of R/RStudio. 
+
+When installing Git for Windows, use the conventional location as it is going to
+help other programs to find Git. RStudio prefers for Git to be installed in 
+"C:/Program Files". Also, when asked about “Adjusting your PATH environment”, 
+select “Git from the command line and also from 3rd-party software”. Otherwise,
+use the defaults parameters.
+
+
+- **macOS users**
+
+On macOS, Git can be installed directly from the shell using this command : 
+
+```{bash}
+git config
+```
+
+This will open an offer to install developer command line tools, accept the 
+offer and click on "Install".
+
+This might have to be redone after upgrading macOS or the RStudio Git pane can
+disappear from a system where it was previously working. 
+
+### Connect RStudio to your GitHub repo
+
+To connect RStudio to a GitHub repository, a personal access token (PAT) is needed.
+This will act as an identifier for a specific GitHub user, along with the 
+authorization the user has. You can thus NOT use your GitHub password as a 
+way to connect to your repository using RStudio.
+
+A PAT can be created on GitHub, in *settings > Developer Settings > Personal*
+*access tokens > Tokens (classic)* or directly [here](https://github.com/settings/tokens).
+Click on *Generate token (classic)* and configure you're token. You can configure :
+- A name, that generally describes what you're using this PAT for.
+- An expiration date, after that date the PAT won't work anymore. GitHub security
+advises for 30 days but you can configure it to no expiration if you see fit. We
+advise to put the expiration date to at least the end of the semester, in case
+you want to use it for your projects. 
+- What this PAT allows to do, it is recommended to select repo, user, gist and 
+workflow.
+
+Once you've generated the token, it will appear. Be careful, it is the only time
+you'll be able to see this PAT so it is advised to copy it somewhere to store it.
+Still keep in mind, this PAT is a password that allows you to modify your work so
+avoid putting it somewhere public. 
+
+Once a PAT has been created, you can clone any GitHub repository on your
+local computer using RStudio. The easiest way of working with GitHub and RStudio
+is to have a GitHub repository first. The only thing needed from GitHub is the 
+cloning https address of your repo. To get it, go the repo page, click the big 
+green button that says “<> Code” and copy the HTTPS URL address.
+
+To clone your GitHub repo on your computer, open RStudio and create a new 
+project. You'll then be able to chose to create a Version Control project and 
+choose Git. Then you just need to paste the HTTPS URL of your GitHub repo and it
+will be cloned as an R project.
+
+The project will open and a new Git tab will appear in the "environment" pane of
+RStudio. This is where you'll be able to manage all things Git related. A file
+appears there once it has been added or modified from the GitHub version. Once 
+a file is modified, you can click on "Diff" to open a new window that will show
+you what has been changed in the selected file. You can then check the staged 
+box, write a commit message and commit these changes. You then click push to 
+send all that to GitHub. That's when you'll be asked to give your username and 
+PAT. RStudio locally tends to remember the PAT so you shouldn't have to put it 
+again. 
+
+Note : If RStudio doesn't appear to find Git on your computer, go to *Tools > Global*
+*Options > Git/SVN* and make sure that the Git executable points to where your 
+Git executable is located on your computer.
+
+You might also have seen a `.gitignore` file. This is a text file containing the
+names of the files that have to be ignored by git and not pushed to GitHub. This
+should usually contain your .Rproj but also all files bigger than 50 Mb as these
+cannot be pushed to GitHub.
+
+RStudio also allows you to have a look at the commit history, if you want to see
+all the changes that have been done to the repo.
+
+`r msmbstyle::question_begin()`
+
+1. Connect the repository you created in the previous section using RStudio.
+
+2. Create a Rmd file locally on RStudio then stage, commit and push it.
+
+3. Modify that Rmd and knit it. When commiting, have a look at how the 
+modification are showed to you. Push it on GitHub and go see the compiled result
+online. Also have a look at the commit online.
+
+4. Modify the readme file on GitHub and pull it locally.
+
+`r msmbstyle::question_end()`
+
+
+## Git and command line
+
+It is still interesting to know that, usually, all these things are done through
+the command line. Here is how to do it :
+
+- Clone the repo locally.
+
+```{bash}
+git clone url 
+```
+
+- Have a look at the files and what is different from the GitHub version.
+
+```{bash}
+git status
+```
+
+- Stage a file for commit.
+
+```{bash}
+git add file
+```
+
+- Commit the staged changes.
+
+```{bash}
+git commit -m ‘comment’
+```
+
+- Push or pull your changes.
+
+```{bash}
+git push
+git pull
+```
+
+Note : For windows users, know that by installing git for windows, you've also 
+installed git bash, a terminal that can be used to use Git through the command 
+line. You can use it in the terminal pane of RStudio as long as you've configured
+it correctly by selecting "Git Bash" in *Tools > Global Options > Terminal > New*
+*terminals open with*
 
 ## Troubleshooting
 
-Remind you of good practice: coordinate your work so that only one of you is working on the same thing, pull/push regularly, work on different files. 
+Remind you of good practice: coordinate your work so that only one of you is 
+working on the same thing, always pull before commiting, pull/push regularly,
+work on different files. 
+
+Cancel commit when forgot to pull before :	git reset --soft HEAD~1
+
+Exercise with modification on Github and Rstudio and have to resolve it (check
+errors with RStudio !).
 
 Demonstration of pull requests as another useful concept.
 
 ## WSBIM2122 Project
-How are they going to be able to use this for their project: we're going to create private repos to which we'll add them and we'll put a README file with the experimental design and a data file with the data.
+
+How are they going to be able to use this for their project: we're going to 
+create 4 private repos to which we'll add them and we'll put a README file with 
+the experimental design and a data file with the data.
 
 ## Reference
 
