@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2024-10-04" />
+<meta name="date" content="2024-10-25" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -65,7 +65,6 @@ function reset_tooltip(id) {
   tooltip.innerHTML = 'Copy link';
 }
 </script>
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
@@ -85,8 +84,9 @@ function reset_tooltip(id) {
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -121,7 +121,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -134,7 +134,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -149,6 +149,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -166,17 +188,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
-<a href="index.html">Preamble</a>
-<a href="sec-rmd.html"><span class="toc-section-number">1</span> R markdown</a>
-<a href="sec-linmod.html"><span class="toc-section-number">2</span> Linear models</a>
-<a href="sec-hts.html"><span class="toc-section-number">3</span> High throughput sequencing</a>
-<a href="sec-rnaseq.html"><span class="toc-section-number">4</span> Differential expression analysis</a>
-<a href="sec-design.html"><span class="toc-section-number">5</span> More complex experimental design</a>
-<a href="sec-gsea.html"><span class="toc-section-number">6</span> Enrichment analyses</a>
-<a href="sec-ms.html"><span class="toc-section-number">7</span> Mass spectrometry</a>
-<a href="sec-prot.html"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
-<a href="sec-ccl.html"><span class="toc-section-number">9</span> Conclusions</a>
-<a id="active-page" href="sec-cli.html"><span class="toc-section-number">10</span> Annex: the shell</a><ul class="toc-sections">
+<a href="index.html" id="toc-preamble">Preamble</a>
+<a href="sec-rmd.html" id="toc-sec-rmd"><span class="toc-section-number">1</span> R markdown</a>
+<a href="sec-linmod.html" id="toc-sec-linmod"><span class="toc-section-number">2</span> Linear models</a>
+<a href="sec-hts.html" id="toc-sec-hts"><span class="toc-section-number">3</span> High throughput sequencing</a>
+<a href="sec-rnaseq.html" id="toc-sec-rnaseq"><span class="toc-section-number">4</span> Differential expression analysis</a>
+<a href="sec-design.html" id="toc-sec-design"><span class="toc-section-number">5</span> More complex experimental design</a>
+<a href="sec-gsea.html" id="toc-sec-gsea"><span class="toc-section-number">6</span> Enrichment analyses</a>
+<a href="sec-ms.html" id="toc-sec-ms"><span class="toc-section-number">7</span> Mass spectrometry</a>
+<a href="sec-prot.html" id="toc-sec-prot"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
+<a href="sec-ccl.html" id="toc-sec-ccl"><span class="toc-section-number">9</span> Conclusions</a>
+<a id="active-page" href="sec-cli.html" id="toc-sec-cli"><span class="toc-section-number">10</span> Annex: the shell</a><ul class="toc-sections">
 <li class="toc"><a href="#introduction-2"> Introduction</a></li>
 <li class="toc"><a href="#navigating-files-and-directories"> Navigating Files and Directories</a></li>
 <li class="toc"><a href="#working-with-files-and-directories"> Working with Files and Directories</a></li>
@@ -184,7 +206,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="toc"><a href="#writing-scripts"> Writing scripts</a></li>
 <li class="toc"><a href="#references-1"> References</a></li>
 </ul>
-<a href="sec-si.html"><span class="toc-section-number">11</span> Course and session information</a>
+<a href="sec-info.html" id="toc-sec-info"><span class="toc-section-number">11</span> Course and session information</a>
 </div>
 </li>
 </ul>
@@ -210,7 +232,7 @@ Genomics</a> lessons.</p>
 <li>Learn how to work with files and navigate directories.</li>
 <li>Learn how run shell scipts.</li>
 </ul>
-<div id="what-is-a-shell-and-why-should-i-care" class="section level3 unnumbered" number="">
+<div id="what-is-a-shell-and-why-should-i-care" class="section level3 unnumbered">
 <h3>What is a shell and why should I care?<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('what-is-a-shell-and-why-should-i-care')" onmouseout="reset_tooltip('what-is-a-shell-and-why-should-i-care-tooltip')"><span class="tooltiptext" id="what-is-a-shell-and-why-should-i-care-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>A shell is a computer program that presents a command line interface
@@ -247,7 +269,7 @@ which can only be accessed through a shell.</li>
 <p>In this lesson you will learn how to use the command line interface to
 move around in your file system.</p>
 </div>
-<div id="how-to-access-the-shell" class="section level3 unnumbered" number="">
+<div id="how-to-access-the-shell" class="section level3 unnumbered">
 <h3>How to access the shell<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('how-to-access-the-shell')" onmouseout="reset_tooltip('how-to-access-the-shell-tooltip')"><span class="tooltiptext" id="how-to-access-the-shell-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>On a Mac or Linux machine, you can access a shell through a program
@@ -262,7 +284,7 @@ are going to the use RStudio Terminal.</p>
 <p>At any point, you can use the <code>clear</code> command or the <code>Ctrl+L</code> keyboard
 shortcut to clear the screen.</p>
 </div>
-<div id="the-shell" class="section level3 unnumbered" number="">
+<div id="the-shell" class="section level3 unnumbered">
 <h3>The Shell<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-shell')" onmouseout="reset_tooltip('the-shell-tooltip')"><span class="tooltiptext" id="the-shell-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The shell is a program where users can type commands. With the shell,
@@ -309,7 +331,7 @@ system:</p>
 /home/lgatto</code></pre>
 <p>To create a shared set of files and directories, we will use the
 <code>rWSBIM2122::prepare_shell()</code> function in RStudio’s R console:</p>
-<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="sec-cli.html#cb457-1" aria-hidden="true"></a>rWSBIM2122<span class="op">::</span><span class="kw">prepare_shell</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="sec-cli.html#cb467-1" tabindex="-1"></a>rWSBIM2122<span class="sc">::</span><span class="fu">prepare_shell</span>()</span></code></pre></div>
 <pre><code>## Preparing shell data in 'wsbim2122_data'.</code></pre>
 <pre><code>## wsbim2122_data is ready.</code></pre>
 <p>This R command could also be executed from the shell by executing a
@@ -373,7 +395,7 @@ bare ls command?</p>
 </p>
 </div>
 </div>
-<div id="shortcut-tab-completion" class="section level3 unnumbered" number="">
+<div id="shortcut-tab-completion" class="section level3 unnumbered">
 <h3>Shortcut: Tab Completion<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('shortcut-tab-completion')" onmouseout="reset_tooltip('shortcut-tab-completion-tooltip')"><span class="tooltiptext" id="shortcut-tab-completion-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>Typing out file or directory names can waste a lot of time and it’s
@@ -477,8 +499,8 @@ are special characters that can cause your command to not work as
 expected and can even result in data loss.</p>
 <p>If you need to refer to names of files or directories that have spaces
 or other special characters, you should surround the name in quotes
-("").</p>
-<div id="viewing-files" class="section level3 unnumbered" number="">
+(““).</p>
+<div id="viewing-files" class="section level3 unnumbered">
 <h3>Viewing files<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('viewing-files')" onmouseout="reset_tooltip('viewing-files-tooltip')"><span class="tooltiptext" id="viewing-files-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>To view a file, you can use <code>cat</code> to display the whole file at
@@ -547,7 +569,7 @@ same way you used <code>/</code> previously.</p>
 </div>
 </div>
 </div>
-<div id="using-a-text-editor-in-the-shell" class="section level3 unnumbered" number="">
+<div id="using-a-text-editor-in-the-shell" class="section level3 unnumbered">
 <h3>Using a text editor in the shell?<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('using-a-text-editor-in-the-shell')" onmouseout="reset_tooltip('using-a-text-editor-in-the-shell-tooltip')"><span class="tooltiptext" id="using-a-text-editor-in-the-shell-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>For this course, given that we are using RStudio, you will be able to
@@ -567,7 +589,7 @@ the suggested default).</p>
 <p>Once our file is saved, we can use <code>Ctrl+X</code> to quit the editor and
 return to the shell.</p>
 </div>
-<div id="creating-moving-copying-and-removing" class="section level3 unnumbered" number="">
+<div id="creating-moving-copying-and-removing" class="section level3 unnumbered">
 <h3>Creating, moving, copying, and removing<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('creating-moving-copying-and-removing')" onmouseout="reset_tooltip('creating-moving-copying-and-removing-tooltip')"><span class="tooltiptext" id="creating-moving-copying-and-removing-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>Make sure you are inside the <code>wsbim2122_data/data</code> directory and create
@@ -789,7 +811,7 @@ an editor, either <code>nano</code> directly from the terminal, or RStudio.</p><
 <li><p>Execute your script with</p></li>
 </ul>
 <pre><code>sh combine_all_simulations.sh</code></pre>
-<div id="making-the-script-into-a-program" class="section level3 unnumbered" number="">
+<div id="making-the-script-into-a-program" class="section level3 unnumbered">
 <h3>Making the script into a program<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('making-the-script-into-a-program')" onmouseout="reset_tooltip('making-the-script-into-a-program-tooltip')"><span class="tooltiptext" id="making-the-script-into-a-program-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>Let’s test the <code>-l</code> (for long) tag of <code>ls</code></p>
@@ -847,7 +869,7 @@ delete a directory using the <code>-r</code> (recursive) option.</p>
 <p>To complete this chapter on shell, let’s conclude by mentioning the R
 <code>system()</code> and <code>system2()</code> functions, that enable to invoke a system
 command such as a shell script:</p>
-<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="sec-cli.html#cb491-1" aria-hidden="true"></a><span class="kw">system</span>(<span class="st">"combine_all_simulations.sh"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="sec-cli.html#cb501-1" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"combine_all_simulations.sh"</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="references-1" class="section level2" number="10.6">
@@ -860,16 +882,16 @@ Shell</a> and
 <a href="https://datacarpentry.org/shell-genomics/">Introduction to the Command Line for
 Genomics</a> lessons.</li>
 <li>
-<em>Bioinformatics Data Skills</em> <span class="citation">(Buffalo <label for="tufte-mn-25" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-25" class="margin-toggle">2015<span class="marginnote">Buffalo, Vince. 2015. <em>Bioinformatics Data Skills</em>. O’Reilly Media, Inc.</span>)</span>.</li>
+<em>Bioinformatics Data Skills</em> <span class="citation">(<label for="tufte-mn-25" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-25" class="margin-toggle">Buffalo 2015<span class="marginnote">Buffalo, Vince. 2015. <em>Bioinformatics Data Skills</em>. O’Reilly Media, Inc.</span>)</span>.</li>
 </ul>
 </div>
 </div>
 <p style="text-align: center;">
 <a href="sec-ccl.html"><button class="btn btn-default">Previous</button></a>
-<a href="sec-si.html"><button class="btn btn-default">Next</button></a>
+<a href="sec-info.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2024-10-04
+2024-10-25
  using 
 R version 4.4.1 (2024-06-14)
 </p>

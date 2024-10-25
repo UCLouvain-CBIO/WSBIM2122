@@ -100,8 +100,19 @@ insects focal adhesion has also been referred to as hemi-adherens
 junction (HAJ).
 ```
 
-```{r go.db1}
+```{r go.db0}
 library("GO.db")
+GO.db
+columns(GO.db) ## variables contained in GO.db
+## Select the term of interest
+select(GO.db, keys = "GO:0005925",
+       columns = columns(GO.db),
+       keytype = "GOID")
+```
+
+Let's now extract all human genes that are tagged with that GO term:
+
+```{r go.db1}
 library("org.Hs.eg.db")
 GO_0005925 <- AnnotationDbi::select(org.Hs.eg.db,
                                     keys = "GO:0005925",
@@ -768,6 +779,12 @@ res_tbl %>%
 ```
 
 `r msmbstyle::solution_end()`
+
+Finally, the
+[pathview](https://bioconductor.org/packages/release/bioc/html/pathview.html)
+package allows to annotate KEEG pathways, colouring the genes/nodes
+based on quantiative values such as log fold-changes to visualise the
+impact or a specific experiment on a pathway of interest.
 
 ## Discussion
 

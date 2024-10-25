@@ -144,7 +144,8 @@ working-with-files-and-directories
 data-analysis-in-the-shell
 writing-scripts
 references-1
-sec-si
+sec-info
 available-platforms
 project-reports
+sec-si
 sec-setup2

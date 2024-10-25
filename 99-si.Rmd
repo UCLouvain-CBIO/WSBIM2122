@@ -1,4 +1,4 @@
-# Course and session information {#sec-si}
+# Course and session information {#sec-info}
 
 
 ## Available platforms
