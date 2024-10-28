@@ -17,6 +17,10 @@ link-citations: yes
 bibliography: [refs.bib, packages.bib]
 ---
 
+```{r globalOptions, echo = FALSE}
+knitr::opts_chunk$set(dev = "CairoPNG")
+```
+
 # Preamble {-}
 
 The [WSBIM2122](https://uclouvain.be/cours-2021-wsbim2122.html) course
