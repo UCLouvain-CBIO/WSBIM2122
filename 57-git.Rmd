@@ -119,6 +119,18 @@ The same process applies for file deletion: delete a file, add it to
 the staging are (these can be done in one step), and commit the
 changes.
 
+`r msmbstyle::question_begin()`
+
+Can you figure out why it is important to stage multiple files and
+commit all together, as opposed to committing multiple single files
+one by one? Imagine that you are working on a project containing one
+Rmd report and two R code files, that the report needs to source (see
+`?source` if you don't know what sourcing is) to be able to compile,
+and consider that two code changes need to be done, one in each R code
+file.
+
+`r msmbstyle::question_end()`
+
 ### GitHub
 
 What we have seen so far all happens on a local computer. But to be
