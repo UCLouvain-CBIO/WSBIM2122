@@ -1,25 +1,162 @@
 # Collaborating with Git and GitHub {#sec-git}
 
 
-## Introduction
+## Motivation
 
-Why ? Student's feedback on the difficulty of collaborative work on R code and 
-rmd files. Git and GitHub are the tools that experts use for code sharing and 
-collaborative work. 
+In the past, students have reported on the difficulty of collaborative
+work on R code and Rmd files. Each student work with RStudio on their
+local computer, and share the code, report and data files on shared
+drive and/or send updates by email. Such a situaton my lead to a well
+known situation, nicely caught by the 'notFinal.doc' PhD Comic:
 
-What is version control : what is it, why (line-by-line difference, clarity), 
-how does it differ from other tools (cloud/drive). 
+[!notFinal.doc](https://phdcomics.com/comics/archive.php?comicid=1531)
 
-## Theoretical concepts of Git and GitHub
 
-Understand the theoretical concepts of using Git and GitHub: repo (local and 
-remote), pull, push, commit, clone, conflicts, issues, pull request (which 
-prevents conflicts). Explain with a concept map 
+The goal of this chapter is to introduce students to 'version
+control', used by data scientists, bioinformaticians and programmers
+around to world to keep track of changes in code, Rmd reports, or any
+other files, and efficiently collaborate among large and small teams.
+
+Although there exist many other verison control software, we will
+focus on [Git](https://git-scm.com/) and
+[GitHub](https://github.com/), and these two are widely used.
+
+## Automated version control
+
+Version control records each change (addition, deletion or
+modification) that is made to a document, thus allowing to rewind back
+to any version of the document since its creation. These recorded
+changes can originate from different users that have made independent
+changes to the same document.
+
+If two users modify the *same* part of the document at the *same* time
+on their respective computers, a **conflict** will occur, that can't
+be automatically merged by the software (that can't decide whose
+changes should be kept and whose should be discarded), and would thus
+have to be resolved by hand. I all other cases, changes are recorded
+and managed automatically by the version control software.
+
+In addition to the actual changes to the file(s), the version control
+software also records metadata about the changes, such as who did the
+changes and when they were done.
+
+### Track changes
+
+Editors such as Microsoft Word, Google docs or LibreOffice allow to
+record [track
+changes](https://support.office.com/en-us/article/Track-changes-in-Word-197ba630-0f5f-4a8e-9a77-3712475e806a),
+[version
+history](https://support.google.com/docs/answer/190843?hl=en), or
+[recording and displaying
+changes](https://help.libreoffice.org/Common/Recording_and_Displaying_Changes)
+respectively. These allow users to highlight suggested changes in a
+document that the main author/reviewer then accepts or rejects. These
+are not the same as automatic version control:
+
+- Track changes can't be dont in parallel on the same document, unless
+  a user is connected to an on-line version of the editor (such as
+  Google docs or Microsoft Office 365).
+- Once a track change is accepted or rejected, it isn't possible to
+  return to previous version. Google docs' version history does allow
+  this.
+- Track changes are only applicable to their respective formats, and
+  not to code files, Rmd documents, or other text-based files.
+- Track changes work on a single file, while version control records
+  changes in all files of a project.
+- When editing code, it is essential to keep a valid source code file
+  and functioning versions of the code, which in turn isn't possible
+  with track changes.
+
+Version control is like an unlimited undo feature that works on many
+files at a time, and allows to rewind back to any version of a data
+analysis or software project. In additiona, version control is
+designed for several people to work in parallel on the same set of
+files.
+
+## Introduction to Git and GitHub
+
+Git is the automated version control software that we will be
+using. GitHub is an web interface to Git that allows to share a
+version control project over the internet, facilitates some operations
+to work collaboratively on-line and enables discussions
+(i.e. issues). Let's start by explaining some fundamental Git
+concepts.
+
+### Git
+
+In Git, the directory that contains all the files that need to be
+tracked/version controlled is called a *repository*. This would be
+equivalent to a RStudio project that one sets up before starting a new
+analysis. And as a matter of fact, later, we will use Git to version
+control an RStudio project.
+
+When starting a new project that needs to be version controlled, the
+(typically) local directory needs to be *initiated* to use Git. Then
+individual files in that working directory can be *added* to the Git
+repository, so that Git knows that these will need to be version
+controlled. Files that are in the working directory, but haven't been
+added to the Git repository will not be tracked. Once added, files
+aren't yet under version control, they a prepared (or *staged*) to be
+*committed*.
+
+Similarly, when a file that is under verison control is modified, Git
+recognises that the file has been modified, but doesn't record
+anything yet. That modified version of the file also needs to be
+*added*. Once added, modified files are *staged* to be *committed*.
+
+The collection of one or multiple files (whether new or modified) that
+are *staged* (or in the *staging area*) are called the
+*changeset*. All these files can now be effectively *committed*,
+i.e. that all the changes, who made them, and when they were added,
+are recorded and added to the version control.
+
+Note that Git doesn't not record the complete file at each
+modification, but only the differences between each file. Knowing the
+difference between the current and previous states of a file is enough
+to reconstruct the previous version(s).
+
+The same process applies for file deletion: delete a file, add it to
+the staging are (these can be done in one step), and commit the
+changes.
+
+### GitHub
+
+What we have seen so far all happens on a local computer. But to be
+able to work as a team, the Git repositry needs to be accessible to
+others, and GitHub allows this.
+
+The repository that we created above is a *local* repository, as it
+lives on a user's local computer. Repositories can also live
+elsewhere, on another user's computer, or a server; such a repository
+are called a *remote* repository.
+
+Let's now start from an exisiting repository on GitHub. Creating a
+local copy of that repository and its content is done by an operation
+called *cloning*. Different users can of course the same remote. At
+the time of cloning, the content of the local and remote repositories
+are identical.
+
+
+
+
+
+
+
+
+
+
+
+Understand the theoretical concepts of using Git and GitHub: repo (local and
+remote), pull, push, commit, clone, conflicts, issues, pull request (which
+prevents conflicts). Explain with a concept map
+
+
+## Getting started
 
 
 `r msmbstyle::question_begin()`
 
-1. Create an account on [GitHub](https://github.com/). Choose your username 
+1. Create an account on [GitHub](https://github.com/). Choose your username
 wisely as you might want to reuse it later and will have to share it.
 **Should we ask them to share it on moodle or somewhere for the next exercise ?**
 
@@ -34,8 +171,8 @@ You have now been added to the WSBIM2122_GitHub_training repository.
 
 1. Reply to the first issue to verify that you're able to access the repo.
 
-2. Create a new issue where you make a link to a file or a specific line of a 
-file and assign it to yourself. 
+2. Create a new issue where you make a link to a file or a specific line of a
+file and assign it to yourself.
 
 3. Close that issue to mark it as done.
 
@@ -44,53 +181,53 @@ file and assign it to yourself.
 
 ## Git and RStudio
 
-It is possible to use Git through the RStudio interface to manage everything 
-that is on a repository. This is useful if you're working mainly with R and 
-want to use Git version control but also if you want to do collaborative work. 
-The RStudio interface then allows a click-button way of using git that can be 
-easier than the traditional command line. 
+It is possible to use Git through the RStudio interface to manage everything
+that is on a repository. This is useful if you're working mainly with R and
+want to use Git version control but also if you want to do collaborative work.
+The RStudio interface then allows a click-button way of using git that can be
+easier than the traditional command line.
 
-This section of the course is based on the *Happy Git and GitHub for the useR* 
+This section of the course is based on the *Happy Git and GitHub for the useR*
 [tutorial](https://happygitwithr.com/) by Jennifer Bryan.
 
 ### Install Git
 
 Git needs to be install on your computer so RStudio can call it, or to use it
-through the command line. Installation is different depending on the operating 
+through the command line. Installation is different depending on the operating
 system of your computer.
 
 - **Windows users**
 
-The easiest way is to install [Git for Windows](https://gitforwindows.org/), 
-also called "Git bash". This allows to get Git but also a Bash shell that is 
-useful to venture outside of R/RStudio. 
+The easiest way is to install [Git for Windows](https://gitforwindows.org/),
+also called "Git bash". This allows to get Git but also a Bash shell that is
+useful to venture outside of R/RStudio.
 
 When installing Git for Windows, use the conventional location as it is going to
-help other programs to find Git. RStudio prefers for Git to be installed in 
-"C:/Program Files". Also, when asked about “Adjusting your PATH environment”, 
+help other programs to find Git. RStudio prefers for Git to be installed in
+"C:/Program Files". Also, when asked about “Adjusting your PATH environment”,
 select “Git from the command line and also from 3rd-party software”. Otherwise,
 use the defaults parameters.
 
 
 - **macOS users**
 
-On macOS, Git can be installed directly from the shell using this command : 
+On macOS, Git can be installed directly from the shell using this command :
 
 ```{bash}
 git config
 ```
 
-This will open an offer to install developer command line tools, accept the 
+This will open an offer to install developer command line tools, accept the
 offer and click on "Install".
 
 This might have to be redone after upgrading macOS or the RStudio Git pane can
-disappear from a system where it was previously working. 
+disappear from a system where it was previously working.
 
 ### Connect RStudio to your GitHub repo
 
 To connect RStudio to a GitHub repository, a personal access token (PAT) is needed.
-This will act as an identifier for a specific GitHub user, along with the 
-authorization the user has. You can thus NOT use your GitHub password as a 
+This will act as an identifier for a specific GitHub user, along with the
+authorization the user has. You can thus NOT use your GitHub password as a
 way to connect to your repository using RStudio.
 
 A PAT can be created on GitHub, in *settings > Developer Settings > Personal*
@@ -100,38 +237,38 @@ Click on *Generate token (classic)* and configure you're token. You can configur
 - An expiration date, after that date the PAT won't work anymore. GitHub security
 advises for 30 days but you can configure it to no expiration if you see fit. We
 advise to put the expiration date to at least the end of the semester, in case
-you want to use it for your projects. 
-- What this PAT allows to do, it is recommended to select repo, user, gist and 
+you want to use it for your projects.
+- What this PAT allows to do, it is recommended to select repo, user, gist and
 workflow.
 
 Once you've generated the token, it will appear. Be careful, it is the only time
 you'll be able to see this PAT so it is advised to copy it somewhere to store it.
 Still keep in mind, this PAT is a password that allows you to modify your work so
-avoid putting it somewhere public. 
+avoid putting it somewhere public.
 
 Once a PAT has been created, you can clone any GitHub repository on your
 local computer using RStudio. The easiest way of working with GitHub and RStudio
-is to have a GitHub repository first. The only thing needed from GitHub is the 
-cloning https address of your repo. To get it, go the repo page, click the big 
+is to have a GitHub repository first. The only thing needed from GitHub is the
+cloning https address of your repo. To get it, go the repo page, click the big
 green button that says “<> Code” and copy the HTTPS URL address.
 
-To clone your GitHub repo on your computer, open RStudio and create a new 
-project. You'll then be able to chose to create a Version Control project and 
+To clone your GitHub repo on your computer, open RStudio and create a new
+project. You'll then be able to chose to create a Version Control project and
 choose Git. Then you just need to paste the HTTPS URL of your GitHub repo and it
 will be cloned as an R project.
 
 The project will open and a new Git tab will appear in the "environment" pane of
 RStudio. This is where you'll be able to manage all things Git related. A file
-appears there once it has been added or modified from the GitHub version. Once 
+appears there once it has been added or modified from the GitHub version. Once
 a file is modified, you can click on "Diff" to open a new window that will show
-you what has been changed in the selected file. You can then check the staged 
-box, write a commit message and commit these changes. You then click push to 
-send all that to GitHub. That's when you'll be asked to give your username and 
-PAT. RStudio locally tends to remember the PAT so you shouldn't have to put it 
-again. 
+you what has been changed in the selected file. You can then check the staged
+box, write a commit message and commit these changes. You then click push to
+send all that to GitHub. That's when you'll be asked to give your username and
+PAT. RStudio locally tends to remember the PAT so you shouldn't have to put it
+again.
 
 Note : If RStudio doesn't appear to find Git on your computer, go to *Tools > Global*
-*Options > Git/SVN* and make sure that the Git executable points to where your 
+*Options > Git/SVN* and make sure that the Git executable points to where your
 Git executable is located on your computer.
 
 You might also have seen a `.gitignore` file. This is a text file containing the
@@ -148,7 +285,7 @@ all the changes that have been done to the repo.
 
 2. Create a Rmd file locally on RStudio then stage, commit and push it.
 
-3. Modify that Rmd and knit it. When commiting, have a look at how the 
+3. Modify that Rmd and knit it. When commiting, have a look at how the
 modification are showed to you. Push it on GitHub and go see the compiled result
 online. Also have a look at the commit online.
 
@@ -165,7 +302,7 @@ the command line. Here is how to do it :
 - Clone the repo locally.
 
 ```{bash}
-git clone url 
+git clone url
 ```
 
 - Have a look at the files and what is different from the GitHub version.
@@ -193,31 +330,60 @@ git push
 git pull
 ```
 
-Note : For windows users, know that by installing git for windows, you've also 
-installed git bash, a terminal that can be used to use Git through the command 
+Note : For windows users, know that by installing git for windows, you've also
+installed git bash, a terminal that can be used to use Git through the command
 line. You can use it in the terminal pane of RStudio as long as you've configured
 it correctly by selecting "Git Bash" in *Tools > Global Options > Terminal > New*
 *terminals open with*
 
 ## Troubleshooting
 
-Remind you of good practice: coordinate your work so that only one of you is 
+Remind you of good practice: coordinate your work so that only one of you is
 working on the same thing, always pull before commiting, pull/push regularly,
-work on different files. 
+work on different files.
 
 Cancel commit when forgot to pull before :	git reset --soft HEAD~1
 
-Exercise with modification on Github and Rstudio and have to resolve it (check
+Exercise with modification on GitHub and Rstudio and have to resolve it (check
 errors with RStudio !).
 
 Demonstration of pull requests as another useful concept.
 
 ## WSBIM2122 Project
 
-How are they going to be able to use this for their project: we're going to 
-create 4 private repos to which we'll add them and we'll put a README file with 
+How are they going to be able to use this for their project: we're going to
+create 4 private repos to which we'll add them and we'll put a README file with
 the experimental design and a data file with the data.
 
-## Reference
+## Glossary and references
 
-https://happygitwithr.com/ 
+This glossary is based on the Carpentry's [Git novice lesson
+glossary](https://swcarpentry.github.io/git-novice/reference.html#glossary).
+
+
+- **changeset**: a group of changes to one or more files that are or
+  will be added to a single commit in a version control repository.
+
+- **clone**: a local copy of a remote repository. Both local and
+  remote repositories know about each other and can thus be kept in
+  sync. The action is called cloning.
+
+- **commit**: to record the current state of a set of files (a
+  changeset) in a version control repository. As a noun, the result of
+  committing, i.e. a recorded changeset in a repository. If a commit
+  contains changes to multiple files, all of the changes are recorded
+  together.
+
+- **remote**: a version control repository, typically located on
+  another computer/sever, connected to another (local), in such way
+  that both can be kept in sync exchanging commits.
+
+- **repository**: a storage area (typically a directory) where a
+  version control system stores the full history of *commits*
+  (changes) of a project and information about who changed what and
+  when.
+
+References
+
+- *Happy Git and GitHub for the useR*, https://happygitwithr.com/
+- *Version Control with Git*, https://swcarpentry.github.io/git-novice
