@@ -709,12 +709,12 @@ adjusted p-value above) and compute a new GSEA score.</p>
 <pre><code>## DataFrame with 6 rows and 4 columns
 ##                Cell        Type Condition sizeFactor
 ##         &lt;character&gt; &lt;character&gt;  &lt;factor&gt;  &lt;numeric&gt;
-## sample1       Cell1  Epithelial      mock   0.726883
-## sample2       Cell1  Epithelial      mock   1.308664
-## sample3       Cell1  Epithelial      KD     1.077368
-## sample4       Cell1  Epithelial      KD     0.966025
-## sample5       Cell1  Epithelial      KD     1.042111
-## sample6       Cell1  Epithelial      mock   1.012664</code></pre>
+## sample1       Cell1  Epithelial      KD     0.726883
+## sample2       Cell1  Epithelial      KD     1.308664
+## sample3       Cell1  Epithelial      mock   1.077368
+## sample4       Cell1  Epithelial      mock   0.966025
+## sample5       Cell1  Epithelial      mock   1.042111
+## sample6       Cell1  Epithelial      KD     1.012664</code></pre>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="sec-gsea.html#cb292-1" tabindex="-1"></a>ensembl_to_geneName <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">ENSEMBL =</span> <span class="fu">rownames</span>(dds)) <span class="sc">%&gt;%</span></span>
 <span id="cb292-2"><a href="sec-gsea.html#cb292-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gene =</span> AnnotationDbi<span class="sc">::</span><span class="fu">mapIds</span>(org.Hs.eg.db, ENSEMBL, <span class="st">"SYMBOL"</span>,</span>
 <span id="cb292-3"><a href="sec-gsea.html#cb292-3" tabindex="-1"></a>                                      <span class="st">"ENSEMBL"</span>)) <span class="sc">%&gt;%</span></span>

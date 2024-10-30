@@ -74,9 +74,8 @@ are not the same as automatic version control:
 
 Version control is like an unlimited undo feature that works on many
 files at a time, and allows to rewind back to any version of a data
-analysis or software project. In addition, a version control is
-designed for several people to work in parallel on the same set of
-files.
+analysis or software project. In addition, version control is designed
+for several people to work in parallel on the same set of files.
 
 ## Introduction to Git and GitHub
 
@@ -160,7 +159,7 @@ are called a *remote* repositories.
 
 Let's now start from an exisiting repository on GitHub. Creating a
 local copy of that repository and its content is done by an operation
-called *cloning*. Different users can of course clone the same remote. 
+called *cloning*. Different users can of course clone the same remote.
 At the time of cloning, the content of the local and remote repositories
 are identical.
 

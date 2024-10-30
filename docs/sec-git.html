@@ -229,10 +229,10 @@ Git</a>.</p>
 <h2>
 <span class="header-section-number">11.1</span> Motivation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('motivation')" onmouseout="reset_tooltip('motivation-tooltip')"><span class="tooltiptext" id="motivation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>In the past, students have reported on the difficulty of collaborative
+<p>In the past, students have reported the difficulty of collaborative
 work on R code and Rmd files. Each student work with RStudio on their
 local computer, and share the code, report and data files on shared
-drive and/or send updates by email. Such a situaton my lead to a well
+drive and/or send updates by email. Such a situaton may lead to a well
 known situation, nicely caught by the ‘notFinal.doc’ PhD Comic:</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:notFinal"></span>
@@ -262,7 +262,7 @@ changes to the same document.</p>
 on their respective computers, a <strong>conflict</strong> will occur, that can’t
 be automatically merged by the software (that can’t decide whose
 changes should be kept and whose should be discarded), and would thus
-have to be resolved by hand. I all other cases, changes are recorded
+have to be resolved by hand. In all other cases, changes are recorded
 and managed automatically by the version control software.</p>
 <p>In addition to the actual changes to the file(s), the version control
 software also records metadata about the changes, such as who did the
@@ -281,7 +281,7 @@ respectively. These allow users to highlight suggested changes in a
 document that the main author/reviewer then accepts or rejects. These
 are not the same as automatic version control:</p>
 <ul>
-<li>Track changes can’t be dont in parallel on the same document, unless
+<li>Track changes can’t be done in parallel on the same document, unless
 a user is connected to an on-line version of the editor (such as
 Google docs or Microsoft Office 365).</li>
 <li>Once a track change is accepted or rejected, it isn’t possible to
@@ -297,9 +297,8 @@ with track changes.</li>
 </ul>
 <p>Version control is like an unlimited undo feature that works on many
 files at a time, and allows to rewind back to any version of a data
-analysis or software project. In additiona, version control is
-designed for several people to work in parallel on the same set of
-files.</p>
+analysis or software project. In addition, version control is designed
+for several people to work in parallel on the same set of files.</p>
 </div>
 </div>
 <div id="introduction-to-git-and-github" class="section level2" number="11.3">
@@ -336,7 +335,7 @@ Figure 11.2: Version control with Git: creating a new repository.
 </p>
 <img src="figs/git1.png" alt="Version control with Git: creating a new repository." width="100%">
 </div>
-<p>Similarly, when a file that is under verison control is modified, Git
+<p>Similarly, when a file that is under version control is modified, Git
 recognises that the file has been modified, but doesn’t record
 anything yet. That modified version of the file also needs to be
 <em>added</em>. Once added, modified files are <em>staged</em> to be <em>committed</em>.</p>
@@ -382,16 +381,16 @@ file.</p>
 <h3>GitHub<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('github')" onmouseout="reset_tooltip('github-tooltip')"><span class="tooltiptext" id="github-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>What we have seen so far all happens on a local computer. But to be
-able to work as a team, the Git repositry needs to be accessible to
+able to work as a team, the Git repository needs to be accessible to
 others, and GitHub allows this.</p>
 <p>The repository that we created above is a <em>local</em> repository, as it
 lives on a user’s local computer. Repositories can also live
-elsewhere, on another user’s computer, or a server; such a repository
-are called a <em>remote</em> repository.</p>
+elsewhere, on another user’s computer, or a server; such a repositories
+are called a <em>remote</em> repositories.</p>
 <p>Let’s now start from an exisiting repository on GitHub. Creating a
 local copy of that repository and its content is done by an operation
-called <em>cloning</em>. Different users can of course the same remote. At
-the time of cloning, the content of the local and remote repositories
+called <em>cloning</em>. Different users can of course clone the same remote.
+At the time of cloning, the content of the local and remote repositories
 are identical.</p>
 <p>The creation, modification and deletion of files is as described
 above: the user interacts with the files in their working directory
@@ -683,12 +682,9 @@ coordinate work by keep local and remote repositories in sync:</p>
 <li>The easiest way to avoid conflicts is to always be in sync with the
 remote repository. To do so, always pull the latest changes before
 starting to work on a project.</li>
-<li>The easiest way to avoid conflicts is to help other always be in
-sync with the remote repository. To do so, regularly push your
-changes to the remote, so that others can pull them.</li>
 </ul>
 <p>To further avoid conflicts, try to modularise your project by
-splitting the work into multiple independement files. For an Rmd
+splitting the work into multiple independent files. For an Rmd
 project:
 - the code for new sections could initially be written in separate
 code files so as to avoid breaking the compilation of the Rmd file
