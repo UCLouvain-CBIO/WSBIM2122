@@ -102,7 +102,8 @@ repository, so that Git knows that these will need to be version
 controlled. Files that are in the working directory, but haven't been
 added to the Git repository will not be tracked. Once added, files
 aren't yet under version control, they a prepared (or *staged*) to be
-*committed*.
+*committed*. It's only upon committing that changes get versioned
+(recorded).
 
 ```{r git1, fig.cap="Version control with Git: creating a new repository.", echo=FALSE, purl=FALSE, out.width='100%', fig.align='center'}
 knitr::include_graphics("figs/git1.png")
@@ -210,8 +211,6 @@ Alice and Bastien
   and then push again.
 - Alice can not pull to retrieve Bastien's changes from the remote.
 
-
-<!-- - Pull requests? -->
 
 ## Getting started
 
@@ -488,7 +487,9 @@ git reset --soft HEAD~1
 
 This is only feasible on the command line.
 
-## Pull requests
+## Other Git/GitHub features of interest
+
+### Pull requests {-}
 
 There's one last operation that GitHub facilitates, which is the *pull
 request*. The use cases that we have seen above assume that all users
@@ -514,6 +515,8 @@ repository.
   reviewed by other team members. Using PRs within a team is useful so
   as to keep everybody informed about the changes different members
   do.
+
+### Branches {-}
 
 ## Glossary and references
 
