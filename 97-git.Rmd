@@ -6,10 +6,10 @@ Git](https://swcarpentry.github.io/git-novice).
 
 ## Motivation
 
-In the past, students have reported on the difficulty of collaborative
+In the past, students have reported the difficulty of collaborative
 work on R code and Rmd files. Each student work with RStudio on their
 local computer, and share the code, report and data files on shared
-drive and/or send updates by email. Such a situaton my lead to a well
+drive and/or send updates by email. Such a situaton may lead to a well
 known situation, nicely caught by the 'notFinal.doc' PhD Comic:
 
 
@@ -38,7 +38,7 @@ If two users modify the *same* part of the document at the *same* time
 on their respective computers, a **conflict** will occur, that can't
 be automatically merged by the software (that can't decide whose
 changes should be kept and whose should be discarded), and would thus
-have to be resolved by hand. I all other cases, changes are recorded
+have to be resolved by hand. In all other cases, changes are recorded
 and managed automatically by the version control software.
 
 In addition to the actual changes to the file(s), the version control
@@ -58,7 +58,7 @@ respectively. These allow users to highlight suggested changes in a
 document that the main author/reviewer then accepts or rejects. These
 are not the same as automatic version control:
 
-- Track changes can't be dont in parallel on the same document, unless
+- Track changes can't be done in parallel on the same document, unless
   a user is connected to an on-line version of the editor (such as
   Google docs or Microsoft Office 365).
 - Once a track change is accepted or rejected, it isn't possible to
@@ -74,7 +74,7 @@ are not the same as automatic version control:
 
 Version control is like an unlimited undo feature that works on many
 files at a time, and allows to rewind back to any version of a data
-analysis or software project. In additiona, version control is
+analysis or software project. In addition, a version control is
 designed for several people to work in parallel on the same set of
 files.
 
@@ -109,7 +109,7 @@ aren't yet under version control, they a prepared (or *staged*) to be
 knitr::include_graphics("figs/git1.png")
 ```
 
-Similarly, when a file that is under verison control is modified, Git
+Similarly, when a file that is under version control is modified, Git
 recognises that the file has been modified, but doesn't record
 anything yet. That modified version of the file also needs to be
 *added*. Once added, modified files are *staged* to be *committed*.
@@ -150,18 +150,18 @@ file.
 ### GitHub {-}
 
 What we have seen so far all happens on a local computer. But to be
-able to work as a team, the Git repositry needs to be accessible to
+able to work as a team, the Git repository needs to be accessible to
 others, and GitHub allows this.
 
 The repository that we created above is a *local* repository, as it
 lives on a user's local computer. Repositories can also live
-elsewhere, on another user's computer, or a server; such a repository
-are called a *remote* repository.
+elsewhere, on another user's computer, or a server; such a repositories
+are called a *remote* repositories.
 
 Let's now start from an exisiting repository on GitHub. Creating a
 local copy of that repository and its content is done by an operation
-called *cloning*. Different users can of course the same remote. At
-the time of cloning, the content of the local and remote repositories
+called *cloning*. Different users can of course clone the same remote. 
+At the time of cloning, the content of the local and remote repositories
 are identical.
 
 The creation, modification and deletion of files is as described
@@ -461,12 +461,9 @@ coordinate work by keep local and remote repositories in sync:
 - The easiest way to avoid conflicts is to always be in sync with the
   remote repository. To do so, always pull the latest changes before
   starting to work on a project.
-- The easiest way to avoid conflicts is to help other always be in
-  sync with the remote repository. To do so, regularly push your
-  changes to the remote, so that others can pull them.
 
 To further avoid conflicts, try to modularise your project by
-splitting the work into multiple independement files. For an Rmd
+splitting the work into multiple independent files. For an Rmd
 project:
 - the code for new sections could initially be written in separate
   code files so as to avoid breaking the compilation of the Rmd file
