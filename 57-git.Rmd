@@ -9,7 +9,11 @@ local computer, and share the code, report and data files on shared
 drive and/or send updates by email. Such a situaton my lead to a well
 known situation, nicely caught by the 'notFinal.doc' PhD Comic:
 
-[!notFinal.doc](https://phdcomics.com/comics/archive.php?comicid=1531)
+
+```{r notFinal, fig.cap="The 'notFinal.doc' [PhD Comic](https://phdcomics.com/comics/archive.php?comicid=1531), describing the very real struggle with trying to handle version with file names.", echo=FALSE, purl=FALSE, out.width='100%', fig.align='center'}
+knitr::include_graphics("figs/phd101212s.png")
+```
+
 
 
 The goal of this chapter is to introduce students to 'version
@@ -40,7 +44,7 @@ In addition to the actual changes to the file(s), the version control
 software also records metadata about the changes, such as who did the
 changes and when they were done.
 
-### Track changes
+### Track changes {-}
 
 Editors such as Microsoft Word, Google docs or LibreOffice allow to
 record [track
@@ -82,7 +86,7 @@ to work collaboratively on-line and enables discussions
 (i.e. issues). Let's start by explaining some fundamental Git
 concepts.
 
-### Git
+### Git {-}
 
 In Git, the directory that contains all the files that need to be
 tracked/version controlled is called a *repository*. This would be
@@ -123,15 +127,17 @@ changes.
 
 Can you figure out why it is important to stage multiple files and
 commit all together, as opposed to committing multiple single files
-one by one? Imagine that you are working on a project containing one
-Rmd report and two R code files, that the report needs to source (see
+one by one?
+
+**Hint**: Imagine that you are working on a project containing one Rmd
+report and two R code files, that the report needs to source (see
 `?source` if you don't know what sourcing is) to be able to compile,
 and consider that two code changes need to be done, one in each R code
 file.
 
 `r msmbstyle::question_end()`
 
-### GitHub
+### GitHub {-}
 
 What we have seen so far all happens on a local computer. But to be
 able to work as a team, the Git repositry needs to be accessible to
@@ -148,29 +154,58 @@ called *cloning*. Different users can of course the same remote. At
 the time of cloning, the content of the local and remote repositories
 are identical.
 
+The creation, modification and deletion of files is as described
+above: the user interacts with the files in their working directory
+and commits the changeset to their local repository. The changeset can
+be synchronised with the remote repository by *pushing* the local
+changes. Another user, who has previously cloned the remote repository
+can *pull* these latest changes to their local repository.
+
+The synchronisation of local and remote changes while pulling and
+pushing are handled automatically by Git, except in case of
+conflict. A conflict happens when two users change the same part of a
+file:
+
+- Alice and Bob pull the latest changes and modify the empty `file1`
+  by adding their name at the beginning of the file. Alice's file
+  looks like this in her local repository:
+
+```
+Alice
+```
+
+  And Bob files looks like this in his local repository:
+
+```
+Bob
+```
+
+- Alice commits locally and pushes to the remote repository. `file1`
+  in the remote and in Alice's local repo are now identical, and Git
+  recorded that the change was adding a new line containing `Alice`.
+- Bob now also tries to push but gets an error because he pushes a
+  file that contains a different first line that would override
+  Alice's commit. His update are rejected because the remote contains
+  work that he does not have locally. If he wants to integrate the
+  remote changes, he first needs to pull these changes, *resolve* the
+  conflicting modifications:
+
+```
+Alice and Bob
+```
+  and then push again.
+- Alice can not pull to retrieve Bob's changes from the remote.
 
 
-
-
-
-
-
-
-
-
-Understand the theoretical concepts of using Git and GitHub: repo (local and
-remote), pull, push, commit, clone, conflicts, issues, pull request (which
-prevents conflicts). Explain with a concept map
-
+<!-- - Pull requests? -->
 
 ## Getting started
 
-
 `r msmbstyle::question_begin()`
 
-1. Create an account on [GitHub](https://github.com/). Choose your username
-wisely as you might want to reuse it later and will have to share it.
-**Should we ask them to share it on moodle or somewhere for the next exercise ?**
+1. Create an account on [GitHub](https://github.com/). Choose your
+username wisely as you might want to reuse it later and will have to
+share it.
 
 2. Create your own repository and open an issue on it.
 
@@ -178,128 +213,153 @@ wisely as you might want to reuse it later and will have to share it.
 
 `r msmbstyle::question_begin()`
 
-You have now been added to the WSBIM2122_GitHub_training repository.
-**We need to add 1 or 2 simple files to the repo**
+You have now been added to the
+[WSBIM2122-GitHub-training](https://github.com/UCLouvain-CBIO/WSBIM2122-GitHub-training)
+repository.  **We need to add 1 or 2 simple files to the repo**
 
-1. Reply to the first issue to verify that you're able to access the repo.
+1. Reply to the first issue to verify that you're able to access the
+   repo.
 
-2. Create a new issue where you make a link to a file or a specific line of a
-file and assign it to yourself.
+2. Create a new issue where you make a link to a file or a specific
+   line of a file and assign it to yourself.
 
 3. Close that issue to mark it as done.
 
 `r msmbstyle::question_end()`
 
-
 ## Git and RStudio
 
-It is possible to use Git through the RStudio interface to manage everything
-that is on a repository. This is useful if you're working mainly with R and
-want to use Git version control but also if you want to do collaborative work.
-The RStudio interface then allows a click-button way of using git that can be
-easier than the traditional command line.
+The original interface to Git was using the command line (see
+below). It is also possible to use Git through the RStudio interface
+to manage everything that is on a repository. This is useful if you're
+working mainly with R and want to use Git version control but also if
+you want to do collaborative work.  The RStudio interface then allows
+a click-button way of using git that can be easier than the
+traditional command line.
 
-This section of the course is based on the *Happy Git and GitHub for the useR*
-[tutorial](https://happygitwithr.com/) by Jennifer Bryan.
+This section of the course is based on the *Happy Git and GitHub for
+the useR* [tutorial](https://happygitwithr.com/) by Jennifer Bryan.
 
 ### Install Git
 
-Git needs to be install on your computer so RStudio can call it, or to use it
-through the command line. Installation is different depending on the operating
-system of your computer.
+Git needs to be install first on your computer for RStudio to use
+it. Installation is different depending on the operating system of
+your computer.
 
-- **Windows users**
+#### Windows users {-}
 
-The easiest way is to install [Git for Windows](https://gitforwindows.org/),
-also called "Git bash". This allows to get Git but also a Bash shell that is
-useful to venture outside of R/RStudio.
+The easiest way is to install [Git for
+Windows](https://gitforwindows.org/), also called "Git bash". This
+allows to get Git but also a Bash shell that is useful to venture
+outside of R/RStudio.
 
-When installing Git for Windows, use the conventional location as it is going to
-help other programs to find Git. RStudio prefers for Git to be installed in
-"C:/Program Files". Also, when asked about “Adjusting your PATH environment”,
-select “Git from the command line and also from 3rd-party software”. Otherwise,
-use the defaults parameters.
+When installing Git for Windows, use the conventional location as it
+is going to help other programs to find Git. RStudio prefers for Git
+to be installed in "C:/Program Files". Also, when asked about
+“Adjusting your PATH environment”, select “Git from the command line
+and also from 3rd-party software”. Otherwise, use the defaults
+parameters.
 
 
-- **macOS users**
+#### macOS users {-}
 
-On macOS, Git can be installed directly from the shell using this command :
+On macOS, Git can be installed directly from the shell using this
+command :
 
-```{bash}
+```
 git config
 ```
 
-This will open an offer to install developer command line tools, accept the
-offer and click on "Install".
+This will open an offer to install developer command line tools,
+accept the offer and click on "Install".
 
-This might have to be redone after upgrading macOS or the RStudio Git pane can
-disappear from a system where it was previously working.
+This might have to be redone after upgrading macOS or the RStudio Git
+pane can disappear from a system where it was previously working.
+
+#### GNU/Linux users {-}
+
+Use your distribution package manager. If you use Debian or Ubuntu,
+the following command will install `git`:
+
+```
+sudo apt install git
+```
 
 ### Connect RStudio to your GitHub repo
 
-To connect RStudio to a GitHub repository, a personal access token (PAT) is needed.
-This will act as an identifier for a specific GitHub user, along with the
-authorization the user has. You can thus NOT use your GitHub password as a
-way to connect to your repository using RStudio.
+To connect RStudio to a GitHub repository, a personal access token
+(PAT) is needed.  This will act as an identifier for a specific GitHub
+user, along with the authorization the user has. You can thus NOT use
+your GitHub password as a way to connect to your repository using
+RStudio.
 
-A PAT can be created on GitHub, in *settings > Developer Settings > Personal*
-*access tokens > Tokens (classic)* or directly [here](https://github.com/settings/tokens).
-Click on *Generate token (classic)* and configure you're token. You can configure :
+A PAT can be created on GitHub, in *settings > Developer Settings >
+Personal* *access tokens > Tokens (classic)* or directly
+[here](https://github.com/settings/tokens).  Click on *Generate token
+(classic)* and configure you're token. You can configure :
+
 - A name, that generally describes what you're using this PAT for.
-- An expiration date, after that date the PAT won't work anymore. GitHub security
-advises for 30 days but you can configure it to no expiration if you see fit. We
-advise to put the expiration date to at least the end of the semester, in case
-you want to use it for your projects.
-- What this PAT allows to do, it is recommended to select repo, user, gist and
-workflow.
+- An expiration date, after that date the PAT won't work
+  anymore. GitHub security advises for 30 days but you can configure
+  it to no expiration if you see fit. We advise to put the expiration
+  date to at least the end of the semester, in case you want to use it
+  for your projects.
+- What this PAT allows to do, it is recommended to select repo, user,
+  gist and workflow.
 
-Once you've generated the token, it will appear. Be careful, it is the only time
-you'll be able to see this PAT so it is advised to copy it somewhere to store it.
-Still keep in mind, this PAT is a password that allows you to modify your work so
-avoid putting it somewhere public.
+Once you've generated the token, it will appear. Be careful, it is the
+only time you'll be able to see this PAT so it is advised to copy it
+somewhere to store it.  Still keep in mind, this PAT is a password
+that allows you to modify your work so avoid putting it somewhere
+public.
 
-Once a PAT has been created, you can clone any GitHub repository on your
-local computer using RStudio. The easiest way of working with GitHub and RStudio
-is to have a GitHub repository first. The only thing needed from GitHub is the
-cloning https address of your repo. To get it, go the repo page, click the big
-green button that says “<> Code” and copy the HTTPS URL address.
+Once a PAT has been created, you can clone any GitHub repository on
+your local computer using RStudio. The easiest way of working with
+GitHub and RStudio is to have a GitHub repository first. The only
+thing needed from GitHub is the cloning https address of your repo. To
+get it, go the repo page, click the big green button that says "<>
+Code" and copy the HTTPS URL address.
 
-To clone your GitHub repo on your computer, open RStudio and create a new
-project. You'll then be able to chose to create a Version Control project and
-choose Git. Then you just need to paste the HTTPS URL of your GitHub repo and it
-will be cloned as an R project.
+To clone your GitHub repo on your computer, open RStudio and create a
+new project. You'll then be able to chose to create a Version Control
+project and choose Git. Then you just need to paste the HTTPS URL of
+your GitHub repo and it will be cloned as an R project.
 
-The project will open and a new Git tab will appear in the "environment" pane of
-RStudio. This is where you'll be able to manage all things Git related. A file
-appears there once it has been added or modified from the GitHub version. Once
-a file is modified, you can click on "Diff" to open a new window that will show
-you what has been changed in the selected file. You can then check the staged
-box, write a commit message and commit these changes. You then click push to
-send all that to GitHub. That's when you'll be asked to give your username and
-PAT. RStudio locally tends to remember the PAT so you shouldn't have to put it
-again.
+The project will open and a new Git tab will appear in the
+"environment" pane of RStudio. This is where you'll be able to manage
+all things Git related. A file appears there once it has been added or
+modified from the GitHub version. Once a file is modified, you can
+click on "Diff" to open a new window that will show you what has been
+changed in the selected file. You can then check the staged box, write
+a commit message and commit these changes. You then click push to send
+all that to GitHub. That's when you'll be asked to give your username
+and PAT. RStudio locally tends to remember the PAT so you shouldn't
+have to put it again.
 
-Note : If RStudio doesn't appear to find Git on your computer, go to *Tools > Global*
-*Options > Git/SVN* and make sure that the Git executable points to where your
-Git executable is located on your computer.
+Note : If RStudio doesn't appear to find Git on your computer, go to
+*Tools > Global* *Options > Git/SVN* and make sure that the Git
+executable points to where your Git executable is located on your
+computer.
 
-You might also have seen a `.gitignore` file. This is a text file containing the
-names of the files that have to be ignored by git and not pushed to GitHub. This
-should usually contain your .Rproj but also all files bigger than 50 Mb as these
-cannot be pushed to GitHub.
+You might also have seen a `.gitignore` file. This is a text file
+containing the names of the files that have to be ignored by git and
+not pushed to GitHub. This should usually contain your .Rproj but also
+all files bigger than 50 Mb as these cannot be pushed to GitHub.
 
-RStudio also allows you to have a look at the commit history, if you want to see
-all the changes that have been done to the repo.
+RStudio also allows you to have a look at the commit history, if you
+want to see all the changes that have been done to the repo.
 
 `r msmbstyle::question_begin()`
 
-1. Connect the repository you created in the previous section using RStudio.
+1. Connect the repository you created in the previous section using
+   RStudio.
 
-2. Create a Rmd file locally on RStudio then stage, commit and push it.
+2. Create a Rmd file locally on RStudio then stage, commit and push
+   it.
 
 3. Modify that Rmd and knit it. When commiting, have a look at how the
-modification are showed to you. Push it on GitHub and go see the compiled result
-online. Also have a look at the commit online.
+   modification are showed to you. Push it on GitHub and go see the
+   compiled result online. Also have a look at the commit online.
 
 4. Modify the readme file on GitHub and pull it locally.
 
@@ -311,61 +371,129 @@ online. Also have a look at the commit online.
 It is still interesting to know that, usually, all these things are done through
 the command line. Here is how to do it :
 
-- Clone the repo locally.
+- Initialise a local repository
 
-```{bash}
+```
+git init
+```
+
+- Clone a remote repository
+
+```
 git clone url
 ```
 
-- Have a look at the files and what is different from the GitHub version.
+- Show the current status of your repository, indicating what files
+  have been modified and haven't been staged yet.
 
-```{bash}
+```
 git status
 ```
 
 - Stage a file for commit.
 
-```{bash}
+```
 git add file
 ```
 
-- Commit the staged changes.
+- Commit the staged changes with a comment.
 
-```{bash}
+```
 git commit -m ‘comment’
 ```
 
-- Push or pull your changes.
+- Push to or pull from a remote repository.
 
-```{bash}
+```
 git push
 git pull
 ```
 
-Note : For windows users, know that by installing git for windows, you've also
-installed git bash, a terminal that can be used to use Git through the command
-line. You can use it in the terminal pane of RStudio as long as you've configured
-it correctly by selecting "Git Bash" in *Tools > Global Options > Terminal > New*
-*terminals open with*
+**Note**: By installing git for windows, Windows users installed *git
+bash*, a terminal that can be used to use Git through the command
+line. You can use it in the terminal pane of RStudio as long as you've
+configured it correctly by selecting "Git Bash" in *Tools > Global
+Options > Terminal > New* *terminals open with*
 
-## Troubleshooting
+## Best practice and troubleshooting
 
-Remind you of good practice: coordinate your work so that only one of you is
-working on the same thing, always pull before commiting, pull/push regularly,
-work on different files.
+- Avoid (Git) conflicts: using Git and Github is mostly a quite
+  sailing on a calm sea. The only little annoying hickup are
+  conflicts. It is best to avoid these by coordinate work.
+- The best way to avoid conflicts is to always be in sync with the
+  remote repository. To do so, always pull the latest changes before
+  starting to work on a project.
+- The best way to avoid conflicts is to help other always be in sync
+  with the remote repository. To do so, regularly push your changes to
+  the remote, so that others can pull them.
+- To further avoid conflicts, try to modularise your project by
+  splitting the work into multiple independement files. For an Rmd
+  project:
+  - the code for new sections could initially be written in separate
+    code files so as to avoid breaking the compilation of the Rmd file
+    when developing the new analysis;
+  - save intermediate data and results so that others can re-use them
+    independently of the whole pipeline.
+- GitHub issues are a useful way to discuss any specific points and
+  centralise coordination in a project.
 
-Cancel commit when forgot to pull before :	git reset --soft HEAD~1
+It is possible to cancel commit if you forgot to pull before working
+with the following command:
 
-Exercise with modification on GitHub and Rstudio and have to resolve it (check
-errors with RStudio !).
+```
+git reset --soft HEAD~1
+```
 
-Demonstration of pull requests as another useful concept.
+This is only feasible on the command line.
 
-## WSBIM2122 Project
+`r msmbstyle::question_begin()`
 
-How are they going to be able to use this for their project: we're going to
-create 4 private repos to which we'll add them and we'll put a README file with
-the experimental design and a data file with the data.
+This exercise will illustrate a merge conflict. To do so, work in
+pairs (called Alice and Bob below).
+
+1. Alice creates a GitHub repository and adds `file1` to the repo, and
+   adds Bob as a collaborator with write access: Settings >
+   Collaborators (in the left panel) > Add people > Search and add a
+   GitHub user.
+
+2. Both Alice and Bob clone to remote repository and add their names
+   to `file1`.
+3. Alices commits her local changes and pushes them to the GitHub
+   repository.
+4. Bob commits his local changes and tries to push them to the GitHub
+   repository.
+5. Bob pulls the latest version from GitHub, and manually fixes
+   conflict in `file1` by manually merging the conflicting lines and
+   adding both names.
+6. Bob commits his local changes and pushes to the remote repository.
+7. Alice pulls the latest version.
+
+`r msmbstyle::question_end()`
+
+There's one last operation that GitHub facilitates, which is the *pull
+request*. The use cases that we have seen above assume that all users
+are part of the project and can thus directly write/push to the remote
+repository.
+
+- It is possible for other GitHub users to contribute to a project
+  without being a member by first forking a GitHub repository, which
+  will create a copy under their account. As an example, Alice could
+  fork `UCLouvain-CBIO/WSBIM2122-GitHub-training` and create
+  `Alice/WSBIM2122-GitHub-training`. GitHub remembers the forking
+  operation and the relation between the two repositories.
+- Alice can now clone `Alice/WSBIM2122-GitHub-training` locally, make
+  any changes she sees fit, and push them back to her remote
+  `Alice/WSBIM2122-GitHub-training`.
+- She could now send a pull request to merge changes from
+  `Alice/WSBIM2122-GitHub-training` back into
+  `UCLouvain-CBIO/WSBIM2122-GitHub-training`. The PR can be inspected
+  and reviewed and merged by a member of the
+  `UCLouvain-CBIO/WSBIM2122-GitHub-training`.
+- Pull requests (of shortened PR) are also useful when multiple
+  members of the same repository want their contributions to be
+  reviewed by other team members. Using PRs within a team is useful so
+  as to keep everybody informed about the changes different members
+  do.
 
 ## Glossary and references
 
@@ -380,11 +508,21 @@ glossary](https://swcarpentry.github.io/git-novice/reference.html#glossary).
   remote repositories know about each other and can thus be kept in
   sync. The action is called cloning.
 
+- **conflict**: a change made by one user of a version control system
+  that is incompatible with changes made by other users. Helping users
+  resolve conflicts is one of version control's major tasks.
+
 - **commit**: to record the current state of a set of files (a
   changeset) in a version control repository. As a noun, the result of
   committing, i.e. a recorded changeset in a repository. If a commit
   contains changes to multiple files, all of the changes are recorded
   together.
+
+- **pull**: action of retrieving changes from a remote repository and
+  merge them into a local repository.
+
+- **push**: action of adding changes from a local repository to a
+  remote repository.
 
 - **remote**: a version control repository, typically located on
   another computer/sever, connected to another (local), in such way
@@ -395,7 +533,16 @@ glossary](https://swcarpentry.github.io/git-novice/reference.html#glossary).
   (changes) of a project and information about who changed what and
   when.
 
-References
+- **resolve**: to eliminate the conflicts between two or more
+  incompatible changes to a file or set of files being managed by a
+  version control system.
+
+- **version control**: a tool for managing changes to a set of
+  files. Each set of changes creates a new commit of the files; the
+  version control system allows users to recover old commits reliably,
+  and helps manage conflicting changes made by different users.
+
+### References
 
 - *Happy Git and GitHub for the useR*, https://happygitwithr.com/
 - *Version Control with Git*, https://swcarpentry.github.io/git-novice
