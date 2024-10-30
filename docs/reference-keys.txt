@@ -155,7 +155,7 @@ automated-version-control
 introduction-to-git-and-github
 getting-started
 git-and-rstudio
-install-git
+sec-install-git
 connect-rstudio-to-your-github-repo
 git-and-command-line
 handling-conflicts

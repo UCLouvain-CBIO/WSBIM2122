@@ -252,7 +252,7 @@ traditional command line.
 This section of the course is based on the *Happy Git and GitHub for
 the useR* [tutorial](https://happygitwithr.com/) by Jennifer Bryan.
 
-### Install Git
+### Install Git {#sec-install-git}
 
 Git needs to be install first on your computer for RStudio to use
 it. Installation is different depending on the operating system of
@@ -524,7 +524,7 @@ default (main) branch below, and a *work* branch. Once the work in the
 *work* branch is completed, its changes can be merged back into the
 *main* branch.
 
-```{r branch, fig.cap="Git branches.", echo=FALSE, purl=FALSE, out.width='100%', fig.align='center'}
+```{r branch, fig.cap="Git branches.", echo=FALSE, purl=FALSE, out.width='60%'}
 knitr::include_graphics("figs/branch.png")
 ```
 
