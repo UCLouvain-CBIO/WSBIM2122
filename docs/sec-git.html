@@ -328,6 +328,13 @@ controlled. Files that are in the working directory, but haven’t been
 added to the Git repository will not be tracked. Once added, files
 aren’t yet under version control, they a prepared (or <em>staged</em>) to be
 <em>committed</em>.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:git1"></span>
+<p class="caption marginnote shownote">
+Figure 11.2: Version control with Git: creating a new repository.
+</p>
+<img src="figs/git1.png" alt="Version control with Git: creating a new repository." width="100%">
+</div>
 <p>Similarly, when a file that is under verison control is modified, Git
 recognises that the file has been modified, but doesn’t record
 anything yet. That modified version of the file also needs to be
@@ -341,6 +348,13 @@ are recorded and added to the version control.</p>
 modification, but only the differences between each file. Knowing the
 difference between the current and previous states of a file is enough
 to reconstruct the previous version(s).</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:git2"></span>
+<p class="caption marginnote shownote">
+Figure 11.3: Version control with Git: modifiying files.
+</p>
+<img src="figs/git2.png" alt="Version control with Git: modifiying files." width="100%">
+</div>
 <p>The same process applies for file deletion: delete a file, add it to
 the staging are (these can be done in one step), and commit the
 changes.</p>
@@ -384,6 +398,13 @@ and commits the changeset to their local repository. The changeset can
 be synchronised with the remote repository by <em>pushing</em> the local
 changes. Another user, who has previously cloned the remote repository
 can <em>pull</em> these latest changes to their local repository.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:git3"></span>
+<p class="caption marginnote shownote">
+Figure 11.4: Version control with GitHub.
+</p>
+<img src="figs/git3.png" alt="Version control with GitHub." width="100%">
+</div>
 <p>The synchronisation of local and remote changes while pulling and
 pushing are handled automatically by Git, except in case of
 conflict. A conflict happens when two users change the same part of a

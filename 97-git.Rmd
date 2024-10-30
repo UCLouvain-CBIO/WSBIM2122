@@ -17,8 +17,6 @@ known situation, nicely caught by the 'notFinal.doc' PhD Comic:
 knitr::include_graphics("figs/phd101212s.png")
 ```
 
-
-
 The goal of this chapter is to introduce students to 'version
 control', used by data scientists, bioinformaticians and programmers
 around to world to keep track of changes in code, Rmd reports, or any
@@ -106,6 +104,10 @@ added to the Git repository will not be tracked. Once added, files
 aren't yet under version control, they a prepared (or *staged*) to be
 *committed*.
 
+```{r git1, fig.cap="Version control with Git: creating a new repository.", echo=FALSE, purl=FALSE, out.width='100%', fig.align='center'}
+knitr::include_graphics("figs/git1.png")
+```
+
 Similarly, when a file that is under verison control is modified, Git
 recognises that the file has been modified, but doesn't record
 anything yet. That modified version of the file also needs to be
@@ -121,6 +123,10 @@ Note that Git doesn't not record the complete file at each
 modification, but only the differences between each file. Knowing the
 difference between the current and previous states of a file is enough
 to reconstruct the previous version(s).
+
+```{r git2, fig.cap="Version control with Git: modifiying files.", echo=FALSE, purl=FALSE, out.width='100%', fig.align='center'}
+knitr::include_graphics("figs/git2.png")
+```
 
 The same process applies for file deletion: delete a file, add it to
 the staging are (these can be done in one step), and commit the
@@ -163,6 +169,11 @@ and commits the changeset to their local repository. The changeset can
 be synchronised with the remote repository by *pushing* the local
 changes. Another user, who has previously cloned the remote repository
 can *pull* these latest changes to their local repository.
+
+```{r git3, fig.cap="Version control with GitHub.", echo=FALSE, purl=FALSE, out.width='100%', fig.align='center'}
+knitr::include_graphics("figs/git3.png")
+```
+
 
 The synchronisation of local and remote changes while pulling and
 pushing are handled automatically by Git, except in case of

@@ -29,6 +29,9 @@ fig:unnamed-chunk-201
 fig:unnamed-chunk-209
 fig:unnamed-chunk-213
 fig:notFinal
+fig:git1
+fig:git2
+fig:git3
 sec-rmd
 knitting-from-within-r
 caching
