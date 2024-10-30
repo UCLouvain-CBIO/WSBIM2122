@@ -1,5 +1,4 @@
-# Collaborating with Git and GitHub {#sec-git}
-
+# Annex: Collaborating with Git and GitHub {#sec-git}
 
 ## Motivation
 

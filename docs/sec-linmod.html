@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2024-10-28" />
+<meta name="date" content="2024-10-30" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -208,7 +208,8 @@ div.csl-indent {
 <a href="sec-prot.html" id="toc-sec-prot"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
 <a href="sec-ccl.html" id="toc-sec-ccl"><span class="toc-section-number">9</span> Conclusions</a>
 <a href="sec-cli.html" id="toc-sec-cli"><span class="toc-section-number">10</span> Annex: the shell</a>
-<a href="sec-info.html" id="toc-sec-info"><span class="toc-section-number">11</span> Course and session information</a>
+<a href="sec-git.html" id="toc-sec-git"><span class="toc-section-number">11</span> Annex: Collaborating with Git and GitHub</a>
+<a href="sec-info.html" id="toc-sec-info"><span class="toc-section-number">12</span> Course and session information</a>
 </div>
 </li>
 </ul>
@@ -617,8 +618,8 @@ opposite responses in the extreme conditions: that the expression of
 some genes will increase in the mutant under dry conditions while they
 will decrease (or change to a lesser extend at least) under humid
 conditions.</p>
-<div class="datatables html-widget html-fill-item" id="htmlwidget-5b77d1fe4e4dd1555a80" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-5b77d1fe4e4dd1555a80">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6,7,8,9,10,11,12],["WT","WT","WT","WT","WT","WT","MT","MT","MT","MT","MT","MT"],["normal","dry","humid","normal","dry","humid","normal","dry","humid","normal","dry","humid"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>sample<\/th>\n      <th>genotype<\/th>\n      <th>condition<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":0},{"name":"sample","targets":0},{"name":"genotype","targets":1},{"name":"condition","targets":2}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Such situation require a new model formula syntax</p>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-7692bcf6f35011a859b4" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-7692bcf6f35011a859b4">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6,7,8,9,10,11,12],["WT","WT","WT","WT","WT","WT","MT","MT","MT","MT","MT","MT"],["normal","dry","humid","normal","dry","humid","normal","dry","humid","normal","dry","humid"]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>sample<\/th>\n      <th>genotype<\/th>\n      <th>condition<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":0},{"name":"sample","targets":0},{"name":"genotype","targets":1},{"name":"condition","targets":2}],"order":[],"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Such situation require a new model formula syntax</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="sec-linmod.html#cb36-1" tabindex="-1"></a><span class="sc">~</span> genotype <span class="sc">*</span> condition</span></code></pre></div>
 <p>which is equivalent to</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="sec-linmod.html#cb37-1" tabindex="-1"></a><span class="sc">~</span> genotype <span class="sc">+</span> condition <span class="sc">+</span> genotype <span class="sc">*</span> condition</span></code></pre></div>
@@ -1084,7 +1085,7 @@ up design and contrast matrices and great preparation to chapter
 <a href="sec-hts.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2024-10-28
+2024-10-30
  using 
 R version 4.4.1 (2024-06-14)
 </p>
