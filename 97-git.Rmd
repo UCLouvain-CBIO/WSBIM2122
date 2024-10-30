@@ -1,5 +1,9 @@
 # Annex: Collaborating with Git and GitHub {#sec-git}
 
+This chapter is based/adapted on content from [Happy Git and GitHub
+for the useR](https://happygitwithr.com/) and [Version Control with
+Git](https://swcarpentry.github.io/git-novice).
+
 ## Motivation
 
 In the past, students have reported on the difficulty of collaborative
