@@ -207,7 +207,7 @@ div.csl-indent {
 <li class="toc"><a href="#git-and-rstudio"> Git and RStudio</a></li>
 <li class="toc"><a href="#git-and-command-line"> Git and command line</a></li>
 <li class="toc"><a href="#handling-conflicts"> Handling conflicts</a></li>
-<li class="toc"><a href="#pull-requests"> Pull requests</a></li>
+<li class="toc"><a href="#other-gitgithub-features-of-interest"> Other Git/GitHub features of interest</a></li>
 <li class="toc"><a href="#glossary-and-references"> Glossary and references</a></li>
 </ul>
 <a href="sec-info.html" id="toc-sec-info"><span class="toc-section-number">12</span> Course and session information</a>
@@ -432,7 +432,6 @@ conflicting modifications:</li>
 <pre><code>Alice and Bastien</code></pre>
 <p>and then push again.
 - Alice can not pull to retrieve Bastien’s changes from the remote.</p>
-<!-- - Pull requests? -->
 </div>
 </div>
 <div id="getting-started" class="section level2" number="11.4">
@@ -703,10 +702,13 @@ with the following command:</p>
 <pre><code>git reset --soft HEAD~1</code></pre>
 <p>This is only feasible on the command line.</p>
 </div>
-<div id="pull-requests" class="section level2" number="11.8">
+<div id="other-gitgithub-features-of-interest" class="section level2" number="11.8">
 <h2>
-<span class="header-section-number">11.8</span> Pull requests<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('pull-requests')" onmouseout="reset_tooltip('pull-requests-tooltip')"><span class="tooltiptext" id="pull-requests-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">11.8</span> Other Git/GitHub features of interest<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('other-gitgithub-features-of-interest')" onmouseout="reset_tooltip('other-gitgithub-features-of-interest-tooltip')"><span class="tooltiptext" id="other-gitgithub-features-of-interest-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
+<div id="pull-requests" class="section level3 unnumbered">
+<h3>Pull requests<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('pull-requests')" onmouseout="reset_tooltip('pull-requests-tooltip')"><span class="tooltiptext" id="pull-requests-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
 <p>There’s one last operation that GitHub facilitates, which is the <em>pull
 request</em>. The use cases that we have seen above assume that all users
 are part of the project and can thus directly write/push to the remote
@@ -732,6 +734,26 @@ reviewed by other team members. Using PRs within a team is useful so
 as to keep everybody informed about the changes different members
 do.</li>
 </ul>
+</div>
+<div id="branches" class="section level3 unnumbered">
+<h3>Branches<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('branches')" onmouseout="reset_tooltip('branches-tooltip')"><span class="tooltiptext" id="branches-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>It is also possible to create entire copies of a repository, and work
+independently on these different copies. These copies are called
+<em>branches</em>. Changes can be done on different branches, such as the
+default (main) branch below, and a <em>work</em> branch. Once the work in the
+<em>work</em> branch is completed, its changes can be merged back into the
+<em>main</em> branch.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:branch"></span>
+<p class="caption marginnote shownote">
+Figure 11.5: Git branches.
+</p>
+<img src="figs/branch.png" alt="Git branches." width="100%">
+</div>
+<p>At this point, if the same lines where modified in the <em>main</em> and
+<em>work</em> branches, conflicts would need to be addressed, as seen above.</p>
+</div>
 </div>
 <div id="glossary-and-references" class="section level2" number="11.9">
 <h2>

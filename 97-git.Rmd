@@ -175,7 +175,6 @@ can *pull* these latest changes to their local repository.
 knitr::include_graphics("figs/git3.png")
 ```
 
-
 The synchronisation of local and remote changes while pulling and
 pushing are handled automatically by Git, except in case of
 conflict. A conflict happens when two users change the same part of a
@@ -517,6 +516,20 @@ repository.
   do.
 
 ### Branches {-}
+
+It is also possible to create entire copies of a repository, and work
+independently on these different copies. These copies are called
+*branches*. Changes can be done on different branches, such as the
+default (main) branch below, and a *work* branch. Once the work in the
+*work* branch is completed, its changes can be merged back into the
+*main* branch.
+
+```{r branch, fig.cap="Git branches.", echo=FALSE, purl=FALSE, out.width='100%', fig.align='center'}
+knitr::include_graphics("figs/branch.png")
+```
+
+At this point, if the same lines where modified in the *main* and
+*work* branches, conflicts would need to be addressed, as seen above.
 
 ## Glossary and references
 

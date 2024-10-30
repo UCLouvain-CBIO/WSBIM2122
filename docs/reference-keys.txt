@@ -32,6 +32,7 @@ fig:notFinal
 fig:git1
 fig:git2
 fig:git3
+fig:branch
 sec-rmd
 knitting-from-within-r
 caching
@@ -158,7 +159,7 @@ install-git
 connect-rstudio-to-your-github-repo
 git-and-command-line
 handling-conflicts
-pull-requests
+other-gitgithub-features-of-interest
 glossary-and-references
 references-2
 sec-info
