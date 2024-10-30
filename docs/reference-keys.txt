@@ -28,6 +28,7 @@ fig:unnamed-chunk-200
 fig:unnamed-chunk-201
 fig:unnamed-chunk-209
 fig:unnamed-chunk-213
+fig:notFinal
 sec-rmd
 knitting-from-within-r
 caching
@@ -144,6 +145,19 @@ working-with-files-and-directories
 data-analysis-in-the-shell
 writing-scripts
 references-1
+sec-git
+motivation
+automated-version-control
+introduction-to-git-and-github
+getting-started
+git-and-rstudio
+install-git
+connect-rstudio-to-your-github-repo
+git-and-command-line
+handling-conflicts
+pull-requests
+glossary-and-references
+references-2
 sec-info
 available-platforms
 project-reports

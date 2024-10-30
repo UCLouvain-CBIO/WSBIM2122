@@ -1,5 +1,8 @@
-# Collaborating with Git and GitHub {#sec-git}
+# Annex: Collaborating with Git and GitHub {#sec-git}
 
+This chapter is based/adapted on content from [Happy Git and GitHub
+for the useR](https://happygitwithr.com/) and [Version Control with
+Git](https://swcarpentry.github.io/git-novice).
 
 ## Motivation
 
@@ -166,7 +169,7 @@ pushing are handled automatically by Git, except in case of
 conflict. A conflict happens when two users change the same part of a
 file:
 
-- Alice and Bob pull the latest changes and modify the empty `file1`
+- Alice and Bastien pull the latest changes and modify the empty `file1`
   by adding their name at the beginning of the file. Alice's file
   looks like this in her local repository:
 
@@ -174,16 +177,16 @@ file:
 Alice
 ```
 
-  And Bob files looks like this in his local repository:
+  And Bastien files looks like this in his local repository:
 
 ```
-Bob
+Bastien
 ```
 
 - Alice commits locally and pushes to the remote repository. `file1`
   in the remote and in Alice's local repo are now identical, and Git
   recorded that the change was adding a new line containing `Alice`.
-- Bob now also tries to push but gets an error because he pushes a
+- Bastien now also tries to push but gets an error because he pushes a
   file that contains a different first line that would override
   Alice's commit. His update are rejected because the remote contains
   work that he does not have locally. If he wants to integrate the
@@ -191,10 +194,10 @@ Bob
   conflicting modifications:
 
 ```
-Alice and Bob
+Alice and Bastien
 ```
   and then push again.
-- Alice can not pull to retrieve Bob's changes from the remote.
+- Alice can not pull to retrieve Bastien's changes from the remote.
 
 
 <!-- - Pull requests? -->
@@ -215,7 +218,7 @@ share it.
 
 You have now been added to the
 [WSBIM2122-GitHub-training](https://github.com/UCLouvain-CBIO/WSBIM2122-GitHub-training)
-repository.  **We need to add 1 or 2 simple files to the repo**
+repository.
 
 1. Reply to the first issue to verify that you're able to access the
    repo.
@@ -415,27 +418,55 @@ line. You can use it in the terminal pane of RStudio as long as you've
 configured it correctly by selecting "Git Bash" in *Tools > Global
 Options > Terminal > New* *terminals open with*
 
-## Best practice and troubleshooting
 
-- Avoid (Git) conflicts: using Git and Github is mostly a quite
-  sailing on a calm sea. The only little annoying hickup are
-  conflicts. It is best to avoid these by coordinate work.
-- The best way to avoid conflicts is to always be in sync with the
+## Handling conflicts
+
+`r msmbstyle::question_begin()`
+
+This exercise will illustrate a merge conflict. To do so, work in
+pairs (called Alice and Bastien below).
+
+1. Alice creates a GitHub repository and adds `file1` to the repo, and
+   adds Bastien as a collaborator with write access: Settings >
+   Collaborators (in the left panel) > Add people > Search and add a
+   GitHub user.
+
+2. Both Alice and Bastien clone to remote repository and add their names
+   to `file1`.
+3. Alices commits her local changes and pushes them to the GitHub
+   repository.
+4. Bastien commits his local changes and tries to push them to the GitHub
+   repository.
+5. Bastien pulls the latest version from GitHub, and manually fixes
+   conflict in `file1` by manually merging the conflicting lines and
+   adding both names.
+6. Bastien commits his local changes and pushes to the remote repository.
+7. Alice pulls the latest version.
+
+`r msmbstyle::question_end()`
+
+Using Git and Github is mostly a quite sailing on a calm sea. The only
+little annoying hickup are conflicts. It is best to avoid these by
+coordinate work by keep local and remote repositories in sync:
+
+- The easiest way to avoid conflicts is to always be in sync with the
   remote repository. To do so, always pull the latest changes before
   starting to work on a project.
-- The best way to avoid conflicts is to help other always be in sync
-  with the remote repository. To do so, regularly push your changes to
-  the remote, so that others can pull them.
-- To further avoid conflicts, try to modularise your project by
-  splitting the work into multiple independement files. For an Rmd
-  project:
-  - the code for new sections could initially be written in separate
-    code files so as to avoid breaking the compilation of the Rmd file
-    when developing the new analysis;
-  - save intermediate data and results so that others can re-use them
-    independently of the whole pipeline.
-- GitHub issues are a useful way to discuss any specific points and
-  centralise coordination in a project.
+- The easiest way to avoid conflicts is to help other always be in
+  sync with the remote repository. To do so, regularly push your
+  changes to the remote, so that others can pull them.
+
+To further avoid conflicts, try to modularise your project by
+splitting the work into multiple independement files. For an Rmd
+project:
+- the code for new sections could initially be written in separate
+  code files so as to avoid breaking the compilation of the Rmd file
+  when developing the new analysis;
+- save intermediate data and results so that others can re-use them
+  independently of the whole pipeline.
+
+GitHub issues are a useful way to discuss any specific points and
+centralise coordination in a project.
 
 It is possible to cancel commit if you forgot to pull before working
 with the following command:
@@ -446,29 +477,7 @@ git reset --soft HEAD~1
 
 This is only feasible on the command line.
 
-`r msmbstyle::question_begin()`
-
-This exercise will illustrate a merge conflict. To do so, work in
-pairs (called Alice and Bob below).
-
-1. Alice creates a GitHub repository and adds `file1` to the repo, and
-   adds Bob as a collaborator with write access: Settings >
-   Collaborators (in the left panel) > Add people > Search and add a
-   GitHub user.
-
-2. Both Alice and Bob clone to remote repository and add their names
-   to `file1`.
-3. Alices commits her local changes and pushes them to the GitHub
-   repository.
-4. Bob commits his local changes and tries to push them to the GitHub
-   repository.
-5. Bob pulls the latest version from GitHub, and manually fixes
-   conflict in `file1` by manually merging the conflicting lines and
-   adding both names.
-6. Bob commits his local changes and pushes to the remote repository.
-7. Alice pulls the latest version.
-
-`r msmbstyle::question_end()`
+## Pull requests
 
 There's one last operation that GitHub facilitates, which is the *pull
 request*. The use cases that we have seen above assume that all users
@@ -499,7 +508,6 @@ repository.
 
 This glossary is based on the Carpentry's [Git novice lesson
 glossary](https://swcarpentry.github.io/git-novice/reference.html#glossary).
-
 
 - **changeset**: a group of changes to one or more files that are or
   will be added to a single commit in a version control repository.

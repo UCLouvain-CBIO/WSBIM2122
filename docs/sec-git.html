@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Chapter 11 Annex: Collaborating with Git and GitHub | Omics Data Analysis" />
+<meta property="og:type" content="book" />
+
+<meta property="og:description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain." />
+
+
+<meta name="author" content="Laurent Gatto" />
+
+<meta name="date" content="2024-10-30" />
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain.">
+
+<title>Chapter 11 Annex: Collaborating with Git and GitHub | Omics Data Analysis</title>
+
+<link href="libs/tufte-css-2015.12.29/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css-2015.12.29/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css-0/msmb.css" rel="stylesheet" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.33/datatables.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Omics Data Analysis<p><p class="author">Laurent Gatto</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html" id="toc-preamble">Preamble</a>
+<a href="sec-rmd.html" id="toc-sec-rmd"><span class="toc-section-number">1</span> R markdown</a>
+<a href="sec-linmod.html" id="toc-sec-linmod"><span class="toc-section-number">2</span> Linear models</a>
+<a href="sec-hts.html" id="toc-sec-hts"><span class="toc-section-number">3</span> High throughput sequencing</a>
+<a href="sec-rnaseq.html" id="toc-sec-rnaseq"><span class="toc-section-number">4</span> Differential expression analysis</a>
+<a href="sec-design.html" id="toc-sec-design"><span class="toc-section-number">5</span> More complex experimental design</a>
+<a href="sec-gsea.html" id="toc-sec-gsea"><span class="toc-section-number">6</span> Enrichment analyses</a>
+<a href="sec-ms.html" id="toc-sec-ms"><span class="toc-section-number">7</span> Mass spectrometry</a>
+<a href="sec-prot.html" id="toc-sec-prot"><span class="toc-section-number">8</span> Quantitative proteomics data analysis</a>
+<a href="sec-ccl.html" id="toc-sec-ccl"><span class="toc-section-number">9</span> Conclusions</a>
+<a href="sec-cli.html" id="toc-sec-cli"><span class="toc-section-number">10</span> Annex: the shell</a>
+<a id="active-page" href="sec-git.html" id="toc-sec-git"><span class="toc-section-number">11</span> Annex: Collaborating with Git and GitHub</a><ul class="toc-sections">
+<li class="toc"><a href="#motivation"> Motivation</a></li>
+<li class="toc"><a href="#automated-version-control"> Automated version control</a></li>
+<li class="toc"><a href="#introduction-to-git-and-github"> Introduction to Git and GitHub</a></li>
+<li class="toc"><a href="#getting-started"> Getting started</a></li>
+<li class="toc"><a href="#git-and-rstudio"> Git and RStudio</a></li>
+<li class="toc"><a href="#git-and-command-line"> Git and command line</a></li>
+<li class="toc"><a href="#handling-conflicts"> Handling conflicts</a></li>
+<li class="toc"><a href="#pull-requests"> Pull requests</a></li>
+<li class="toc"><a href="#glossary-and-references"> Glossary and references</a></li>
+</ul>
+<a href="sec-info.html" id="toc-sec-info"><span class="toc-section-number">12</span> Course and session information</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="sec-git" class="section level1" number="11">
+<h1>
+<span class="header-section-number">Chapter 11</span> Annex: Collaborating with Git and GitHub</h1>
+<p>This chapter is based/adapted on content from <a href="https://happygitwithr.com/">Happy Git and GitHub
+for the useR</a> and <a href="https://swcarpentry.github.io/git-novice">Version Control with
+Git</a>.</p>
+<div id="motivation" class="section level2" number="11.1">
+<h2>
+<span class="header-section-number">11.1</span> Motivation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('motivation')" onmouseout="reset_tooltip('motivation-tooltip')"><span class="tooltiptext" id="motivation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>In the past, students have reported on the difficulty of collaborative
+work on R code and Rmd files. Each student work with RStudio on their
+local computer, and share the code, report and data files on shared
+drive and/or send updates by email. Such a situaton my lead to a well
+known situation, nicely caught by the ‘notFinal.doc’ PhD Comic:</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:notFinal"></span>
+<p class="caption marginnote shownote">
+Figure 11.1: The ‘notFinal.doc’ <a href="https://phdcomics.com/comics/archive.php?comicid=1531">PhD Comic</a>, describing the very real struggle with trying to handle version with file names.
+</p>
+<img src="figs/phd101212s.png" alt="The 'notFinal.doc' [PhD Comic](https://phdcomics.com/comics/archive.php?comicid=1531), describing the very real struggle with trying to handle version with file names." width="100%">
+</div>
+<p>The goal of this chapter is to introduce students to ‘version
+control’, used by data scientists, bioinformaticians and programmers
+around to world to keep track of changes in code, Rmd reports, or any
+other files, and efficiently collaborate among large and small teams.</p>
+<p>Although there exist many other verison control software, we will
+focus on <a href="https://git-scm.com/">Git</a> and
+<a href="https://github.com/">GitHub</a>, and these two are widely used.</p>
+</div>
+<div id="automated-version-control" class="section level2" number="11.2">
+<h2>
+<span class="header-section-number">11.2</span> Automated version control<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('automated-version-control')" onmouseout="reset_tooltip('automated-version-control-tooltip')"><span class="tooltiptext" id="automated-version-control-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Version control records each change (addition, deletion or
+modification) that is made to a document, thus allowing to rewind back
+to any version of the document since its creation. These recorded
+changes can originate from different users that have made independent
+changes to the same document.</p>
+<p>If two users modify the <em>same</em> part of the document at the <em>same</em> time
+on their respective computers, a <strong>conflict</strong> will occur, that can’t
+be automatically merged by the software (that can’t decide whose
+changes should be kept and whose should be discarded), and would thus
+have to be resolved by hand. I all other cases, changes are recorded
+and managed automatically by the version control software.</p>
+<p>In addition to the actual changes to the file(s), the version control
+software also records metadata about the changes, such as who did the
+changes and when they were done.</p>
+<div id="track-changes" class="section level3 unnumbered">
+<h3>Track changes<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('track-changes')" onmouseout="reset_tooltip('track-changes-tooltip')"><span class="tooltiptext" id="track-changes-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Editors such as Microsoft Word, Google docs or LibreOffice allow to
+record <a href="https://support.office.com/en-us/article/Track-changes-in-Word-197ba630-0f5f-4a8e-9a77-3712475e806a">track
+changes</a>,
+<a href="https://support.google.com/docs/answer/190843?hl=en">version
+history</a>, or
+<a href="https://help.libreoffice.org/Common/Recording_and_Displaying_Changes">recording and displaying
+changes</a>
+respectively. These allow users to highlight suggested changes in a
+document that the main author/reviewer then accepts or rejects. These
+are not the same as automatic version control:</p>
+<ul>
+<li>Track changes can’t be dont in parallel on the same document, unless
+a user is connected to an on-line version of the editor (such as
+Google docs or Microsoft Office 365).</li>
+<li>Once a track change is accepted or rejected, it isn’t possible to
+return to previous version. Google docs’ version history does allow
+this.</li>
+<li>Track changes are only applicable to their respective formats, and
+not to code files, Rmd documents, or other text-based files.</li>
+<li>Track changes work on a single file, while version control records
+changes in all files of a project.</li>
+<li>When editing code, it is essential to keep a valid source code file
+and functioning versions of the code, which in turn isn’t possible
+with track changes.</li>
+</ul>
+<p>Version control is like an unlimited undo feature that works on many
+files at a time, and allows to rewind back to any version of a data
+analysis or software project. In additiona, version control is
+designed for several people to work in parallel on the same set of
+files.</p>
+</div>
+</div>
+<div id="introduction-to-git-and-github" class="section level2" number="11.3">
+<h2>
+<span class="header-section-number">11.3</span> Introduction to Git and GitHub<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('introduction-to-git-and-github')" onmouseout="reset_tooltip('introduction-to-git-and-github-tooltip')"><span class="tooltiptext" id="introduction-to-git-and-github-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Git is the automated version control software that we will be
+using. GitHub is an web interface to Git that allows to share a
+version control project over the internet, facilitates some operations
+to work collaboratively on-line and enables discussions
+(i.e. issues). Let’s start by explaining some fundamental Git
+concepts.</p>
+<div id="git" class="section level3 unnumbered">
+<h3>Git<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('git')" onmouseout="reset_tooltip('git-tooltip')"><span class="tooltiptext" id="git-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>In Git, the directory that contains all the files that need to be
+tracked/version controlled is called a <em>repository</em>. This would be
+equivalent to a RStudio project that one sets up before starting a new
+analysis. And as a matter of fact, later, we will use Git to version
+control an RStudio project.</p>
+<p>When starting a new project that needs to be version controlled, the
+(typically) local directory needs to be <em>initiated</em> to use Git. Then
+individual files in that working directory can be <em>added</em> to the Git
+repository, so that Git knows that these will need to be version
+controlled. Files that are in the working directory, but haven’t been
+added to the Git repository will not be tracked. Once added, files
+aren’t yet under version control, they a prepared (or <em>staged</em>) to be
+<em>committed</em>.</p>
+<p>Similarly, when a file that is under verison control is modified, Git
+recognises that the file has been modified, but doesn’t record
+anything yet. That modified version of the file also needs to be
+<em>added</em>. Once added, modified files are <em>staged</em> to be <em>committed</em>.</p>
+<p>The collection of one or multiple files (whether new or modified) that
+are <em>staged</em> (or in the <em>staging area</em>) are called the
+<em>changeset</em>. All these files can now be effectively <em>committed</em>,
+i.e. that all the changes, who made them, and when they were added,
+are recorded and added to the version control.</p>
+<p>Note that Git doesn’t not record the complete file at each
+modification, but only the differences between each file. Knowing the
+difference between the current and previous states of a file is enough
+to reconstruct the previous version(s).</p>
+<p>The same process applies for file deletion: delete a file, add it to
+the staging are (these can be done in one step), and commit the
+changes.</p>
+<div class="question">
+<p class="question-begin">
+► Question
+</p>
+<div class="question-body">
+<p>Can you figure out why it is important to stage multiple files and
+commit all together, as opposed to committing multiple single files
+one by one?</p>
+<p><strong>Hint</strong>: Imagine that you are working on a project containing one Rmd
+report and two R code files, that the report needs to source (see
+<code>?source</code> if you don’t know what sourcing is) to be able to compile,
+and consider that two code changes need to be done, one in each R code
+file.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="github" class="section level3 unnumbered">
+<h3>GitHub<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('github')" onmouseout="reset_tooltip('github-tooltip')"><span class="tooltiptext" id="github-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>What we have seen so far all happens on a local computer. But to be
+able to work as a team, the Git repositry needs to be accessible to
+others, and GitHub allows this.</p>
+<p>The repository that we created above is a <em>local</em> repository, as it
+lives on a user’s local computer. Repositories can also live
+elsewhere, on another user’s computer, or a server; such a repository
+are called a <em>remote</em> repository.</p>
+<p>Let’s now start from an exisiting repository on GitHub. Creating a
+local copy of that repository and its content is done by an operation
+called <em>cloning</em>. Different users can of course the same remote. At
+the time of cloning, the content of the local and remote repositories
+are identical.</p>
+<p>The creation, modification and deletion of files is as described
+above: the user interacts with the files in their working directory
+and commits the changeset to their local repository. The changeset can
+be synchronised with the remote repository by <em>pushing</em> the local
+changes. Another user, who has previously cloned the remote repository
+can <em>pull</em> these latest changes to their local repository.</p>
+<p>The synchronisation of local and remote changes while pulling and
+pushing are handled automatically by Git, except in case of
+conflict. A conflict happens when two users change the same part of a
+file:</p>
+<ul>
+<li>Alice and Bastien pull the latest changes and modify the empty <code>file1</code>
+by adding their name at the beginning of the file. Alice’s file
+looks like this in her local repository:</li>
+</ul>
+<pre><code>Alice</code></pre>
+<p>And Bastien files looks like this in his local repository:</p>
+<pre><code>Bastien</code></pre>
+<ul>
+<li>Alice commits locally and pushes to the remote repository. <code>file1</code>
+in the remote and in Alice’s local repo are now identical, and Git
+recorded that the change was adding a new line containing <code>Alice</code>.</li>
+<li>Bastien now also tries to push but gets an error because he pushes a
+file that contains a different first line that would override
+Alice’s commit. His update are rejected because the remote contains
+work that he does not have locally. If he wants to integrate the
+remote changes, he first needs to pull these changes, <em>resolve</em> the
+conflicting modifications:</li>
+</ul>
+<pre><code>Alice and Bastien</code></pre>
+<p>and then push again.
+- Alice can not pull to retrieve Bastien’s changes from the remote.</p>
+<!-- - Pull requests? -->
+</div>
+</div>
+<div id="getting-started" class="section level2" number="11.4">
+<h2>
+<span class="header-section-number">11.4</span> Getting started<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('getting-started')" onmouseout="reset_tooltip('getting-started-tooltip')"><span class="tooltiptext" id="getting-started-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<div class="question">
+<p class="question-begin">
+► Question
+</p>
+<div class="question-body">
+<ol style="list-style-type: decimal">
+<li><p>Create an account on <a href="https://github.com/">GitHub</a>. Choose your
+username wisely as you might want to reuse it later and will have to
+share it.</p></li>
+<li><p>Create your own repository and open an issue on it.</p></li>
+</ol>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="question">
+<p class="question-begin">
+► Question
+</p>
+<div class="question-body">
+<p>You have now been added to the
+<a href="https://github.com/UCLouvain-CBIO/WSBIM2122-GitHub-training">WSBIM2122-GitHub-training</a>
+repository.</p>
+<ol style="list-style-type: decimal">
+<li><p>Reply to the first issue to verify that you’re able to access the
+repo.</p></li>
+<li><p>Create a new issue where you make a link to a file or a specific
+line of a file and assign it to yourself.</p></li>
+<li><p>Close that issue to mark it as done.</p></li>
+</ol>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="git-and-rstudio" class="section level2" number="11.5">
+<h2>
+<span class="header-section-number">11.5</span> Git and RStudio<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('git-and-rstudio')" onmouseout="reset_tooltip('git-and-rstudio-tooltip')"><span class="tooltiptext" id="git-and-rstudio-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>The original interface to Git was using the command line (see
+below). It is also possible to use Git through the RStudio interface
+to manage everything that is on a repository. This is useful if you’re
+working mainly with R and want to use Git version control but also if
+you want to do collaborative work. The RStudio interface then allows
+a click-button way of using git that can be easier than the
+traditional command line.</p>
+<p>This section of the course is based on the <em>Happy Git and GitHub for
+the useR</em> <a href="https://happygitwithr.com/">tutorial</a> by Jennifer Bryan.</p>
+<div id="install-git" class="section level3" number="11.5.1">
+<h3>
+<span class="header-section-number">11.5.1</span> Install Git<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('install-git')" onmouseout="reset_tooltip('install-git-tooltip')"><span class="tooltiptext" id="install-git-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Git needs to be install first on your computer for RStudio to use
+it. Installation is different depending on the operating system of
+your computer.</p>
+<div id="windows-users" class="section level4 unnumbered">
+<h4>Windows users</h4>
+<p>The easiest way is to install <a href="https://gitforwindows.org/">Git for
+Windows</a>, also called “Git bash”. This
+allows to get Git but also a Bash shell that is useful to venture
+outside of R/RStudio.</p>
+<p>When installing Git for Windows, use the conventional location as it
+is going to help other programs to find Git. RStudio prefers for Git
+to be installed in “C:/Program Files”. Also, when asked about
+“Adjusting your PATH environment”, select “Git from the command line
+and also from 3rd-party software”. Otherwise, use the defaults
+parameters.</p>
+</div>
+<div id="macos-users" class="section level4 unnumbered">
+<h4>macOS users</h4>
+<p>On macOS, Git can be installed directly from the shell using this
+command :</p>
+<pre><code>git config</code></pre>
+<p>This will open an offer to install developer command line tools,
+accept the offer and click on “Install”.</p>
+<p>This might have to be redone after upgrading macOS or the RStudio Git
+pane can disappear from a system where it was previously working.</p>
+</div>
+<div id="gnulinux-users" class="section level4 unnumbered">
+<h4>GNU/Linux users</h4>
+<p>Use your distribution package manager. If you use Debian or Ubuntu,
+the following command will install <code>git</code>:</p>
+<pre><code>sudo apt install git</code></pre>
+</div>
+</div>
+<div id="connect-rstudio-to-your-github-repo" class="section level3" number="11.5.2">
+<h3>
+<span class="header-section-number">11.5.2</span> Connect RStudio to your GitHub repo<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('connect-rstudio-to-your-github-repo')" onmouseout="reset_tooltip('connect-rstudio-to-your-github-repo-tooltip')"><span class="tooltiptext" id="connect-rstudio-to-your-github-repo-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>To connect RStudio to a GitHub repository, a personal access token
+(PAT) is needed. This will act as an identifier for a specific GitHub
+user, along with the authorization the user has. You can thus NOT use
+your GitHub password as a way to connect to your repository using
+RStudio.</p>
+<p>A PAT can be created on GitHub, in <em>settings &gt; Developer Settings &gt;
+Personal</em> <em>access tokens &gt; Tokens (classic)</em> or directly
+<a href="https://github.com/settings/tokens">here</a>. Click on <em>Generate token
+(classic)</em> and configure you’re token. You can configure :</p>
+<ul>
+<li>A name, that generally describes what you’re using this PAT for.</li>
+<li>An expiration date, after that date the PAT won’t work
+anymore. GitHub security advises for 30 days but you can configure
+it to no expiration if you see fit. We advise to put the expiration
+date to at least the end of the semester, in case you want to use it
+for your projects.</li>
+<li>What this PAT allows to do, it is recommended to select repo, user,
+gist and workflow.</li>
+</ul>
+<p>Once you’ve generated the token, it will appear. Be careful, it is the
+only time you’ll be able to see this PAT so it is advised to copy it
+somewhere to store it. Still keep in mind, this PAT is a password
+that allows you to modify your work so avoid putting it somewhere
+public.</p>
+<p>Once a PAT has been created, you can clone any GitHub repository on
+your local computer using RStudio. The easiest way of working with
+GitHub and RStudio is to have a GitHub repository first. The only
+thing needed from GitHub is the cloning https address of your repo. To
+get it, go the repo page, click the big green button that says “&lt;&gt;
+Code” and copy the HTTPS URL address.</p>
+<p>To clone your GitHub repo on your computer, open RStudio and create a
+new project. You’ll then be able to chose to create a Version Control
+project and choose Git. Then you just need to paste the HTTPS URL of
+your GitHub repo and it will be cloned as an R project.</p>
+<p>The project will open and a new Git tab will appear in the
+“environment” pane of RStudio. This is where you’ll be able to manage
+all things Git related. A file appears there once it has been added or
+modified from the GitHub version. Once a file is modified, you can
+click on “Diff” to open a new window that will show you what has been
+changed in the selected file. You can then check the staged box, write
+a commit message and commit these changes. You then click push to send
+all that to GitHub. That’s when you’ll be asked to give your username
+and PAT. RStudio locally tends to remember the PAT so you shouldn’t
+have to put it again.</p>
+<p>Note : If RStudio doesn’t appear to find Git on your computer, go to
+<em>Tools &gt; Global</em> <em>Options &gt; Git/SVN</em> and make sure that the Git
+executable points to where your Git executable is located on your
+computer.</p>
+<p>You might also have seen a <code>.gitignore</code> file. This is a text file
+containing the names of the files that have to be ignored by git and
+not pushed to GitHub. This should usually contain your .Rproj but also
+all files bigger than 50 Mb as these cannot be pushed to GitHub.</p>
+<p>RStudio also allows you to have a look at the commit history, if you
+want to see all the changes that have been done to the repo.</p>
+<div class="question">
+<p class="question-begin">
+► Question
+</p>
+<div class="question-body">
+<ol style="list-style-type: decimal">
+<li><p>Connect the repository you created in the previous section using
+RStudio.</p></li>
+<li><p>Create a Rmd file locally on RStudio then stage, commit and push
+it.</p></li>
+<li><p>Modify that Rmd and knit it. When commiting, have a look at how the
+modification are showed to you. Push it on GitHub and go see the
+compiled result online. Also have a look at the commit online.</p></li>
+<li><p>Modify the readme file on GitHub and pull it locally.</p></li>
+</ol>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="git-and-command-line" class="section level2" number="11.6">
+<h2>
+<span class="header-section-number">11.6</span> Git and command line<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('git-and-command-line')" onmouseout="reset_tooltip('git-and-command-line-tooltip')"><span class="tooltiptext" id="git-and-command-line-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>It is still interesting to know that, usually, all these things are done through
+the command line. Here is how to do it :</p>
+<ul>
+<li>Initialise a local repository</li>
+</ul>
+<pre><code>git init</code></pre>
+<ul>
+<li>Clone a remote repository</li>
+</ul>
+<pre><code>git clone url</code></pre>
+<ul>
+<li>Show the current status of your repository, indicating what files
+have been modified and haven’t been staged yet.</li>
+</ul>
+<pre><code>git status</code></pre>
+<ul>
+<li>Stage a file for commit.</li>
+</ul>
+<pre><code>git add file</code></pre>
+<ul>
+<li>Commit the staged changes with a comment.</li>
+</ul>
+<pre><code>git commit -m ‘comment’</code></pre>
+<ul>
+<li>Push to or pull from a remote repository.</li>
+</ul>
+<pre><code>git push
+git pull</code></pre>
+<p><strong>Note</strong>: By installing git for windows, Windows users installed <em>git
+bash</em>, a terminal that can be used to use Git through the command
+line. You can use it in the terminal pane of RStudio as long as you’ve
+configured it correctly by selecting “Git Bash” in <em>Tools &gt; Global
+Options &gt; Terminal &gt; New</em> <em>terminals open with</em></p>
+</div>
+<div id="handling-conflicts" class="section level2" number="11.7">
+<h2>
+<span class="header-section-number">11.7</span> Handling conflicts<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('handling-conflicts')" onmouseout="reset_tooltip('handling-conflicts-tooltip')"><span class="tooltiptext" id="handling-conflicts-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<div class="question">
+<p class="question-begin">
+► Question
+</p>
+<div class="question-body">
+<p>This exercise will illustrate a merge conflict. To do so, work in
+pairs (called Alice and Bastien below).</p>
+<ol style="list-style-type: decimal">
+<li><p>Alice creates a GitHub repository and adds <code>file1</code> to the repo, and
+adds Bastien as a collaborator with write access: Settings &gt;
+Collaborators (in the left panel) &gt; Add people &gt; Search and add a
+GitHub user.</p></li>
+<li><p>Both Alice and Bastien clone to remote repository and add their names
+to <code>file1</code>.</p></li>
+<li><p>Alices commits her local changes and pushes them to the GitHub
+repository.</p></li>
+<li><p>Bastien commits his local changes and tries to push them to the GitHub
+repository.</p></li>
+<li><p>Bastien pulls the latest version from GitHub, and manually fixes
+conflict in <code>file1</code> by manually merging the conflicting lines and
+adding both names.</p></li>
+<li><p>Bastien commits his local changes and pushes to the remote repository.</p></li>
+<li><p>Alice pulls the latest version.</p></li>
+</ol>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Using Git and Github is mostly a quite sailing on a calm sea. The only
+little annoying hickup are conflicts. It is best to avoid these by
+coordinate work by keep local and remote repositories in sync:</p>
+<ul>
+<li>The easiest way to avoid conflicts is to always be in sync with the
+remote repository. To do so, always pull the latest changes before
+starting to work on a project.</li>
+<li>The easiest way to avoid conflicts is to help other always be in
+sync with the remote repository. To do so, regularly push your
+changes to the remote, so that others can pull them.</li>
+</ul>
+<p>To further avoid conflicts, try to modularise your project by
+splitting the work into multiple independement files. For an Rmd
+project:
+- the code for new sections could initially be written in separate
+code files so as to avoid breaking the compilation of the Rmd file
+when developing the new analysis;
+- save intermediate data and results so that others can re-use them
+independently of the whole pipeline.</p>
+<p>GitHub issues are a useful way to discuss any specific points and
+centralise coordination in a project.</p>
+<p>It is possible to cancel commit if you forgot to pull before working
+with the following command:</p>
+<pre><code>git reset --soft HEAD~1</code></pre>
+<p>This is only feasible on the command line.</p>
+</div>
+<div id="pull-requests" class="section level2" number="11.8">
+<h2>
+<span class="header-section-number">11.8</span> Pull requests<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('pull-requests')" onmouseout="reset_tooltip('pull-requests-tooltip')"><span class="tooltiptext" id="pull-requests-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>There’s one last operation that GitHub facilitates, which is the <em>pull
+request</em>. The use cases that we have seen above assume that all users
+are part of the project and can thus directly write/push to the remote
+repository.</p>
+<ul>
+<li>It is possible for other GitHub users to contribute to a project
+without being a member by first forking a GitHub repository, which
+will create a copy under their account. As an example, Alice could
+fork <code>UCLouvain-CBIO/WSBIM2122-GitHub-training</code> and create
+<code>Alice/WSBIM2122-GitHub-training</code>. GitHub remembers the forking
+operation and the relation between the two repositories.</li>
+<li>Alice can now clone <code>Alice/WSBIM2122-GitHub-training</code> locally, make
+any changes she sees fit, and push them back to her remote
+<code>Alice/WSBIM2122-GitHub-training</code>.</li>
+<li>She could now send a pull request to merge changes from
+<code>Alice/WSBIM2122-GitHub-training</code> back into
+<code>UCLouvain-CBIO/WSBIM2122-GitHub-training</code>. The PR can be inspected
+and reviewed and merged by a member of the
+<code>UCLouvain-CBIO/WSBIM2122-GitHub-training</code>.</li>
+<li>Pull requests (of shortened PR) are also useful when multiple
+members of the same repository want their contributions to be
+reviewed by other team members. Using PRs within a team is useful so
+as to keep everybody informed about the changes different members
+do.</li>
+</ul>
+</div>
+<div id="glossary-and-references" class="section level2" number="11.9">
+<h2>
+<span class="header-section-number">11.9</span> Glossary and references<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('glossary-and-references')" onmouseout="reset_tooltip('glossary-and-references-tooltip')"><span class="tooltiptext" id="glossary-and-references-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>This glossary is based on the Carpentry’s <a href="https://swcarpentry.github.io/git-novice/reference.html#glossary">Git novice lesson
+glossary</a>.</p>
+<ul>
+<li><p><strong>changeset</strong>: a group of changes to one or more files that are or
+will be added to a single commit in a version control repository.</p></li>
+<li><p><strong>clone</strong>: a local copy of a remote repository. Both local and
+remote repositories know about each other and can thus be kept in
+sync. The action is called cloning.</p></li>
+<li><p><strong>conflict</strong>: a change made by one user of a version control system
+that is incompatible with changes made by other users. Helping users
+resolve conflicts is one of version control’s major tasks.</p></li>
+<li><p><strong>commit</strong>: to record the current state of a set of files (a
+changeset) in a version control repository. As a noun, the result of
+committing, i.e. a recorded changeset in a repository. If a commit
+contains changes to multiple files, all of the changes are recorded
+together.</p></li>
+<li><p><strong>pull</strong>: action of retrieving changes from a remote repository and
+merge them into a local repository.</p></li>
+<li><p><strong>push</strong>: action of adding changes from a local repository to a
+remote repository.</p></li>
+<li><p><strong>remote</strong>: a version control repository, typically located on
+another computer/sever, connected to another (local), in such way
+that both can be kept in sync exchanging commits.</p></li>
+<li><p><strong>repository</strong>: a storage area (typically a directory) where a
+version control system stores the full history of <em>commits</em>
+(changes) of a project and information about who changed what and
+when.</p></li>
+<li><p><strong>resolve</strong>: to eliminate the conflicts between two or more
+incompatible changes to a file or set of files being managed by a
+version control system.</p></li>
+<li><p><strong>version control</strong>: a tool for managing changes to a set of
+files. Each set of changes creates a new commit of the files; the
+version control system allows users to recover old commits reliably,
+and helps manage conflicting changes made by different users.</p></li>
+</ul>
+<div id="references-2" class="section level3" number="11.9.1">
+<h3>
+<span class="header-section-number">11.9.1</span> References<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('references-2')" onmouseout="reset_tooltip('references-2-tooltip')"><span class="tooltiptext" id="references-2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<ul>
+<li>
+<em>Happy Git and GitHub for the useR</em>, <a href="https://happygitwithr.com/" class="uri">https://happygitwithr.com/</a>
+</li>
+<li>
+<em>Version Control with Git</em>, <a href="https://swcarpentry.github.io/git-novice" class="uri">https://swcarpentry.github.io/git-novice</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<p style="text-align: center;">
+<a href="sec-cli.html"><button class="btn btn-default">Previous</button></a>
+<a href="sec-info.html"><button class="btn btn-default">Next</button></a>
+</p>
+<p class="build-date">Page built: 
+2024-10-30
+ using 
+R version 4.4.1 (2024-06-14)
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>
