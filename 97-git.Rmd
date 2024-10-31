@@ -62,8 +62,8 @@ are not the same as automatic version control:
   a user is connected to an on-line version of the editor (such as
   Google docs or Microsoft Office 365).
 - Once a track change is accepted or rejected, it isn't possible to
-  return to previous version. Google docs' version history does allow
-  this.
+  return to previous version. Google and Microsoft OneDrive documents
+  do allow this.
 - Track changes are only applicable to their respective formats, and
   not to code files, Rmd documents, or other text-based files.
 - Track changes work on a single file, while version control records
@@ -80,11 +80,10 @@ for several people to work in parallel on the same set of files.
 ## Introduction to Git and GitHub
 
 Git is the automated version control software that we will be
-using. GitHub is an web interface to Git that allows to share a
-version control project over the internet, facilitates some operations
-to work collaboratively on-line and enables discussions
-(i.e. issues). Let's start by explaining some fundamental Git
-concepts.
+using. GitHub is a web interface to Git that allows to share a version
+control project over the internet, facilitates some operations to work
+collaboratively on-line and enables discussions (i.e. issues). Let's
+start by explaining some fundamental Git concepts.
 
 ### Git {-}
 
@@ -119,10 +118,10 @@ are *staged* (or in the *staging area*) are called the
 i.e. that all the changes, who made them, and when they were added,
 are recorded and added to the version control.
 
-Note that Git doesn't not record the complete file at each
-modification, but only the differences between each file. Knowing the
-difference between the current and previous states of a file is enough
-to reconstruct the previous version(s).
+Note that Git does not record the complete file at each modification,
+but only the differences between each file. Knowing the difference
+between the current and previous states of a file is enough to
+reconstruct the previous version(s).
 
 ```{r git2, fig.cap="Version control with Git: modifiying files.", echo=FALSE, purl=FALSE, out.width='100%', fig.align='center'}
 knitr::include_graphics("figs/git2.png")
@@ -257,6 +256,12 @@ Git needs to be install first on your computer for RStudio to use
 it. Installation is different depending on the operating system of
 your computer.
 
+
+
+
+
+
+
 #### Windows users {-}
 
 The easiest way is to install [Git for
@@ -304,7 +309,7 @@ user, along with the authorization the user has. You can thus NOT use
 your GitHub password as a way to connect to your repository using
 RStudio.
 
-A PAT can be created on GitHub, in *settings > Developer Settings >
+A PAT can be created on GitHub, in *Settings > Developer Settings >
 Personal* *access tokens > Tokens (classic)* or directly
 [here](https://github.com/settings/tokens).  Click on *Generate token
 (classic)* and configure you're token. You can configure :
@@ -459,16 +464,23 @@ coordinate work by keep local and remote repositories in sync:
 
 - The easiest way to avoid conflicts is to always be in sync with the
   remote repository. To do so, always pull the latest changes before
-  starting to work on a project.
+  starting to work on a project, and regularly push so that you
+  co-workers can also stay in sync with your changes.
+
 
 To further avoid conflicts, try to modularise your project by
 splitting the work into multiple independent files. For an Rmd
 project:
+
 - the code for new sections could initially be written in separate
   code files so as to avoid breaking the compilation of the Rmd file
   when developing the new analysis;
 - save intermediate data and results so that others can re-use them
-  independently of the whole pipeline.
+  independently of the whole pipeline;
+- given that Git compares documents line by line to assess if it can
+  merge them automatically, use shorter lines (i.e. split your
+  sentences and paragraphes over more lines) to reduce the risk of
+  conflicts.
 
 GitHub issues are a useful way to discuss any specific points and
 centralise coordination in a project.
