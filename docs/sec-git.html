@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2024-10-30" />
+<meta name="date" content="2024-10-31" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -285,8 +285,8 @@ are not the same as automatic version control:</p>
 a user is connected to an on-line version of the editor (such as
 Google docs or Microsoft Office 365).</li>
 <li>Once a track change is accepted or rejected, it isn’t possible to
-return to previous version. Google docs’ version history does allow
-this.</li>
+return to previous version. Google and Microsoft OneDrive documents
+do allow this.</li>
 <li>Track changes are only applicable to their respective formats, and
 not to code files, Rmd documents, or other text-based files.</li>
 <li>Track changes work on a single file, while version control records
@@ -306,11 +306,10 @@ for several people to work in parallel on the same set of files.</p>
 <span class="header-section-number">11.3</span> Introduction to Git and GitHub<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('introduction-to-git-and-github')" onmouseout="reset_tooltip('introduction-to-git-and-github-tooltip')"><span class="tooltiptext" id="introduction-to-git-and-github-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Git is the automated version control software that we will be
-using. GitHub is an web interface to Git that allows to share a
-version control project over the internet, facilitates some operations
-to work collaboratively on-line and enables discussions
-(i.e. issues). Let’s start by explaining some fundamental Git
-concepts.</p>
+using. GitHub is a web interface to Git that allows to share a version
+control project over the internet, facilitates some operations to work
+collaboratively on-line and enables discussions (i.e. issues). Let’s
+start by explaining some fundamental Git concepts.</p>
 <div id="git" class="section level3 unnumbered">
 <h3>Git<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('git')" onmouseout="reset_tooltip('git-tooltip')"><span class="tooltiptext" id="git-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
@@ -344,10 +343,10 @@ are <em>staged</em> (or in the <em>staging area</em>) are called the
 <em>changeset</em>. All these files can now be effectively <em>committed</em>,
 i.e. that all the changes, who made them, and when they were added,
 are recorded and added to the version control.</p>
-<p>Note that Git doesn’t not record the complete file at each
-modification, but only the differences between each file. Knowing the
-difference between the current and previous states of a file is enough
-to reconstruct the previous version(s).</p>
+<p>Note that Git does not record the complete file at each modification,
+but only the differences between each file. Knowing the difference
+between the current and previous states of a file is enough to
+reconstruct the previous version(s).</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:git2"></span>
 <p class="caption marginnote shownote">
@@ -429,8 +428,10 @@ remote changes, he first needs to pull these changes, <em>resolve</em> the
 conflicting modifications:</li>
 </ul>
 <pre><code>Alice and Bastien</code></pre>
-<p>and then push again.
-- Alice can not pull to retrieve Bastien’s changes from the remote.</p>
+<p>and then push again.</p>
+<ul>
+<li>Alice can not pull to retrieve Bastien’s changes from the remote.</li>
+</ul>
 </div>
 </div>
 <div id="getting-started" class="section level2" number="11.4">
@@ -533,7 +534,7 @@ the following command will install <code>git</code>:</p>
 user, along with the authorization the user has. You can thus NOT use
 your GitHub password as a way to connect to your repository using
 RStudio.</p>
-<p>A PAT can be created on GitHub, in <em>settings &gt; Developer Settings &gt;
+<p>A PAT can be created on GitHub, in <em>Settings &gt; Developer Settings &gt;
 Personal</em> <em>access tokens &gt; Tokens (classic)</em> or directly
 <a href="https://github.com/settings/tokens">here</a>. Click on <em>Generate token
 (classic)</em> and configure you’re token. You can configure :</p>
@@ -681,16 +682,23 @@ coordinate work by keep local and remote repositories in sync:</p>
 <ul>
 <li>The easiest way to avoid conflicts is to always be in sync with the
 remote repository. To do so, always pull the latest changes before
-starting to work on a project.</li>
+starting to work on a project, and regularly push so that you
+co-workers can also stay in sync with your changes.</li>
 </ul>
 <p>To further avoid conflicts, try to modularise your project by
 splitting the work into multiple independent files. For an Rmd
-project:
-- the code for new sections could initially be written in separate
+project:</p>
+<ul>
+<li>the code for new sections could initially be written in separate
 code files so as to avoid breaking the compilation of the Rmd file
-when developing the new analysis;
-- save intermediate data and results so that others can re-use them
-independently of the whole pipeline.</p>
+when developing the new analysis;</li>
+<li>save intermediate data and results so that others can re-use them
+independently of the whole pipeline;</li>
+<li>given that Git compares documents line by line to assess if it can
+merge them automatically, use shorter lines (i.e. split your
+sentences and paragraphes over more lines) to reduce the risk of
+conflicts.</li>
+</ul>
 <p>GitHub issues are a useful way to discuss any specific points and
 centralise coordination in a project.</p>
 <p>It is possible to cancel commit if you forgot to pull before working
@@ -810,7 +818,7 @@ and helps manage conflicting changes made by different users.</p></li>
 <a href="sec-info.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2024-10-30
+2024-10-31
  using 
 R version 4.4.1 (2024-06-14)
 </p>

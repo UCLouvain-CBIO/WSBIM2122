@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2024-10-30" />
+<meta name="date" content="2024-10-31" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -711,10 +711,10 @@ adjusted p-value above) and compute a new GSEA score.</p>
 ##         &lt;character&gt; &lt;character&gt;  &lt;factor&gt;  &lt;numeric&gt;
 ## sample1       Cell1  Epithelial      KD     0.726883
 ## sample2       Cell1  Epithelial      KD     1.308664
-## sample3       Cell1  Epithelial      mock   1.077368
+## sample3       Cell1  Epithelial      KD     1.077368
 ## sample4       Cell1  Epithelial      mock   0.966025
 ## sample5       Cell1  Epithelial      mock   1.042111
-## sample6       Cell1  Epithelial      KD     1.012664</code></pre>
+## sample6       Cell1  Epithelial      mock   1.012664</code></pre>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="sec-gsea.html#cb292-1" tabindex="-1"></a>ensembl_to_geneName <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">ENSEMBL =</span> <span class="fu">rownames</span>(dds)) <span class="sc">%&gt;%</span></span>
 <span id="cb292-2"><a href="sec-gsea.html#cb292-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gene =</span> AnnotationDbi<span class="sc">::</span><span class="fu">mapIds</span>(org.Hs.eg.db, ENSEMBL, <span class="st">"SYMBOL"</span>,</span>
 <span id="cb292-3"><a href="sec-gsea.html#cb292-3" tabindex="-1"></a>                                      <span class="st">"ENSEMBL"</span>)) <span class="sc">%&gt;%</span></span>
@@ -737,22 +737,22 @@ adjusted p-value above) and compute a new GSEA score.</p>
 <span id="cb292-20"><a href="sec-gsea.html#cb292-20" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">score =</span> <span class="fu">cumsum</span>(score))</span>
 <span id="cb292-21"><a href="sec-gsea.html#cb292-21" tabindex="-1"></a></span>
 <span id="cb292-22"><a href="sec-gsea.html#cb292-22" tabindex="-1"></a>res_tmp</span></code></pre></div>
-<pre><code>## # A tibble: 22,224 × 5
-##    ENSEMBL         ENTREZID   padj inGO  score
-##    &lt;chr&gt;           &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
-##  1 ENSG00000278267 102466751 0.998 FALSE    -1
-##  2 ENSG00000233750 100420257 0.998 FALSE    -2
-##  3 ENSG00000228463 728481    0.998 FALSE    -3
-##  4 ENSG00000236679 728517    0.998 FALSE    -4
-##  5 ENSG00000225972 100887749 0.998 FALSE    -5
-##  6 ENSG00000225630 100652939 0.998 FALSE    -6
-##  7 ENSG00000237973 107075141 0.998 FALSE    -7
-##  8 ENSG00000229344 107075310 0.998 FALSE    -8
-##  9 ENSG00000248527 106480796 0.998 FALSE    -9
-## 10 ENSG00000198744 107075270 0.998 FALSE   -10
-## # ℹ 22,214 more rows</code></pre>
+<pre><code>## # A tibble: 14,012 × 5
+##    ENSEMBL         ENTREZID      padj inGO  score
+##    &lt;chr&gt;           &lt;chr&gt;        &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
+##  1 ENSG00000101856 10857    1.36e-147 FALSE  -1  
+##  2 ENSG00000177494 79413    5.17e- 67 FALSE  -2  
+##  3 ENSG00000136159 55270    1.83e- 44 FALSE  -3  
+##  4 ENSG00000175315 1474     9.11e- 43 FALSE  -4  
+##  5 ENSG00000128245 7533     1.87e- 42 FALSE  -5  
+##  6 ENSG00000113272 54974    9.51e- 39 FALSE  -6  
+##  7 ENSG00000213853 2013     2.00e- 36 FALSE  -7  
+##  8 ENSG00000115107 55240    1.48e- 33 FALSE  -8  
+##  9 ENSG00000008513 6482     1.17e- 32 FALSE  -9  
+## 10 ENSG00000105855 3696     3.75e- 31 TRUE   28.1
+## # ℹ 14,002 more rows</code></pre>
 <div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="sec-gsea.html#cb294-1" tabindex="-1"></a><span class="fu">max</span>(res_tmp<span class="sc">$</span>score)</span></code></pre></div>
-<pre><code>## [1] 394.1317</code></pre>
+<pre><code>## [1] 2155.674</code></pre>
 <div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="sec-gsea.html#cb296-1" tabindex="-1"></a><span class="fu">plot</span>(res_tmp<span class="sc">$</span>score, <span class="at">type =</span> <span class="st">"l"</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/gsea_res-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests
@@ -1267,7 +1267,7 @@ ordering criteria in GSEA) provide different results.</p>
 <a href="sec-ms.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2024-10-30
+2024-10-31
  using 
 R version 4.4.1 (2024-06-14)
 </p>
