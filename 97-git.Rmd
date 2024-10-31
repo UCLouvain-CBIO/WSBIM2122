@@ -206,6 +206,7 @@ Bastien
 Alice and Bastien
 ```
   and then push again.
+
 - Alice can not pull to retrieve Bastien's changes from the remote.
 
 
