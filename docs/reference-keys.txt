@@ -156,7 +156,7 @@ introduction-to-git-and-github
 getting-started
 git-and-rstudio
 sec-install-git
-connect-rstudio-to-your-github-repo
+connect-rstudio-to-your-github-repository
 git-and-command-line
 handling-conflicts
 other-gitgithub-features-of-interest

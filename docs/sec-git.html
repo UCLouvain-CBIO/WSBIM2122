@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2024-10-31" />
+<meta name="date" content="2024-11-01" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -232,7 +232,7 @@ Git</a>.</p>
 <p>In the past, students have reported the difficulty of collaborative
 work on R code and Rmd files. Each student work with RStudio on their
 local computer, and share the code, report and data files on shared
-drive and/or send updates by email. Such a situaton may lead to a well
+drive and/or send updates by email. Such a situation may lead to a well
 known situation, nicely caught by the ‘notFinal.doc’ PhD Comic:</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:notFinal"></span>
@@ -245,7 +245,7 @@ Figure 11.1: The ‘notFinal.doc’ <a href="https://phdcomics.com/comics/archiv
 control’, used by data scientists, bioinformaticians and programmers
 around to world to keep track of changes in code, Rmd reports, or any
 other files, and efficiently collaborate among large and small teams.</p>
-<p>Although there exist many other verison control software, we will
+<p>Although there exist many other version control software, we will
 focus on <a href="https://git-scm.com/">Git</a> and
 <a href="https://github.com/">GitHub</a>, and these two are widely used.</p>
 </div>
@@ -307,17 +307,17 @@ for several people to work in parallel on the same set of files.</p>
 </h2>
 <p>Git is the automated version control software that we will be
 using. GitHub is a web interface to Git that allows to share a version
-control project over the internet, facilitates some operations to work
+control project over the interned, facilitates some operations to work
 collaboratively on-line and enables discussions (i.e. issues). Let’s
 start by explaining some fundamental Git concepts.</p>
 <div id="git" class="section level3 unnumbered">
 <h3>Git<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('git')" onmouseout="reset_tooltip('git-tooltip')"><span class="tooltiptext" id="git-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>In Git, the directory that contains all the files that need to be
-tracked/version controlled is called a <em>repository</em>. This would be
-equivalent to a RStudio project that one sets up before starting a new
-analysis. And as a matter of fact, later, we will use Git to version
-control an RStudio project.</p>
+tracked/version controlled is called a <em>repository</em> (often shortened
+to repo). This would be equivalent to a RStudio project that one sets
+up before starting a new analysis. And as a matter of fact, later, we
+will use Git to version control an RStudio project.</p>
 <p>When starting a new project that needs to be version controlled, the
 (typically) local directory needs to be <em>initiated</em> to use Git. Then
 individual files in that working directory can be <em>added</em> to the Git
@@ -350,9 +350,9 @@ reconstruct the previous version(s).</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:git2"></span>
 <p class="caption marginnote shownote">
-Figure 11.3: Version control with Git: modifiying files.
+Figure 11.3: Version control with Git: modifying files.
 </p>
-<img src="figs/git2.png" alt="Version control with Git: modifiying files." width="100%">
+<img src="figs/git2.png" alt="Version control with Git: modifying files." width="100%">
 </div>
 <p>The same process applies for file deletion: delete a file, add it to
 the staging are (these can be done in one step), and commit the
@@ -384,13 +384,13 @@ able to work as a team, the Git repository needs to be accessible to
 others, and GitHub allows this.</p>
 <p>The repository that we created above is a <em>local</em> repository, as it
 lives on a user’s local computer. Repositories can also live
-elsewhere, on another user’s computer, or a server; such a repositories
-are called a <em>remote</em> repositories.</p>
-<p>Let’s now start from an exisiting repository on GitHub. Creating a
+elsewhere, on another user’s computer, or a server; such a
+repositories are called a <em>remote</em> repositories.</p>
+<p>Let’s now start from an existing repository on GitHub. Creating a
 local copy of that repository and its content is done by an operation
 called <em>cloning</em>. Different users can of course clone the same remote.
-At the time of cloning, the content of the local and remote repositories
-are identical.</p>
+At the time of cloning, the content of the local and remote
+repositories are identical.</p>
 <p>The creation, modification and deletion of files is as described
 above: the user interacts with the files in their working directory
 and commits the changeset to their local repository. The changeset can
@@ -409,17 +409,18 @@ pushing are handled automatically by Git, except in case of
 conflict. A conflict happens when two users change the same part of a
 file:</p>
 <ul>
-<li>Alice and Bastien pull the latest changes and modify the empty <code>file1</code>
-by adding their name at the beginning of the file. Alice’s file
-looks like this in her local repository:</li>
+<li>Alice and Bastien pull the latest changes and modify the empty
+<code>file1</code> by adding their name at the beginning of the file. Alice’s
+file looks like this in her local repository:</li>
 </ul>
 <pre><code>Alice</code></pre>
 <p>And Bastien files looks like this in his local repository:</p>
 <pre><code>Bastien</code></pre>
 <ul>
 <li>Alice commits locally and pushes to the remote repository. <code>file1</code>
-in the remote and in Alice’s local repo are now identical, and Git
-recorded that the change was adding a new line containing <code>Alice</code>.</li>
+in the remote and in Alice’s local repository are now identical, and
+Git recorded that the change was adding a new line containing
+<code>Alice</code>.</li>
 <li>Bastien now also tries to push but gets an error because he pushes a
 file that contains a different first line that would override
 Alice’s commit. His update are rejected because the remote contains
@@ -445,7 +446,7 @@ conflicting modifications:</li>
 <div class="question-body">
 <ol style="list-style-type: decimal">
 <li><p>Create an account on <a href="https://github.com/">GitHub</a>. Choose your
-username wisely as you might want to reuse it later and will have to
+user name wisely as you might want to reuse it later and will have to
 share it.</p></li>
 <li><p>Create your own repository and open an issue on it.</p></li>
 </ol>
@@ -464,7 +465,7 @@ share it.</p></li>
 repository.</p>
 <ol style="list-style-type: decimal">
 <li><p>Reply to the first issue to verify that you’re able to access the
-repo.</p></li>
+repository.</p></li>
 <li><p>Create a new issue where you make a link to a file or a specific
 line of a file and assign it to yourself.</p></li>
 <li><p>Close that issue to mark it as done.</p></li>
@@ -525,9 +526,9 @@ the following command will install <code>git</code>:</p>
 <pre><code>sudo apt install git</code></pre>
 </div>
 </div>
-<div id="connect-rstudio-to-your-github-repo" class="section level3" number="11.5.2">
+<div id="connect-rstudio-to-your-github-repository" class="section level3" number="11.5.2">
 <h3>
-<span class="header-section-number">11.5.2</span> Connect RStudio to your GitHub repo<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('connect-rstudio-to-your-github-repo')" onmouseout="reset_tooltip('connect-rstudio-to-your-github-repo-tooltip')"><span class="tooltiptext" id="connect-rstudio-to-your-github-repo-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">11.5.2</span> Connect RStudio to your GitHub repository<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('connect-rstudio-to-your-github-repository')" onmouseout="reset_tooltip('connect-rstudio-to-your-github-repository-tooltip')"><span class="tooltiptext" id="connect-rstudio-to-your-github-repository-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>To connect RStudio to a GitHub repository, a personal access token
 (PAT) is needed. This will act as an identifier for a specific GitHub
@@ -545,8 +546,8 @@ anymore. GitHub security advises for 30 days but you can configure
 it to no expiration if you see fit. We advise to put the expiration
 date to at least the end of the semester, in case you want to use it
 for your projects.</li>
-<li>What this PAT allows to do, it is recommended to select repo, user,
-gist and workflow.</li>
+<li>What this PAT allows to do, it is recommended to select repository,
+user, gist and workflow.</li>
 </ul>
 <p>Once you’ve generated the token, it will appear. Be careful, it is the
 only time you’ll be able to see this PAT so it is advised to copy it
@@ -556,13 +557,13 @@ public.</p>
 <p>Once a PAT has been created, you can clone any GitHub repository on
 your local computer using RStudio. The easiest way of working with
 GitHub and RStudio is to have a GitHub repository first. The only
-thing needed from GitHub is the cloning https address of your repo. To
-get it, go the repo page, click the big green button that says “&lt;&gt;
-Code” and copy the HTTPS URL address.</p>
-<p>To clone your GitHub repo on your computer, open RStudio and create a
-new project. You’ll then be able to chose to create a Version Control
-project and choose Git. Then you just need to paste the HTTPS URL of
-your GitHub repo and it will be cloned as an R project.</p>
+thing needed from GitHub is the cloning https address of your
+repository. To get it, go the repository page, click the big green
+button that says “&lt;&gt; Code” and copy the HTTPS URL address.</p>
+<p>To clone your GitHub repository on your computer, open RStudio and
+create a new project. You’ll then be able to chose to create a Version
+Control project and choose Git. Then you just need to paste the HTTPS
+URL of your GitHub repository and it will be cloned as an R project.</p>
 <p>The project will open and a new Git tab will appear in the
 “environment” pane of RStudio. This is where you’ll be able to manage
 all things Git related. A file appears there once it has been added or
@@ -570,7 +571,7 @@ modified from the GitHub version. Once a file is modified, you can
 click on “Diff” to open a new window that will show you what has been
 changed in the selected file. You can then check the staged box, write
 a commit message and commit these changes. You then click push to send
-all that to GitHub. That’s when you’ll be asked to give your username
+all that to GitHub. That’s when you’ll be asked to give your user name
 and PAT. RStudio locally tends to remember the PAT so you shouldn’t
 have to put it again.</p>
 <p>Note : If RStudio doesn’t appear to find Git on your computer, go to
@@ -582,7 +583,7 @@ containing the names of the files that have to be ignored by git and
 not pushed to GitHub. This should usually contain your .Rproj but also
 all files bigger than 50 Mb as these cannot be pushed to GitHub.</p>
 <p>RStudio also allows you to have a look at the commit history, if you
-want to see all the changes that have been done to the repo.</p>
+want to see all the changes that have been done to the repository.</p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -593,10 +594,10 @@ want to see all the changes that have been done to the repo.</p>
 RStudio.</p></li>
 <li><p>Create a Rmd file locally on RStudio then stage, commit and push
 it.</p></li>
-<li><p>Modify that Rmd and knit it. When commiting, have a look at how the
+<li><p>Modify that Rmd and knit it. When committing, have a look at how the
 modification are showed to you. Push it on GitHub and go see the
 compiled result online. Also have a look at the commit online.</p></li>
-<li><p>Modify the readme file on GitHub and pull it locally.</p></li>
+<li><p>Modify the README file on GitHub and pull it locally.</p></li>
 </ol>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -609,8 +610,8 @@ compiled result online. Also have a look at the commit online.</p></li>
 <h2>
 <span class="header-section-number">11.6</span> Git and command line<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('git-and-command-line')" onmouseout="reset_tooltip('git-and-command-line-tooltip')"><span class="tooltiptext" id="git-and-command-line-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>It is still interesting to know that, usually, all these things are done through
-the command line. Here is how to do it :</p>
+<p>It is still interesting to know that, usually, all these things are
+done through the command line. Here is how to do it :</p>
 <ul>
 <li>Initialise a local repository</li>
 </ul>
@@ -655,13 +656,13 @@ Options &gt; Terminal &gt; New</em> <em>terminals open with</em></p>
 <p>This exercise will illustrate a merge conflict. To do so, work in
 pairs (called Alice and Bastien below).</p>
 <ol style="list-style-type: decimal">
-<li><p>Alice creates a GitHub repository and adds <code>file1</code> to the repo, and
+<li><p>Alice creates a GitHub repository and adds <code>file1</code> to the repository, and
 adds Bastien as a collaborator with write access: Settings &gt;
 Collaborators (in the left panel) &gt; Add people &gt; Search and add a
 GitHub user.</p></li>
 <li><p>Both Alice and Bastien clone to remote repository and add their names
 to <code>file1</code>.</p></li>
-<li><p>Alices commits her local changes and pushes them to the GitHub
+<li><p>Alice commits her local changes and pushes them to the GitHub
 repository.</p></li>
 <li><p>Bastien commits his local changes and tries to push them to the GitHub
 repository.</p></li>
@@ -677,7 +678,7 @@ adding both names.</p></li>
 </div>
 </div>
 <p>Using Git and Github is mostly a quite sailing on a calm sea. The only
-little annoying hickup are conflicts. It is best to avoid these by
+little annoying hick-up are conflicts. It is best to avoid these by
 coordinate work by keep local and remote repositories in sync:</p>
 <ul>
 <li>The easiest way to avoid conflicts is to always be in sync with the
@@ -696,7 +697,7 @@ when developing the new analysis;</li>
 independently of the whole pipeline;</li>
 <li>given that Git compares documents line by line to assess if it can
 merge them automatically, use shorter lines (i.e. split your
-sentences and paragraphes over more lines) to reduce the risk of
+sentences and paragraphs over more lines) to reduce the risk of
 conflicts.</li>
 </ul>
 <p>GitHub issues are a useful way to discuss any specific points and
@@ -729,10 +730,10 @@ any changes she sees fit, and push them back to her remote
 <code>Alice/WSBIM2122-GitHub-training</code>.</li>
 <li>She could now send a pull request to merge changes from
 <code>Alice/WSBIM2122-GitHub-training</code> back into
-<code>UCLouvain-CBIO/WSBIM2122-GitHub-training</code>. The PR can be inspected
-and reviewed and merged by a member of the
+<code>UCLouvain-CBIO/WSBIM2122-GitHub-training</code>. The pull request can be
+inspected and reviewed and merged by a member of the
 <code>UCLouvain-CBIO/WSBIM2122-GitHub-training</code>.</li>
-<li>Pull requests (of shortened PR) are also useful when multiple
+<li>Pull requests (often shortened PR) are also useful when multiple
 members of the same repository want their contributions to be
 reviewed by other team members. Using PRs within a team is useful so
 as to keep everybody informed about the changes different members
@@ -818,7 +819,7 @@ and helps manage conflicting changes made by different users.</p></li>
 <a href="sec-info.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2024-10-31
+2024-11-01
  using 
 R version 4.4.1 (2024-06-14)
 </p>
