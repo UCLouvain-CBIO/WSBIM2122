@@ -581,7 +581,18 @@ glossary](https://swcarpentry.github.io/git-novice/reference.html#glossary).
   version control system allows users to recover old commits reliably,
   and helps manage conflicting changes made by different users.
 
-### References
+### References {-}
 
-- *Happy Git and GitHub for the useR*, https://happygitwithr.com/
-- *Version Control with Git*, https://swcarpentry.github.io/git-novice
+- [Happy Git and GitHub for the useR](https://happygitwithr.com/).
+- [Version Control with Git](https://swcarpentry.github.io/git-novice).
+
+### Further reading {-}
+
+- Bryan J. (2017). [Excuse me, do you have a moment to talk about
+  version control?](https://doi.org/10.7287/peerj.preprints.3159v2)
+  PeerJ Preprints 5:e3159v2.
+- Perez-Riverol, Yasset, Laurent Gatto, Rui Wang, Timo Sachsenberg,
+  Julian Uszkoreit, Felipe da Veiga Leprevost, Christian Fufezan, et
+  al. (2016). [Ten Simple Rules for Taking Advantage of Git and
+  GitHub](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004947)
+  PLoS Computational Biology 12 (7): e1004947.

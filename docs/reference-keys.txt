@@ -161,7 +161,6 @@ git-and-command-line
 handling-conflicts
 other-gitgithub-features-of-interest
 glossary-and-references
-references-2
 sec-info
 available-platforms
 project-reports
