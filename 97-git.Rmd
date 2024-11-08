@@ -67,10 +67,11 @@ are not the same as automatic version control:
   Google docs or Microsoft Office 365).
 - Once a track change is accepted or rejected, it isn't possible to
   return to previous version. Google and Microsoft OneDrive documents
-  do allow this.
-- Track changes are only applicable to their respective formats, and
-  not to code files, Rmd documents, or other text-based files.
-- Track changes work on a single file, while version control records
+  do allow this (and this require on-line access).
+- Track changes are only applicable to their respective formats (odt,
+  docx, ...), and not to code files, Rmd documents, or any other
+  text-based files.
+- Track changes work on a single file, while version control tracks
   changes in all files of a project.
 - When editing code, it is essential to keep a valid source code file
   and functioning versions of the code, which in turn isn't possible
