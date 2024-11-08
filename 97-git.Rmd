@@ -238,7 +238,7 @@ repository.
    repository.
 
 2. Create a new issue where you make a link to a file or a specific
-   line of a file and assign it to yourself.
+   line of a file and tag either @lagtto or @JulieDevis.
 
 3. Close that issue to mark it as done.
 
