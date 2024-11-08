@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2024-11-02" />
+<meta name="date" content="2024-11-08" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -230,10 +230,10 @@ Git</a>.</p>
 <span class="header-section-number">11.1</span> Motivation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('motivation')" onmouseout="reset_tooltip('motivation-tooltip')"><span class="tooltiptext" id="motivation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>In the past, students have reported the difficulty of collaborative
-work on R code and Rmd files. Each student work with RStudio on their
-local computer, and share the code, report and data files on shared
-drive and/or send updates by email. Such a situation may lead to a well
-known situation, nicely caught by the ‘notFinal.doc’ PhD Comic:</p>
+work on R code and Rmd files. Student work with RStudio on their local
+computer, and share their code, report and data files on a shared
+drive and/or send updates by email. Such a situation may lead to a
+well known situation, nicely caught by the ‘notFinal.doc’ PhD Comic:</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:notFinal"></span>
 <p class="caption marginnote shownote">
@@ -244,7 +244,10 @@ Figure 11.1: The ‘notFinal.doc’ <a href="https://phdcomics.com/comics/archiv
 <p>The goal of this chapter is to introduce students to ‘version
 control’, used by data scientists, bioinformaticians and programmers
 around to world to keep track of changes in code, Rmd reports, or any
-other files, and efficiently collaborate among large and small teams.</p>
+other (text-based) files, and efficiently collaborate among small and
+large teams. Version control is also relevant for solo projects, with
+a single developer, that care about reproducibility and traceability
+of their code and results.</p>
 <p>Although there exist many other version control software, we will
 focus on <a href="https://git-scm.com/">Git</a> and
 <a href="https://github.com/">GitHub</a>, and these two are widely used.</p>
@@ -260,10 +263,11 @@ changes can originate from different users that have made independent
 changes to the same document.</p>
 <p>If two users modify the <em>same</em> part of the document at the <em>same</em> time
 on their respective computers, a <strong>conflict</strong> will occur, that can’t
-be automatically merged by the software (that can’t decide whose
-changes should be kept and whose should be discarded), and would thus
-have to be resolved by hand. In all other cases, changes are recorded
-and managed automatically by the version control software.</p>
+be automatically merged by the software (the software can’t decide
+whose changes should be kept and whose should be discarded, or how to
+merge them), and would thus have to be resolved by hand. In all other
+cases, changes are recorded and managed automatically by the version
+control software.</p>
 <p>In addition to the actual changes to the file(s), the version control
 software also records metadata about the changes, such as who did the
 changes and when they were done.</p>
@@ -286,10 +290,11 @@ a user is connected to an on-line version of the editor (such as
 Google docs or Microsoft Office 365).</li>
 <li>Once a track change is accepted or rejected, it isn’t possible to
 return to previous version. Google and Microsoft OneDrive documents
-do allow this.</li>
-<li>Track changes are only applicable to their respective formats, and
-not to code files, Rmd documents, or other text-based files.</li>
-<li>Track changes work on a single file, while version control records
+do allow this (and this require on-line access).</li>
+<li>Track changes are only applicable to their respective formats (odt,
+docx, …), and not to code files, Rmd documents, or any other
+text-based files.</li>
+<li>Track changes work on a single file, while version control tracks
 changes in all files of a project.</li>
 <li>When editing code, it is essential to keep a valid source code file
 and functioning versions of the code, which in turn isn’t possible
@@ -830,7 +835,7 @@ PLoS Computational Biology 12 (7): e1004947.</li>
 <a href="sec-info.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2024-11-02
+2024-11-08
  using 
 R version 4.4.1 (2024-06-14)
 </p>
