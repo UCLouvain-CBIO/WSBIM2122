@@ -7,10 +7,10 @@ Git](https://swcarpentry.github.io/git-novice).
 ## Motivation
 
 In the past, students have reported the difficulty of collaborative
-work on R code and Rmd files. Each student work with RStudio on their
-local computer, and share the code, report and data files on shared
-drive and/or send updates by email. Such a situation may lead to a well
-known situation, nicely caught by the 'notFinal.doc' PhD Comic:
+work on R code and Rmd files. Student work with RStudio on their local
+computer, and share their code, report and data files on a shared
+drive and/or send updates by email. Such a situation may lead to a
+well known situation, nicely caught by the 'notFinal.doc' PhD Comic:
 
 
 ```{r notFinal, fig.cap="The 'notFinal.doc' [PhD Comic](https://phdcomics.com/comics/archive.php?comicid=1531), describing the very real struggle with trying to handle version with file names.", echo=FALSE, purl=FALSE, out.width='100%', fig.align='center'}
