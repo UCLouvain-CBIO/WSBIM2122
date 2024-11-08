@@ -39,10 +39,11 @@ changes to the same document.
 
 If two users modify the *same* part of the document at the *same* time
 on their respective computers, a **conflict** will occur, that can't
-be automatically merged by the software (that can't decide whose
-changes should be kept and whose should be discarded), and would thus
-have to be resolved by hand. In all other cases, changes are recorded
-and managed automatically by the version control software.
+be automatically merged by the software (the software can't decide
+whose changes should be kept and whose should be discarded, or how to
+merge them), and would thus have to be resolved by hand. In all other
+cases, changes are recorded and managed automatically by the version
+control software.
 
 In addition to the actual changes to the file(s), the version control
 software also records metadata about the changes, such as who did the
