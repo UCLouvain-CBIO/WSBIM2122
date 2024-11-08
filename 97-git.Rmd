@@ -203,7 +203,7 @@ Bastien
   `Alice`.
 - Bastien now also tries to push but gets an error because he pushes a
   file that contains a different first line that would override
-  Alice's commit. His update are rejected because the remote contains
+  Alice's commit. His update is rejected because the remote contains
   work that he does not have locally. If he wants to integrate the
   remote changes, he first needs to pull these changes, *resolve* the
   conflicting modifications:
