@@ -178,10 +178,10 @@ can *pull* these latest changes to their local repository.
 knitr::include_graphics("figs/git3.png")
 ```
 
-The synchronisation of local and remote changes while pulling and
-pushing are handled automatically by Git, except in case of
-conflict. A conflict happens when two users change the same part of a
-file:
+The synchronisation (called merging) of local and remote changes while
+pulling and pushing are handled automatically by Git, except in case
+of conflict. A conflict happens when two users change the same part of
+a file:
 
 - Alice and Bastien pull the latest changes and modify the empty
   `file1` by adding their name at the beginning of the file. Alice's
