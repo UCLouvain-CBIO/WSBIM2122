@@ -20,7 +20,10 @@ knitr::include_graphics("figs/phd101212s.png")
 The goal of this chapter is to introduce students to 'version
 control', used by data scientists, bioinformaticians and programmers
 around to world to keep track of changes in code, Rmd reports, or any
-other files, and efficiently collaborate among large and small teams.
+other (text-based) files, and efficiently collaborate among small and
+large teams. Version control is also relevant for solo projects, with
+a single developer, that care about reproducibility and traceability
+of their code and results.
 
 Although there exist many other version control software, we will
 focus on [Git](https://git-scm.com/) and
