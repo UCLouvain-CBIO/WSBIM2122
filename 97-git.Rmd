@@ -230,7 +230,7 @@ share it.
 
 `r msmbstyle::question_begin()`
 
-You have now been added to the
+Let now use the
 [WSBIM2122-GitHub-training](https://github.com/UCLouvain-CBIO/WSBIM2122-GitHub-training)
 repository.
 
