@@ -343,7 +343,7 @@ as an instance of class `SummarizedExperiment`. We also use the
 peptide sequences and specify that the file is a tab-separated table.
 
 ```{r}
-cptac_se <- readSummarizedExperiment(f, ecol = i, fnames = "Sequence", sep = "\t")
+cptac_se <- readSummarizedExperiment(f, quantCols = i, fnames = "Sequence", sep = "\t")
 cptac_se
 ```
 
@@ -834,7 +834,7 @@ data](./data/cptac_a_b_c_peptides.txt) including a third condition
 ```{r, echo = FALSE}
 f <- "./data/cptac_a_b_c_peptides.txt"
 i <- grep("Intensity\\.", names(read.delim(f)))
-cptac2 <- readSummarizedExperiment(f, ecol = i,
+cptac2 <- readSummarizedExperiment(f, quantCols = i,
                                    sep = "\t",
                                    fnames = "Sequence")
 colnames(cptac2) <- sub("I.+\\.", "", colnames(cptac2))

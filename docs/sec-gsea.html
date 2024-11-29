@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto" />
 
-<meta name="date" content="2024-11-08" />
+<meta name="date" content="2024-11-29" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -227,7 +227,7 @@ to address the following points:</p>
 <li>Why are enrichment analyses useful?</li>
 <li>Understanding over representation analyses.</li>
 <li>Understanding a gene set enrichment analysis.</li>
-<li>Application of the <em><a href="https://bioconductor.org/packages/3.19/clusterProfiler">clusterProfiler</a></em> package.</li>
+<li>Application of the <em><a href="https://bioconductor.org/packages/3.20/clusterProfiler">clusterProfiler</a></em> package.</li>
 </ul>
 <div id="introduction" class="section level2" number="6.1">
 <h2>
@@ -293,7 +293,7 @@ Figure 6.1: Gene ontology entry for the GO term for cell adhesion.
 <img src="figs/go-screenshot.png" alt="Gene ontology entry for the GO term for cell adhesion." width="100%">
 </div>
 <p>The whole Gene Ontology is can be accessed in R with the
-<em><a href="https://bioconductor.org/packages/3.19/GO.db">GO.db</a></em> package.</p>
+<em><a href="https://bioconductor.org/packages/3.20/GO.db">GO.db</a></em> package.</p>
 <p>In the code chunk below, we query the <code>GO.db</code> package through the
 <code>org.Hs.eg.db</code> interface. This <em>org.db</em>-type of packages for Homo
 sapiens enables to perform various queries for human genes, such as
@@ -308,13 +308,13 @@ junction (HAJ).</code></pre>
 <div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="sec-gsea.html#cb260-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"GO.db"</span>)</span>
 <span id="cb260-2"><a href="sec-gsea.html#cb260-2" tabindex="-1"></a>GO.db</span></code></pre></div>
 <pre><code>## GODb object:
-## | GOSOURCENAME: Gene Ontology
-## | GOSOURCEURL: http://current.geneontology.org/ontology/go-basic.obo
-## | GOSOURCEDATE: 2024-01-17
+## | GOSOURCENAME: 
+## | GOSOURCEURL: 
+## | GOSOURCEDATE: 
 ## | Db type: GODb
 ## | package: AnnotationDbi
 ## | DBSCHEMA: GO_DB
-## | GOEGSOURCEDATE: 2024-Mar12
+## | GOEGSOURCEDATE: 2024-Sep20
 ## | GOEGSOURCENAME: Entrez Gene
 ## | GOEGSOURCEURL: ftp://ftp.ncbi.nlm.nih.gov/gene/DATA
 ## | DBSCHEMAVERSION: 2.1</code></pre>
@@ -343,7 +343,7 @@ junction (HAJ).</code></pre>
 <span id="cb268-7"><a href="sec-gsea.html#cb268-7" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">duplicated</span>(ENTREZID))</span></code></pre></div>
 <pre><code>## 'select()' returned 1:many mapping between keys and columns</code></pre>
 <div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="sec-gsea.html#cb270-1" tabindex="-1"></a>GO_0005925</span></code></pre></div>
-<pre><code>## # A tibble: 421 × 5
+<pre><code>## # A tibble: 424 × 5
 ##    GO         EVIDENCE ONTOLOGY ENTREZID SYMBOL
 ##    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt; 
 ##  1 GO:0005925 HDA      CC       60       ACTB  
@@ -356,9 +356,9 @@ junction (HAJ).</code></pre>
 ##  8 GO:0005925 HDA      CC       102      ADAM10
 ##  9 GO:0005925 HDA      CC       118      ADD1  
 ## 10 GO:0005925 HDA      CC       214      ALCAM 
-## # ℹ 411 more rows</code></pre>
-<p>We have 421 genes matching this GO term. There are
-thus 421 genes in the GO_0005925 GO set.</p>
+## # ℹ 414 more rows</code></pre>
+<p>We have 424 genes matching this GO term. There are
+thus 424 genes in the GO_0005925 GO set.</p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -390,7 +390,7 @@ continually during the cell-division cycle.</code></pre>
 <span id="cb273-6"><a href="sec-gsea.html#cb273-6" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">duplicated</span>(ENTREZID))</span></code></pre></div>
 <pre><code>## 'select()' returned 1:many mapping between keys and columns</code></pre>
 <div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="sec-gsea.html#cb275-1" tabindex="-1"></a>GO_0005813</span></code></pre></div>
-<pre><code>## # A tibble: 637 × 5
+<pre><code>## # A tibble: 627 × 5
 ##    GO         EVIDENCE ONTOLOGY ENTREZID SYMBOL
 ##    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt; 
 ##  1 GO:0005813 IDA      CC       35       ACADS 
@@ -402,8 +402,8 @@ continually during the cell-division cycle.</code></pre>
 ##  7 GO:0005813 ISS      CC       472      ATM   
 ##  8 GO:0005813 IBA      CC       582      BBS1  
 ##  9 GO:0005813 IDA      CC       585      BBS4  
-## 10 GO:0005813 IBA      CC       595      CCND1 
-## # ℹ 627 more rows</code></pre>
+## 10 GO:0005813 IDA      CC       598      BCL2L1
+## # ℹ 617 more rows</code></pre>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -428,7 +428,7 @@ Figure 6.2: KEGG pathway for cell cycle.
 </p>
 <img src="figs/hsa04110.png" alt="KEGG pathway for cell cycle." width="100%">
 </div>
-<p>The <em><a href="https://bioconductor.org/packages/3.19/KEGGREST">KEGGREST</a></em> package provides a client interface to the KEGG server.</p>
+<p>The <em><a href="https://bioconductor.org/packages/3.20/KEGGREST">KEGGREST</a></em> package provides a client interface to the KEGG server.</p>
 </div>
 <div id="reactome" class="section level3" number="6.2.3">
 <h3>
@@ -436,7 +436,7 @@ Figure 6.2: KEGG pathway for cell cycle.
 </h3>
 <p>Alike KEGG patway, <a href="https://reactome.org/">Reactome</a> is a free,
 open-source, curated and peer-reviewed pathway database. The
-Bioconductor <em><a href="https://bioconductor.org/packages/3.19/reactome.db">reactome.db</a></em> package provides
+Bioconductor <em><a href="https://bioconductor.org/packages/3.20/reactome.db">reactome.db</a></em> package provides
 access to reactome maps and annotations within R.</p>
 </div>
 <div id="molecular-signatures-database-msigdb" class="section level3" number="6.2.4">
@@ -485,7 +485,7 @@ have been tested) and that have unique ENTREZ gene identifiers.</p>
 <span id="cb277-5"><a href="sec-gsea.html#cb277-5" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">ENTREZID =</span> <span class="fu">as.character</span>(ENTREZID))</span>
 <span id="cb277-6"><a href="sec-gsea.html#cb277-6" tabindex="-1"></a></span>
 <span id="cb277-7"><a href="sec-gsea.html#cb277-7" tabindex="-1"></a>res_tbl</span></code></pre></div>
-<pre><code>## # A tibble: 14,014 × 9
+<pre><code>## # A tibble: 14,006 × 9
 ##    ENSEMBL         gene   ENTREZID baseMean log2FoldChange lfcSE  stat    pvalue
 ##    &lt;chr&gt;           &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
 ##  1 ENSG00000101856 PGRMC1 10857       1209.          -4.67 0.178 -26.2 8.24e-152
@@ -498,7 +498,7 @@ have been tested) and that have unique ENTREZ gene identifiers.</p>
 ##  8 ENSG00000115107 STEAP3 55240        193.           3.44 0.271  12.7 7.18e- 37
 ##  9 ENSG00000008513 ST3GA… 6482        1419.           3.00 0.240  12.5 6.39e- 36
 ## 10 ENSG00000105855 ITGB8  3696        6134.           2.18 0.178  12.2 2.26e- 34
-## # ℹ 14,004 more rows
+## # ℹ 13,996 more rows
 ## # ℹ 1 more variable: padj &lt;dbl&gt;</code></pre>
 </div>
 </div>
@@ -586,8 +586,8 @@ and non-DE genes that are not in the set:</p>
 <span id="cb280-3"><a href="sec-gsea.html#cb280-3" tabindex="-1"></a><span class="fu">colnames</span>(cont_mat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"GO"</span>, <span class="st">"not_GO"</span>)</span>
 <span id="cb280-4"><a href="sec-gsea.html#cb280-4" tabindex="-1"></a>cont_mat</span></code></pre></div>
 <pre><code>##         GO not_GO
-## DE     158   4039
-## not_DE 210   9607</code></pre>
+## DE     159   4037
+## not_DE 210   9600</code></pre>
 <p>We can now apply a Fisher’s exact (or hypergeometric test) that will
 test whether we can identify a statistically enrichment of DE genes in
 the GO category.</p>
@@ -596,13 +596,13 @@ the GO category.</p>
 ##  Fisher's Exact Test for Count Data
 ## 
 ## data:  cont_mat
-## p-value = 6.091e-08
+## p-value = 4.253e-08
 ## alternative hypothesis: true odds ratio is greater than 1
 ## 95 percent confidence interval:
-##  1.491543      Inf
+##  1.501133      Inf
 ## sample estimates:
 ## odds ratio 
-##   1.789422</code></pre>
+##   1.800321</code></pre>
 <p>Note that we could keep the default <code>alternative = "two.sided"</code> to
 test to over or under representation.</p>
 <div class="question">
@@ -647,7 +647,7 @@ p-values. This is already the case for our <code>res_tbl</code> table. We also
 need to know which genes are in our set of interest.</p>
 <div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="sec-gsea.html#cb284-1" tabindex="-1"></a>res_tbl<span class="sc">$</span>inGO <span class="ot">&lt;-</span> res_tbl<span class="sc">$</span>ENTREZID <span class="sc">%in%</span> GO_0005925<span class="sc">$</span>ENTREZID</span>
 <span id="cb284-2"><a href="sec-gsea.html#cb284-2" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">select</span>(res_tbl, ENTREZID, padj, inGO)</span></code></pre></div>
-<pre><code>## # A tibble: 14,014 × 3
+<pre><code>## # A tibble: 14,006 × 3
 ##    ENTREZID      padj inGO 
 ##    &lt;chr&gt;        &lt;dbl&gt; &lt;lgl&gt;
 ##  1 10857    1.36e-147 FALSE
@@ -660,7 +660,7 @@ need to know which genes are in our set of interest.</p>
 ##  8 55240    1.48e- 33 FALSE
 ##  9 6482     1.17e- 32 FALSE
 ## 10 3696     3.75e- 31 TRUE 
-## # ℹ 14,004 more rows</code></pre>
+## # ℹ 13,996 more rows</code></pre>
 <p>We are now going to compute a score by traversing to ordered gene list
 and count a positive score when we encounter a gene in the gene set,
 and a -1 when the gene is not in the gene set. The positive score,
@@ -737,7 +737,7 @@ adjusted p-value above) and compute a new GSEA score.</p>
 <span id="cb292-20"><a href="sec-gsea.html#cb292-20" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">score =</span> <span class="fu">cumsum</span>(score))</span>
 <span id="cb292-21"><a href="sec-gsea.html#cb292-21" tabindex="-1"></a></span>
 <span id="cb292-22"><a href="sec-gsea.html#cb292-22" tabindex="-1"></a>res_tmp</span></code></pre></div>
-<pre><code>## # A tibble: 22,224 × 5
+<pre><code>## # A tibble: 22,214 × 5
 ##    ENSEMBL         ENTREZID   padj inGO  score
 ##    &lt;chr&gt;           &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt; &lt;dbl&gt;
 ##  1 ENSG00000278267 102466751 0.998 FALSE    -1
@@ -750,9 +750,9 @@ adjusted p-value above) and compute a new GSEA score.</p>
 ##  8 ENSG00000229344 107075310 0.998 FALSE    -8
 ##  9 ENSG00000248527 106480796 0.998 FALSE    -9
 ## 10 ENSG00000198744 107075270 0.998 FALSE   -10
-## # ℹ 22,214 more rows</code></pre>
+## # ℹ 22,204 more rows</code></pre>
 <div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="sec-gsea.html#cb294-1" tabindex="-1"></a><span class="fu">max</span>(res_tmp<span class="sc">$</span>score)</span></code></pre></div>
-<pre><code>## [1] 394.1317</code></pre>
+<pre><code>## [1] 395.3187</code></pre>
 <div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="sec-gsea.html#cb296-1" tabindex="-1"></a><span class="fu">plot</span>(res_tmp<span class="sc">$</span>score, <span class="at">type =</span> <span class="st">"l"</span>)</span></code></pre></div>
 <p><img src="WSBIM2122_files/figure-html/gsea_res-1.png" width="672"></p>
 <p>This approach is very time consuming, given that the statistical tests
@@ -888,7 +888,7 @@ be done in different ways and lead to different results.</p>
 <a href="http://bioconductor.org/packages/release/BiocViews.html#___GeneSetEnrichment">the very
 many</a>
 packages that are available.
-Here, we will demonstrate <em><a href="https://bioconductor.org/packages/3.19/clusterProfiler">clusterProfiler</a></em><label for="tufte-sn-12" class="margin-toggle sidenote-number">12</label><input type="checkbox" id="tufte-sn-12" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">12</span> <a href="https://yulab-smu.top/clusterProfiler-book/" class="uri">https://yulab-smu.top/clusterProfiler-book/</a></span>,
+Here, we will demonstrate <em><a href="https://bioconductor.org/packages/3.20/clusterProfiler">clusterProfiler</a></em><label for="tufte-sn-12" class="margin-toggle sidenote-number">12</label><input type="checkbox" id="tufte-sn-12" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">12</span> <a href="https://yulab-smu.top/clusterProfiler-book/" class="uri">https://yulab-smu.top/clusterProfiler-book/</a></span>,
 that itself relies on other packages to perform the GSEA-related computations.</p>
 <div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="sec-gsea.html#cb306-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"clusterProfiler"</span>)</span></code></pre></div>
 <p>These dedicated packages will perform either of the two tests (or
@@ -1267,7 +1267,7 @@ ordering criteria in GSEA) provide different results.</p>
 <a href="sec-ms.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2024-11-08
+2024-11-29
  using 
 R version 4.4.1 (2024-06-14)
 </p>
