@@ -62,6 +62,11 @@ These terms are classed into three categories, called *namespaces*:
 - Biological Process (BP): pathways and larger processes made up of
   the activities of multiple gene products
 
+See also [Gene Ontology annotations: what they mean and where they
+come
+from](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-9-S5-S2)
+[@Hill:2008] for more details.
+
 Here's an example of GO term `GO:0007155`, that describes cell adhesion.
 
 ```
