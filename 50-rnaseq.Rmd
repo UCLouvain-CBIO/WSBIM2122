@@ -34,24 +34,24 @@ knitr::include_graphics("./figs/deseq2_steps.png")
 ### Size factor estimation
 
 DESeq2 expects as an input a matrix of raw counts (un-normalised counts).
-These counts are supposed to reflect gene abundance (what we are interested in), 
-but they are also dependent on other less interesting factors such as gene length, 
-sequencing biases, sequencing depth or library composition. DESeq2 will estimate 
-scaling factors that will be used internally to account for the “uninteresting” 
-factors rendering the expression levels more comparable between samples. 
+These counts are supposed to reflect gene abundance (what we are interested in),
+but they are also dependent on other less interesting factors such as gene length,
+sequencing biases, sequencing depth or library composition. DESeq2 will estimate
+scaling factors that will be used internally to account for the “uninteresting”
+factors rendering the expression levels more comparable between samples.
 
 
 - **Gene length**
 
 As illustrated in the example below, gene 1 and gene 2 have similar levels of expression,
 but many more reads map to gene 2 than to gene 1. This might not be related to biology
-but it could just reflect the fact that gene 2 is longer. Taking into account gene lengths 
-in the normalisation procedure is important when the purpose is to compare gene expression 
-levels within the same sample. However, for differential expression analysis, as gene 
-expression levels are compared between samples, it is not necessary to use gene lengths to 
-estimate the scaling factors (it is even not recommended). It was just mentioned here for 
-information because many RNAseq common normalisation methods such as TPM (transcripts per 
-million), FPKM (fragments per million), or RPKM (reads per million) take into account gene 
+but it could just reflect the fact that gene 2 is longer. Taking into account gene lengths
+in the normalisation procedure is important when the purpose is to compare gene expression
+levels within the same sample. However, for differential expression analysis, as gene
+expression levels are compared between samples, it is not necessary to use gene lengths to
+estimate the scaling factors (it is even not recommended). It was just mentioned here for
+information because many RNA-seq common normalisation methods such as TPM (transcripts per
+million), FPKM (fragments per million), or RPKM (reads per million) take into account gene
 lengths.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
@@ -129,7 +129,7 @@ zero. This will hence automatically eliminate genes expressed in some
 samples but not in others and will help to focus the scaling factor on
 housekeeping genes.
 
-**Step 4**: Normalised counts can be obtained by dividing each raw count 
+**Step 4**: Normalised counts can be obtained by dividing each raw count
 values in a given sample by that sample’s scaling factor.
 
 ```{r, echo=FALSE, fig.align='center', out.width='100%', purl=TRUE}
@@ -139,7 +139,7 @@ knitr::include_graphics("./figs/SF_steps.png")
 ### Count modeling
 
 Let's first have a look at the counts distribution for a typical
-RNAseq sample:
+RNA-seq sample:
 
 ```{r, echo=FALSE, fig.align='center', out.width='80%', purl=TRUE}
 knitr::include_graphics("./figs/distribution_of_counts.png")
@@ -154,13 +154,13 @@ As seen in the [WSBIM1322 course](http://bit.ly/WSBIM1322) with the
 example of the coin toss, count data are often modelised by a binomial
 distribution with parameters n and p where p is the discrete
 probability distribution of the number of successes in a sequence of n
-independent experiments. In an RNAseq experiment, p would be the
+independent experiments. In an RNA-seq experiment, p would be the
 probability of getting a read associated to a particular gene given
 that n total number of reads were sequenced in the
 experiment. However, when n is large and p is low, Poisson
 distribution is used instead of binomial. It describes typically the
 distribution of a rare event in a large population, which fits better
-to RNAseq. Indeed, for each sample, the total number of reads tends to
+to RNA-seq. Indeed, for each sample, the total number of reads tends to
 be in millions, while the counts per gene can vary considerably but
 tend to be in tens, hundreds or thousands. Therefore, the chance of a
 given read to be mapped to any specific gene is extremely small.
@@ -174,18 +174,18 @@ that the variance equals the mean.
 $$K_{ij} \sim P(µ_{ij} = \sigma^2_{ij})$$
 
 
-Applying a Poisson distribution to
-Rnaseq counts holds true when comparing technical replicates from a
-same sample, where the variance only reflects the counting noise. But
-when comparing biological replicates, counting noise is not the only
-source of variance. The observed count values for each gene within
-biological replicates fluctuate more importantly, due to the
-combination of biological and technical factors: inter-individual
-variations in gene expression, sample purity, cell reponses to
-environment (e.g. heat-shock)... Due to this overdispersion, the
-Poisson distribution doesn't fit that well to RNAseq counts.
+Applying a Poisson distribution to RNA-seq counts holds true when
+comparing technical replicates from a same sample, where the variance
+only reflects the counting noise. But when comparing biological
+replicates, counting noise is not the only source of variance. The
+observed count values for each gene within biological replicates
+fluctuate more importantly, due to the combination of biological and
+technical factors: inter-individual variations in gene expression,
+sample purity, cell reponses to environment (e.g. heat-shock)... Due
+to this overdispersion, the Poisson distribution doesn't fit that well
+to RNA-seq counts.
 
-Actually, RNAseq counts are better modelised by an alternative
+Actually, RNA-seq counts are better modelised by an alternative
 distribution, the negative-binomial. It is derived from the Poisson
 distribution but the negative-binomial distribution has, in addition
 to the mean parameter, an extra parameter $α$ called the “dispersion”
@@ -237,7 +237,7 @@ knitr::include_graphics("./figs/dispersion_plot.png")
 ```
 
 Note that the dispersion plot highlights an intrinsic feature of
-RNAseq data: genes with low read counts show substantially higher
+RNA-seq data: genes with low read counts show substantially higher
 dispersion than highly expressed genes.
 
 **Step 2: A curve is fitted to gene-wise dispersion estimates**. A
@@ -252,9 +252,9 @@ distribution of reasonable estimates of dispersion.
 values predicted by the curve**.  Initial gene-wise dispersion
 estimates will be shrinked (by an empirical Bayes approach) towards
 this fitted curve to obtain the final dispersion estimates. The strength
-of the shrinkage for each gene will depend on how close the dispersion 
-values are from the curve, and on the number of samples available (the 
-more sample (as the sample size increases, the shrinkage decreases in 
+of the shrinkage for each gene will depend on how close the dispersion
+values are from the curve, and on the number of samples available (the
+more sample (as the sample size increases, the shrinkage decreases in
 strength, and eventually becomes negligible).
 adjusted dispersion values are represented by the blue dots in the
 dispersion plot. For a certain number of genes, the adjusted
@@ -284,7 +284,7 @@ knitr::include_graphics("./figs/disp_shrinkage.png")
 
 DESeq2 fits a generalized linear model of the form: $$log2(q_{ij}) = \Sigma x_j.β_i$$
 
-where the parameter $q_{ij}$ is proportional to the expected true concentration of 
+where the parameter $q_{ij}$ is proportional to the expected true concentration of
 gene i for sample j:
 
 $$ q_{ij} = \frac{µ_{ij}}{SizeFactor_{j}} $$
@@ -341,7 +341,7 @@ chance that the wrong decision is made (resulting in a false
 positive). But remember the problematic of multiple testing seen in
 chapter 7 from [WSBIM1322 course](http://bit.ly/WSBIM1322).
 
-In a typical RNAseq differential expression analysis, we might have
+In a typical RNA-seq differential expression analysis, we might have
 about 20,000 genes to test and usually only a fraction of genes is
 really differentially expressed.  Imagine a drug treatment that
 modifies the expression of about 1000 genes, but that has no impact on
@@ -432,7 +432,7 @@ We will run a DESeq2 analysis using real data.
 ### Construct DESeqDataSet object
 
 Let's first load the count matrix and the sample metadata.
-This dataset corresponds to RNAseq data from a cell line
+This dataset corresponds to RNA-seq data from a cell line
 treated or not by a siRNA.
 
 ```{r}
@@ -474,7 +474,7 @@ As for SummarizedExperiments (see chapter 3 from [WSBIM1322 course](http://bit.l
 
 `r msmbstyle::question_begin()`
 
-Access the count data from the dds object and plot the count distributions 
+Access the count data from the dds object and plot the count distributions
 of each sample.
 
 `r msmbstyle::question_end()`
@@ -484,7 +484,7 @@ of each sample.
 
 ```{r}
 as_tibble(assay(dds), rownames = "gene") %>%
-  pivot_longer(names_to = "sample", values_to = "counts", cols = 2:7) %>% 
+  pivot_longer(names_to = "sample", values_to = "counts", cols = 2:7) %>%
   ggplot(aes(x = log2(counts + 1), fill = sample)) +
   geom_histogram(bins = 20) +
   facet_wrap(~ sample)
@@ -492,12 +492,12 @@ as_tibble(assay(dds), rownames = "gene") %>%
 
 `r msmbstyle::solution_end()`
 
-The count matrix contains many rows with only zeros. We can start by removing 
-these rows of the dds object as anyway no statistical test can be done on 
+The count matrix contains many rows with only zeros. We can start by removing
+these rows of the dds object as anyway no statistical test can be done on
 these genes that have no variation in their counts (equal to 0 in all samples).
 
-It is not necessary to pre-filter low count genes before running 
-the DESeq2 functions, but by removing rows containing only zeros, we reduce the 
+It is not necessary to pre-filter low count genes before running
+the DESeq2 functions, but by removing rows containing only zeros, we reduce the
 memory size of the `dds` object and increase the speed of the analysis.
 Additional filtering to improve power will be applied later.
 
@@ -530,7 +530,7 @@ Before anything else, a good practice is to explore the data
 and perform quality controls checks.
 
 
-It is highly recommended to starts by a PCA to assess overall similarity between 
+It is highly recommended to starts by a PCA to assess overall similarity between
 the samples:
 
 - Which samples are similar/different to each other?
@@ -554,19 +554,19 @@ knitr::include_graphics("./figs/PCA_outlier.png")
 `r msmbstyle::question_end()`
 
 Remember that if one performs PCA directly on a matrix of normalised read counts,
-the result typically depends only on the few most strongly expressed genes 
-because they show the largest absolute differences between samples. 
-A simple and often used strategy to avoid this is to take the logarithm of the 
-normalised count values plus a small pseudocount; however, now the genes with 
-low counts tend to dominate the results because, due to the strong Poisson noise 
-inherent to small count values, they show the strongest relative differences 
-between samples. As a solution, DESeq2 offers the regularized-logarithm 
-transformation `rlog()`. 
+the result typically depends only on the few most strongly expressed genes
+because they show the largest absolute differences between samples.
+A simple and often used strategy to avoid this is to take the logarithm of the
+normalised count values plus a small pseudocount; however, now the genes with
+low counts tend to dominate the results because, due to the strong Poisson noise
+inherent to small count values, they show the strongest relative differences
+between samples. As a solution, DESeq2 offers the regularized-logarithm
+transformation `rlog()`.
 
-For genes with high counts, the rlog transformation 
-differs not much from an ordinary log2 transformation. However for genes with 
-lower counts, the transformation moderates the variance across the mean, 
-shrunking the values towards the genes’ averages across all samples. 
+For genes with high counts, the rlog transformation
+differs not much from an ordinary log2 transformation. However for genes with
+lower counts, the transformation moderates the variance across the mean,
+shrunking the values towards the genes’ averages across all samples.
 See `?rlog` for more details about the function.
 
 
@@ -576,15 +576,15 @@ rld <- rlogTransformation(dds)
 
 `r msmbstyle::question_begin()`
 
-1. ENSG00000198804 and ENSG00000248671 are two genes expressed respectively at a 
+1. ENSG00000198804 and ENSG00000248671 are two genes expressed respectively at a
 very high and a very low level. Inspect the effect of the rlog transformation
-on the counts of these genes. Compare to counts that would be transformed by a 
-classical log transformation (You can use the `normTransform()` function to 
+on the counts of these genes. Compare to counts that would be transformed by a
+classical log transformation (You can use the `normTransform()` function to
 normalise and log-transform the dds counts)
 
-2. Draw a scatter plot representing the log counts of sample1 versus the 
+2. Draw a scatter plot representing the log counts of sample1 versus the
 log counts of sample2 (sample1 and sample2 are 2 control replicates).
-Draw another scatter plot representing the "rlog transformed" counts of sample1 
+Draw another scatter plot representing the "rlog transformed" counts of sample1
 versus the "rlog transformed" counts of sample2. Compare the two plots.
 
 `r msmbstyle::question_end()`
@@ -606,13 +606,13 @@ assay(rld)[c("ENSG00000198804", "ENSG00000248671"), ]
 Question 2
 
 ```{r}
-fig1 <- as_tibble(assay(log_dds[, 1:2])) %>% 
+fig1 <- as_tibble(assay(log_dds[, 1:2])) %>%
   ggplot(aes(x = sample1, y = sample2)) +
   geom_point(alpha = 0.2) +
   geom_abline(slope = 1, color = "red") +
   ggtitle("log2 transformation")
 
-fig2 <- as_tibble(assay(rld[,1:2])) %>% 
+fig2 <- as_tibble(assay(rld[,1:2])) %>%
   ggplot(aes(x = sample1, y = sample2))+
   geom_point(alpha = 0.2) +
   geom_abline(slope = 1, color = "red") +
@@ -689,8 +689,8 @@ plotDispEsts(dds)
 
 `r msmbstyle::question_begin()`
 
-1. Create a new fictive DESeqDataSet object containing only 2 replicates of each 
-condition instead of the 3 replicates that we have in our `dds` object. 
+1. Create a new fictive DESeqDataSet object containing only 2 replicates of each
+condition instead of the 3 replicates that we have in our `dds` object.
 Inspect its dispersion plot and compare it with the dispersion plot of `dds`.
 
 2. Using the `dispersions()` function, you can acceed to the dispersion values.
@@ -711,15 +711,15 @@ dds_2_replicates <- DESeqDataSetFromMatrix(countData = counts[, c(1,2,4,6)],
 dds_2_replicates <- dds_2_replicates[rownames(dds), ]
 dds_2_replicates <- DESeq(dds_2_replicates)
 
-plotDispEsts(dds_2_replicates) 
+plotDispEsts(dds_2_replicates)
 plotDispEsts(dds)
 ```
 
 Question 2.
 
 ```{r, message = FALSE, warning = FALSE}
-tibble(dispersions_3_replicates = dispersions(dds), 
-       dispersions_2_replicates = dispersions(dds_2_replicates)) %>% 
+tibble(dispersions_3_replicates = dispersions(dds),
+       dispersions_2_replicates = dispersions(dds_2_replicates)) %>%
   ggplot(aes(x = dispersions_3_replicates, y = dispersions_2_replicates)) +
   geom_point() +
   geom_abline(slope = 1, color = "red")
@@ -741,7 +741,7 @@ dds$Condition
 ```
 
 In this case, it seems more logical to use mock cells as reference.
-Reference levels can be changed using the `relevel()` function. But in this 
+Reference levels can be changed using the `relevel()` function. But in this
 case don't forget to re-run `DESeq()` function after the re-leveling operation.
 
 ```{r, message = FALSE}
@@ -756,7 +756,7 @@ The `name` parameter must be an element of resultsNames(object) specifying the
 samples to compare.
 
 Note that the `contrast` argument of `results()` can also be used to
-extract results of interest. In this case, the two following commands will give 
+extract results of interest. In this case, the two following commands will give
 the same results[^contrast].
 
 [^contrast]: Using the `name` argument is however necessary to extract specific
@@ -882,7 +882,7 @@ res_tbl %>%
   filter(is.na(padj))
 ```
 
-These genes all have a very low basemean and are the one that have been filtered 
+These genes all have a very low basemean and are the one that have been filtered
 out by the independent filtering procedure.
 
 `r msmbstyle::solution_end()`
@@ -899,7 +899,7 @@ metadata(res)$filterThreshold
 This means that genes whith basemean < `r metadata(res)$filterThreshold` have been
 filtered. This represents `r names(metadata(res)$filterThreshold)` of all tested genes!
 
-Remember that the filtering threshold has been fixed in a way that maximizes the 
+Remember that the filtering threshold has been fixed in a way that maximizes the
 number of genes which will have a significant padjusted value.
 
 We can plot the number of rejections over the basemean quantiles.
@@ -921,8 +921,8 @@ as_tibble(metadata(res)$filterNumRej) %>%
 but set the independent filtering parameter to FALSE.
 Check how many genes have no padj?
 
-2. Compare the number of significant genes obtained with and without 
-independent filtering 
+2. Compare the number of significant genes obtained with and without
+independent filtering
 
 3. Imagine another way of filtering genes with very low counts
 
@@ -946,8 +946,8 @@ res_no_IF_tbl %>%
 ```
 
 
-2. Compare the number of significant genes obtained with and without 
-independent filtering 
+2. Compare the number of significant genes obtained with and without
+independent filtering
 
 ```{r}
 res_tbl %>% filter(padj < .05) %>% nrow()
@@ -968,7 +968,7 @@ dim(dds_bis)
 res_bis <- results(dds_bis,
                    name = "Condition_KD_vs_mock",
                    independentFiltering = FALSE)
-res_bis_tbl <- as_tibble(res_bis, rownames = "ENSEMBL") 
+res_bis_tbl <- as_tibble(res_bis, rownames = "ENSEMBL")
 
 # Compare with previous analysis
 # (Independant filtering threshold fixed automatically by DESeq2)
@@ -1002,7 +1002,7 @@ What do you think about the pvalues histogram?
 
 There is a peak at 0, but there is also a peak close to 0.8.
 Assumption that the p-values near 1 are uniform doesn't seem to be completely valid.
-This implies that in principle, a false discovery rate shouldn't be applied to 
+This implies that in principle, a false discovery rate shouldn't be applied to
 control these p-values.
 Let's try to figure out why the p-values show this behavior.
 
@@ -1021,9 +1021,9 @@ We observe that most of the genes that have a pvalue around 0.8
 (corresponding to genes belonging to the second peak) have a pvalue,
 but no padjusted value. These are hence genes that were filtered out
 by the independent filtering process. This means that DESeq2
-calculates pvalue for every gene, but the pvalue adjustement is computed 
-later only, on genes that pass the independent filtering threshold. 
-If we plot again the pvalues histogram using filtered genes only, 
+calculates pvalue for every gene, but the pvalue adjustement is computed
+later only, on genes that pass the independent filtering threshold.
+If we plot again the pvalues histogram using filtered genes only,
 then we observe that the pvalues behaviour is now much nicer!
 
 
@@ -1084,8 +1084,8 @@ best_genes <- res_tbl %>%
 
 as_tibble(counts(dds[best_genes$ENSEMBL, ], normalize = TRUE),
           rownames = 'ENSEMBL') %>%
-  pivot_longer(names_to = "sample", values_to = "counts", -ENSEMBL) %>%  
-  left_join(as_tibble(coldata, rownames = "sample")) %>% 
+  pivot_longer(names_to = "sample", values_to = "counts", -ENSEMBL) %>%
+  left_join(as_tibble(coldata, rownames = "sample")) %>%
   ggplot(aes(x = sample, y = counts, fill = Condition)) +
   geom_bar(stat = 'identity', color = "gray30") +
   facet_wrap( ~ ENSEMBL, scales = "free", ncol = 3) +
@@ -1168,22 +1168,22 @@ dispersions(dds[selected_genes$ENSEMBL,])
 
 `r msmbstyle::solution_end()`
 
-### Logfoldchange shrinkage 
+### Logfoldchange shrinkage
 
-The fold-changes values might sometimes be used for specific downstream analyses 
-(these values could for example be used for gene ranking or visualization). 
-But the Log2FC estimates provided by DESeq2 should not be used directly, 
-as some genes might be associated to large fold-changes reflecting a high 
+The fold-changes values might sometimes be used for specific downstream analyses
+(these values could for example be used for gene ranking or visualization).
+But the Log2FC estimates provided by DESeq2 should not be used directly,
+as some genes might be associated to large fold-changes reflecting a high
 variability rather than true strong differences.
 
-To overcome this problem, DESeq2 provides a shrinkage function called 
-`lfcShrink()`, to generate more accurate Log2foldchange estimates. 
-The function will shrink the fold-change values in a way that will depend 
-on counts and on gene dispersion values[^FCShrinkage]. As seen in the following 
-MA-plots, the shrinkage is much stronger for lowly than for highly expressed genes. 
+To overcome this problem, DESeq2 provides a shrinkage function called
+`lfcShrink()`, to generate more accurate Log2foldchange estimates.
+The function will shrink the fold-change values in a way that will depend
+on counts and on gene dispersion values[^FCShrinkage]. As seen in the following
+MA-plots, the shrinkage is much stronger for lowly than for highly expressed genes.
 
-[^FCShrinkage]: The shrinkage is based on bayesian approach. See the paper 
-describing thedefault shrinkage estimator for more details [@Zhu:2019]  
+[^FCShrinkage]: The shrinkage is based on bayesian approach. See the paper
+describing thedefault shrinkage estimator for more details [@Zhu:2019]
 
 This procedure improves interpretability of the fold-changes estimates.
 
@@ -1210,34 +1210,34 @@ fig1 | fig2
 
 `r msmbstyle::question_begin()`
 
-Genes ENSG00000183055 and ENSG00000161082, highlighted in the following MA 
-plots, have similar expression levels and log2FoldChanges before shrinkage. 
+Genes ENSG00000183055 and ENSG00000161082, highlighted in the following MA
+plots, have similar expression levels and log2FoldChanges before shrinkage.
 
 
 ```{r, echo = FALSE, warning = FALSE}
 my_genes <- c("ENSG00000183055", "ENSG00000161082")
 fig1 <- ggplot(res_tbl, aes(x = baseMean, y = log2FoldChange)) +
   geom_point(data = res_tbl, alpha = 0.4) +
-  geom_point(data = res_tbl %>% filter(ENSEMBL %in% my_genes), 
+  geom_point(data = res_tbl %>% filter(ENSEMBL %in% my_genes),
              aes(x = baseMean, y = log2FoldChange, color = ENSEMBL), size = 1, alpha = 1)  +
   scale_x_log10() +
   geom_hline(yintercept = 0) + theme(legend.position = "bottom")+
-  ggrepel::geom_text_repel(data = res_tbl %>% filter(ENSEMBL %in% my_genes), 
+  ggrepel::geom_text_repel(data = res_tbl %>% filter(ENSEMBL %in% my_genes),
                   aes(x = baseMean, y = log2FoldChange, label = ENSEMBL, color = ENSEMBL),
-                  size = 3, 
+                  size = 3,
                   segment.size = 0.1, max.overlaps = 30) +
   theme(legend.position = "none") +
   ggtitle("MA plot with original logFC values")
 
 fig2 <- ggplot(res_shr_tbl, aes(x = baseMean, y = log2FoldChange)) +
   geom_point(data = res_shr_tbl, alpha = 0.4) +
-  geom_point(data = res_shr_tbl %>% filter(ENSEMBL %in% my_genes), 
+  geom_point(data = res_shr_tbl %>% filter(ENSEMBL %in% my_genes),
              aes(x = baseMean, y = log2FoldChange, color = ENSEMBL), size = 1, alpha = 1)  +
   scale_x_log10() +
   geom_hline(yintercept = 0) + theme(legend.position = "bottom")+
-  ggrepel::geom_text_repel(data = res_shr_tbl %>% filter(ENSEMBL %in% my_genes), 
+  ggrepel::geom_text_repel(data = res_shr_tbl %>% filter(ENSEMBL %in% my_genes),
                   aes(x = baseMean, y = log2FoldChange, label = ENSEMBL, color = ENSEMBL),
-                  size = 3, 
+                  size = 3,
                   segment.size = 0.1, max.overlaps = 30)  +
   theme(legend.position = "none") +
   ylab("shrunked log2FoldChange") +
@@ -1250,8 +1250,8 @@ fig1 | fig2
 1. Compare DESeq2 results for these 2 genes before and after logFC shrinkage.
 What was the impact on their log2FoldChange values? on their p-values?
 
-2. Try to figure out why one of the 2 genes is more affected by the shrinkage 
-procedure. 
+2. Try to figure out why one of the 2 genes is more affected by the shrinkage
+procedure.
 
 `r msmbstyle::question_end()`
 
@@ -1262,15 +1262,15 @@ What was the impact on their log2FoldChange values? on their p-values?
 
 
 ```{r}
-res_tbl %>% 
+res_tbl %>%
   filter(ENSEMBL %in% c("ENSG00000183055", "ENSG00000161082"))
 
-res_shr_tbl %>% 
+res_shr_tbl %>%
   filter(ENSEMBL %in% c("ENSG00000183055", "ENSG00000161082"))
 ```
 
-2. Try to figure out why one of the 2 genes is more affected by the shrinkage 
-procedure. 
+2. Try to figure out why one of the 2 genes is more affected by the shrinkage
+procedure.
 
 ```{r}
 as_tibble(counts(dds[c("ENSG00000183055", "ENSG00000161082"), ], normalize = TRUE),
@@ -1294,13 +1294,13 @@ dispersions(dds[c("ENSG00000183055", "ENSG00000161082"),])
 ### Adding gene annotations
 
 The result table only uses Ensembl gene IDs, but gene names may be
-more informative.  
+more informative.
 
-`AnnotationDbi` is an R package that provides an interface for connecting 
+`AnnotationDbi` is an R package that provides an interface for connecting
 and querying various annotation databases.
 
-There are a many organism-specific `orgDb` packages, such as `org.Hs.eg.db` 
-for human and `org.Mm.eg.db` for mouse. 
+There are a many organism-specific `orgDb` packages, such as `org.Hs.eg.db`
+for human and `org.Mm.eg.db` for mouse.
 
 ```{r message = FALSE}
 #BiocManager::install(c("AnnotationDbi", "org.Hs.eg.db"))
@@ -1308,7 +1308,7 @@ library("AnnotationDbi")
 library("org.Hs.eg.db")
 ```
 
-The `keytypes()` function can help us to see what information we can extract 
+The `keytypes()` function can help us to see what information we can extract
 from the database (ENSEMBL gene ID, gene symbol, gene name, ...)
 
 
@@ -1320,24 +1320,24 @@ We can easily extract information from this database using the `mapIds()` functi
 
 ```{r}
 # Retrieving the gene symbol of our "best genes"
-mapIds(x = org.Hs.eg.db,               
-       keys = selected_genes$ENSEMBL,  
-       column = "SYMBOL",              
+mapIds(x = org.Hs.eg.db,
+       keys = selected_genes$ENSEMBL,
+       column = "SYMBOL",
        keytype = "ENSEMBL")
 
 # Retrieving the ENTREZID of our "best genes"
-mapIds(x = org.Hs.eg.db, 
+mapIds(x = org.Hs.eg.db,
        keys = selected_genes$ENSEMBL,
-       column = "ENTREZID", 
+       column = "ENTREZID",
        keytype = "ENSEMBL")
 ```
 
 Let's add gene symbols and ENTREZID in our table of results.
 
 ```{r}
-res_tbl <- res_tbl %>% 
-  mutate(gene = mapIds(org.Hs.eg.db, ENSEMBL, "SYMBOL", "ENSEMBL")) %>% 
-  mutate(ENTREZID = mapIds(org.Hs.eg.db, ENSEMBL, "ENTREZID", "ENSEMBL")) %>% 
+res_tbl <- res_tbl %>%
+  mutate(gene = mapIds(org.Hs.eg.db, ENSEMBL, "SYMBOL", "ENSEMBL")) %>%
+  mutate(ENTREZID = mapIds(org.Hs.eg.db, ENSEMBL, "ENTREZID", "ENSEMBL")) %>%
   dplyr::select(ENSEMBL, gene, ENTREZID, everything()) %>%
   arrange(padj)
 
@@ -1355,17 +1355,12 @@ saveRDS(res_tbl, file = "./data/res_tbl.rds")
 
 ### Further links
 
-- [iSEE](https://bioconductor.org/packages/release/bioc/html/iSEE.html) is a 
-Bioconductor package that provides an interactive Shiny-based graphical user 
+- [iSEE](https://bioconductor.org/packages/release/bioc/html/iSEE.html) is a
+Bioconductor package that provides an interactive Shiny-based graphical user
 interface for exploring data stored in SummarizedExperiment objects.
 
-- [Glimma](https://www.bioconductor.org/packages/release/bioc/html/Glimma.html) 
-is a Bioconductor package that generates interactive visualisations for analysis 
-of RNA-sequencing data using output from limma, edgeR or DESeq2 packages in an 
-HTML page. The interactions are built on top of the popular static representations 
+- [Glimma](https://www.bioconductor.org/packages/release/bioc/html/Glimma.html)
+is a Bioconductor package that generates interactive visualisations for analysis
+of RNA-sequencing data using output from limma, edgeR or DESeq2 packages in an
+HTML page. The interactions are built on top of the popular static representations
 of analysis results in order to provide additional information.
-
-
-
-
-

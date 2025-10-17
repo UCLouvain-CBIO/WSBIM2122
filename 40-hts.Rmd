@@ -10,7 +10,7 @@ library(DT)
 **Learning Objectives**
 
 The aim of this chapter is to present high throughput sequencing by
-going through one of its key applications: RNAseq. It is a highly
+going through one of its key applications: RNA-seq. It is a highly
 sensitive and accurate tool that has revolutionised the study of
 transcriptomes. The objective is to give an overview of the
 technology.
@@ -27,7 +27,7 @@ control, alignment and counting steps.
 
 ## RNA-seq library preparation
 
-The starting point of a RNAseq experiment is the cDNA library
+The starting point of a RNA-seq experiment is the cDNA library
 preparation.  RNA is first isolated from cells and purified to remove
 ribosomal RNA which constitute the majority of total RNA. This can be
 done by extracting poly(A) RNA or by depleting rRNA. Purified RNA is then
@@ -175,7 +175,7 @@ in a specified order is commonly referred to as a pipeline.
 knitr::include_graphics("figs/pipeline.png")
 ```
 
-You can download the whole script that we will use to process the RNAseq data
+You can download the whole script that we will use to process the RNA-seq data
 by clicking
 [here](https://raw.githubusercontent.com/UCLouvain-CBIO/WSBIM2122/master/data/script_RNAseq_processing.sh)
 
@@ -205,7 +205,7 @@ $ fastqc SampleName.fastq
 
 Try to interpret the different plots of this
 [fastQC report](./OD01_10_1_fastqc.html)
-from a real RNAseq fastq file.
+from a real RNA-seq fastq file.
 
 Another report corresponding to [bad
 quality](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/bad_sequence_fastqc.html)
@@ -283,11 +283,11 @@ knitr::include_graphics("figs/fastqc_fig4.png")
 It plots the proportion of each base position over all the
 reads. Typically, we expect to see each base roughly 25% of the time
 at each position so the lines in this plot should run parallel with
-each other. Experience has shown that RNAseq libraries often have a
+each other. Experience has shown that RNA-seq libraries often have a
 selection bias in around the first 12bp of each run. This is due to a
 biased selection of random primers, but doesn't represent any
 individually biased sequences.  This is a typical plot obtained for
-RNAseq reads.
+RNA-seq reads.
 
 When Analysing DNA, the figure could look like this:
 
@@ -351,7 +351,7 @@ all the reads are expected to be unique, appearing only 1
 time in the sequence data. A high level of duplication could indicate
 biased PCR enrichment, or presence of contaminant.
 
-In contrast, in RNAseq, there will likely be some very highly abundant
+In contrast, in RNA-seq, there will likely be some very highly abundant
 transcripts for which it is expected to observe duplicated reads. Here
 the data was flagged as 'failed' by FastQC even though duplication was
 expected in this case.
@@ -446,7 +446,7 @@ reads originated from.  Many different aligners are available such as
 [Salmon](https://combine-lab.github.io/salmon/),
 [Subread](https://sourceforge.net/projects/subread/)...  There is no
 gold standard, but some tools are better suited for particular NGS
-analyses [@Baruzzo:2017]... In the case of RNAseq, it is important to
+analyses [@Baruzzo:2017]... In the case of RNA-seq, it is important to
 use an aligner able to handle spliced reads.
 
 ```{r, echo = FALSE, fig.align = 'center', out.width = '100%', purl = TRUE}
@@ -707,7 +707,7 @@ to avoid elimination of counts equal to zero.
 
 ## Preparing the count matrix
 
-The aim of an RNAseq experiment is often to compare different types of
+The aim of an RNA-seq experiment is often to compare different types of
 cells, or to compare treated cells to control cells, to see if some
 genes are up- or down- regulated.
 
