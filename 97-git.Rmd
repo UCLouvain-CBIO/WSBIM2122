@@ -313,7 +313,7 @@ RStudio.
 A PAT can be created on GitHub, in *Settings > Developer Settings >
 Personal* *access tokens > Tokens (classic)* or directly
 [here](https://github.com/settings/tokens).  Click on *Generate token
-(classic)* and configure you're token. You can configure :
+(classic)* and configure your token. You can configure :
 
 - A name, that generally describes what you're using this PAT for.
 - An expiration date, after that date the PAT won't work
