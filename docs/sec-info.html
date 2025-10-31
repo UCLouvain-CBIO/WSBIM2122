@@ -11,9 +11,9 @@
 <meta property="og:description" content="Course material for the Omics Data Analysis (WSBIM2122) course at UCLouvain." />
 
 
-<meta name="author" content="Laurent Gatto" />
+<meta name="author" content="Laurent Gatto and Axelle Loriot" />
 
-<meta name="date" content="2025-10-28" />
+<meta name="date" content="2025-10-31" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -184,7 +184,7 @@ div.csl-indent {
 <div class="col-sm-12">
 <div id="TOC">
 <ul class="navbar">
-<li class="msmb"><p class="title">Omics Data Analysis<p><p class="author">Laurent Gatto</p>
+<li class="msmb"><p class="title">Omics Data Analysis<p><p class="author">Laurent Gatto and Axelle Loriot</p>
 <li class="dropdown" style="float:right">
 <a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
 <div class="dropdown-content">
@@ -296,8 +296,8 @@ improve your own group report.</p>
 ## other attached packages:
 ##  [1] plotly_4.11.0               factoextra_1.0.7           
 ##  [3] gplots_3.2.0                limma_3.64.3               
-##  [5] QFeatures_1.19.1            MultiAssayExperiment_1.34.0
-##  [7] PSMatch_1.13.3              magrittr_2.0.4             
+##  [5] QFeatures_1.18.0            MultiAssayExperiment_1.34.0
+##  [7] PSMatch_1.12.0              magrittr_2.0.4             
 ##  [9] Spectra_1.18.2              BiocParallel_1.42.2        
 ## [11] msigdbr_25.1.1              clusterProfiler_4.16.0     
 ## [13] GO.db_3.21.0                org.Hs.eg.db_3.21.0        
@@ -319,54 +319,54 @@ improve your own group report.</p>
 ##   [1] splines_4.5.0             later_1.4.4              
 ##   [3] bitops_1.0-9              ggplotify_0.1.3          
 ##   [5] R.oo_1.27.1               lifecycle_1.0.4          
-##   [7] rstatix_0.7.2             lattice_0.22-6           
+##   [7] rstatix_0.7.3             lattice_0.22-6           
 ##   [9] vroom_1.6.6               MASS_7.3-65              
 ##  [11] crosstalk_1.2.2           backports_1.5.0          
 ##  [13] sass_0.4.10               rmarkdown_2.30           
 ##  [15] jquerylib_0.1.4           yaml_2.3.10              
-##  [17] httpuv_1.6.16             ggtangle_0.0.7           
-##  [19] cowplot_1.2.0             MsCoreUtils_1.20.0       
-##  [21] DBI_1.2.3                 RColorBrewer_1.1-3       
-##  [23] abind_1.4-8               R.utils_2.13.0           
-##  [25] AnnotationFilter_1.32.0   yulab.utils_0.2.1        
-##  [27] rappdirs_0.3.3            GenomeInfoDbData_1.2.14  
-##  [29] enrichplot_1.28.4         ggrepel_0.9.6            
-##  [31] tidytree_0.4.6            BiocStyle_2.36.0         
-##  [33] ncdf4_1.24                codetools_0.2-20         
-##  [35] DelayedArray_0.34.1       DOSE_4.2.0               
-##  [37] xml2_1.4.0                tidyselect_1.2.1         
-##  [39] aplot_0.2.9               UCSC.utils_1.4.0         
-##  [41] farver_2.1.2              jsonlite_2.0.0           
-##  [43] Formula_1.2-5             bbmle_1.0.25.1           
-##  [45] tools_4.5.0               ExploreModelMatrix_1.20.1
-##  [47] msdata_0.48.0             treeio_1.32.0            
-##  [49] Rcpp_1.1.0                glue_1.8.0               
-##  [51] BiocBaseUtils_1.10.0      SparseArray_1.8.1        
-##  [53] xfun_0.53                 qvalue_2.40.0            
-##  [55] shinydashboard_0.7.3      withr_3.0.2              
-##  [57] numDeriv_2016.8-1.1       BiocManager_1.30.26      
-##  [59] fastmap_1.2.0             shinyjs_2.1.0            
-##  [61] caTools_1.18.3            digest_0.6.37            
-##  [63] timechange_0.3.0          R6_2.6.1                 
-##  [65] mime_0.13                 gridGraphics_0.5-1       
-##  [67] Cairo_1.6-5               gtools_3.9.5             
-##  [69] RSQLite_2.4.3             R.methodsS3_1.8.2        
-##  [71] utf8_1.2.6                data.table_1.17.8        
-##  [73] httr_1.4.7                htmlwidgets_1.6.4        
-##  [75] S4Arrays_1.8.1            pkgconfig_2.0.3          
-##  [77] gtable_0.3.6              blob_1.2.4               
-##  [79] S7_0.2.0                  XVector_0.48.0           
-##  [81] htmltools_0.5.8.1         carData_3.0-5            
-##  [83] bookdown_0.34.2           fgsea_1.34.2             
-##  [85] ProtGenerics_1.40.0       rintrojs_0.3.4           
-##  [87] clue_0.3-66               scales_1.4.0             
-##  [89] png_0.1-8                 ggfun_0.2.0              
-##  [91] knitr_1.50                MetaboCoreUtils_1.16.1   
-##  [93] rstudioapi_0.17.1         tzdb_0.5.0               
-##  [95] reshape2_1.4.4            coda_0.19-4.1            
-##  [97] nlme_3.1-168              curl_7.0.0               
-##  [99] bdsmatrix_1.3-7           cachem_1.1.0             
-##  [ reached 'max' / getOption("max.print") -- omitted 47 entries ]</code></pre>
+##  [17] httpuv_1.6.16             otel_0.2.0               
+##  [19] ggtangle_0.0.7            cowplot_1.2.0            
+##  [21] MsCoreUtils_1.20.0        DBI_1.2.3                
+##  [23] RColorBrewer_1.1-3        abind_1.4-8              
+##  [25] R.utils_2.13.0            AnnotationFilter_1.32.0  
+##  [27] yulab.utils_0.2.1         rappdirs_0.3.3           
+##  [29] GenomeInfoDbData_1.2.14   enrichplot_1.28.4        
+##  [31] ggrepel_0.9.6             tidytree_0.4.6           
+##  [33] BiocStyle_2.36.0          ncdf4_1.24               
+##  [35] codetools_0.2-20          DelayedArray_0.34.1      
+##  [37] DOSE_4.2.0                xml2_1.4.1               
+##  [39] tidyselect_1.2.1          aplot_0.2.9              
+##  [41] UCSC.utils_1.4.0          farver_2.1.2             
+##  [43] jsonlite_2.0.0            Formula_1.2-5            
+##  [45] bbmle_1.0.25.1            tools_4.5.0              
+##  [47] ExploreModelMatrix_1.20.1 msdata_0.48.0            
+##  [49] treeio_1.32.0             Rcpp_1.1.0               
+##  [51] glue_1.8.0                BiocBaseUtils_1.10.0     
+##  [53] SparseArray_1.8.1         xfun_0.53                
+##  [55] qvalue_2.40.0             shinydashboard_0.7.3     
+##  [57] withr_3.0.2               numDeriv_2016.8-1.1      
+##  [59] BiocManager_1.30.26       fastmap_1.2.0            
+##  [61] shinyjs_2.1.0             caTools_1.18.3           
+##  [63] digest_0.6.37             timechange_0.3.0         
+##  [65] R6_2.6.1                  mime_0.13                
+##  [67] gridGraphics_0.5-1        Cairo_1.7-0              
+##  [69] gtools_3.9.5              RSQLite_2.4.3            
+##  [71] R.methodsS3_1.8.2         utf8_1.2.6               
+##  [73] data.table_1.17.8         httr_1.4.7               
+##  [75] htmlwidgets_1.6.4         S4Arrays_1.8.1           
+##  [77] pkgconfig_2.0.3           gtable_0.3.6             
+##  [79] blob_1.2.4                S7_0.2.0                 
+##  [81] XVector_0.48.0            htmltools_0.5.8.1        
+##  [83] carData_3.0-5             bookdown_0.34.2          
+##  [85] fgsea_1.34.2              ProtGenerics_1.40.0      
+##  [87] clue_0.3-66               rintrojs_0.3.4           
+##  [89] scales_1.4.0              png_0.1-8                
+##  [91] ggfun_0.2.0               knitr_1.50               
+##  [93] MetaboCoreUtils_1.16.1    rstudioapi_0.17.1        
+##  [95] tzdb_0.5.0                reshape2_1.4.4           
+##  [97] coda_0.19-4.1             nlme_3.1-168             
+##  [99] curl_7.0.0                bdsmatrix_1.3-7          
+##  [ reached 'max' / getOption("max.print") -- omitted 48 entries ]</code></pre>
 </div>
 <div id="sec-setup2" class="section level2" number="12.4">
 <h2>
@@ -393,7 +393,7 @@ the following code:</p>
 <a href="sec-git.html"><button class="btn btn-default">Previous</button></a>
 </p>
 <p class="build-date">Page built: 
-2025-10-28
+2025-10-31
  using 
 R version 4.5.0 (2025-04-11)
 </p>

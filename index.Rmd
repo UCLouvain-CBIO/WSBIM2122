@@ -1,6 +1,6 @@
 ---
 title: "Omics Data Analysis"
-author: "Laurent Gatto"
+author: "Laurent Gatto and Axelle Loriot"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 knit: bookdown::preview_chapter

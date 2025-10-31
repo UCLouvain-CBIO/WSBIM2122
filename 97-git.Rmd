@@ -39,7 +39,7 @@ changes to the same document.
 
 If two users modify the *same* part of the document at the *same* time
 on their respective computers, a **conflict** will occur, that can't
-be automatically merged by the software (the software can't decide
+be automatically *merged* by the software (the software can't decide
 whose changes should be kept and whose should be discarded, or how to
 merge them), and would thus have to be resolved by hand. In all other
 cases, changes are recorded and managed automatically by the version
@@ -67,12 +67,12 @@ are not the same as automatic version control:
   Google docs or Microsoft Office 365).
 - Once a track change is accepted or rejected, it isn't possible to
   return to previous version. Google and Microsoft OneDrive documents
-  do allow this (and this require on-line access).
+  do allow this (and this requires on-line access).
 - Track changes are only applicable to their respective formats (odt,
   docx, ...), and not to code files, Rmd documents, or any other
   text-based files.
 - Track changes work on a single file, while version control tracks
-  changes in all files of a project.
+  changes in *all files of a project*.
 - When editing code, it is essential to keep a valid source code file
   and functioning versions of the code, which in turn isn't possible
   with track changes.
@@ -133,7 +133,7 @@ knitr::include_graphics("figs/git2.png")
 ```
 
 The same process applies for file deletion: delete a file, add it to
-the staging are (these can be done in one step), and commit the
+the staging area (these can be done in one step), and commit the
 changes.
 
 `r msmbstyle::question_begin()`
@@ -238,7 +238,7 @@ repository.
    repository.
 
 2. Create a new issue where you make a link to a file or a specific
-   line of a file and tag either `@lgatto` or `@JulieDevis`.
+   line of a file and tag `@lgatto`.
 
 3. Close that issue to mark it as done.
 
@@ -250,8 +250,8 @@ The original interface to Git was using the command line (see
 below). It is also possible to use Git through the RStudio interface
 to manage everything that is on a repository. This is useful if you're
 working mainly with R and want to use Git version control but also if
-you want to do collaborative work.  The RStudio interface then allows
-a click-button way of using git that can be easier than the
+you want to do collaborative work.  The RStudio interface then offers
+a graphical user interface to git that can be easier than the
 traditional command line.
 
 This section of the course is based on the *Happy Git and GitHub for
