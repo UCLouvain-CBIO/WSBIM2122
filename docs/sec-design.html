@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto and Axelle Loriot" />
 
-<meta name="date" content="2025-10-31" />
+<meta name="date" content="2025-11-01" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -327,12 +327,13 @@ names of the coefficients that can be extracted.</p>
 <ul>
 <li><p>The <span class="math inline">\(Intercept\)</span> represents the log2 expression level in the
 reference (in mock Epithelial cells).</p></li>
-<li><p>The <span class="math inline">\(Type\_Fibroblast\_vs\_Epithelial\)</span> coefficient corresponds to the log2FC
-between fibroblasts and epithelial cells. <span class="math inline">\(x_j = 0\)</span> if the sample j corresponds to epithelial cells,
-and <span class="math inline">\(x_j = 1\)</span> if the sample j corresponds to fibroblasts.</p></li>
-<li><p>The <span class="math inline">\(Condition\_KD\_vs\_mock\)</span> coefficient corresponds to the log2FC between KD and
-mock cells. <span class="math inline">\(y_j = 0\)</span> if the sample j corresponds
-to mock cells, and <span class="math inline">\(y_j\)</span> = 1 if the sample j corresponds to KD cells.</p></li>
+<li><p>The <span class="math inline">\(Type\_Fibroblast\_vs\_Epithelial\)</span> coefficient corresponds to
+the log2FC between fibroblasts and epithelial cells. <span class="math inline">\(x_j = 0\)</span> if
+the sample j corresponds to epithelial cells, and <span class="math inline">\(x_j = 1\)</span> if the
+sample j corresponds to fibroblasts.</p></li>
+<li><p>The <span class="math inline">\(Condition\_KD\_vs\_mock\)</span> coefficient corresponds to the log2FC
+between KD and mock cells. <span class="math inline">\(y_j = 0\)</span> if the sample j corresponds to
+mock cells, and <span class="math inline">\(y_j\)</span> = 1 if the sample j corresponds to KD cells.</p></li>
 </ul>
 <p>The following figure (generated with the <a href="http://www.bioconductor.org/packages/release/bioc/vignettes/ExploreModelMatrix/inst/doc/ExploreModelMatrix.html">ExploreModelMatrix</a> package) illustrates the value of the
 linear predictor of a generalized linear model for each combination of
@@ -449,18 +450,19 @@ which is equivalent to
 <ul>
 <li><p>The <span class="math inline">\(Intercept\)</span> represents the log2 expression level in the
 reference (in mock Cell1).</p></li>
-<li><p>The <span class="math inline">\(Type\_Fibroblast\_vs\_Epithelial\)</span> coefficient corresponds
-to the log2FC between mock fibroblasts and mock epithelial cells.
-<span class="math inline">\(x_j = 0\)</span> if the sample j corresponds to fibroblasts,
-and <span class="math inline">\(x_j = 1\)</span> if the sample j corresponds to epithelial cells.</p></li>
+<li><p>The <span class="math inline">\(Type\_Fibroblast\_vs\_Epithelial\)</span> coefficient corresponds to
+the log2FC between mock fibroblasts and mock epithelial cells. <span class="math inline">\(x_j = 0\)</span>
+if the sample j corresponds to epithelial, and <span class="math inline">\(x_j = 1\)</span> if the
+sample j corresponds to fibroblasts cells.</p></li>
 <li><p>The <span class="math inline">\(Condition\_KD\_vs\_mock\)</span> coefficient corresponds to the log2FC
-between KD and mock cells in the reference cells (here epithelial cells).
-<span class="math inline">\(y_j = 0\)</span> if the sample j corresponds to mock cells, and <span class="math inline">\(y_j\)</span> = 1 if
-the sample j corresponds to KD cells.</p></li>
-<li><p>The <span class="math inline">\(TypeFibroblast.ConditionKD\)</span> coefficient corresponds to the
-the <em>extra KD effect</em> in KD-fibroblasts compared to KD-epitelial cells.
-<span class="math inline">\(z_j = 0\)</span> if the sample j corresponds to mock cells or to epithial cells,
-and <span class="math inline">\(z_j = 1\)</span> if the sample j corresponds to KD-fibroblasts.</p></li>
+between KD and mock cells in the reference cells (here epithelial
+cells). <span class="math inline">\(y_j = 0\)</span> if the sample j corresponds to mock cells, and
+<span class="math inline">\(y_j\)</span> = 1 if the sample j corresponds to KD cells.</p></li>
+<li><p>The <span class="math inline">\(Type\_Fibroblast.ConditionKD\)</span> coefficient corresponds to the
+the <em>extra KD effect</em> in KD-fibroblasts compared to KD-epitelial
+cells. <span class="math inline">\(z_j = 0\)</span> if the sample j corresponds to mock cells or to
+epithial cells, and <span class="math inline">\(z_j = 1\)</span> if the sample j corresponds to
+KD-fibroblasts.</p></li>
 </ul>
 <p>This is summarized in the following figure:</p>
 <p><img src="WSBIM2122_files/figure-html/unnamed-chunk-136-1.png" width="672"></p>
@@ -645,7 +647,7 @@ while on the contrary it is increased by the treatment in the fibroblast cells.<
 <a href="sec-gsea.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2025-10-31
+2025-11-01
  using 
 R version 4.5.0 (2025-04-11)
 </p>

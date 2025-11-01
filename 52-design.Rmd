@@ -123,15 +123,16 @@ The linear model set with this design can be written
 $$log2(q_{ij}) = Intercept + Type\_Fibroblast\_vs\_Epithelial.x_j + Condition\_KD\_vs\_mock.y_j + \epsilon$$
 
 - The $Intercept$ represents the log2 expression level in the
-reference (in mock Epithelial cells).
+  reference (in mock Epithelial cells).
 
-- The $Type\_Fibroblast\_vs\_Epithelial$ coefficient corresponds to the log2FC
-between fibroblasts and epithelial cells. $x_j = 0$ if the sample j corresponds to epithelial cells,
-and $x_j = 1$ if the sample j corresponds to fibroblasts.
+- The $Type\_Fibroblast\_vs\_Epithelial$ coefficient corresponds to
+  the log2FC between fibroblasts and epithelial cells. $x_j = 0$ if
+  the sample j corresponds to epithelial cells, and $x_j = 1$ if the
+  sample j corresponds to fibroblasts.
 
-- The $Condition\_KD\_vs\_mock$ coefficient corresponds to the log2FC between KD and
-mock cells. $y_j = 0$ if the sample j corresponds
-to mock cells, and $y_j$ = 1 if the sample j corresponds to KD cells.
+- The $Condition\_KD\_vs\_mock$ coefficient corresponds to the log2FC
+  between KD and mock cells. $y_j = 0$ if the sample j corresponds to
+  mock cells, and $y_j$ = 1 if the sample j corresponds to KD cells.
 
 
 The following figure (generated with the [ExploreModelMatrix](http://www.bioconductor.org/packages/release/bioc/vignettes/ExploreModelMatrix/inst/doc/ExploreModelMatrix.html) package) illustrates the value of the
@@ -265,28 +266,28 @@ The `resultsNames()` function gives the names of results that can be extracted.
 resultsNames(dds)
 ```
 
-
 The linear model used with this design can be written
 
 $$log2(q_{ij}) = Intercept + Type\_Fibroblast\_vs\_Epithelial.x_j + Condition\_KD\_vs\_mock.y_j  + TypeFibroblast.ConditionKD.z_j + \epsilon$$
 
 - The $Intercept$ represents the log2 expression level in the
-reference (in mock Cell1).
+  reference (in mock Cell1).
 
-- The $Type\_Fibroblast\_vs\_Epithelial$ coefficient corresponds
-to the log2FC between mock fibroblasts and mock epithelial cells.
-$x_j = 0$ if the sample j corresponds to fibroblasts,
-and $x_j = 1$ if the sample j corresponds to epithelial cells.
+- The $Type\_Fibroblast\_vs\_Epithelial$ coefficient corresponds to
+  the log2FC between mock fibroblasts and mock epithelial cells.  $x_j = 0$
+  if the sample j corresponds to epithelial, and $x_j = 1$ if the
+  sample j corresponds to fibroblasts cells.
 
 - The $Condition\_KD\_vs\_mock$ coefficient corresponds to the log2FC
-between KD and mock cells in the reference cells (here epithelial cells).
-$y_j = 0$ if the sample j corresponds to mock cells, and $y_j$ = 1 if
-the sample j corresponds to KD cells.
+  between KD and mock cells in the reference cells (here epithelial
+  cells). $y_j = 0$ if the sample j corresponds to mock cells, and
+  $y_j$ = 1 if the sample j corresponds to KD cells.
 
-- The $TypeFibroblast.ConditionKD$ coefficient corresponds to the
-the *extra KD effect* in KD-fibroblasts compared to KD-epitelial cells.
-$z_j = 0$ if the sample j corresponds to mock cells or to epithial cells,
-and $z_j = 1$ if the sample j corresponds to KD-fibroblasts.
+- The $Type\_Fibroblast.ConditionKD$ coefficient corresponds to the
+  the *extra KD effect* in KD-fibroblasts compared to KD-epitelial
+  cells. $z_j = 0$ if the sample j corresponds to mock cells or to
+  epithial cells, and $z_j = 1$ if the sample j corresponds to
+  KD-fibroblasts.
 
 This is summarized in the following figure:
 
