@@ -275,8 +275,8 @@ reference (in mock Cell1).
 
 - The $Type\_Fibroblast\_vs\_Epithelial$ coefficient corresponds
 to the log2FC between mock fibroblasts and mock epithelial cells.
-$x_j = 0$ if the sample j corresponds to fibroblasts,
-and $x_j = 1$ if the sample j corresponds to epithelial cells.
+$x_j = 0$ if the sample j corresponds to epithelial cells,
+and $x_j = 1$ if the sample j corresponds to fibroblasts.
 
 - The $Condition\_KD\_vs\_mock$ coefficient corresponds to the log2FC
 between KD and mock cells in the reference cells (here epithelial cells).
