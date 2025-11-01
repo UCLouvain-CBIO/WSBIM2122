@@ -353,7 +353,7 @@ all that to GitHub. That's when you'll be asked to give your user name
 and PAT. RStudio locally tends to remember the PAT so you shouldn't
 have to put it again.
 
-Note : If RStudio doesn't appear to find Git on your computer, go to
+Note: If RStudio doesn't appear to find Git on your computer, go to
 *Tools > Global* *Options > Git/SVN* and make sure that the Git
 executable points to where your Git executable is located on your
 computer.
@@ -382,6 +382,8 @@ want to see all the changes that have been done to the repository.
 
 `r msmbstyle::question_end()`
 
+Note: In some cases, users need to configure their email and name to
+be able to commit using `git config user.email` and `user.name`.
 
 ## Git and command line
 
