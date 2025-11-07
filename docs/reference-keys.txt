@@ -87,7 +87,7 @@ further-links
 sec-design
 a-more-complex-dataset
 pca-analysis
-paired-design
+two-factor-design
 kd-effect
 epithelial-vs-fibroblasts-cells
 design-with-interaction

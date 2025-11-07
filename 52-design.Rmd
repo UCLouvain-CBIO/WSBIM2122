@@ -87,7 +87,7 @@ biological questions that are asked.
 *Which genes are not affected in the same way by the KD in the two cell lines*
 
 
-## Paired design
+## Two-factor design
 
 To take into account the condition effect while controlling the cell origin,
 we can use the following design:
@@ -229,11 +229,6 @@ as_tibble(counts(dds[res_tbl$ENSEMBL[1:2], ], normalize = TRUE),
         legend.text = element_text(size = 7),
         legend.title = element_text(size = 7))
 ```
-
-
-
-
-
 
 ## Design with interaction
 
