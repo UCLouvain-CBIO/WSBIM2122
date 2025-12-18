@@ -74,7 +74,7 @@ account.
 Different designs can be used to analyse this dataset, depending on the
 biological questions that are asked.
 
-- **A paired design** should be used to answer to the question:
+- **A two-factor design** should be used to answer to the question:
 
 *Which genes are consistently affected by the KD in both cell lines?*
 

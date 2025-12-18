@@ -54,7 +54,7 @@ improve your own group report.
 
 The following packages have been used to generate this document.
 
-```{r include=FALSE}
+```{r include=FALSE, eval=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
   .packages(), 'bookdown', 'knitr', 'rmarkdown', 'msmbstyle'
