@@ -592,7 +592,7 @@ go_ora
 
 The `GeneRatio` and `BgRatio` correspond respectively to
 
-- the ration between the number of genes of interest in the gene set
+- the ratio between the number of genes of interest in the gene set
   and the number of (unique) genes-of-interest:
   $\frac{|genes\_of\_interest~in~gene\_set|}{|genes\_of\_interest|}$
 
