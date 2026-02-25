@@ -16,3 +16,8 @@ In the course's work directory, simply type
 ```{r combilebook2, eval=FALSE}
 bookdown::render_book(".")
 ```
+
+## License
+
+This material is licensed under the Creative Commons Attribution-ShareAlike 4.0 License.
+
