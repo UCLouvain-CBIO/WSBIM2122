@@ -714,6 +714,10 @@ standard t-tests when the number of samples is lot.
 [^shrinkage]: alike the shinkage gene-wise dispersion estimates see in
     `DESeq2`.
 
+Note that other methods directly developed for proteomics are also available,
+such as msqrob2 [@goeminne_peptide-level_2016; @goeminne_msqrob_2020] or limpa
+[@li_quantification_2025]
+
 
 The code chunk below illstrated how to set up the model, fit it, and
 apply the empirical Bayes moderation.

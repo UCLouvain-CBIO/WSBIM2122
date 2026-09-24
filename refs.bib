@@ -569,7 +569,6 @@
 	author = {WOLD, H.},
 	year = {1966},
 	pages = {391--420},
-	file = {Estimation of principal components and related models by iterative least squares Snapshot:/home/leopoldguyot/Zotero/storage/FGHF8R5M/1572261551103031296.html:text/html},
 }
 
 @article{bishop_bayesian_1998,
@@ -582,5 +581,56 @@
 	publisher = {MIT Press},
 	author = {Bishop, Christopher},
 	year = {1998},
-	file = {Full Text PDF:/home/leopoldguyot/Zotero/storage/IM5ZN2XY/Bishop - 1998 - Bayesian PCA.pdf:application/pdf},
+}
+
+@misc{li_quantification_2025,
+	title = {Quantification and differential analysis of mass spectrometry proteomics data with probabilistic recovery of information from missing values},
+	copyright = {© 2025, Posted by Cold Spring Harbor Laboratory. This pre-print is available under a Creative Commons License (Attribution 4.0 International), CC BY 4.0, as described at http://creativecommons.org/licenses/by/4.0/},
+	url = {https://www.biorxiv.org/content/10.1101/2025.04.28.651125v1},
+	doi = {10.1101/2025.04.28.651125},
+	abstract = {Mass spectrometry (MS) is the technology standard for expression proteomics, but statistical analysis of the resulting data is complicated by the occurrence of missing values. Missing values remain ubiquitous in MS-based proteomics data and are especially frequent in the emerging fields of single-cell and spatial proteomics. The limpa package implements new methods for quantification and differential expression analysis of MS proteomics data, including probabilistic information recovery from missing values. limpa summarises peptide-level data to estimate an expression value for every protein in every sample. Expression values that are supported by fewer detected peptides or involve more missing values are treated as less precise and are downweighted in the differential expression analysis, maximising statistical power while avoiding false discoveries. limpa produces a linear model object suitable for downstream analysis with the limma package, allowing complex experimental designs and other downstream tasks such as the gene ontology or pathway analysis.},
+	language = {en},
+	urldate = {2026-09-24},
+	publisher = {bioRxiv},
+	author = {Li, Mengbo and Cobbold, Simon A. and Smyth, Gordon K.},
+	month = apr,
+	year = {2025},
+	note = {Pages: 2025.04.28.651125
+Section: New Results},
+}
+
+@article{goeminne_peptide-level_2016,
+	title = {Peptide-level {Robust} {Ridge} {Regression} {Improves} {Estimation}, {Sensitivity}, and {Specificity} in {Data}-dependent {Quantitative} {Label}-free {Shotgun} {Proteomics}*},
+	volume = {15},
+	issn = {1535-9476},
+	url = {https://www.sciencedirect.com/science/article/pii/S153594762033694X},
+	doi = {10.1074/mcp.M115.055897},
+	abstract = {Peptide intensities from mass spectra are increasingly used for relative quantitation of proteins in complex samples. However, numerous issues inherent to the mass spectrometry workflow turn quantitative proteomic data analysis into a crucial challenge. We and others have shown that modeling at the peptide level outperforms classical summarization-based approaches, which typically also discard a lot of proteins at the data preprocessing step. Peptide-based linear regression models, however, still suffer from unbalanced datasets due to missing peptide intensities, outlying peptide intensities and overfitting. Here, we further improve upon peptide-based models by three modular extensions: ridge regression, improved variance estimation by borrowing information across proteins with empirical Bayes and M-estimation with Huber weights. We illustrate our method on the CPTAC spike-in study and on a study comparing wild-type and ArgP knock-out Francisella tularensis proteomes. We show that the fold change estimates of our robust approach are more precise and more accurate than those from state-of-the-art summarization-based methods and peptide-based regression models, which leads to an improved sensitivity and specificity. We also demonstrate that ionization competition effects come already into play at very low spike-in concentrations and confirm that analyses with peptide-based regression methods on peptide intensity values aggregated by charge state and modification status (e.g. MaxQuant's peptides.txt file) are slightly superior to analyses on raw peptide intensity values (e.g. MaxQuant's evidence.txt file).},
+	number = {2},
+	urldate = {2026-09-24},
+	journal = {Molecular \& Cellular Proteomics},
+	author = {Goeminne, LudgerJ. E. and Gevaert, Kris and Clement, Lieven},
+	month = feb,
+	year = {2016},
+	pages = {657--668},
+}
+
+@article{goeminne_msqrob_2020,
+	title = {{MSqRob} {Takes} the {Missing} {Hurdle}: {Uniting} {Intensity}- and {Count}-{Based} {Proteomics}},
+	volume = {92},
+	issn = {0003-2700},
+	shorttitle = {{MSqRob} {Takes} the {Missing} {Hurdle}},
+	url = {https://doi.org/10.1021/acs.analchem.9b04375},
+	doi = {10.1021/acs.analchem.9b04375},
+	abstract = {Missing
+values are a major issue in quantitative data-dependent
+mass spectrometry-based proteomics. We therefore present an innovative solution to this key issue by introducing a hurdle model, which is a mixture between a binomial peptide count and a peptide intensity-based model component. It enables dramatically enhanced quantification of proteins with many missing values without having to resort to harmful assumptions for missingness. We demonstrate the superior performance of our method by comparing it with state-of-the-art methods in the field.},
+	number = {9},
+	urldate = {2026-09-24},
+	journal = {Analytical Chemistry},
+	author = {Goeminne, Ludger J. E. and Sticker, Adriaan and Martens, Lennart and Gevaert, Kris and Clement, Lieven},
+	month = may,
+	year = {2020},
+	pages = {6278--6287},
+	file = {Full Text PDF:/home/leopoldguyot/Zotero/storage/NRYKNGM8/Goeminne et al. - 2020 - MSqRob Takes the Missing Hurdle Uniting Intensity- and Count-Based Proteomics.pdf:application/pdf;Snapshot:/home/leopoldguyot/Zotero/storage/WJFZWKKD/acs.analchem.html:text/html},
 }
