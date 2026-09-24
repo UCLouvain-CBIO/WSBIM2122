@@ -478,10 +478,11 @@ heatmap.2(x, col = c("lightgray", "black"),
           ColSideColors = rep(c("steelblue", "darkolivegreen"), each = 8))
 ```
 
-When downstream analyses permit, it might thus be safer not to impute
-data and deal explicitly with missing values. This is possible when
-performing hypothesis tests, but not to perform a principal component
-analysis.
+When downstream analyses permit, it might thus be safer not to impute data and
+deal explicitly with missing values. This is possible for hypothesis testing
+and for dimensionality reduction using methods specifically designed to handle
+missing values, such as NIPALS [@wold_estimation_1966] or BPCA
+[@bishop_bayesian_1998].
 
 
 ## Identification quality control
@@ -712,6 +713,10 @@ standard t-tests when the number of samples is lot.
 
 [^shrinkage]: alike the shinkage gene-wise dispersion estimates see in
     `DESeq2`.
+
+Note that other methods directly developed for proteomics are also available,
+such as msqrob2 [@goeminne_peptide-level_2016; @goeminne_msqrob_2020] or limpa
+[@li_quantification_2025]
 
 
 The code chunk below illstrated how to set up the model, fit it, and
