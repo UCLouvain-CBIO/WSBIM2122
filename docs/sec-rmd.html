@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto and Axelle Loriot" />
 
-<meta name="date" content="2025-12-19" />
+<meta name="date" content="2026-09-24" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -75,16 +75,17 @@ function reset_tooltip(id) {
 <script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
-<script src="libs/plotly-binding-4.11.0/plotly.js"></script>
+<script src="libs/plotly-binding-4.12.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -154,6 +155,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -318,7 +320,7 @@ function, where <code>time</code> is the time interval to suspend execution for,
 <li><p>The <code>system.time()</code> function can be used to measure the time to run
 a fonction in R. Instead of manually comparing the compilation
 timings, wrap a call to <code>render()</code> in <code>system.time()</code> to let R
-record the compilation timings. Hint: you can set <code>render(quiet =   TRUE)</code> to remove the knitting messages.</p></li>
+record the compilation timings. Hint: you can set <code>render(quiet = TRUE)</code> to remove the knitting messages.</p></li>
 </ul>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -450,8 +452,9 @@ associated scientific papers is to use the <code>citation()</code> function:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="sec-rmd.html#cb10-1" tabindex="-1"></a><span class="fu">citation</span>()</span></code></pre></div>
 <pre><code>## To cite R in publications use:
 ## 
-##   R Core Team (2025). _R: A Language and Environment for Statistical
+##   R Core Team (2026). _R: A Language and Environment for Statistical
 ##   Computing_. R Foundation for Statistical Computing, Vienna, Austria.
+##   doi:10.32614/R.manuals &lt;https://doi.org/10.32614/R.manuals&gt;.
 ##   &lt;https://www.R-project.org/&gt;.
 ## 
 ## A BibTeX entry for LaTeX users is
@@ -461,7 +464,8 @@ associated scientific papers is to use the <code>citation()</code> function:</p>
 ##     author = {{R Core Team}},
 ##     organization = {R Foundation for Statistical Computing},
 ##     address = {Vienna, Austria},
-##     year = {2025},
+##     year = {2026},
+##     doi = {10.32614/R.manuals},
 ##     url = {https://www.R-project.org/},
 ##   }
 ## 
@@ -471,11 +475,11 @@ associated scientific papers is to use the <code>citation()</code> function:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="sec-rmd.html#cb12-1" tabindex="-1"></a><span class="fu">citation</span>(<span class="at">package =</span> <span class="st">"SummarizedExperiment"</span>)</span></code></pre></div>
 <pre><code>## To cite package 'SummarizedExperiment' in publications use:
 ## 
-##   Morgan M, Obenchain V, Hester J, Pagès H (2025).
+##   Morgan M, Obenchain V, Hester J, Pagès H (2026).
 ##   _SummarizedExperiment: A container (S4 class) for matrix-like
 ##   assays_. doi:10.18129/B9.bioc.SummarizedExperiment
-##   &lt;https://doi.org/10.18129/B9.bioc.SummarizedExperiment&gt;, R package
-##   version 1.40.0,
+##   &lt;https://doi.org/10.18129/B9.bioc.SummarizedExperiment&gt;. R package
+##   version 1.42.0,
 ##   &lt;https://bioconductor.org/packages/SummarizedExperiment&gt;.
 ## 
 ## A BibTeX entry for LaTeX users is
@@ -483,8 +487,8 @@ associated scientific papers is to use the <code>citation()</code> function:</p>
 ##   @Manual{,
 ##     title = {SummarizedExperiment: A container (S4 class) for matrix-like assays},
 ##     author = {Martin Morgan and Valerie Obenchain and Jim Hester and Hervé Pagès},
-##     year = {2025},
-##     note = {R package version 1.40.0},
+##     year = {2026},
+##     note = {R package version 1.42.0},
 ##     url = {https://bioconductor.org/packages/SummarizedExperiment},
 ##     doi = {10.18129/B9.bioc.SummarizedExperiment},
 ##   }</code></pre>
@@ -513,9 +517,9 @@ Xie, Christophe Dervieux, Emily Riederer.</p></li>
 <a href="sec-linmod.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2025-12-19
+2026-09-24
  using 
-R version 4.5.0 (2025-04-11)
+R version 4.6.1 (2026-06-24)
 </p>
 </div>
 </div>

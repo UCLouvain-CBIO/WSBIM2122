@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto and Axelle Loriot" />
 
-<meta name="date" content="2025-12-19" />
+<meta name="date" content="2026-09-24" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -75,16 +75,17 @@ function reset_tooltip(id) {
 <script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
-<script src="libs/plotly-binding-4.11.0/plotly.js"></script>
+<script src="libs/plotly-binding-4.12.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -154,6 +155,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -281,7 +283,7 @@ called Terminal, which is already available on your computer. If
 you’re using Windows, you can install a <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Windows Subsystem for
 Linux</a>. We
 are going to the use RStudio Terminal.</p>
-<p><img src="figs/rstudio_terminal.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="figs/rstudio_terminal.png" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p>At any point, you can use the <code>clear</code> command or the <code>Ctrl+L</code> keyboard
 shortcut to clear the screen.</p>
 </div>
@@ -332,7 +334,7 @@ system:</p>
 /home/lgatto</code></pre>
 <p>To create a shared set of files and directories, we will use the
 <code>rWSBIM2122::prepare_shell()</code> function in RStudio’s R console:</p>
-<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="sec-cli.html#cb462-1" tabindex="-1"></a>rWSBIM2122<span class="sc">::</span><span class="fu">prepare_shell</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="sec-cli.html#cb493-1" tabindex="-1"></a>rWSBIM2122<span class="sc">::</span><span class="fu">prepare_shell</span>()</span></code></pre></div>
 <pre><code>## Preparing shell data in 'wsbim2122_data'.</code></pre>
 <pre><code>## wsbim2122_data is ready.</code></pre>
 <p>This R command could also be executed from the shell by executing a
@@ -870,7 +872,7 @@ delete a directory using the <code>-r</code> (recursive) option.</p>
 <p>To complete this chapter on shell, let’s conclude by mentioning the R
 <code>system()</code> and <code>system2()</code> functions, that enable to invoke a system
 command such as a shell script:</p>
-<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="sec-cli.html#cb496-1" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"combine_all_simulations.sh"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="sec-cli.html#cb527-1" tabindex="-1"></a><span class="fu">system</span>(<span class="st">"combine_all_simulations.sh"</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="references-1" class="section level2" number="10.6">
@@ -883,7 +885,7 @@ Shell</a> and
 <a href="https://datacarpentry.org/shell-genomics/">Introduction to the Command Line for
 Genomics</a> lessons.</li>
 <li>
-<em>Bioinformatics Data Skills</em> <span class="citation">(<label for="tufte-mn-26" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-26" class="margin-toggle">Buffalo 2015<span class="marginnote">Buffalo, Vince. 2015. <em>Bioinformatics Data Skills</em>. O’Reilly Media, Inc.</span>)</span>.</li>
+<em>Bioinformatics Data Skills</em> <span class="citation">(<label for="tufte-mn-31" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-31" class="margin-toggle">Buffalo 2015<span class="marginnote">Buffalo, Vince. 2015. <em>Bioinformatics Data Skills</em>. O’Reilly Media, Inc.</span>)</span>.</li>
 </ul>
 </div>
 </div>
@@ -892,9 +894,9 @@ Genomics</a> lessons.</li>
 <a href="sec-git.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2025-12-19
+2026-09-24
  using 
-R version 4.5.0 (2025-04-11)
+R version 4.6.1 (2026-06-24)
 </p>
 </div>
 </div>

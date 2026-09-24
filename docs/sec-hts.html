@@ -13,7 +13,7 @@
 
 <meta name="author" content="Laurent Gatto and Axelle Loriot" />
 
-<meta name="date" content="2025-12-19" />
+<meta name="date" content="2026-09-24" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -75,16 +75,17 @@ function reset_tooltip(id) {
 <script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
-<script src="libs/plotly-binding-4.11.0/plotly.js"></script>
+<script src="libs/plotly-binding-4.12.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -154,6 +155,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -243,7 +245,7 @@ ribosomal RNA which constitute the majority of total RNA. This can be
 done by extracting poly(A) RNA or by depleting rRNA. Purified RNA is then
 fragmented, reverse transcribed and adapters are ligated to both extremities
 to allow for amplification and sequencing.</p>
-<p><img src="figs/Unstranded_lib_prep.png" width="60%" style="display: block; margin: auto;"></p>
+<p><img src="figs/Unstranded_lib_prep.png" alt="" width="60%" style="display: block; margin: auto;"></p>
 <div id="stranded-versus-unstranded-libraries" class="section level3" number="3.1.1">
 <h3>
 <span class="header-section-number">3.1.1</span> Stranded versus unstranded libraries<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('stranded-versus-unstranded-libraries')" onmouseout="reset_tooltip('stranded-versus-unstranded-libraries-tooltip')"><span class="tooltiptext" id="stranded-versus-unstranded-libraries-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
@@ -261,7 +263,7 @@ will be sequenced. Indeed, if the sequence of the read corresponds to the
 the sense strand of DNA, it means that the gene was originally transcribed in a
 sense orientation. On the contrary, if the read is complementary to the sense
 strand of DNA, it means that it was originally transcribed in antisense.</p>
-<p><img src="figs/stranded_vs_unstranded.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figs/stranded_vs_unstranded.png" alt="" width="100%" style="display: block; margin: auto;"></p>
 <p>Strand-specificity leads to lower number of ambiguous reads.</p>
 </div>
 </div>
@@ -279,7 +281,7 @@ a high throughput manner to obtain short sequences from one end
 sequencing is cheaper, but Paired-end sequencing improves the ability
 to localise the fragment in the genome and resolve mapping close to
 repeat regions, resulting in less multimapping reads.</p>
-<p><img src="figs/SE_vs_PE.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figs/SE_vs_PE.png" alt="" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div id="cluster-amplification" class="section level3" number="3.2.2">
 <h3>
@@ -307,7 +309,7 @@ removed by specific base cleavage, leaving the forward DNA strand. The
 blocked to prevent interference with the sequencing reaction. The
 sequencing primer is hybridised to the Illumina adapter. Clusters are
 ready for sequencing.</p>
-<p><img src="figs/cluster_amplification.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figs/cluster_amplification.png" alt="" width="100%" style="display: block; margin: auto;"></p>
 <p>The sequencing process is done by synthesis. A polymerase adds a
 fluorescently tagged dNTP to the DNA strand (only one base is able to
 be added per round due to the fluorophore acting as a blocking group,
@@ -328,7 +330,7 @@ files called <code>fastq</code> files. For a single-end run, one fastq file is
 created for each sample. For a paired-end run, two separated fastq
 files are generated, each containing sequences from one end.</p>
 <p>What does a FASTQ file look like?</p>
-<p><img src="figs/fastq_first_lines.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figs/fastq_first_lines.png" alt="" width="100%" style="display: block; margin: auto;"></p>
 <p>Each entry in a fastq file consists of 4 lines:</p>
 <ul>
 <li>A sequence identifier (by convention preceded by ‘@’) with
@@ -341,7 +343,7 @@ numerical quality scores. Each character is assigned a quality
 score between 0 and 40. Quality scores represent the probability
 that the corresponding nucleotide call is correct.</li>
 </ul>
-<p><img src="figs/phred_score.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figs/phred_score.png" alt="" width="100%" style="display: block; margin: auto;"></p>
 <div class="question">
 <p class="question-begin">
 ► Question
@@ -363,7 +365,7 @@ fastq file above?</p>
 tools to yield ultimately a count table, representing a snapshot of
 individual gene expression levels. The execution of this set of tools
 in a specified order is commonly referred to as a pipeline.</p>
-<p><img src="figs/pipeline.png" width="40%" style="display: block; margin: auto;"></p>
+<p><img src="figs/pipeline.png" alt="" width="40%" style="display: block; margin: auto;"></p>
 <p>You can download the whole script that we will use to process the RNA-seq data
 by clicking
 <a href="https://raw.githubusercontent.com/UCLouvain-CBIO/WSBIM2122/master/data/script_RNAseq_processing.sh">here</a></p>
@@ -408,7 +410,7 @@ data can be used as a point of comparison.</p>
 </p>
 <div id="sol-body-5" class="solution-body" style="display: none;">
 <p><strong>1. Per base sequence quality</strong></p>
-<p><img src="figs/fastqc_fig1.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="figs/fastqc_fig1.png" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p>This graph shows an overview of the range of quality values (Phred
 scores) across all bases at each position. In this example, the sample
 contains reads that are 150 bp long. For each position, a boxplot is
@@ -418,9 +420,9 @@ divides the y-axis into very good quality scores (green), scores of
 reasonable quality (orange), and reads of poor quality (red). Here
 the quality of reads is very good.</p>
 <p>This graph would for example represent low quality reads:</p>
-<p><img src="figs/fastqc_bad_fig1.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="figs/fastqc_bad_fig1.png" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p><strong>2. Per tile sequence quality</strong>:</p>
-<p><img src="figs/fastqc_fig2.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="figs/fastqc_fig2.png" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p>Flowcells are divided into tiles. The graph allows to look at the
 quality scores from each tile across the reads to see if there is a
 loss in quality associated with one part of the flowcell. The plot
@@ -433,16 +435,16 @@ found around the edges, but hot spots can also occur in the middle
 only a small percentage of the total sequences. In this example no
 tile shows poor quality.</p>
 <p>This graph would for example show some lower quality tiles:</p>
-<p><img src="figs/fastqc_bad_fig2.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="figs/fastqc_bad_fig2.png" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p><strong>3. Per sequence quality scores</strong></p>
-<p><img src="figs/fastqc_fig3.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="figs/fastqc_fig3.png" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p>It represents a density plot of average quality per read. The
 distribution of average read quality should show a tight peak in the
 upper range of the plot. It could report a subset of sequences with
 low quality values, however these should represent only a small
 percentage of the total sequences.</p>
 <p><strong>4. Per base sequence content</strong></p>
-<p><img src="figs/fastqc_fig4.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="figs/fastqc_fig4.png" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p>It plots the proportion of each base position over all the
 reads. Typically, we expect to see each base roughly 25% of the time
 at each position so the lines in this plot should run parallel with
@@ -452,9 +454,9 @@ biased selection of random primers, but doesn’t represent any
 individually biased sequences. This is a typical plot obtained for
 RNA-seq reads.</p>
 <p>When Analysing DNA, the figure could look like this:</p>
-<p><img src="figs/fastqc_bad_fig4.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="figs/fastqc_bad_fig4.png" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p><strong>5. Per sequence GC content</strong></p>
-<p><img src="figs/fastqc_fig5.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="figs/fastqc_fig5.png" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p>It gives the GC distribution across the reads.</p>
 <p>This plot makes more sense for whole genome shotgun sequencing,
 as the overall GC content should reflect the GC content of the underlying genome.
@@ -464,7 +466,7 @@ the theorical distribution is calculated from the observed data).</p>
 <p>For RNA sequencing, this plot makes less sense, as over-represented sequences
 might generate an unexpected distribution.</p>
 <p><strong>6. Per base N content</strong></p>
-<p><img src="figs/fastqc_fig6.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="figs/fastqc_fig6.png" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p>If a sequencer is unable to make a base call with sufficient
 confidence then it will replace the conventional base call with an
 ‘N’. This graph plots the percent of times that ‘N’ occurs at a
@@ -472,11 +474,11 @@ position in all reads. If there was an increase at a particular
 position, it could indicate that something went wrong during
 sequencing.</p>
 <p><strong>7. Sequence Length Distribution</strong></p>
-<p><img src="figs/fastqc_fig7.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="figs/fastqc_fig7.png" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p>The distribution of sequence lengths of all reads in the file.
 Here we see that most reads are 150 pb long but some reads are shorter.</p>
 <p><strong>8. Sequence Duplication Levels</strong>:</p>
-<p><img src="figs/fastqc_fig8.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="figs/fastqc_fig8.png" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p>It gives the distribution of duplicated reads. The blue line
 corresponds to the percentage of duplicated reads among total number
 of reads. The red line corresponds to the percentage of duplicated
@@ -490,17 +492,17 @@ transcripts for which it is expected to observe duplicated reads. Here
 the data was flagged as ‘failed’ by FastQC even though duplication was
 expected in this case.</p>
 <p><strong>9. Overrepresented sequences</strong></p>
-<p><img src="figs/fastqc_fig9.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="figs/fastqc_fig9.png" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p>FastQC lists here all of the sequence which make up more than 0.1% of
 the total. Finding that a single sequence is highly overrepresented in
 the set means that it is either highly biologically significant, or
 that the library is biased or contaminated. Here it is of course not
 relevant as it just corresponds to a sequence full of ‘N’.</p>
 <p><strong>10. Adapter Content</strong></p>
-<p><img src="figs/fastqc_fig10.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="figs/fastqc_fig10.png" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p>This graph indicates if and where adapter sequences occur in the reads.</p>
 <p>If residual adapters were present we could see something like this:</p>
-<p><img src="figs/fastqc_bad_fig10.png" width="80%" style="display: block; margin: auto;"></p>
+<p><img src="figs/fastqc_bad_fig10.png" alt="" width="80%" style="display: block; margin: auto;"></p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -563,7 +565,7 @@ if the per base sequence quality is higher after trimming…</p>
 <h2>
 <span class="header-section-number">3.5</span> Alignment<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('alignment')" onmouseout="reset_tooltip('alignment-tooltip')"><span class="tooltiptext" id="alignment-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p><img src="figs/pipeline_mapping.png" width="20%" style="display: block; margin: auto;"></p>
+<p><img src="figs/pipeline_mapping.png" alt="" width="20%" style="display: block; margin: auto;"></p>
 <p>Next step is to map the reads to determine where in the genome the
 reads originated from. Many different aligners are available such as
 <a href="https://ccb.jhu.edu/software/hisat2/manual.shtml">HISAT2</a>,
@@ -574,7 +576,7 @@ reads originated from. Many different aligners are available such as
 gold standard, but some tools are better suited for particular NGS
 analyses <span class="citation">(<label for="tufte-mn-6" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-6" class="margin-toggle">Giacomo et al. 2017<span class="marginnote">Giacomo, B, K E Hayer, E J Kim, B Di Camillo, G A FitzGerald, and G R Grant. 2017. <span>“Simulation-Based Comprehensive Benchmarking of RNA-Seq Aligners.”</span> <em>Nature Methods</em> 2 (14): 135. <a href="https://doi.org/10.1038/nmeth.4106">https://doi.org/10.1038/nmeth.4106</a>.</span>)</span>… In the case of RNA-seq, it is important to
 use an aligner able to handle spliced reads.</p>
-<p><img src="figs/spliced_alignment.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figs/spliced_alignment.png" alt="" width="100%" style="display: block; margin: auto;"></p>
 <p>Here we show an example of what the command could look like when using
 <a href="http://daehwankimlab.github.io/hisat2/">HISAT2</a> aligner,
 launched with default parameters. In this basic configuration,
@@ -598,7 +600,7 @@ details). The alignment output file data is a <code>sam</code> file (see below).
   -S SampleName.sam             # sam file name</code></pre>
 <p>It is recommended to pay attention to the HISAT2 report to check the
 alignment rate. For a PE-end alignment it could look like this:</p>
-<p><img src="figs/hisat2_report.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figs/hisat2_report.png" alt="" width="100%" style="display: block; margin: auto;"></p>
 <p><strong>SAM format</strong></p>
 <p>The <a href="https://genome.sph.umich.edu/wiki/SAM">SAM</a> format is a generic
 format for storing large nucleotide sequence alignments.
@@ -644,7 +646,7 @@ chromosomal coordinates for downstream applications.</p>
 a very useful interactive tool for the visual exploration of genomic data.</p>
 <p>Visualising the alignments is not part of the processing pipeline
 but sometimes it can be useful..</p>
-<p><img src="figs/pipeline_IGV.png" width="60%" style="display: block; margin: auto;"></p>
+<p><img src="figs/pipeline_IGV.png" alt="" width="60%" style="display: block; margin: auto;"></p>
 <p>IGV requires that BAM files have an associated index file<label for="tufte-sn-5" class="margin-toggle sidenote-number">5</label><input type="checkbox" id="tufte-sn-5" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">5</span> Indexing a BAM file allows IGV to quickly extract alignments overlapping
 particular genomic regions</span>.
 Samtools can be used to index the BAM file. The following command would create
@@ -653,7 +655,7 @@ the indexed SampleName.bam.bai file.</p>
 <p>Bam file can be loaded in IGV<label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> Note that the index file must reside in the same directory as the bam
 file that it indexes, and it must have the same basename</span>.
 Below is an example of visualisation of a bam file using IGV, focusing on CDKN1A gene.</p>
-<p><img src="figs/IGV.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figs/IGV.png" alt="" width="100%" style="display: block; margin: auto;"></p>
 <p>Loading a BAM file creates 3 associated tracks:</p>
 <ul>
 <li><p>Coverage Track to view depth of coverage</p></li>
@@ -665,7 +667,7 @@ Below is an example of visualisation of a bam file using IGV, focusing on CDKN1A
 <h2>
 <span class="header-section-number">3.6</span> Counting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('counting')" onmouseout="reset_tooltip('counting-tooltip')"><span class="tooltiptext" id="counting-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p><img src="figs/pipeline_counting.png" width="20%" style="display: block; margin: auto;"></p>
+<p><img src="figs/pipeline_counting.png" alt="" width="20%" style="display: block; margin: auto;"></p>
 <p>Now comes the quantification step. It can be performed with several
 tools such as <a href="https://pypi.org/project/HTSeq/">htseq-count</a> or
 <a href="http://bioinf.wehi.edu.au/featureCounts/">FeatureCounts</a>. We will
@@ -680,7 +682,7 @@ from <a href="http://www.ensembl.org/info/data/ftp/index.html">Ensembl</a> or
 from the <a href="https://www.gencodegenes.org/human/">UCSC table
 browser</a>. The first few lines of
 gtf annotation file for human genome assembly GRCh38 look like this:</p>
-<p><img src="figs/gtf_example.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figs/gtf_example.png" alt="" width="100%" style="display: block; margin: auto;"></p>
 <p>FeatureCounts will count the number of uniquely mapped reads assigned
 to features (e.g. an exon) or meta-features (e.g. a gene) of the gtf
 file. When summarizing reads at gene level, read counts obtained for
@@ -688,7 +690,7 @@ exons belonging to the same gene will be added up to yield the read
 count for the corresponding gene. Note that an exon-spanning read
 will be counted only once for the corresponding gene even if it
 overlaps with more than one exon.</p>
-<p><img src="figs/featurecount_metafeature.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="figs/featurecount_metafeature.png" alt="" width="100%" style="display: block; margin: auto;"></p>
 <p>FeatureCounts could be launched with the following command. As usual,
 many of other parameters can be fine-tuned (see the
 <a href="http://manpages.ubuntu.com/manpages/bionic/man1/featureCounts.1.html">manual</a>
@@ -706,8 +708,8 @@ SampleName.bam              # bam file</code></pre>
 the raw counts of each gene in that sample.</p>
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="sec-hts.html#cb92-1" tabindex="-1"></a>counts_result <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="at">file =</span> <span class="st">"wsbim2122_data/count_data/sample1_counts.tsv.gz"</span>)</span>
 <span id="cb92-2"><a href="sec-hts.html#cb92-2" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(counts_result))</span></code></pre></div>
-<div class="datatables html-widget html-fill-item" id="htmlwidget-877457a1d04954c454d0" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-877457a1d04954c454d0">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["ENSG00000223972","ENSG00000227232","ENSG00000278267","ENSG00000243485","ENSG00000284332","ENSG00000237613"],["1;1;1;1;1;1;1;1;1","1;1;1;1;1;1;1;1;1;1;1","1","1;1;1;1;1","1","1;1;1;1;1"],["11869;12010;12179;12613;12613;12975;13221;13221;13453","14404;15005;15796;16607;16858;17233;17606;17915;18268;24738;29534","17369","29554;30267;30564;30976;30976","30366","34554;35245;35277;35721;35721"],["12227;12057;12227;12721;12697;13052;13374;14409;13670","14501;15038;15947;16765;17055;17368;17742;18061;18366;24891;29570","17436","30039;30667;30667;31109;31097","30503","35174;35481;35481;36073;36081"],["+;+;+;+;+;+;+;+;+","-;-;-;-;-;-;-;-;-;-;-","-","+;+;+;+;+","+","-;-;-;-;-"],[1735,1351,68,1021,138,1219],[0,14,8,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Geneid<\/th>\n      <th>Chr<\/th>\n      <th>Start<\/th>\n      <th>End<\/th>\n      <th>Strand<\/th>\n      <th>Length<\/th>\n      <th>../processed_data/bam/sample1.bam<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[6,7]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Geneid","targets":1},{"name":"Chr","targets":2},{"name":"Start","targets":3},{"name":"End","targets":4},{"name":"Strand","targets":5},{"name":"Length","targets":6},{"name":"../processed_data/bam/sample1.bam","targets":7}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><div class="question">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-f67f4b6a58d5cef123d6" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-f67f4b6a58d5cef123d6">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["ENSG00000223972","ENSG00000227232","ENSG00000278267","ENSG00000243485","ENSG00000284332","ENSG00000237613"],["1;1;1;1;1;1;1;1;1","1;1;1;1;1;1;1;1;1;1;1","1","1;1;1;1;1","1","1;1;1;1;1"],["11869;12010;12179;12613;12613;12975;13221;13221;13453","14404;15005;15796;16607;16858;17233;17606;17915;18268;24738;29534","17369","29554;30267;30564;30976;30976","30366","34554;35245;35277;35721;35721"],["12227;12057;12227;12721;12697;13052;13374;14409;13670","14501;15038;15947;16765;17055;17368;17742;18061;18366;24891;29570","17436","30039;30667;30667;31109;31097","30503","35174;35481;35481;36073;36081"],["+;+;+;+;+;+;+;+;+","-;-;-;-;-;-;-;-;-;-;-","-","+;+;+;+;+","+","-;-;-;-;-"],[1735,1351,68,1021,138,1219],[0,14,8,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Geneid<\/th>\n      <th>Chr<\/th>\n      <th>Start<\/th>\n      <th>End<\/th>\n      <th>Strand<\/th>\n      <th>Length<\/th>\n      <th>../processed_data/bam/sample1.bam<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[6,7]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Geneid","targets":1},{"name":"Chr","targets":2},{"name":"Start","targets":3},{"name":"End","targets":4},{"name":"Strand","targets":5},{"name":"Length","targets":6},{"name":"../processed_data/bam/sample1.bam","targets":7}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><div class="question">
 <p class="question-begin">
 ► Question
 </p>
@@ -758,7 +760,7 @@ the raw counts of each gene in that sample.</p>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="sec-hts.html#cb101-1" tabindex="-1"></a>counts_result <span class="sc">%&gt;%</span></span>
 <span id="cb101-2"><a href="sec-hts.html#cb101-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log2</span>(counts <span class="sc">+</span> <span class="dv">1</span>))) <span class="sc">+</span></span>
 <span id="cb101-3"><a href="sec-hts.html#cb101-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>)</span></code></pre></div>
-<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-59-1.png" width="672"></p>
+<p><img src="WSBIM2122_files/figure-html/unnamed-chunk-59-1.png" alt="" width="672"></p>
 <p>Note that a “pseudo-count” was added before the log2 transformation of the counts,
 to avoid elimination of counts equal to zero.</p>
 <p class="solution-end">
@@ -847,9 +849,9 @@ it will be covered in the next chapter.</p>
 <a href="sec-rnaseq.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2025-12-19
+2026-09-24
  using 
-R version 4.5.0 (2025-04-11)
+R version 4.6.1 (2026-06-24)
 </p>
 </div>
 </div>

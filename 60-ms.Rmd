@@ -56,13 +56,14 @@ knitr::include_graphics("figs/Spectra.png")
 We are going to use the Bioconductor [@Huber:2015] [`Spectra`
 package](https://rformassspectrometry.github.io/Spectra/articles/Spectra.html),
 which can be install with the `BiocManager` package, available from
-CRAN. We will also make use of some test data from the `msdata`
+CRAN. We will also make use of some test data from the
+[MsDataHub](https://rformassspectrometry.github.io/MsDataHub/)
 package. Identification data will be handled by the
 [`PSMatch`](https://rformassspectrometry.github.io/PSMatch/) package.
 
 
 ```{r, eval = FALSE}
-BiocManager::install("msdata")
+BiocManager::install("MsDataHub")
 BiocManager::install("ProtGenerics")
 BiocManager::install("Spectra")
 BiocManager::install("PSMatch")
@@ -156,13 +157,13 @@ knitr::include_graphics("figs/ms3D.png")
 
 ## Reading and accessing MS data
 
-Let's start by accessing an MS raw data file from the `msdata`
-package. The `proteomics()` function checks the package content for a
-file matching the `"2014"` pattern and returns its full name.
+Let's start by accessing an MS raw data file from the
+[MsDataHub](https://rformassspectrometry.github.io/MsDataHub/)
+package.
 
 
 ```{r}
-basename(f <- msdata::proteomics(pattern = "2014", full.names = TRUE))
+f <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzML.gz()
 ```
 
 There exist a set of community-maintained file formats for mass
@@ -324,11 +325,11 @@ positives. See [@Kall:2008] for further reading.
 
 Identification results are also stored in an XML-based file format,
 called `mzIdentML` (or `mzId` for short). Below, we access such a file
-available in the `msdata` package and load its content into R with the
-`PSMs::PSM()` function.
+available in the `MsDataHub` package and load its content into R with
+the `PSMatch::PSM()` function.
 
 ```{r readPSMs}
-basename(idf <- msdata::ident(full.names = TRUE))
+idf <- MsDataHub::TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01.20141210.mzid()
 id <- PSM(idf)
 head(id)
 ```
@@ -361,7 +362,7 @@ hits. Interprete the figures.
 
 ```{r}
 library("ggplot2")
-data.frame(id) %>%
+data.frame(id) |>
     ggplot(aes(x = MS.GF.RawScore, colour = isDecoy)) +
     geom_density()
 ```
@@ -413,7 +414,7 @@ the calculated peptide fragment.
   100 and are matched to the same peptide sequence.
 
 - Then visualise them annotating their fragment ion with its fragment
-  ions by passing the `addFragments` function to `plotSpectra`'s
+  ions by passing the `labelFragments` function to `plotSpectra`'s
   `labels` argument.
 
 `r msmbstyle::question_end()`
@@ -422,17 +423,17 @@ the calculated peptide fragment.
 `r msmbstyle::solution_begin()`
 
 ```{r, fig.height = 9, fig.width = 7, message = FALSE, fig.cap = "Two MS2 spectra that were matched to the `TKGLNVMQNLLTAHPDVQAVFAQNDEMALGALR` peptide."}
-seq <- as_tibble(spectraData(ms)) %>%
-    filter(`MS.GF.RawScore` > 100) %>%
-    group_by(sequence) %>%
-    summarise(n = n()) %>%
-    filter(n == 2) %>%
-    head(1) %>%
+seq <- as_tibble(spectraData(ms)) |>
+    filter(`MS.GF.RawScore` > 100) |>
+    group_by(sequence) |>
+    summarise(n = n()) |>
+    filter(n == 2) |>
+    head(1) |>
     pull(sequence)
 
 i <- which(ms$sequence == seq)
 
-plotSpectra(ms[i], labels = addFragments,
+plotSpectra(ms[i], labels = labelFragments,
             labelPos = 3, labelCol = "orange",
             main = ms[i]$sequence)
 ```
@@ -443,7 +444,7 @@ on the same graph pointing upwards and downwards:
 
 ```{r, fig.height = 5, fig.width = 7, message = FALSE, warning = FALSE, fig.cap = "Mirror representation of to matches to the `TKGLNVMQNLLTAHPDVQAVFAQNDEMALGALR` peptide."}
 plotSpectraMirror(ms[i[1]], ms[i[2]],
-                  labels = addFragments,
+                  labels = labelFragments,
                   labelPos = 3, labelCol = "orange")
 ```
 
